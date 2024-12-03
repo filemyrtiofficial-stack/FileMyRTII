@@ -1,0 +1,134 @@
+
+  .theme-btn {
+    font-size: 1.45833vw;
+  }
+  .theme-btn-link {
+    font-size: 1.25vw;
+  }
+  .menu .fs-24 {
+    font-size: 1.25vw;
+  }
+  .mega_menu .fs-28 {
+    font-size: 1.45833vw;
+  }
+  .mega_menu .fs-20 {
+    font-size: 1.04167vw;
+  }
+  .nav_menu .fs-28 {
+    font-size: 1.45833vw;
+  }
+  .nav_details .fs-18 {
+    font-size: 0.9375vw;
+  }
+
+  .header_text .title {
+    font-size: 3.75vw;
+  }
+  .header_text .fs-24 {
+    font-size: 1.25vw;
+  }
+  .testimonial_slide .fs-20 {
+    font-size: 1.04167vw;
+  }
+
+  .section_heading .fs-56 {
+    font-size: 2.91667vw;
+  }
+
+  .rti_tab_list .rti_tab_item,
+  .rti_item .fs-28 {
+    font-size: 1.45833vw;
+  }
+
+
+  .process_flow .fs-36 {
+    font-size: 1.875vw;
+  }
+  .process_flow .fs-24 {
+    font-size: 1.25vw;
+  }
+
+  .blog_area .fs-28 {
+    font-size: 1.45833vw;
+  }
+  .blog_area .fs-20 {
+    font-size: 1.04167vw;
+  }
+
+  .footer .fs-24 {
+    font-size: 1.25vw;
+  }
+  .footer .fs-20 {
+    font-size: 1.04167vw;
+  }
+  .form-field {
+    font-size: 1.04167vw;
+  }
+
+
+  @media (max-width: 767px) {
+    .theme-btn,
+    .theme-btn-link {
+        font-size: 16px;
+      }
+      .menu .fs-24 {
+        font-size: 16px;
+      }
+      .mega_menu .fs-28 {
+        font-size: 16px;
+      }
+      .mega_menu .fs-20 {
+        font-size: 16px;
+      }
+      .nav_menu .fs-28 {
+        font-size: 16px;
+      }
+      .nav_details .fs-18 {
+        font-size: 14px;
+      }
+    
+      .header_text .title {
+        font-size: 35px;
+      }
+      .header_text .fs-24 {
+        font-size: 16px;
+      }
+      .testimonial_slide .fs-20 {
+        font-size: 16px;
+      }
+    
+      .section_heading .fs-56 {
+        font-size: 30px;
+      }
+      .rti_tab_list .rti_tab_item {
+        font-size: 20px;
+      }
+      .rti_item .fs-28 {
+        font-size: 16px;
+      }
+    
+    
+      .process_flow .fs-36 {
+        font-size: 20px;
+      }
+      .process_flow .fs-24 {
+        font-size: 16px;
+      }
+    
+      .blog_area .fs-28 {
+        font-size: 20px;
+      }
+      .blog_area .fs-20 {
+        font-size: 16px;
+      }
+    
+      .footer .fs-24 {
+        font-size: 16px;
+      }
+      .footer .fs-20 {
+        font-size: 14px;
+      }
+      .form-field {
+        font-size: 16px;
+      }
+  }
