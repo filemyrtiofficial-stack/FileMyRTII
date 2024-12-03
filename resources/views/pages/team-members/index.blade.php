@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Blog Management'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Team Member Management'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
 
         <div class="card mb-4">
             <div class="card-header pb-0 list-header">
-                <h6>Blog</h6>
-                <a href="{{route('blogs.create')}}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add
-                Blog</a>
+                <h6>Team Member</h6>
+                <a href="{{route('team-members.create')}}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add
+                Team Member</a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -18,12 +18,11 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
                                 </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Expertise
+                                </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Status
                                 </th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Publish Date</th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
@@ -38,19 +37,18 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div>
-                                            <img src="{{ asset($item->thumbnail) }}" class="avatar me-3"
+                                            <img src="{{ asset($item->image) }}" class="avatar me-3"
                                                 alt="image">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->title}}</h6>
+                                            <h6 class="mb-0 text-sm">{{$item->name}}</h6>
                                         </div>
                                     </div>
                                 </td>
+                                <td class="align-middle text-sm">{{$item->expertise?? ''}}</td>
+
                                 <td>
-                                    <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{blogStatus()[$item->status]['name'] ??''}}</b></span>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    {{Carbon\Carbon::parse($item->publish_date)->format('d M, Y')}}
+                                    <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
@@ -59,8 +57,8 @@
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
                                    
                                         <a class="text-sm font-weight-bold mb-0 ps-2"
-                                            href="{{route('blogs.edit', $item->id)}}">Edit</a>
-                                        <a href="{{route('blogs.destroy', $item->id)}}"
+                                            href="{{route('team-members.edit', $item->id)}}">Edit</a>
+                                        <a href="{{route('team-members.destroy', $item->id)}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn">Delete</a>
                                     </div>
                                 </td>

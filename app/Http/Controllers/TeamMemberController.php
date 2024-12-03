@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Blog;
-use App\Models\Category;
-use App\Repositories\BlogRepository;
-use App\Interfaces\BlogInterface;
+use App\Models\TeamMember;
+use App\Repositories\TeamMemberRepository;
+use App\Interfaces\TeamMemberInterface;
 use Validator;
-class BlogController extends Controller
-{
-    private BlogRepository $blogRepository;
 
-    public function __construct(BlogInterface $blogRepository)
+class TeamMemberController extends Controller
+{
+    private TeamMemberRepository $TeamMemberRepository;
+
+    public function __construct(TeamMemberInterface $teamMemberRepository)
     {
-       $this->blogRepository = $blogRepository;
+        $this->teamMemberRepository = $teamMemberRepository;
     }
 
     /**
@@ -24,8 +24,8 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        $list = Blog::list(true, $request->all());
-        return view('pages.blog.index', compact('list'));
+        $list = TeamMember::list(true, $request->all());
+        return view('pages.team-members.index', compact('list'));
     }
 
     /**
@@ -35,8 +35,8 @@ class BlogController extends Controller
      */
     public function create(Request $request)
     {
-        $categories = Category::list(false, ['status' => 1]);
-        return view('pages.blog.create', compact('categories'));
+
+        return view('pages.team-members.create');
 
     }
 
@@ -49,21 +49,17 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => "required|unique:blogs,title",
+            'name' => "required",
+            'profile_image' => "required|image",
             'status' => "required",
-            'short_description' => "required",
-            'description' => "required",
-            'thumbnail' => "required",
-            'feature_image' => "required",
-            'category' => "required",
-            'slug' => "required|unique:slug_masters,slug",
-            'publish_date' => 'required|date'
+            'about' => "required",
+            'expertise' => "required"
 
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
-        $data = $this->blogRepository->store($request);
+        $data = $this->teamMemberRepository->store($request);
         return $data;
     }
 
@@ -86,10 +82,9 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $data = Blog::get($id);
-        $categories = Category::list(false, ['status' => 1]);
-        $category_ids = getColumnData($data->blogCategories->toArray(), 'category_id');
-        return view('pages.blog.create', compact('data', 'categories', 'category_ids'));
+        $data = TeamMember::get($id);
+
+        return view('pages.team-members.create', compact('data'));
 
     }
 
@@ -103,25 +98,16 @@ class BlogController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-          'title' => "required|unique:blogs,title,".$id,
+            'name' => "required",
+            'profile_image' => "nullable|image",
             'status' => "required",
-            'short_description' => "required",
-            'description' => "required",
-            // 'thumbnail' => "nullable|image",
-            // 'feature_image' => "nullable|image",
-            'category' => "required",
-            'slug' => "required|unique:blogs,slug,".$id,
-            'publish_date' => 'required|date'
+            'about' => "required",
+            'expertise' => "required"
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
-        $blog = Blog::get($id);
-        // if($blog && $blog->slug && checkSlug($request->slug, $blog->slug->id)) {
-        //     return response(['errors' => ['slug' => "This slug is already exist"]], 422);
-
-        // }
-        $data = $this->blogRepository->update($request, $id);
+        $data = $this->teamMemberRepository->update($request, $id);
         return $data;
     }
 
@@ -135,7 +121,7 @@ class BlogController extends Controller
     {
 
         try {
-            $data = $this->blogRepository->delete($id);
+            $data = $this->teamMemberRepository->delete($id);
             return response(['message' => 'Data is successfully deleted']);
         } catch (Exception $ex) {
             return response(['error' => $ex->getMessage()], 500);

@@ -40,6 +40,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TeamMemberController;
+
 
 
 
@@ -101,7 +103,9 @@ Route::get('/service/{id}', [FrontendController::class, 'service'])->name('servi
 	Route::resource('blogs', BlogController::class);       
 	Route::resource('labs', LabController::class);       
 	Route::resource('service-category', ServiceCategoryController::class);       
+	Route::resource('team-members', TeamMemberController::class);       
 
+	
 	Route::resource('services', ServiceController::class);       
 	   
 	

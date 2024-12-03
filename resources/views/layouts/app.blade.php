@@ -101,6 +101,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="assets/js/argon-dashboard.js"></script>
+    <script src='https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js'></script>
     @stack('js');
 
     @if(session()->has('success'))
@@ -112,10 +113,12 @@
         </script>
     @endif
     <script>
-    // $('.dropify').dropify();
+    ClassicEditor.create(document.querySelector(".editor"));
+
+     $('.dropify').dropify();
 
 
-    // $('.select-2').select2();
+     $('.select-2').select2();
 
     $(document).on('submit', '.form-submit', function(e) {
         e.preventDefault();

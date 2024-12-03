@@ -33,4 +33,11 @@ class Blog extends Model
     public function blogFaqs() {
         return $this->hasMany(BlogFaq::class, 'blog_id', 'id');
     }
+    public function slugMaster() {
+        return $this->hasOne(SlugMaster::class, 'linkable_id', 'id')->where('linkable_type', 'blogs');
+    }
+
+    public function seo() {
+        return $this->hasOne(SeoMaster::class, 'linkable_id', 'id')->where('linkable_type', 'blogs');
+    }
 }

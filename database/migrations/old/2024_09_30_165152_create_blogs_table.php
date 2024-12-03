@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('slug')->nullable();
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('status')->default(false);
+            $table->integer('status')->default(1);
             $table->string('thumbnail')->nullable();
             $table->string('banner')->nullable();
             $table->date('publish_date')->nullable();

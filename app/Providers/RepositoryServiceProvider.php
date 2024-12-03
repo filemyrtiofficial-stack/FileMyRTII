@@ -29,6 +29,8 @@ use App\Repositories\ServiceCategoryRepository;
 use App\Interfaces\ServiceCategoryInterface;
 use App\Repositories\ServiceRepository;
 use App\Interfaces\ServiceInterface;
+use App\Repositories\TeamMemberRepository;
+use App\Interfaces\TeamMemberInterface;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -51,6 +53,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(LabInterface::Class, LabRepository::class);
         $this->app->bind(ServiceCategoryInterface::Class, ServiceCategoryRepository::class);
         $this->app->bind(ServiceInterface::Class, ServiceRepository::class);
+        $this->app->bind(TeamMemberInterface::Class, TeamMemberRepository::class);
 
     }
 

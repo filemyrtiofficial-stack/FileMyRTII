@@ -25,7 +25,7 @@
 
             <li class="nav-item mt-3 d-flex align-items-center">
              
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">User managment</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">User management</h6>
             </li> 
 
 
@@ -43,6 +43,16 @@
                         <i class="fa fa-user text-dark text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Users</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'team-members' ? 'active' : '' }}"
+                    href="{{ route('team-members.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-user text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Team Members</span>
                 </a>
             </li>
             <!-- <li class="nav-item">
@@ -123,7 +133,7 @@
 
             <li class="nav-item mt-3 d-flex align-items-center">
              
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">Content managment</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">Content management</h6>
             </li> 
            
             <li class="nav-item">
@@ -166,6 +176,20 @@
                         <i class="fa fa-question text-dark text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">RTI Service</span>
+                </a>
+            </li>
+
+            <li class="nav-item mt-3 d-flex align-items-center">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">Lawyer management</h6>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'users' ? 'active' : '' }}"
+                    href="{{ route('users.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-user text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Lawyers List</span>
                 </a>
             </li>
 

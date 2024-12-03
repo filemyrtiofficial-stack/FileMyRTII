@@ -13,6 +13,19 @@ function commonStatus() {
         ];
 }
 
+function blogStatus() {
+    return [
+            1 => [
+                'name' => 'Draft',
+                'class' => 'text-danger'
+            ],
+            2 => [
+                'name' => 'Publish',
+                'class' => 'text-success'
+            ]
+        ];
+}
+
 function daysList() {
     return [
         'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' 
@@ -231,4 +244,8 @@ function checkSlug($slug, $id = null) {
     }
     $check_slug = $check_slug->first();
     return $check_slug;
+}
+
+function getColumnData($data, $key) {
+    return array_column($data, $key);
 }
