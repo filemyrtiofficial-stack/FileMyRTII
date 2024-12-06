@@ -10,30 +10,34 @@
             </div>
             <div class="card-body pt-0">
                 <form method="POST"
-                    action="{{isset($data['id']) ? route('categoies.update', $data['id']) : route('categoies.store')}}"
+                    action="{{isset($data['id']) ? route('categories.update', $data['id']) : route('categories.store')}}"
                     enctype="multipart/form-data" class="form-submit" method="post">
                     @csrf
                     @if(isset($data['id']))
                     <input type="hidden" name="_method" value="PUT">
                     @endif
-                    <div class="row">
+                    <div class="row mt-5">
                         <div class="col-6">
-                            <label class="form-label">Name</label>
-                            <div class="input-group">
-                                <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control"
-                                    type="text" placeholder="Name">
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <div class="input-group">
+                                    <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control"
+                                        type="text" placeholder="Name">
+                                </div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <label class="form-label">Status</label>
-                            <div class="input-group">
-                                <select name="status" id="status" class="form-control">
-                                    @foreach(commonStatus() as $key => $item)
-                                    <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
-                                        selected @endif>
-                                        {{$item['name']}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <div class="input-group">
+                                    <select name="status" id="status" class="form-control">
+                                        @foreach(commonStatus() as $key => $item)
+                                        <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
+                                            selected @endif>
+                                            {{$item['name']}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                        

@@ -1,12 +1,12 @@
 <nav class="navbar">
     <div class="container">
         <div class="row">
-            <div class="col-2">
+            <div class="col-3">
                 <a class="header_logo" href="javascript:void(0);">
                     <img class="img-fluid" src="{{asset('assets/rti/images/logo.webp')}}" alt="logo">
                 </a>
             </div>
-            <div class="col-10">
+            <div class="col-9">
                 <div class="nav_wrapper">
                     <ul class="menu">
                         <li class="fs-24"><a href="javascript:void(0);">About RTI</a></li>
@@ -17,23 +17,21 @@
                                         <li class="has-dropdown"><a class="fs-28" href="javascript:void(0);">Personal
                                                 RTI</a>
                                             <ul>
-                                                <li class="fs-20"><a href="javascript:void(0);">Complaint
-                                                        Tracking</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Complaint Tracking</a>
+                                                </li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Marksheet
                                                         Verification</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Answer Copy</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Passport Delay</a>
+                                                <li class="fs-20"><a href="javascript:void(0);">Passport Delay</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Income Tax Refund</a>
                                                 </li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Income Tax
-                                                        Refund</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">FIR Status</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">EPF Status</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Pension Inquiry
                                                         Tracking</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">IRCTC Payment &
-                                                        Refund Issues</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a>
-                                                </li>
+                                                <li class="fs-20"><a href="javascript:void(0);">IRCTC Payment & Refund
+                                                        Issues</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a></li>
                                             </ul>
                                         </li>
                                         <li class="has-dropdown"><a class="fs-28" href="javascript:void(0);">Property
@@ -45,20 +43,18 @@
                                                         Records</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Mutation Related
                                                         Issues</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Link Documents</a>
-                                                </li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Link Documents</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Sale Deed Copies</a>
                                                 </li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Land Survey
-                                                        Issues</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Land Survey Issues</a>
+                                                </li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Registration Refund
                                                         Issues</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Dharani
                                                         (Telangana-specific land-related issues)</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Meebhoomi (Andhra
                                                         Pradesh-specific land-related issues)</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a>
-                                                </li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a></li>
                                             </ul>
                                         </li>
                                         <li class="has-dropdown"><a class="fs-28" href="javascript:void(0);">Social
@@ -72,16 +68,13 @@
                                                 </li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Road Work Status</a>
                                                 </li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Street Lights</a>
-                                                </li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Toll Collection</a>
-                                                </li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Street Lights</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Toll Collection</a></li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Municipality-Related</a>
                                                 </li>
                                                 <li class="fs-20"><a href="javascript:void(0);">Public
                                                         Transportation</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a>
-                                                </li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a></li>
                                             </ul>
                                         </li>
                                         <li class="has-dropdown"><a class="fs-28" href="javascript:void(0);">Other
@@ -89,18 +82,17 @@
                                             <ul>
                                                 <li class="fs-20"><a href="javascript:void(0);">Citizen Charter of
                                                         Government Offices</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Refunds from
+                                                <li class="fs-20"><a href="javascript:void(0);">Refunds from Government
+                                                        Offices/Departments</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Certified Copies from
                                                         Government Offices/Departments</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Certified Copies
-                                                        from Government Offices/Departments</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">RTA-Related
-                                                        Queries</a></li>
+                                                <li class="fs-20"><a href="javascript:void(0);">RTA-Related Queries</a>
+                                                </li>
                                                 <li class="fs-20"><a href="javascript:void(0);">First RTI Appeal</a>
                                                 </li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Second RTI
-                                                        Appeal</a></li>
-                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a>
+                                                <li class="fs-20"><a href="javascript:void(0);">Second RTI Appeal</a>
                                                 </li>
+                                                <li class="fs-20"><a href="javascript:void(0);">Custom Request</a></li>
                                             </ul>
                                         </li>
                                     </ul>

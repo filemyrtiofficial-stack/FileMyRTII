@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $fillable = ['name', 'icon', 'status', 'description', 'category_id'];
     
     public static function list($pagination, $filters = null) {

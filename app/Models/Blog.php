@@ -10,9 +10,14 @@ class Blog extends Model
     use HasFactory;
     protected $fillable = ['title', 'slug', 'short_description', 'description', 'status', 'thumbnail', 'banner', 'publish_date'];
     public static function list($pagination, $filters = null) {
+        $filter_data = $filters;
+        unset($filters['ids']);
         $list = Blog::orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);
+        }
+        if(isset($filter_data['ids'])) {
+            $list->wherein('id', $filter_data['ids']);
         }
         if($pagination) {
             return $list->paginate(10);

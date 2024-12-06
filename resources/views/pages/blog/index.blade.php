@@ -6,9 +6,9 @@
     <div class="col-12">
 
         <div class="card mb-4">
-            <div class="card-header pb-0 list-header">
-                <h6>Blog</h6>
-                <a href="{{route('blogs.create')}}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add
+            <div class="card-header list-header">
+                <h4>Blog</h4>
+                <a href="{{route('blogs.create')}}" class="btn btn-primary float-end=">Add
                 Blog</a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">

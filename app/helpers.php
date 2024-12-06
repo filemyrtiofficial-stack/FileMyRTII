@@ -249,3 +249,352 @@ function checkSlug($slug, $id = null) {
 function getColumnData($data, $key) {
     return array_column($data, $key);
 }
+
+function fieldTypeList() {
+
+    return $field_list = [
+        'General' => [
+                        'boolean' => [
+                            'field_type' => 'Boolean',
+                            'field_key' => 'boolean',
+                            'limit' => 1,
+                            'required' => false
+                        ],
+                        'date' => [
+                            'field_type' => 'Date',
+                            'field_key' => 'date',
+                        ],
+                        'email' => [
+                            'field_type' => 'Email',
+                            'field_key' => 'email',
+                        ],
+                        'link' => [
+                            'field_type' => 'Link',
+                            'field_key' => 'link',
+                        ],
+                    ],
+        'Number' => [
+                        'list-float' => [
+                            'field_type' => 'List (float)',
+                            'field_key' => 'list-float',
+                        ],
+                        'list-integer' => [
+                            'field_type' => 'List (integer)',
+                            'field_key' => 'list-integer',
+                        ],
+                        'number-decimal' => [
+                            'field_type' => 'Number (decimal)',
+                            'field_key' => 'number-decimal',
+                        ],
+                        'number-float' => [
+                            'field_type' => 'Number (float)',
+                            'field_key' => 'number-float',
+                        ],
+                        'number-integer' => [
+                            'field_type' => 'Number (integer)',
+                            'field_key' => 'number-integer',
+                        ],
+                    ],
+        'Text' => [
+                        'list-text' => [
+                            'field_type' => 'List (Text)',
+                            'field_key' => 'list-text',
+                        ],
+                        'text-formatted' => [
+                            'field_type' => 'Text (formatted)',
+                            'field_key' => 'text-formatted',
+                        ],
+                        'text-formatted-long' => [
+                            'field_type' => 'Text (formatted, long)',
+                            'field_key' => 'text-formatted-long',
+                        ],
+                        'text-formatted-long-summary' => [
+                            'field_type' => 'Text (formatted, long, with summary)',
+                            'field_key' => 'text-formatted-long-summary',
+                        ],
+                        'text-plain' => [
+                            'field_type' => 'Text (Plain)',
+                            'field_key' => 'text-plain',
+                        ],
+                        'text-plain-long' => [
+                            'field_type' => 'Text (Plain, Long)',
+                            'field_key' => 'text-plain-long',
+                        ],
+                    ],
+        'Reference' => [
+                        'file' => [
+                            'field_type' => 'File',
+                            'field_key' => 'file',
+                            'allow_extension' => [
+                                'lable' => "Allowed file extensions",
+                                'required' => true,
+                                'fields' => [
+                                        [
+                                            'type' => 'input',
+                                            'name' => "allow_extension",
+                                            'default' => 'txt',
+                                        ]
+                                    ]
+                            ],
+                            "upload-size" => [
+                                'lable' => "Maximum upload size",
+                                'required' => false,
+                                'default' => "6 GB",
+                                'fields' => [
+                                        [
+                                            'type' => 'input',
+                                            'name' => "upload_size",
+                                        ]
+                                    ]
+                            ]
+
+                        ],
+                        'image' => [
+                            'field_type' => 'Image',
+                            'field_key' => 'image',
+                            'additional_fields' => [
+
+                                'allow_extension' => [
+                                    'lable' => "Allowed file extensions",
+                                    'required' => true,
+                                    'fields' => [
+                                        [
+                                            'type' => 'input',
+                                            'name' => "allow_extension",
+                                            'default' => 'png, gif, jpg, jpeg',
+                                        ]
+                                    ]
+
+                                ],
+                                "min-resolution" => [
+                                    'lable' => "Minimum image resolution",
+                                    'required' => false,
+                                    'note' => 'The minimum allowed image size expressed as WIDTH×HEIGHT (e.g. 640×480). Leave blank for no restriction. If a smaller image is uploaded, it will be rejected.',
+                                    'fields' => [
+                                            [
+                                                'type' => 'input',
+                                                'name' => "min_height",
+                                                'lable' => "Min Height"
+                                            ],
+                                            [
+                                                'type' => 'input',
+                                                'name' => "min_width",
+                                                'lable' => "Min Width"
+
+                                            ]
+                                        ]
+
+                                ],
+                                "max-resolution" => [
+                                    'lable' => "Maximum image resolution Maximum width",
+                                    'required' => false,
+                                    'note' => 'The maximum allowed image size expressed as WIDTH×HEIGHT (e.g. 640×480). Leave blank for no restriction. If a larger image is uploaded, it will be resized to reflect the given width and height. Resizing images on upload will cause the loss of EXIF data in the image.',
+                                    'fields' => [
+                                        [
+                                            'type' => 'input',
+                                            'name' => "max_height",
+                                            'lable' => "max Height"
+                                        ],
+                                        [
+                                            'type' => 'input',
+                                            'name' => "max_width",
+                                            'lable' => "max Width"
+
+                                        ]
+                                    ]
+                                ],
+                                "upload-size" => [
+                                    'lable' => "Maximum upload size",
+                                    'required' => false,
+                                    'default' => "6GB",
+                                    'fields' => [
+                                        [
+                                            'type' => 'input',
+                                            'name' => "upload_size",
+                                        ]
+                                    ]
+                                ]
+                            ]
+
+                        ],
+                        'service-category' => [
+                            'field_type' => 'Service Category',
+                            'field_key' => 'service-category',
+                        ],
+                        'service' => [
+                            'field_type' => 'Service',
+                            'field_key' => 'service',
+                        ],
+                        'blog-category' => [
+                            'field_type' => 'Blog (Category)',
+                            'field_key' => 'blog-category',
+                        ],
+                        'team-members' => [
+                            'field_type' => 'Team Members',
+                            'field_key' => 'team-members',
+                        ],
+                        'lawyers' => [
+                            'field_type' => 'Lawyers',
+                            'field_key' => 'lawyers',
+                        ],
+                        'sections' => [
+                            'field_type' => 'Sections',
+                            'field_key' => 'sections',
+                            'additional_fields' => [
+                                "select-sections" => [
+                                    'lable' => "Select Section For Reference",
+                                    'required' => true,
+                                    'fields' => [
+                                        [
+                                            'type' => 'select',
+                                            'name' => "section_list",
+                                            'options' => sectionList()
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                    ]
+    ];
+}
+
+function sectionList() {
+    return App\Models\TemplateSection::select('id', 'section as name')->get();
+}
+
+function getTypeDetails($key) {
+    $key = explode("#",$key);
+    return fieldTypeList()[$key[0]][$key[1]];
+
+}
+
+function allNumberOfValueOptions() {
+    return [
+        'unlimited' => "Unlimited",
+        'limited' => "Limited",
+        ];
+}
+
+
+function templateList() {
+    return $template = [
+            'home_banner' => [
+                "section_name" => "Hero Banner",
+                'key' => 'home_banner',
+                "fields" => [
+                    [
+                        "type" => 'input',
+                        "lable" => 'Title',
+                        'name' => "banner_title",
+
+                    ],
+                    [
+                        "type" => 'textarea',
+                        "lable" => 'Description',
+                        'name' => "banner_description",
+
+                    ],
+                    [
+                        "type" => 'image',
+                        "lable" => 'Mobile Banner',
+                        'name' => "banner_mobile_image",
+
+                    ],
+                    [
+                        "type" => 'image',
+                        "lable" => 'Desktop Banner',
+                        'name' => "banner_desktop_image",
+
+                    ],
+                    [
+                        "type" => 'link',
+                        'lable' => "File My RTI Now",
+                        'fields' => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Title',
+                                'name' => "banner_link_title",
+        
+                            ],
+                            [
+                                "type" => 'input',
+                                "lable" => 'Url',
+                                'name' => "banner_link_url",
+        
+                            ],
+                        ]
+                    ],
+                    [
+                        "type" => "section",
+                        "key" => 'hero_banner_review_slider',
+                        'section_name' => "Review Slider",
+                        'repeat' => 10,
+                        "fields" => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Title',
+                                'name' => "banner_review_slider_title",
+
+                            ],
+                            [
+                                "type" => 'textarea',
+                                "lable" => 'Description',
+                                'name' => "banner_review_slider_description",
+
+                            ],
+                            [
+                                "type" => 'image',
+                                "lable" => 'Image',
+                                'name' => "banner_review_slider_image",
+
+                            ],
+                        ]
+                    ]
+                ]
+                        ],
+            'our_blogs' => [
+                "section_name" => "Our Blogs",
+                'key' => 'our_blogs',
+                "fields" => [
+                    [
+                        "type" => 'input',
+                        "lable" => 'Title',
+                        'name' => "title",
+
+                    ],
+                    [
+                        "type" => 'select',
+                        'lable' => "All Multiple",
+                        'name' => "all_multiple",
+                        'options' => yesNoOption(),
+                        'target' => 'our_blogs_blog_list'
+
+                        
+                    ],
+                    [
+                        "type" => 'select',
+                        'lable' => "Select Blogs",
+                        'name' => "blog_list",
+                        'options' => App\Models\Blog::list(false, ['status' => true]),
+                        'check_multiple_type' => 'our_blogs_all_multiple'
+                        
+                    ]
+                    
+                ]
+            ]
+      
+    ];
+}
+
+function yesNoOption() {
+    return [
+        [
+            'id' => 'yes',
+            'name' => 'Yes'
+        ],
+        [
+            'id' => 'no',
+            'name' => 'No'
+        ]
+        ];
+}

@@ -5,87 +5,13 @@ Home
 @endsection
 
 @section('content')
-<header class="section_banner">
-    <div class="header_bg_img" style="background-image: url({{asset('assets/rti/images/banner.webp')}});">
-        <div class="container">
-            <div class="row banner_row">
-                <div class="col-12 col-sm-6">
-                    <div class="header_text">
-                        <h1 class="title">Fed Up with <br><span>Bribes</span> & <span>Delayed</span> Government
-                            Services?</h1>
-                        <p class="fs-24">Fast-Track Your Government Responses with FileMyRTI: Experience Speedy
-                            and Transparent Services from the Comfort of Your Home.</p>
-                        <a href="javascipt:void(0);" class="theme-btn"><span>File My RTI Now</span></a>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="mobile_img">
-                        <img class="img-fluid" src="{{asset('assets/rti/images/banner.webp')}}" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="row testimonial_row">
-                <div class="col-auto">
-                    <div class="slider_wrapper">
-                        <div class="testimonial_slider">
-                            <div class="item">
-                                <div class="testimonial_slide">
-                                    <div class="profile">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/user.webp')}}"
-                                            alt="profile pic">
-                                    </div>
-                                    <div class="slide_content">
-                                        <div class="fs-20">
-                                            <p>Lorem ipsum dolor sit amet consectetur. Congue risus id nec sed.
-                                                Nisl eget imperdiet habitant nibh </p>
-                                        </div>
-                                        <div class="fs-20">
-                                            <div class="user-name fw-700">Client Name</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial_slide">
-                                    <div class="profile">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/user.webp')}}"
-                                            alt="profile pic">
-                                    </div>
-                                    <div class="slide_content">
-                                        <div class="fs-20">
-                                            <p>Lorem ipsum dolor sit amet consectetur. Congue risus id nec sed.
-                                                Nisl eget imperdiet habitant nibh </p>
-                                        </div>
-                                        <div class="fs-20">
-                                            <div class="user-name fw-700">Client Name</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial_slide">
-                                    <div class="profile">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/user.webp')}}"
-                                            alt="profile pic">
-                                    </div>
-                                    <div class="slide_content">
-                                        <div class="fs-20">
-                                            <p>Lorem ipsum dolor sit amet consectetur. Congue risus id nec sed.
-                                                Nisl eget imperdiet habitant nibh </p>
-                                        </div>
-                                        <div class="fs-20">
-                                            <div class="user-name fw-700">Client Name</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+
+@foreach($page_section as $section)
+<?php
+$data = json_decode($section->data, true);
+?>
+@include('frontend.sections.' . $section->section_key)
+@endforeach
 
 <section class="rti_section ">
     <div class="container">
@@ -744,7 +670,8 @@ Home
     </div>
 </section>
 
-<section class="cta_section">
+<!-- <section class="cta_section">
+
     <div class="container">
         <div class="cta_text">
             <div class="section_heading">
@@ -753,5 +680,21 @@ Home
             <a href="javascipt:void(0);" class="theme-btn"><span>File My RTI Now</span></a>
         </div>
     </div>
+</section> -->
+
+
+<section class="cta_section">
+    <div class="cta_bg">
+        <img class="cta_bg_img bg_img" src="{{asset('assets/rti/images/cta_bg.webp')}}" alt="cta bg">
+        <div class="container">
+            <div class="cta_text">
+                <div class="section_heading">
+                    <h4 class="fs-56 fw-700">Bringing transparency closer, one RTI at a time.</h4>
+                </div>
+                <a href="javascipt:void(0);" class="theme-btn"><span>File My RTI Now</span></a>
+            </div>
+        </div>
+    </div>
 </section>
+
 @endsection

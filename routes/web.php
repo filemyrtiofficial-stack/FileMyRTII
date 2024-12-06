@@ -42,6 +42,10 @@ use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TeamMemberController;
 
+use App\Http\Controllers\Template\SectionController;
+use App\Http\Controllers\Template\MenuController;
+use App\Http\Controllers\Template\TemplateController;
+
 
 
 
@@ -66,8 +70,8 @@ Route::get("test-mailer", function(){
 });
 
 Route::get('/', [FrontendController::class, 'index'])->name('home-page');
-Route::post('/send-enquiry', [FrontendController::class, 'sendEnquiry'])->name('send-enquiry');
-Route::get('/service/{id}', [FrontendController::class, 'service'])->name('service-page');
+// Route::post('/send-enquiry', [FrontendController::class, 'sendEnquiry'])->name('send-enquiry');
+// Route::get('/service/{id}', [FrontendController::class, 'service'])->name('service-page');
 
 
 // Route::get('/about-us', [FrontendController::class, 'about'])->name('about');
@@ -90,34 +94,52 @@ Route::get('/service/{id}', [FrontendController::class, 'service'])->name('servi
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 	Route::group(['middleware' => 'auth'], function () {
 	Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-	Route::resource('hospitals', HospitalController::class);  
-	Route::resource('specialities', SpecializationController::class);    
-	Route::resource('doctors', DoctorController::class);    
-	Route::resource('disease', DiseaseController::class);    
-	Route::resource('disease-types', DiseaseTypeController::class);    
-	Route::resource('lab-tests', LabTestController::class);    
-	Route::resource('ambulances', AmbulanceController::class);    
+	// Route::resource('hospitals', HospitalController::class);  
+	// Route::resource('specialities', SpecializationController::class);    
+	// Route::resource('doctors', DoctorController::class);    
+	// Route::resource('disease', DiseaseController::class);    
+	// Route::resource('disease-types', DiseaseTypeController::class);    
+	// Route::resource('lab-tests', LabTestController::class);    
+	// Route::resource('ambulances', AmbulanceController::class);    
 	Route::resource('users', UserController::class);       
-	Route::resource('enquiries', EnquiryController::class);       
-	Route::resource('categoies', CategoryController::class);    
+	// Route::resource('enquiries', EnquiryController::class);       
+	// Route::resource('labs', LabController::class);       
+	Route::resource('categories', CategoryController::class);    
 	Route::resource('blogs', BlogController::class);       
-	Route::resource('labs', LabController::class);       
-	Route::resource('service-category', ServiceCategoryController::class);       
 	Route::resource('team-members', TeamMemberController::class);       
+	Route::post('/update-menu-node', [MenuController::class, 'updateMenuNode'])->name('menu.MenuNodeStore');
+	Route::resource('menu-setting', MenuController::class);       
+	Route::resource('service-category', ServiceCategoryController::class);       
+	Route::resource('services', ServiceController::class);    
+	
+	Route::post('/upload-images', [TemplateController::class, 'uploadImages'])->name('upload-images');
+	
 
+	Route::get('/update-page-section/{page_id}/{section_type}/{id?}', [TemplateController::class, 'getSectionPage'])->name('get-page-section');
 	
-	Route::resource('services', ServiceController::class);       
-	   
+	Route::post('/update-page-section/{page_id}', [TemplateController::class, 'updateSectionDetails'])->name('update-page-section');
+	
+	Route::resource('pages', TemplateController::class); 
+
+	Route::get('/template-section-fields/{section_id}', [SectionController::class, 'fieldIndex'])->name('template-section-fields.index');
+	Route::get('/template-section-fields/{section_id}/create', [SectionController::class, 'fieldCreate'])->name('template-section-fields.create');
+	Route::post('/template-section-fields/{section_id}', [SectionController::class, 'fieldStore'])->name('template-section-fields.store');
+	Route::get('/template-section-fields/{section_id}/{id}', [SectionController::class, 'fieldEdit'])->name('template-section-fields.edit');
+	Route::delete('/template-section-fields/{id}', [SectionController::class, 'fieldDelete'])->name('template-section-fields.destroy');
+	Route::put('/template-section-fields/{id}', [SectionController::class, 'fieldUpdate'])->name('template-section-fields.update');
+	Route::get('/get-section', [SectionController::class, 'getSectionHtml'])->name('get-sections');
+	
+	Route::resource('template-section', SectionController::class); 
 	
 	
-	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
-	Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');
-	Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-	Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-	Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static'); 
-	Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
-	Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
-	Route::get('/{page}', [PageController::class, 'index'])->name('page');
+	// Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
+	// Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');
+	// Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+	// Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+	// Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static'); 
+	// Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
+	// Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
+	// Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 });

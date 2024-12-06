@@ -6,9 +6,9 @@
     <div class="col-12">
 
         <div class="card mb-4">
-            <div class="card-header pb-0 list-header">
-                <h6>Blog Category</h6>
-                <a href="{{route('categoies.create')}}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add
+            <div class="card-header list-header">
+                <h4>Blog Category</h4>
+                <a href="{{route('categories.create')}}" class="btn btn-primary float-end">Add
                 Blog Category</a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -50,8 +50,8 @@
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
                                    
                                         <a class="text-sm font-weight-bold mb-0 ps-2"
-                                            href="{{route('categoies.edit', $item->id)}}">Edit</a>
-                                        <a href="{{route('categoies.destroy', $item->id)}}"
+                                            href="{{route('categories.edit', $item->id)}}">Edit</a>
+                                        <a href="{{route('categories.destroy', $item->id)}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn">Delete</a>
                                     </div>
                                 </td>

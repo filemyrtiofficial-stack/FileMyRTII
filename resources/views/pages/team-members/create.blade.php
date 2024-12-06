@@ -17,46 +17,58 @@
                     <input type="hidden" name="_method" value="PUT">
                     @endif
                  
-                    <div class="row">
-                        <div class="col-4">
-                            <label class="form-label">Name</label>
-                            <div class="input-group">
-                                <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control"
-                                    type="text" placeholder="Name">
+                    <div class="row mt-5">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <div class="input-group">
+                                    <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control"
+                                        type="text" placeholder="Name">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <label class="form-label">Expertise</label>
-                            <div class="input-group">
-                                <input id="expertise" name="expertise" value="{{$data->expertise ?? ''}}" class="form-control"
-                                    type="text" placeholder="Expertise">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Expertise</label>
+                                <div class="input-group">
+                                    <input id="expertise" name="expertise" value="{{$data->expertise ?? ''}}" class="form-control"
+                                        type="text" placeholder="Expertise">
+                                </div>
                             </div>
                         </div>
 
                         
                         
-                        <div class="col-4">
-                            <label class="form-label">Status</label>
-                            <div class="input-group">
-                                <select name="status" id="status" class="form-control">
-                                    @foreach(commonStatus() as $key => $item)
-                                    <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
-                                        selected @endif>
-                                        {{$item['name']}}</option>
-                                    @endforeach
-                                </select>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <div class="input-group">
+                                    <select name="status" id="status" class="form-control">
+                                        @foreach(commonStatus() as $key => $item)
+                                        <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
+                                            selected @endif>
+                                            {{$item['name']}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">About</label>
+                                <div class="input-group">
+                                    <textarea name="about" class="form-control" id="about" rows="12">{{$data['about'] ?? ''}}</textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <label class="form-label">About</label>
-                            <div class="input-group">
-                                <textarea name="about" class="form-control" id="about" rows="8">{{$data['about'] ?? ''}}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Profile Image</label>
-                            <div class="input-group">
-                                <input name="profile_image" type="file" class="form-control dropify" id="profile_image" @if(isset($data)) data-default-file="{{ asset($data->image) }}" @endif>
+                            <div class="form-group">
+                                <label class="form-label">Profile Image</label>
+                                <div class="input-group">
+                                    <input name="profile_image" type="file" class="form-control dropify" id="profile_image" @if(isset($data)) data-default-file="{{ asset($data->image) }}" @endif>
+                                </div>
                             </div>
                         </div>
                     </div>

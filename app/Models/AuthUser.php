@@ -40,7 +40,5 @@ class AuthUser extends Authenticatable implements JWTSubject
         'password'
     ];
     
-    public function profile() {
-        return $this->hasOne(FamilyMember::class, 'user_id', 'id')->where(['relation' => 'self']);
-    }
+   
 }

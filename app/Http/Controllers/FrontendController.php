@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Enquiry;
+use App\Models\PageData;
 class FrontendController extends Controller
 {
     public function index() {
-        return view('frontend.index');
+
+
+        $page_section = PageData::where(['page_id' => 7])->get();
+
+        return view('frontend.index', compact('page_section'));
     }
     public function about() {
         return view('frontend.about');

@@ -65,7 +65,11 @@
     font-size: 1.04167vw;
   }
 
-
+@media (max-width: 991px) {
+    .rti_tab_list .rti_tab_item {
+        font-size: 16px;
+    }
+} 
   @media (max-width: 767px) {
     .theme-btn,
     .theme-btn-link {
@@ -100,13 +104,12 @@
       .section_heading .fs-56 {
         font-size: 30px;
       }
-      .rti_tab_list .rti_tab_item {
-        font-size: 20px;
-      }
       .rti_item .fs-28 {
         font-size: 16px;
       }
-    
+      .rti_tab_list .rti_tab_item {
+        font-size: 18px;
+    }
     
       .process_flow .fs-36 {
         font-size: 20px;
@@ -118,6 +121,9 @@
       .blog_area .fs-28 {
         font-size: 20px;
       }
+      .blog_area .fs-20.blog_date {
+        font-size: 13px;
+      }
       .blog_area .fs-20 {
         font-size: 16px;
       }
@@ -126,7 +132,7 @@
         font-size: 16px;
       }
       .footer .fs-20 {
-        font-size: 14px;
+        font-size: 16px;
       }
       .form-field {
         font-size: 16px;

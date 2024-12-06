@@ -6,9 +6,9 @@
     <div class="col-12">
 
         <div class="card mb-4">
-            <div class="card-header pb-0 list-header">
-                <h6>Service Category</h6>
-                <a href="{{route('service-category.create')}}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add
+            <div class="card-header list-header">
+                <h4>Service Category</h4>
+                <a href="{{route('service-category.create')}}" class="btn btn-primary float-end">Add
                 Service Category</a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
