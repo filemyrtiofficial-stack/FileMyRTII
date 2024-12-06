@@ -581,7 +581,69 @@ function templateList() {
                     ]
                     
                 ]
+            ],
+            'how_it_works' => [
+                "section_name" => "How It Works",
+                'key' => 'how_it_works',
+                "fields" => [
+                    [
+                        "type" => 'input',
+                        "lable" => 'Title',
+                        'name' => "title",
+
+                    ],
+                    [
+                        "type" => 'link',
+                        'lable' => "Redirection Link",
+                        'fields' => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Title',
+                                'name' => "link_title",
+        
+                            ],
+                            [
+                                "type" => 'input',
+                                "lable" => 'Url',
+                                'name' => "link_url",
+        
+                            ],
+                        ]
+                    ],
+                    [
+                        "type" => 'section',
+                        'lable' => "",
+                        'name' => "",
+                        'repeat' => 3,
+                        'key' => 'journey_list',
+                        "fields" => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Title',
+                                'name' => "section_title",
+
+                            ],
+                            [
+                                "type" => 'textarea',
+                                "lable" => 'Description',
+                                'name' => "section_description",
+
+                            ],
+                            [
+                                "type" => 'image',
+                                "lable" => 'Image',
+                                'name' => "section_image",
+
+                            ],
+                        ]
+
+                        
+                    ],
+                    
+                    
+                ]
             ]
+
       
     ];
 }
