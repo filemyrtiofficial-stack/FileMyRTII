@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                         <label class="form-label">Title</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" value="{{$data['home_banner_title'] ?? ''}}" name="home_banner_title" id="home_banner_title">
+                                            <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" id="title">
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label">CTA Buttom</label>
+                                    <label class="form-label">CTA Button</label>
                                     <div class="input-group">
                                     <div class="row">
                                         <div class="col-6">

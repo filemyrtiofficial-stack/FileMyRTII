@@ -1,10 +1,9 @@
-
 <section class="process_section ">
     <div class="container">
         <div class="row process_head_row">
             <div class="col-12 col-sm-9">
                 <div class="section_heading">
-                    <h3 class="fs-56 fw-700">{!! $data['how_it_work_title'] ?? '' !!}</h3>
+                    <h3 class="fs-56 fw-700">{!! $data['title'] ?? '' !!}</h3>
                 </div>
             </div>
             <div class="col-12 col-sm-3 know-more">
@@ -12,19 +11,37 @@
             </div>
         </div>
         <div class="row process_row">
-            @for($index = 0; $index < $data['step_list_row_count'] ?? 1; $index++)
-            <div class="col-12 col-sm-4">
-                <div class="process_flow">
-                    <div class="process_icon">
-                        <img class="img-fluid" src="{{asset($data['step_image_'.$index] ?? '')}}" alt="{{$data['step_image_alt_'.$index] ?? ''}}">
-                    </div>
-                    <div class="process_title fs-36 fw-700">{{$data['step_title_'.$index] ?? ''}}</div>
-                    <div class="fs-24">
-                        <p>{{$data['step_description_'.$index] ?? ''}}</p>
-                    </div>
-                </div>
-            </div>
-            @endfor
+            <?php
+                $list = App\Models\Section::list(false, ['ids' => json_decode($data['how_it_work_list'], true), 'status' => true]);
+            ?>
+            @if(!empty($list))
+                @for($index = 0; $index <  $data['how_it_work_count'] ?? 0; $index++)
+                    @if(isset($data['how_it_work_'.$index]))
+                    <?php
+                            $item = collect($list)->where('id', $data['how_it_work_'.$index])->values();
+                                $details = [];
+                                if(!empty($item) && isset($item[0])) {
+                                    $details = json_decode($item[0]['data'], true);
+                                }
+                        ?>
+                        @if(!empty($item) && isset($item[0]))
+                        <div class="col-12 col-sm-4">
+                            <div class="process_flow">
+                                <div class="process_icon">
+                                    <img class="img-fluid" src="{{asset($details['image'] ?? '')}}" alt="{{$details['image_alt'] ?? ''}}">
+                                </div>
+                                <div class="process_title fs-36 fw-700">{{$details['title'] ?? ''}}</div>
+                                <div class="fs-24">
+                                    <p>{{$details['description'] ?? ''}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endif
+
+                @endfor
+            @endif
+            
           
         </div>
     </div>

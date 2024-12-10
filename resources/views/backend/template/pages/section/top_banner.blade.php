@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                         <label class="form-label">Title</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" value="{{$data['top_banner_title'] ?? ''}}" name="top_banner_title" id="top_banner_title">
+                                            <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" id="title">
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-label">Mobile Banner @if(isset($data)) <a target="blank" href="{{ asset($data['top_banner_mobile_image'] ) }}"><img width="20" src="{{ asset($data['top_banner_mobile_image'] ) }}" alt=""></a> @endif</label>
+                                                <label class="form-label">Mobile Banner @if(isset($data) && isset($data['top_banner_mobile_image'])) <a target="blank" href="{{ asset($data['top_banner_mobile_image'] ) }}"><img width="50" src="{{ asset($data['top_banner_mobile_image'] ) }}" alt=""></a> @endif</label>
                                                 <div class="input-group">
                                                     <input type="file" class=" upload-image dropify" id="top_banner_mobile_image" @if(isset($data)) data-default-file="{{ asset($data['top_banner_mobile_image'] ?? '') }}" @endif>
                                                     <div class="image-collection mt-3" >
@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-label">Desktop Banner @if(isset($data)) <a target="blank" href="{{ asset($data['top_banner_desktop_image'] ) }}"><img width="20" src="{{ asset($data['top_banner_desktop_image'] ) }}" alt=""></a> @endif</label>
+                                                <label class="form-label">Desktop Banner @if(isset($data) && isset($data['top_banner_desktop_image'])) <a target="blank" href="{{ asset($data['top_banner_desktop_image'] ) }}"><img width="50" src="{{ asset($data['top_banner_desktop_image'] ) }}" alt=""></a> @endif</label>
                                                 <div class="input-group">
                                                     <input type="file" class=" upload-image dropify" id="top_banner_desktop_image_input" @if(isset($data)) data-default-file="{{ asset($data['top_banner_desktop_image'] ?? '') }}" @endif>
                                                     <div class="image-collection mt-3" >

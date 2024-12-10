@@ -27,7 +27,7 @@
                            
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label">CTA Buttom</label>
+                                    <label class="form-label">CTA Button</label>
                                     <div class="input-group">
                                     <div class="row">
                                         <div class="col-6">

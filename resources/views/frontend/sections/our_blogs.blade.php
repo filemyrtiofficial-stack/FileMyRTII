@@ -7,14 +7,15 @@
         <div class="row">
             @if(is_array($data['our_blogs_blog_list']))
             <?php
-                $blog_list = App\Models\Blog::list(false, ['ids' => $data['our_blogs_blog_list']]);
+                $blog_list = App\Models\Blog::list(false, ['ids' => $data['our_blogs_blog_list'], 'status' => 2]);
             ?>
             @else
             <?php
-                $blog_list = App\Models\Blog::list(false, ['ids' => [$data['our_blogs_blog_list']]]);
+                $blog_list = App\Models\Blog::list(false, ['ids' => [$data['our_blogs_blog_list']] , 'status' => 2]);
             ?>
             @endif
             @foreach($blog_list as $value)
+            
                 <div class="col-12 col-sm-4">
                     <div class="blog_item_wrapper">
                         <div class="blog_item">

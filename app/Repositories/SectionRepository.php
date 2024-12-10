@@ -4,18 +4,19 @@ use App\Interfaces\SectionInterface;
 use Carbon\Carbon;
 use App\Models\Section;
 use App\Models\SlugMaster;
+use App\Models\TemplateSectionField;
 use Session;
 use Exception;
 class SectionRepository implements SectionInterface {
 
     public function store($request) {
-        $service = Section::create(['title' => $request['title'], 'description' => $request->description, 'type' => $request->section_type, 'data' => json_encode($request->all())]);
+        $service = Section::create(['title' => $request['title'], 'description' => $request->description, 'type' => $request->section_type, 'status' => $request->status, 'data' => json_encode($request->all())]);
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added", 'redirect' => route('template-section.index')]);
     }
     
     public function update($request, $id) {
-        $service = Section::where('id', $id)->update(['title' => $request['title'], 'description' => $request->description,'data' => json_encode($request->all())]);
+        $service = Section::where('id', $id)->update(['title' => $request['title'], 'description' => $request->description,'data' => json_encode($request->all()), 'status' => $request->status]);
         Session::flash("success", "Data successfully updated");
         return response(['message' => "Data successfully updated"]);
     }
@@ -42,7 +43,8 @@ class SectionRepository implements SectionInterface {
             'template_section_id' => $section_id,
             'field_lable' => $request['name'],
             'field_key' => $request['field_type'],
-            'machine_key' => $request['slug']
+            'machine_key' => $request['slug'],
+            'status' => $request['status']
         ]);
         SlugMaster::create(['slug' => $request['slug'], 'linkable_id' => $service->id, 'linkable_type' => "template_section_fields"]);
         Session::flash("success", "Data successfully added");

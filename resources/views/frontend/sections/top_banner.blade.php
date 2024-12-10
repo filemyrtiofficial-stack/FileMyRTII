@@ -5,9 +5,14 @@
         <div class="container">
             <div class="cta_text">
                 <div class="section_heading">
-                    <h4 class="fs-56 fw-700">{{$data['top_banner_title'] ?? ''}}</h4>
+                    <h4 class="fs-56 fw-700">{{$data['title'] ?? ''}}</h4>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+@if($key == 0 && $slug == 'blogs')
+@include('frontend.sections.blog_listing')
+
+@endif

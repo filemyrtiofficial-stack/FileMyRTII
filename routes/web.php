@@ -151,6 +151,10 @@ Route::get("test-mail", function(){
 
 	});
 
+Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
+
+
+
 
 

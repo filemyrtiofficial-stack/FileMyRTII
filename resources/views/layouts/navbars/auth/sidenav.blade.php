@@ -100,12 +100,12 @@
               <span class="menu-title">Pages</span>
             </a>
           </li>
-          <!-- <li class="nav-item pl-3">
+          <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('template-section.index') }}">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Sections</span>
             </a>
-          </li> -->
+          </li>
            <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('settings.index') }}">
               <i class="icon-head menu-icon"></i>

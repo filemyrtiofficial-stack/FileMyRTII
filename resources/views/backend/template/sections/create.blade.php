@@ -20,7 +20,7 @@
                     <input hidden name="section_type" value="{{$_GET['type'] ?? ''}}">
                     @endif
                     <div class="row mt-5">
-                        <div class="col-12">
+                        <div class="col-8">
                             <div class="form-group"> 
                                 <label class="form-label">Title</label>
                                 <div class="input-group">
@@ -29,6 +29,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <div class="input-group">
+                                        <select name="status" id="status" class="form-control">
+                                            @foreach(commonStatus() as $key => $item)
+                                            <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
+                                                selected @endif>
+                                                {{$item['name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="col-12">
                             <div class="form-group"> 
                                 <label class="form-label">Description</label>
@@ -39,7 +53,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group"> 
-                                <label class="form-label">Image</label>
+                                <label class="form-label">Image @if(isset($details)) <a target="blank" href="{{ asset($details['image'] ?? '' ) }}"><img width="50" src="{{ asset($details['image'] ?? '' ) }}" alt=""></a> @endif</label>
                                 <div class="input-group">
                                     <input type="file" class=" upload-image dropify" id="images" @if(isset($data)) data-default-file="{{asset($details['image'] ?? '')}}" @endif>
                                     <div class="image-collection mt-3" >
@@ -49,10 +63,53 @@
                                 </div>
                             </div>
                         </div>
+                        <?php
+                        $fields = [];
+                        if(isset($_GET['type'])) {
+                            $fields = sectionTypeList()[$_GET['type']]['fields'];
+                        }
+                        else {
+                            $fields = sectionTypeList()[$data['type']]['fields'];
+
+                        }
+                        ?>
+                        @if(isset($fields))
+                        
+                            @foreach($fields as $key =>  $fields)
+                                @if($fields['type'] == 'link')
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label">CTA Button</label>
+                                        <div class="input-group">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Title</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" value="{{$details['link_title'] ?? ''}}" name="link_title" data-lable="link_title" id="link_title">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Url</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" value="{{$details['link_url'] ?? ''}}" name="link_url" data-lable="link_url" id="link_url">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+                        
+                        @endif
                     </div>
                     <div class="mt-5 text-right">
                         <button class="btn btn-primary">Submit</button>
                     </div>
+</div>
                 </form>
             </div>
         </div>

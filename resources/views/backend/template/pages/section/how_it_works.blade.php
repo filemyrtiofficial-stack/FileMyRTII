@@ -20,13 +20,13 @@
                                 <div class="form-group">
                                         <label class="form-label">Title</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" value="{{$data['how_it_work_title'] ?? ''}}" name="how_it_work_title" id="how_it_work_title">
+                                            <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" id="title">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label">CTA Buttom</label>
+                                    <label class="form-label">CTA Button</label>
                                     <div class="input-group">
                                     <div class="row">
                                         <div class="col-6">
@@ -50,55 +50,49 @@
                             </div>
 
                           
-                            <hr>
-                            <h5>Steps</h5>
-                            <div class="step_list row mb-3" id="sortable_product">
-                            @if(isset($data['step_list_row_count'] ))
-                                @for($index = 0; $index < $data['step_list_row_count'] ?? 1; $index++)
-                                    <div class="col-lg-6 draggable mb-3"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
-                                        <div class=" mt-lg-0 card">
-                                            <div class="card-body">
+                            <div class="col-12">
+                                    <hr>
+                                    <div class="form-group">
+                                        <label class="form-label"><strong>Services</strong></label> (<span class="text-danger">Note : You can add only 3 list</span>)
+                                        <div class="how_it_work_list" id="sortable_product">
+                                            @if(isset($data['how_it_work_count']))
+                                                @for($index = 0; $index < $data['how_it_work_count']; $index++)
+                                                    <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
+                                                        <div class="col-lg-9 mt-lg-0">
+                                                            <div class="card-body">
+                                                                <select name="how_it_work_{{$index}}" id="how_it_work_{{$index}}" class="form-control how_it_work" data-index="{{$index}}">
+                                                                    <option value="">Select Service</option>    
+                                                                {!! sectionTemplateOptions('how_it_works', $data['how_it_work_'.$index]) !!}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                                    </div>
+                                                @endfor
+                                            @else
 
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                            <label class="form-label">Title</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control step_title" value="{{$data['step_title_'.$index] ?? ''}}" name="step_title_{{$index}}" id="step_title">
+                                                <div class="d-flex draggable"  id="row0"  draggable="true" productID="0">
+                                                    <div class="col-lg-9 mt-lg-0">
+                                                        <div class="card-body">
+                                                            <select name="how_it_work_0" id="how_it_work_0" class="form-control how_it_work" data-index="0">
+                                                                <option value="">Select</option>    
+                                                            {!!  sectionTemplateOptions('how_it_works')!!}
+                                                            </select>
                                                         </div>
                                                     </div>
+                                                    <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
                                                 </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                            <label class="form-label">Description</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control step_description" value="{{$data['step_description_'.$index] ?? ''}}"  name="step_description_{{$index}}" id="step_description">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label class="form-label">Image</label>
-                                                        <div class="input-group">
-                                                            <input type="file" class=" upload-image dropify" id="upload-image_{{$index}}" >
-                                                                <input hidden type="text"  class="form-control image-input step_image image-input" value="{{$data['step_image_'.$index] ?? ''}}" name="step_image_{{$index}}" id="step_image_{{$index}}">
-                                                                <input placeholder="Alternative text" type="text"  id="step_image_alt_{{$index}}" value="{{$data['step_image_alt_'.$index] ?? ''}}" name="step_image_alt_{{$index}}" class="form-control w-100 step_image_alt">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button class="btn btn-sm btn-danger mt-4 step_list_remove">Remove</button>
-
-                                            </div>
+                                            @endif
                                         </div>
-                                    
+                                        <button class="btn btn-sm btn-secondary service_tabs_add_more" data-tag="how_it_work" type="button">Add More</button>
+                                        <input type="hidden" id="how_it_work_count" name="how_it_work_count" value="{{$data['how_it_work_count'] ?? '1'}}">
+                                        <input type="hidden" id="how_it_work_list" name="how_it_work_list"  value="{{$data['how_it_work_list'] ?? ''}}">
+                                        
                                     </div>
-                                @endfor
-                            @endif
-                               
-                            </div>
-                            <input type="hidden" name="step_list_row_count" id="step_list_row_count" value="{{$data['step_list_row_count'] ?? 1}}">
-
-                            <button type="button" class="btn btn-primary btn-sm add-module-section"  data-key="0">Add More</button>
-
+                                    
+                                </div>
+                            <hr>
+                            
 
 
 
@@ -117,72 +111,65 @@
 @endsection
 @push('js')
 <script>
-    $(document).on('click', '.add-module-section', function(e){
+    $(document).on('click', '.service_tabs_add_more', function(e){
         e.preventDefault();
-    
-     renderHtml();
+        if($('.draggable').length < 3) {
 
+            $('.how_it_work_list').append(`<div class="d-flex draggable" >
+                                                      <div class="col-lg-9 mt-lg-0 ">
+                                                          <div class="card-body">
+                                                              <select name="how_it_work_0" id="how_it_work_0" class="form-control how_it_work">
+                                                                  <option value="">Select Service</option> 
+                                                                  <?php echo sectionTemplateOptions('how_it_works');?>
+                                                              </select>
+                                                          </div>
+                                                      </div>
+                                                       <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                                  </div>`);
+        }
+      
+                                            updateServiceSequance();
     });
-    if('<?=$id?>'== '') {
-
-renderHtml()
-}
-
-    
-    function renderHtml(){
-        $('.step_list').append(`<div class="col-lg-6 draggable mb-3"  id="row0"  draggable="true" productID="0">
-                                    <div class=" mt-lg-0 card">
-                                        <div class="card-body">
-
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                        <label class="form-label">Title</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control step_title" name="step_title_0" id="step_title">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                        <label class="form-label">Description</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control step_description"  name="step_description_0" id="step_description">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label class="form-label">Image</label>
-                                                    <div class="input-group">
-                                                        <input type="file" class=" upload-image dropify" >
-                                                            <input hidden type="text"  class="form-control image-input step_image" name="step_image_0" id="step_image_0">
-                                                            <input placeholder="Alternative text" type="text"  id="step_image_alt_0" name="step_image_alt_0" class="form-control w-100 step_image_alt">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-sm btn-danger mt-4 step_list_remove">Remove</button>
-
-                                        </div>
-                                    </div>
-                                 
-                                </div>`);
-     $('.dropify').dropify();
-     restructureList();
-
-    }
-    function restructureList() {
+    function updateServiceSequance(){
+        let tag = 'how_it_work';
+      
         $('.draggable').each(function(index, value){
             $(this).attr('id', 'row'+index).attr('productID', index);
-            $(this).find('.upload-image').attr('id', 'upload-image'+index);
-            $(this).find('.step_title').attr('name', 'step_title_'+index).attr('id', 'step_title_'+index);
-            $(this).find('.step_description').attr('name', 'step_description_'+index).attr('id', 'step_description_'+index);
-            $(this).find('.step_image').attr('name', 'step_image_'+index).attr('id', 'step_image_'+index);
-            $(this).find('.step_image_alt').attr('name', 'step_image_alt_'+index).attr('id', 'step_image_alt_'+index);
-
-
-
+            $(this).find('.'+tag).attr('name', tag+"_"+index).attr('id', tag+"_"+index).attr('data-index', index);
+            
         });
-        $('#step_list_row_count').val($('.step_title').length);
+        $('#how_it_work_count').val($('.'+tag).length);
+        var values = [];
+        $('.how_it_work').each(function(index, value){
+            values.push($(this).val());
+        }) 
+        $('#how_it_work_list').val(JSON.stringify(values));
     }
+    $(document).on('click', '.service_tabs_remove', function(e){
+        $(this).parents().eq(1).remove();
+        updateServiceSequance();
+    });
+    $(document).on('change', '.how_it_work', function(e){
+       
+        var services = $('#how_it_work_list').val();
+        if(services != '') {
+            services = JSON.parse(services);
+        }
+        else {
+            services = [];
+        }
+
+        if($(this).val() != '') {
+            
+            if(services.indexOf($(this).val()) != -1) {
+                $(this).val('').change();
+                return false;
+            }
+           
+        }
+        updateServiceSequance();
+       
+
+    })
     </script>
 @endpush

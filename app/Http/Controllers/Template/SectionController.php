@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Template;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
+use App\Models\TemplateSectionField;
 use App\Repositories\SectionRepository;
 use App\Interfaces\SectionInterface;
 use Validator;
@@ -96,15 +97,15 @@ class SectionController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:template_sections,section,".$id,
-            'slug' => "required",
+            'title' => "required|unique:sections,title,".$id,
             'description' => "required",
+
 
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
-        $template = TemplateSection::get($id);
+        $template = Section::get($id);
         if($template && $template->slug && checkSlug($request->slug, $template->slugMaster->id)) {
             return response(['errors' => ['slug' => "This slug is already exist"]], 422);
 

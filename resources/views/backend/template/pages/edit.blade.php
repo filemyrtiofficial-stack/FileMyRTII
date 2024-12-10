@@ -125,12 +125,14 @@
                           @foreach($data->getData ?? [] as $key => $item)
                             <?php
                             $item_data = templateList()[$item->section_key] ?? [];
+                            $details = json_decode($item->data, true);
                             ?>
                             <div class="card draggable"  id="row{{  $item->id }}"  draggable="true" productID="{{ $item->id}}">
                               <div class="card-header" id="headingOne" style="background: #e3e3e3;;">
                                 <h2 class="mb-0">
-                                      <strong>{{$item_data['section_name'] ?? ''}}</strong>
+                                      <strong>{{$item_data['section_name'] ?? ''}} </strong>
                                 </h2>
+                                  <h4>({!! $details['title'] ?? '' !!})</h4>
                                 <div class="accordian-actions">
                                   <a href="{{route('get-page-section',[$data->id, $item->section_key, $item->id])}}" class="btn btn-sm btn-secondary">Edit</a>
                                   <button href="{{route('delete-page-section',[$item->id])}}" class="btn btn-sm btn-danger ml-3 delete-btn">Delete</button>
@@ -230,7 +232,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="sectionSelectionModalCenter" tabindex="-1" role="dialog" aria-labelledby="sectionSelectionModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Section List</h5>
@@ -241,12 +243,18 @@
       <div class="modal-body">
         <div class="row">
           @foreach(templateList() as $key => $section)
-          <div class="col-md-4"  >
+          <div class="col-md-3 mb-3"  >
 
             <div class="card add-section1" data-key="{{$key}}" data-name="{{$section['section_name']}}">
+              <div class="card-header p-0">
+              <img src="{{asset('assets/section/'.$key.'.PNG')}}" class="w-100">
+
+              </div>
               <div class="card-body">
-                <img src="{{asset('assets/ref'.$key.'.png')}}" alt="" width="100">
-              <a href="{{route('get-page-section', [$data->id, $key])}}">{{$section['section_name']}}</a>
+                
+              <a href="{{route('get-page-section', [$data->id, $key])}}">
+              {{$section['section_name']}}
+            </a>
 
               </div>
             </div>

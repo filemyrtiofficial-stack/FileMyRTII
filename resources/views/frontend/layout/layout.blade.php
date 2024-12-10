@@ -7,6 +7,8 @@
     <title>
         @yield('title')
     </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="{{asset('assets/rti/css/custom-style.css')}}">
 </head>
 
@@ -25,6 +27,7 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="{{asset('assets/rti/js/slick.min.js')}}"></script>
     <script src="{{asset('assets/rti/js/custom-script.js')}}"></script>
+    @stack('js')
 </body>
 
 </html>

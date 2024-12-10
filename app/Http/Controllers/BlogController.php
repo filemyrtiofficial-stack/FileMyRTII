@@ -141,4 +141,7 @@ class BlogController extends Controller
             return response(['error' => $ex->getMessage()], 500);
         }
     }
+
+
+   
 }

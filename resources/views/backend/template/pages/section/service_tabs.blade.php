@@ -20,48 +20,60 @@
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="service_tabs_title" value="{{$data['service_tabs_title'] ?? ''}}">
+                                        <input type="text" class="form-control" name="title" value="{{$data['title'] ?? ''}}">
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <hr>
-                                    <div class="form-group">
-                                        <label class="form-label"><strong>Services</strong></label>
-                                        <div class="service_tabs_service_list" id="sortable_product">
-                                            @if(isset($data['service_tabs_service_count']))
-                                                @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
-                                                    <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
-                                                        <div class="col-lg-9 mt-lg-0">
-                                                            <div class="card-body">
-                                                                <select name="service_tabs_service_{{$index}}" id="service_tabs_service_{{$index}}" class="form-control service_tabs_service" data-index="{{$index}}">
-                                                                    <option value="">Select Service</option>    
-                                                                {!! serviceCategoryOptions($data['service_tabs_service_'.$index]) !!}
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
-                                                    </div>
-                                                @endfor
-                                            @else
-
-                                                <div class="d-flex draggable"  id="row0"  draggable="true" productID="0">
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Description Enable in Design</label>
+                                    <div class="input-group">
+                                        <select type="text" class="form-control" name="description_enable">
+                                            @foreach(yesNoOption() as $value)
+                                                <option value="{{$value['id'] ?? ''}}" @if(isset($data) && isset($data['description_enable']) && $data['description_enable'] == $value['id']) selected  @endif>{{$value['name'] ?? ''}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr>
+                                <div class="form-group">
+                                    <label class="form-label"><strong>Services</strong></label>
+                                    <div class="service_tabs_service_list" id="sortable_product">
+                                        @if(isset($data['service_tabs_service_count']))
+                                            @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
+                                                <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
                                                     <div class="col-lg-9 mt-lg-0">
                                                         <div class="card-body">
-                                                            <select name="service_tabs_service_0" id="service_tabs_service_0" class="form-control service_tabs_service" data-index="0">
+                                                            <select name="service_tabs_service_{{$index}}" id="service_tabs_service_{{$index}}" class="form-control service_tabs_service" data-index="{{$index}}">
                                                                 <option value="">Select Service</option>    
-                                                            {!! serviceCategoryOptions() !!}
+                                                            {!! serviceCategoryOptions($data['service_tabs_service_'.$index]) !!}
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
                                                 </div>
-                                            @endif
-                                        </div>
-                                        <button class="btn btn-sm btn-secondary service_tabs_add_more" data-tag="service_tabs_service" type="button">Add More</button>
-                                        <input type="hidden" id="service_tabs_service_count" name="service_tabs_service_count" value="{{$data['service_tabs_service_count'] ?? '1'}}">
-                                        <input type="hidden" id="service_tabs_service_list" name="service_tabs_service_list"  value="{{$data['service_tabs_service_list'] ?? ''}}">
+                                            @endfor
+                                        @else
 
+                                            <div class="d-flex draggable"  id="row0"  draggable="true" productID="0">
+                                                <div class="col-lg-9 mt-lg-0">
+                                                    <div class="card-body">
+                                                        <select name="service_tabs_service_0" id="service_tabs_service_0" class="form-control service_tabs_service" data-index="0">
+                                                            <option value="">Select Service</option>    
+                                                        {!! serviceCategoryOptions() !!}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                            </div>
+                                        @endif
                                     </div>
+                                    <button class="btn btn-sm btn-secondary service_tabs_add_more" data-tag="service_tabs_service" type="button">Add More</button>
+                                    <input type="hidden" id="service_tabs_service_count" name="service_tabs_service_count" value="{{$data['service_tabs_service_count'] ?? '1'}}">
+                                    <input type="hidden" id="service_tabs_service_list" name="service_tabs_service_list"  value="{{$data['service_tabs_service_list'] ?? ''}}">
+
                                 </div>
                             </div>
                         </div>
@@ -80,17 +92,20 @@
 <script>
     $(document).on('click', '.service_tabs_add_more', function(e){
         e.preventDefault();
-      $('.service_tabs_service_list').append(`<div class="d-flex draggable" >
-                                                <div class="col-lg-9 mt-lg-0 ">
-                                                    <div class="card-body">
-                                                        <select name="service_tabs_service_0" id="service_tabs_service_0" class="form-control service_tabs_service">
-                                                            <option value="">Select Service</option> 
-                                                            <?php echo serviceCategoryOptions();?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                 <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
-                                            </div>`);
+        if($('.draggable').length < 3) {
+
+            $('.service_tabs_service_list').append(`<div class="d-flex draggable" >
+                                                        <div class="col-lg-9 mt-lg-0 ">
+                                                            <div class="card-body">
+                                                                <select name="service_tabs_service_0" id="service_tabs_service_0" class="form-control service_tabs_service">
+                                                                    <option value="">Select Service</option> 
+                                                                    <?php echo serviceCategoryOptions();?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                                    </div>`);
+        }
       
                                             updateServiceSequance();
     });

@@ -552,42 +552,42 @@ function templateList() {
                     ]
                 ]
             ],
-            'banner' => [
-                "section_name" => "Banner",
-                'key' => 'banner',
-                "fields" => [
-                    [
-                        "type" => 'input',
-                        "lable" => 'Title',
-                        'name' => "banner_title",
+            // 'banner' => [
+            //     "section_name" => "Banner",
+            //     'key' => 'banner',
+            //     "fields" => [
+            //         [
+            //             "type" => 'input',
+            //             "lable" => 'Title',
+            //             'name' => "banner_title",
 
-                    ],
-                    [
-                        "type" => 'image',
-                        "lable" => 'Mobile Banner',
-                        'name' => "banner_image",
+            //         ],
+            //         [
+            //             "type" => 'image',
+            //             "lable" => 'Mobile Banner',
+            //             'name' => "banner_image",
 
-                    ],
-                    [
-                        "type" => 'link',
-                        'lable' => "Redirection Link",
-                        'fields' => [
-                            [
-                                "type" => 'input',
-                                "lable" => 'Title',
-                                'name' => "link_title",
+            //         ],
+            //         [
+            //             "type" => 'link',
+            //             'lable' => "Redirection Link",
+            //             'fields' => [
+            //                 [
+            //                     "type" => 'input',
+            //                     "lable" => 'Title',
+            //                     'name' => "link_title",
         
-                            ],
-                            [
-                                "type" => 'input',
-                                "lable" => 'Url',
-                                'name' => "link_url",
+            //                 ],
+            //                 [
+            //                     "type" => 'input',
+            //                     "lable" => 'Url',
+            //                     'name' => "link_url",
         
-                            ],
-                        ]
-                    ]
-                ]
-            ],
+            //                 ],
+            //             ]
+            //         ]
+            //     ]
+            // ],
             'our_blogs' => [
                 "section_name" => "Our Blogs",
                 'key' => 'our_blogs',
@@ -733,6 +733,32 @@ function templateList() {
                 'key' => 'top_banner'
                
             ],
+
+            'footer_banner' => [
+                "section_name" => "Footer Banner",
+                'key' => 'footer_banner'
+               
+            ],
+            'left_image_right_text' => [
+                "section_name" => "Left Image Right Text",
+                'key' => 'left_image_right_text'
+               
+            ],
+            'right_image_left_text' => [
+                "section_name" => "Right Image Left Text",
+                'key' => 'right_image_left_text'
+               
+            ],
+            'right_image_left_accordian' => [
+                "section_name" => "Right Image Left Accordian",
+                'key' => 'right_image_left_accordian'
+               
+            ],
+            'our_team' => [
+                "section_name" => "Our Team",
+                'key' => 'our_team'
+               
+            ],
                 
 
       
@@ -764,6 +790,19 @@ function serviceCategoryOptions($selected = null)  {
     return $list;
 }
 
+function sectionTemplateOptions($type, $selected = null)  {
+    $list = "";
+    foreach(App\Models\Section::list(false, ['type' => $type]) as $item) {
+        $is_selected = "";
+        if($selected == $item->id) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->title.'</option>';
+    }
+    return $list;
+}
+
+
 
 function sectionTypeList() {
     return [
@@ -789,6 +828,40 @@ function sectionTypeList() {
                     'required' => true
                 ],
             ]
+        ],
+            'footer_banner' => [
+            'title' => 'footer Banner',
+            'fields' => [
+                [
+                    "type" => 'link',
+                    'lable' => "File My RTI Now"
+                    
+                ],
+            ]
         ]
-            ];
+    ];
+}
+
+function teamOptions($selected = null)  {
+    $list = "";
+    foreach(App\Models\TeamMember::list(false) as $item) {
+        $is_selected = "";
+        if($selected == $item->id) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->name.'</option>';
+    }
+    return $list;
+}
+
+function blogOptions($selected = null)  {
+    $list = "";
+    foreach(App\Models\Blog::list(false) as $item) {
+        $is_selected = "";
+        if($selected == $item->id) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->title.'</option>';
+    }
+    return $list;
 }

@@ -8,7 +8,7 @@ use App\Models\Enquiry;
 use App\Models\PageData;
 use App\Models\Page;
 use App\Models\SlugMaster;
-
+use App\Models\Blog;
 class FrontendController extends Controller
 {
     public function index($slug = null) {
@@ -22,7 +22,8 @@ class FrontendController extends Controller
         if($page) {
 
             $page_section = $page->pageData;
-            return view('frontend.index', compact('page_section'));
+            $seo = $page->seo;
+            return view('frontend.index', compact('page_section', 'slug', 'seo'));
         }
         abort(404);
     }
@@ -52,5 +53,12 @@ class FrontendController extends Controller
 
         return response(['message' =>  'Thank you for connecting with us']);
     }
+    public function blogListingAPI(Request $request) {
+        // $request->merge(['status' =>  2]);
+        $blogs = Blog::list(true, $request->all());
+        $html = view('frontend.template.blog_listing', compact('blogs'))->render();
+        return response(['data' => $blogs, 'html' => $html]);
+    }
+
 }
 
