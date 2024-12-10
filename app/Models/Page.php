@@ -36,6 +36,10 @@ class Page extends Model
     }
 
     public function getData() {
-        return $this->hasMany(PageData::class, 'page_id', 'id');
+        return $this->hasMany(PageData::class, 'page_id', 'id')->orderBy('sequance');
+    }
+    
+    public function pageData() {
+        return $this->hasMany(PageData::class, 'page_id', 'id')->orderBy('sequance');
     }
 }

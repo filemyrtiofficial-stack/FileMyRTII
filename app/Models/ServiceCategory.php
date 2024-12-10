@@ -11,9 +11,14 @@ class ServiceCategory extends Model
     protected $fillable = ['name', 'icon', 'status'];
     
     public static function list($pagination, $filters = null) {
-        $list = ServiceCategory::orderBy('id', 'desc');
+        $filter_data = $filters;
+        unset($filters['ids']);
+        $list = ServiceCategory::with('services')->orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);
+        }
+        if(isset($filter_data['ids'])) {
+            $list->wherein('id', $filter_data['ids']);
         }
         if($pagination) {
             return $list->paginate(10);
@@ -25,6 +30,10 @@ class ServiceCategory extends Model
     }
     public static function get($id) {
         return ServiceCategory::find($id);
+    }
+
+    public function services() {
+        return $this->hasMany(Service::class, 'category_id', 'id');
     }
    
   

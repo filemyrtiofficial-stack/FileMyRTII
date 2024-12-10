@@ -109,22 +109,7 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-12">
-                                <div class="form-group">
-                                  
-                                    <label class="form-label">Section Type</label>
-                                    <div class="input-group">
-                                      <ul>
-                                          @foreach(templateList() as $key => $section)
-                                                <li>
-                                                  <a class="add-section" data-key="{{$key}}">{{$section['section_name']}}</a>
-                                                </li>
-                                          @endforeach
-                                      </ul>
-                                      
-                                    </div>
-                                </div>
-                            </div> -->
+                            
                             
                         </div>
                   </div>
@@ -136,26 +121,20 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class=" mt-5">
-                        <div class="accordion" id="accordionExample">
-                          @foreach($data->getData ?? [] as $item)
+                        <div class="accordion" id="sortable_product">
+                          @foreach($data->getData ?? [] as $key => $item)
                             <?php
                             $item_data = templateList()[$item->section_key] ?? [];
                             ?>
-                            <div class="card">
+                            <div class="card draggable"  id="row{{  $item->id }}"  draggable="true" productID="{{ $item->id}}">
                               <div class="card-header" id="headingOne" style="background: #e3e3e3;;">
                                 <h2 class="mb-0">
-                                  <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                  
-                                  {{$item_data['section_name'] ?? ''}}
-                                </button>
-                                <a href="{{route('get-page-section',[$data->id, $item->section_key, $item->id])}}">Edit</a>
+                                      <strong>{{$item_data['section_name'] ?? ''}}</strong>
                                 </h2>
-                              </div>
+                                <div class="accordian-actions">
+                                  <a href="{{route('get-page-section',[$data->id, $item->section_key, $item->id])}}" class="btn btn-sm btn-secondary">Edit</a>
+                                  <button href="{{route('delete-page-section',[$item->id])}}" class="btn btn-sm btn-danger ml-3 delete-btn">Delete</button>
 
-                              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                <div class="card-body">
-
-                                  Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
                                 </div>
                               </div>
                             </div>
@@ -239,26 +218,10 @@
          
       </div>
     </div>
+    <input type="text" id="update_array" name="update_array" hidden>
     <!-- <input type="file" id="file_upload" name="file_upload[]" multiple> -->
 
 </form>
-<!-- 
-<form class="dropzone needsclick" id="demo-upload" action="{{route('upload-images')}}">
-      <DIV class="dz-message needsclick">    
-        Drop files here or click to upload.<BR>
-        <SPAN class="note needsclick">(This is just a demo dropzone. Selected 
-        files are <STRONG>not</STRONG> actually uploaded.)</SPAN>
-      </DIV>
-</form>
-
-<form method="POST"
-    action="{{isset($data['id']) ? route('blogs.update', $data['id']) : route('blogs.store')}}"
-    enctype="multipart/form-data" class="test-form-submit-page" method="post">
-    @csrf
-    @if(isset($data['id']))
-    <input type="hidden" name="_method" value="PUT">
-    @endif
-</form> -->
 
 
 
@@ -278,7 +241,7 @@
       <div class="modal-body">
         <div class="row">
           @foreach(templateList() as $key => $section)
-          <div class="col-md-4">
+          <div class="col-md-4"  >
 
             <div class="card add-section1" data-key="{{$key}}" data-name="{{$section['section_name']}}">
               <div class="card-body">

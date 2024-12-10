@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Template;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\TemplateSection;
-use App\Models\TemplateSectionField;
+use App\Models\Section;
 use App\Repositories\SectionRepository;
 use App\Interfaces\SectionInterface;
 use Validator;
@@ -24,8 +23,8 @@ class SectionController extends Controller
      */
     public function index(Request $request)
     {
-        $list = TemplateSection::list(true, $request->all());
-        return view('backend.template.section.index', compact('list'));
+        $list = Section::list(true, $request->all());
+        return view('backend.template.sections.index', compact('list'));
 
     }
 
@@ -36,7 +35,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        return view('backend.template.section.create');
+        return view('backend.template.sections.create');
 
     }
 
@@ -49,8 +48,7 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:template_sections,section",
-            'slug' => "required|unique:slug_masters,slug",
+            'title' => "required|unique:sections,title",
             'description' => "required",
 
 
@@ -82,9 +80,9 @@ class SectionController extends Controller
      */
     public function edit($id)
     {
-        $data = TemplateSection::get($id);
-
-        return view('backend.template.section.create', compact('data'));
+        $data = Section::get($id);
+        $details = json_decode($data->data, true);
+        return view('backend.template.sections.create', compact('data', 'details'));
 
     }
 

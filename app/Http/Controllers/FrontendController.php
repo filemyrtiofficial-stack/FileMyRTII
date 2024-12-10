@@ -6,14 +6,25 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Enquiry;
 use App\Models\PageData;
+use App\Models\Page;
+use App\Models\SlugMaster;
+
 class FrontendController extends Controller
 {
-    public function index() {
+    public function index($slug = null) {
 
 
-        $page_section = PageData::where(['page_id' => 7])->get();
+        if($slug == null) {
+          $slug = 'root';
+        }
+        $page = Page::with('pageData')->join('slug_masters', 'slug_masters.linkable_id', '=', 'pages.id')
+        ->where(['slug_masters.linkable_type'=> 'pages', 'slug_masters.slug' => $slug])->select('pages.*')->first();
+        if($page) {
 
-        return view('frontend.index', compact('page_section'));
+            $page_section = $page->pageData;
+            return view('frontend.index', compact('page_section'));
+        }
+        abort(404);
     }
     public function about() {
         return view('frontend.about');

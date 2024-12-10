@@ -73,6 +73,13 @@
               </ul>
             </div>
           </li>
+
+          <li class="nav-item pl-3">
+            <a class="nav-link" href="{{ route('testimonials.index') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Testimonials</span>
+            </a>
+          </li>
           
           <li class="nav-item mt-3">
             <a class="nav-link" href="">
@@ -86,16 +93,23 @@
               <span class="menu-title">Menu</span>
             </a>
           </li>
-          <li class="nav-item pl-3">
-            <a class="nav-link" href="{{ route('template-section.index') }}">
-              <i class="icon-head menu-icon"></i>
-              <span class="menu-title">Section</span>
-            </a>
-          </li>
+         
           <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('pages.index') }}">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Pages</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item pl-3">
+            <a class="nav-link" href="{{ route('template-section.index') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Sections</span>
+            </a>
+          </li> -->
+           <li class="nav-item pl-3">
+            <a class="nav-link" href="{{ route('settings.index') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Setting</span>
             </a>
           </li>
         </ul>

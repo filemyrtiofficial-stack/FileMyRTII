@@ -1,6 +1,6 @@
 
 <div>
-<label class="form-label">{{$template['title'] ??''}}</label><br>
+<label class="form-label">{{$template['title'] ??''}} Banner Slider</label><br>
 </div>
 <div>
 

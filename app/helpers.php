@@ -551,7 +551,43 @@ function templateList() {
                         ]
                     ]
                 ]
-                        ],
+            ],
+            'banner' => [
+                "section_name" => "Banner",
+                'key' => 'banner',
+                "fields" => [
+                    [
+                        "type" => 'input',
+                        "lable" => 'Title',
+                        'name' => "banner_title",
+
+                    ],
+                    [
+                        "type" => 'image',
+                        "lable" => 'Mobile Banner',
+                        'name' => "banner_image",
+
+                    ],
+                    [
+                        "type" => 'link',
+                        'lable' => "Redirection Link",
+                        'fields' => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Title',
+                                'name' => "link_title",
+        
+                            ],
+                            [
+                                "type" => 'input',
+                                "lable" => 'Url',
+                                'name' => "link_url",
+        
+                            ],
+                        ]
+                    ]
+                ]
+            ],
             'our_blogs' => [
                 "section_name" => "Our Blogs",
                 'key' => 'our_blogs',
@@ -642,7 +678,62 @@ function templateList() {
                     
                     
                 ]
-            ]
+            ],
+            'service_tabs' => [
+                "section_name" => "Services In Tab",
+                'key' => 'service_tabs',
+                "fields" => [
+                    [
+                        "type" => 'input',
+                        "lable" => 'Title',
+                        'name' => "title",
+
+                    ],
+                    [
+                        "type" => 'link',
+                        'lable' => "Redirection Link",
+                        'fields' => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Title',
+                                'name' => "link_title",
+        
+                            ],
+                            [
+                                "type" => 'input',
+                                "lable" => 'Url',
+                                'name' => "link_url",
+        
+                            ],
+                        ]
+                    ],
+                    [
+                        "type" => 'search',
+                        'lable' => "",
+                        'name' => "",
+                        'repeat' => 4,
+                        'key' => 'Service_category',
+                        "fields" => [
+                            [
+                                "type" => 'input',
+                                "lable" => 'Service Category',
+                                'name' => "catgeory",
+
+                            ]
+                        ]
+
+                        
+                    ],
+                    
+                    
+                ]
+            ],
+            'top_banner' => [
+                "section_name" => "Banner Design 2",
+                'key' => 'top_banner'
+               
+            ],
+                
 
       
     ];
@@ -659,4 +750,45 @@ function yesNoOption() {
             'name' => 'No'
         ]
         ];
+}
+
+function serviceCategoryOptions($selected = null)  {
+    $list = "";
+    foreach(App\Models\ServiceCategory::list(false) as $item) {
+        $is_selected = "";
+        if($selected == $item->id) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->name.'</option>';
+    }
+    return $list;
+}
+
+
+function sectionTypeList() {
+    return [
+        'how_it_works' => [
+            'title' => 'How it works',
+            'fields' => [
+                [
+                    'type' => 'input',
+                    'label' => 'Title',
+                    'name' => 'title',
+                    'required' => true
+                ],
+                [
+                    'type' => 'image',
+                    'label' => 'Icon',
+                    'name' => 'icon',
+                    'required' => true
+                ],
+                [
+                    'type' => 'textarea',
+                    'label' => 'Description',
+                    'name' => 'description',
+                    'required' => true
+                ],
+            ]
+        ]
+            ];
 }

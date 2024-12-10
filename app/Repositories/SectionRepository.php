@@ -2,27 +2,20 @@
 namespace App\Repositories;
 use App\Interfaces\SectionInterface;
 use Carbon\Carbon;
-use App\Models\TemplateSection;
-use App\Models\TemplateSectionField;
-
+use App\Models\Section;
 use App\Models\SlugMaster;
 use Session;
 use Exception;
 class SectionRepository implements SectionInterface {
 
     public function store($request) {
-        $service = TemplateSection::create(['section' => $request['name'], 'description' => $request->description, 'slug' => $request->slug]);
-        SlugMaster::create(['slug' => $request['slug'], 'linkable_id' => $service->id, 'linkable_type' => "template_sections"]);
+        $service = Section::create(['title' => $request['title'], 'description' => $request->description, 'type' => $request->section_type, 'data' => json_encode($request->all())]);
         Session::flash("success", "Data successfully added");
-        return response(['message' => "Data successfully added"]);
+        return response(['message' => "Data successfully added", 'redirect' => route('template-section.index')]);
     }
     
     public function update($request, $id) {
-        $data = ['section' => $request['name'], 'description' => $request->description, 'slug' => $request->slug];
-        TemplateSection::where('id', $id)->update($data);
-        if(!empty($request['slug'])) {
-            SlugMaster::createUpdateSlug(['slug' => $request['slug'], 'linkable_id' => $id, 'linkable_type' => "template_sections"]);
-        }
+        $service = Section::where('id', $id)->update(['title' => $request['title'], 'description' => $request->description,'data' => json_encode($request->all())]);
         Session::flash("success", "Data successfully updated");
         return response(['message' => "Data successfully updated"]);
     }
@@ -31,7 +24,7 @@ class SectionRepository implements SectionInterface {
    
 
     public function delete($id) {
-        $data = TemplateSection::where(['id' => $id])->first();
+        $data = Section::where(['id' => $id])->first();
         if($data) {
             if($data->slugMaster) {
                 $data->slugMaster()->delete();

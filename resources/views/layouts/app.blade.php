@@ -19,7 +19,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{asset('assets/css/vertical-layout-light/style.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- endinject -->
 
   <style>
@@ -53,6 +53,24 @@
 }
 .card-header h4 {
     margin-top : 11px;
+}
+.accordian-actions {
+    position: absolute;
+    right: 15px;
+    justify-content: center;
+    top: 28%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.accordian-actions a, .accordian-actions button {
+    font-size: 1rem !important;
+
+}
+.accordion > .card .card-header * {
+    font-size: 1.3rem;
+    font-weight: 500 !important;
+
 }
     </style>
 </head>
@@ -120,6 +138,34 @@
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+<script>
+ 
+
+    $(document).ready(function() {
+    updateArray = [];
+    myList = $('#sortable_product');
+    $(() => {
+		myList.sortable({
+			stop: function(event, ui) {
+				updateArray = $("#sortable_product").sortable("toArray", { attribute: 'productID' });
+				$('#array').html(updateArray.join(', '));
+        $('#update_array').val(JSON.stringify(updateArray))
+				
+			}
+		});
+		updateArray = $("#sortable_product").sortable("toArray", { attribute: 'productID' });
+		
+		myList.disableSelection();
+     });
+
+
+     
+
+ })
+
+</script>
   <!-- End custom js for this page-->
   <script src='https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js'></script>
     @stack('js');
@@ -139,8 +185,13 @@
          let uploadedFile = document.getElementById($(this).attr('id')).files[0];
          var form_data = new FormData();
          form_data.append("file", uploadedFile);
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
          $.ajax({
-            url: "/upload-images",
+            url: "{{route('upload-images')}}",
             method: "POST",
             data: form_data,
             cache : false,
@@ -150,9 +201,9 @@
             success : function(response){
                 console.log('upload-image', response)
               _this.parents().eq(0).find('.image-collection').show();
-              _this.parents().eq(0).find('.img-preview').attr('src', response.data);
-              _this.parents().eq(0).find('.image-input').val(response.data);
-
+            //   _this.parents().eq(0).find('.img-preview').attr('src', response.da ta);
+              _this.parents().eq(1).find('.image-input').val(response.data);
+            //   console.log(_this.parents().eq(1).find('.image-input').attr('class'))
             },
             error : function(error) {}
          });
@@ -185,7 +236,13 @@
             processData: false,
             type: method, // For jQuery < 1.9
             success: function(response) {
-                //window.location.reload();
+            if(response.redirect) {
+                window.location.href = response.redirect;
+            }
+            else {
+
+                window.location.reload();
+            }
             },
             error: function(error) {
                 $.each(error.responseJSON.errors, function(index, value) {

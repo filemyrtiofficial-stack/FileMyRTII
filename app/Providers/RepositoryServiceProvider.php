@@ -39,6 +39,10 @@ use App\Repositories\SectionRepository;
 use App\Interfaces\SectionInterface;
 use App\Repositories\TemplateRepository;
 use App\Interfaces\TemplateInterface;
+use App\Repositories\SettingRepository;
+use App\Interfaces\SettingInterface;
+use App\Repositories\TestimonialRepository;
+use App\Interfaces\TestimonialInterface;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -65,6 +69,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(MenuInterface::Class, MenuRepository::class);
         $this->app->bind(SectionInterface::Class, SectionRepository::class);
         $this->app->bind(TemplateInterface::Class, TemplateRepository::class);
+        $this->app->bind(SettingInterface::Class, SettingRepository::class);
+        $this->app->bind(TestimonialInterface::Class, TestimonialRepository::class);
+
 
     }
 

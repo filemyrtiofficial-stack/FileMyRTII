@@ -186,4 +186,13 @@ class TemplateController extends Controller
         // print_r(json_encode( $template));
        return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data'));
     }
+
+    public function deleteSectionPage($id) {
+        try {
+            $data = $this->templateRepository->deleteSection($id);
+            return response(['message' => 'Data is successfully deleted']);
+        } catch (Exception $ex) {
+            return response(['error' => $ex->getMessage()], 500);
+        }
+    }
 }

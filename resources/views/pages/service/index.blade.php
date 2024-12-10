@@ -58,10 +58,10 @@
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
                                    
-                                        <a class="text-sm font-weight-bold mb-0 ps-2"
+                                        <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('services.edit', $item->id)}}">Edit</a>
                                         <a href="{{route('services.destroy', $item->id)}}"
-                                            class="text-sm font-weight-bold mb-0 ps-2 delete-btn">Delete</a>
+                                            class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
                                     </div>
                                 </td>
                             </tr>
