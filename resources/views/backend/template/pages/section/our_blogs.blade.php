@@ -17,57 +17,66 @@
                     <div class="card-body pt-0">
                         <div class="row">
                             <div class="col-12">
-                                @foreach($template['fields'] as $field)
-                                    <?php
-                                    $title = $template['key'].'_'.($field['name'] ?? '' );
-                                    ?>
-                                    <div class="form-group">
-                                        <label class="form-label">{{$field['lable'] ??''}}</label>
-                                        <div class="input-group">
-                                            @if($field['type'] == 'input')
-                                            <input type="text" class="form-control" value="{{$data[$title] ?? ''}}" name="{{$template['key']}}_{{$field['name']}}" data-lable="{{$template['key']}}_{{$field['name']}}" id="{{$template['key']}}_{{$field['name']}}">
-                                            @elseif($field['type'] == 'select')
-                                            <select class="form-control" @if(isset($field['check_multiple_type']) && isset($data[$field['check_multiple_type']]) && $data[$field['check_multiple_type']] == 'yes') multiple @endif   name="{{$template['key']}}_{{$field['name']}}@if(isset($field['check_multiple_type']) && isset($data[$field['check_multiple_type']]) && $data[$field['check_multiple_type']] == 'yes')[]@endif" @if(isset($field['target'])) data-target="{{$field['target']}}" @endif data-lable="{{$template['key']}}_{{$field['name']}}" id="{{$template['key']}}_{{$field['name']}}">
-                                                <option value="">{{$field['lable'] ??''}}</option>
-                                                @foreach($field['options'] as $option)
-                                                    <option value="{{$option['id'] ?? ''}}" @if(isset($data[$title]) && ((gettype($data[$title]) == 'string' && $data[$title] == $option['id'] ) || (gettype($data[$title]) == 'array' && in_array($option['id'] , $data[$title])))) selected @endif>{{$option['title'] ??( $option['name'] ?? '') }}</option>
-                                                @endforeach
-                                            </select>
-                                           
-                                            @elseif($field['type'] == 'link')
-                                                <div class="row">
-                                                    @foreach($field['fields'] as $sub_field)
-                                                        <?php
-                                                        $title = $template['key'].'_'.($sub_field['name'] ?? '' );
-                                                        ?>
-                                                        <div class="col-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">{{$sub_field['lable'] ??''}}</label>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control" value="{{$data[$title] ?? ''}}" name="{{$template['key']}}_{{$sub_field['name']}}" data-lable="{{$template['key']}}_{{$sub_field['name']}}" id="{{$template['key']}}_{{$sub_field['name']}}-0">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            @elseif($field['type'] == 'image')
-                                            <input type="file" class=" upload-image" id="{{$template['key']}}_{{$field['name']}}">
-                                            <div class="image-collection" >
-                                                <input hidden type="text" value="{{$data[$title] ?? ''}}"  class="form-control image-input" name="{{$template['key']}}_{{$field['name']}}" data-lable="{{$template['key']}}_{{$field['name']}}" id="{{$template['key']}}_{{$field['name']}}">
-                                                <img src="{{asset($data[$title] ?? '')}}" class="img-preview" id="{{$template['key']}}_{{$field['name']}}" width="100" height="100">
-                                                <input type="text" value="{{$data[$title.'_alt'] ?? ''}}" id="{{$template['key']}}_{{$field['name']}}" name="{{$template['key']}}_{{$field['name']}}_alt" class="form-control">
-                                            </div>
-                                            @elseif($field['type'] == 'textarea')
-                                            <textarea class="form-control" name="{{$template['key']}}_{{$field['name']}}" data-lable="{{$template['key']}}_{{$field['name']}}" id="{{$template['key']}}_{{$field['name']}}">{{$data[$title] ?? ''}}</textarea>
-                                            @elseif($field['type'] == 'section')
-
-                                                @include('backend.template.pages.section.'.$field['key'],['template' => $field, 'prefix_key' => $template['key']])
-                                            @endif
-                                        </div>
+                                <div class="form-group">
+                                    <label class="form-label">Title</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" data-lable="title" id="title">
                                     </div>
-                                
-                                @endforeach
+                                </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Add Multiple</label>
+                                    <div class="input-group">
+                                        <select type="text" class="form-control" name="our_blogs_all_multiple" data-lable="our_blogs_all_multiple" id="our_blogs_all_multiple">
+                                            @foreach(yesNoOption() as $item)
+                                                <option value="{{$item['id'] ?? ''}}" @if(isset($data['our_blogs_all_multiple']) && ((gettype($data['our_blogs_all_multiple']) == 'string' && $data['our_blogs_all_multiple'] == $item['id'] ) || (gettype($data['our_blogs_all_multiple']) == 'array' && in_array($option['id'] , $data['our_blogs_all_multiple'])))) selected @endif>{{$item['name'] ?? ''}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr>
+                                <div class="form-group">
+                                    <label class="form-label"><strong>Services</strong></label>
+                                    <div class="blog_list" id="sortable_product">
+                                        @if(isset($data['blog_count']))
+                                            @for($index = 0; $index < $data['blog_count']; $index++)
+                                                <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
+                                                    <div class="col-lg-9 mt-lg-0">
+                                                        <div class="card-body">
+                                                            <select name="blog_{{$index}}" id="blog_{{$index}}" class="form-control blog" data-index="{{$index}}">
+                                                                <option value="">Select Blog</option>    
+                                                            {!! blogOptions($data['blog_'.$index]) !!}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                                </div>
+                                            @endfor
+                                        @else
+
+                                            <div class="d-flex draggable"  id="row0"  draggable="true" productID="0">
+                                                <div class="col-lg-9 mt-lg-0">
+                                                    <div class="card-body">
+                                                        <select name="blog_0" id="blog_0" class="form-control blog" data-index="0">
+                                                            <option value="">Select Blog</option>    
+                                                        {!! blogOptions() !!}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <button class="btn btn-sm btn-secondary service_tabs_add_more" data-tag="blog" type="button">Add More</button>
+                                    <input type="hidden" id="blog_count" name="blog_count" value="{{$data['blog_count'] ?? '1'}}">
+                                    <input type="hidden" id="blog_list" name="blog_list"  value="{{$data['blog_list'] ?? ''}}">
+
+                                </div>
+                            </div>
+                         
                         </div>
     
                     </div>
@@ -82,18 +91,64 @@
 @endsection
 @push('js')
 <script>
-    $(document).on('click', '.add-module-section', function(e){
+    $(document).on('click', '.service_tabs_add_more', function(e){
         e.preventDefault();
-       let target = $(this).attr('data-target');
-       $(this).parents().eq(0).find('.add-new-section').append('<div class="col-12 row-item" >'+$(this).siblings().find('.row-item').html()+'</div>');
-       $(this).parents().eq(0).find('#'+target+"_row_count").val($(this).siblings().find('.row-item').length);
-        let key = $(this).attr('data-key');
+        if($('.draggable').length < 3) {
 
-       $( $('.home_banner_banner_review_slider_image')).each(function( index, value ) {
-               
-
-            $(this).attr('id', $(this).attr('data-key')+"_"+index)
+            $('.blog_list').append(`<div class="d-flex draggable" >
+                                                        <div class="col-lg-9 mt-lg-0 ">
+                                                            <div class="card-body">
+                                                                <select name="blog_0" id="blog_0" class="form-control blog">
+                                                                    <option value="">Select Blog</option> 
+                                                                    <?php echo blogOptions();?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
+                                                    </div>`);
+        }
+      
+                                            updateServiceSequance();
+    });
+    function updateServiceSequance(){
+        let tag = 'blog';
+      
+        $('.draggable').each(function(index, value){
+            $(this).attr('id', 'row'+index).attr('productID', index);
+            $(this).find('.'+tag).attr('name', tag+"_"+index).attr('id', tag+"_"+index).attr('data-index', index);
+            
         });
+        $('#blog_count').val($('.'+tag).length);
+        var values = [];
+        $('.blog').each(function(index, value){
+            values.push($(this).val());
+        }) 
+        $('#blog_list').val(JSON.stringify(values));
+    }
+    $(document).on('click', '.service_tabs_remove', function(e){
+        $(this).parents().eq(1).remove();
+        updateServiceSequance();
+    });
+    $(document).on('change', '.blog', function(e){
+       
+        var services = $('#blog_list').val();
+        if(services != '') {
+            services = JSON.parse(services);
+        }
+        else {
+            services = [];
+        }
+
+        if($(this).val() != '') {
+            
+            if(services.indexOf($(this).val()) != -1) {
+                $(this).val('').change();
+                return false;
+            }
+           
+        }
+        updateServiceSequance();
+       
 
     })
     </script>

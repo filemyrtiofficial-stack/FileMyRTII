@@ -7,6 +7,7 @@
     <title>
         @yield('title')
     </title>
+    @yield('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('assets/rti/css/custom-style.css')}}">
@@ -21,6 +22,7 @@
 
 
     </main>
+
 
     @include('frontend.footer')
     <!-- <script src="js/jquery.min.js"></script> -->

@@ -4,6 +4,9 @@
 {{$seo->meta_title}}
 @endsection
 
+@section('meta')
+<meta name="description" value="{{$seo->meta_description}}">
+@endsection
 @section('content')
 
 @foreach($page_section as $key => $section)

@@ -1,22 +1,23 @@
 
+<?php
+
+$blogs = App\Models\Blog::list(false, ['ids' => json_decode($data['blog_list'], true), 'status' => 2]);
+?>
+
 <section class="blog_section">
     <div class="container">
         <div class="section_heading">
             <h4 class="fs-56 fw-700">{!! $data['our_blogs_title'] ?? '' !!}</h4>
         </div>
         <div class="row">
-            @if(is_array($data['our_blogs_blog_list']))
-            <?php
-                $blog_list = App\Models\Blog::list(false, ['ids' => $data['our_blogs_blog_list'], 'status' => 2]);
-            ?>
-            @else
-            <?php
-                $blog_list = App\Models\Blog::list(false, ['ids' => [$data['our_blogs_blog_list']] , 'status' => 2]);
-            ?>
-            @endif
-            @foreach($blog_list as $value)
             
-                <div class="col-12 col-sm-4">
+            @for($index = 0; $index < $data['blog_count']; $index++)
+                <?php
+                    $item = collect($blogs)->where('id', $data['blog_'.$index])->where('status', 2)->values();
+                    $value = $item[0] ?? [];
+                ?>
+                @if(!empty($value))
+                 <div class="col-12 col-sm-4">
                     <div class="blog_item_wrapper">
                         <div class="blog_item">
                             <div class="blog_img">
@@ -34,7 +35,10 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+                @endif
+            @endfor
+
+          
           
            
          

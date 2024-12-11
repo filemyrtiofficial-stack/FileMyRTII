@@ -611,7 +611,7 @@ function templateList() {
                         "type" => 'select',
                         'lable' => "Select Blogs",
                         'name' => "blog_list",
-                        'options' => App\Models\Blog::list(false, ['status' => true]),
+                        'options' => App\Models\Blog::list(false, ['status' => 2]),
                         'check_multiple_type' => 'our_blogs_all_multiple'
                         
                     ]
