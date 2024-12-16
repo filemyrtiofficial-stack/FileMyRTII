@@ -865,3 +865,42 @@ function blogOptions($selected = null)  {
     }
     return $list;
 }
+
+function permissionList($parent_id) {
+    $permissions = Spatie\Permission\Models\Permission::where(['parent_id' => $parent_id])->get();
+}
+
+function fieldList() {
+    return [
+        'input' => 'Input',
+        'textarea' => 'Textarea',
+        'boolean' => 'boolean',
+
+
+    ];
+}
+
+function fieldListOptions($selected = null)  {
+    $list = "";
+    foreach(fieldList() as $key => $value) {
+        $is_selected = "";
+        if($selected == $key) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$key.'" '.$is_selected.'>'.$value.'</option>';
+    }
+    return $list;
+}
+
+function booleanListOptions($selected = null)  {
+    $list = "";
+    foreach(BooleanList() as $key => $value) {
+        $is_selected = "";
+        if($selected == $key) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$key.'" '.$is_selected.'>'.$value['name'].'</option>';
+    }
+    return $list;
+}
+

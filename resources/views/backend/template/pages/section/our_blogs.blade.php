@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="form-group">
                                     <label class="form-label">Add Multiple</label>
                                     <div class="input-group">
@@ -35,7 +35,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12">
                                 <hr>
                                 <div class="form-group">

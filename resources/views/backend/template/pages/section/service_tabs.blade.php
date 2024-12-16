@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="title" value="{{$data['title'] ?? ''}}">
+                                        <input type="text" class="form-control" name="title" id="title" value="{{$data['title'] ?? ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
 <script>
     $(document).on('click', '.service_tabs_add_more', function(e){
         e.preventDefault();
-        if($('.draggable').length < 3) {
+        if($('.draggable').length < 4) {
 
             $('.service_tabs_service_list').append(`<div class="d-flex draggable" >
                                                         <div class="col-lg-9 mt-lg-0 ">

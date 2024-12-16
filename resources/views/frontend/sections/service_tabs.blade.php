@@ -18,7 +18,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
 
                 </div>
                 <div class="row">
-                    <div class="col-auto">
+                    <div class="col-12">
                         <div class="rti_tab_wrapper">
                             <div class="rti_tabs">
                                 <ul class="rti_tab_list rti_tab_slider">
@@ -54,7 +54,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                 <p>{{$item['description'] ?? ''}}</p>
                                                             </div>
                                                         @endif
-                                                        <a href="javascript:void(0);" class="theme-btn-link">Apply Now</a>
+                                                        <a href="{{route('frontend.service',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
                                                     </div>
                                                 </div>
                                             </div>

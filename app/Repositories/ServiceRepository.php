@@ -9,7 +9,7 @@ use Exception;
 class ServiceRepository implements ServiceInterface {
 
     public function store($request) {
-        $service = Service::create(['name' => $request['name'], 'icon' => uploadFile($request, 'icon', 'icon'), 'status' => $request->status, 'description' => $request->description, 'category_id' => $request->category]);
+        $service = Service::create(['name' => $request['name'], 'icon' => uploadFile($request, 'icon', 'icon'), 'status' => $request->status, 'description' => $request->description, 'category_id' => $request->category, 'fields' => json_encode($request->all())]);
         SlugMaster::create(['slug' => $request['slug'], 'linkable_id' => $service->id, 'linkable_type' => "services"]);
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added"]);
@@ -20,7 +20,8 @@ class ServiceRepository implements ServiceInterface {
             'name' => $request['name'],
             'status' => $request->status,
             'description' =>  $request['description'],
-            'category_id' => $request['category']
+            'category_id' => $request['category'],
+            'fields' => json_encode($request->all())
         ];
 
       

@@ -2,9 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\DataController;
-
+use Spatie\Permission\Models\Permission;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,19 +18,87 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('send-otp',[AuthController::class, 'sendOtp']);
-Route::post('verify-otp',[AuthController::class, 'verifyOtp']);
 
-Route::middleware(['api-auth'])->group(function () {
-    Route::get('my-profile',[AuthController::class, 'myProfile']);
-    Route::post('register',[AuthController::class, 'register']);
-    
+Route::get('create-permission', function(){
+    $permissions = [
+            'Team Manager' => [
+                'Manage Team Member',
+                'Create Team Member',
+                'Edit Team Member',
+                'Delete Team Member'
+            ],
+            'Testimonial' => [
+                'Manage Testimonial',
+                'Create Testimonial',
+                'Edit Testimonial',
+                'Delete Testimonial'
+            ],
+            'Blog Category' => [
+                'Manage Blog Category',
+                'Create Blog Category',
+                'Edit Blog Category',
+                'Delete Blog Category'
+            ],
+            'Blog' => [
+                'Manage Blog',
+                'Create Blog',
+                'Edit Blog',
+                'Delete Blog'
+            ],
+            'Service category' => [
+                'Manage Service category',
+                'Create Service category',
+                'Edit Service category',
+                'Delete Service category'
+            ],
+            'Service' => [
+                'Manage Service',
+                'Create Service',
+                'Edit Service',
+                'Delete Service'
+            ],
+            'Menu' => [
+                'Manage Menu'
+            ],
+            'Pages' => [
+                'Manage Pages',
+                'Create Pages',
+                'Edit Pages',
+                'Delete Pages'
+            ],
+            'Section Data' => [
+                'Manage Section Data',
+                'Create Section Data',
+                'Edit Section Data',
+                'Delete Section Data'
+            ],
+            'Setting' => [
+                'Manage Setting'
+            ],
+
+        ];
+
+        foreach($permissions as $key => $items) {
+            $parent_permission = Permission::where(['name' => $key])->first();
+            // print_r(json_encode($parent_permission));die;
+            if(!$parent_permission) {
+                $parent_permission = new Permission;
+                $parent_permission->name = $key;
+                $parent_permission->guard_name = 'web';
+                $parent_permission->parent_id = 0;
+                $parent_permission->save();
+            }
+            foreach($items as $item) {
+                
+                $permission = Permission::where(['name' => $item])->first();
+                if($permission) {
+                    $permission->update(['parent_id' => $parent_permission->id]);
+                }
+                else {
+                    $permission = Permission::create(['name' => $item, 'guard_name' => 'web', 'parent_id' => $parent_permission->id]);
+
+                }
+
+            }
+        }
 });
-Route::get('specialities',[DataController::class, 'specialityList']);
-Route::post('hospitals',[DataController::class, 'hospitalList']);
-Route::post('doctors',[DataController::class, 'doctorList']);
-Route::get('disease-types',[DataController::class, 'diseaseTypeList']);
-Route::get('disease-types/{id}',[DataController::class, 'getDiseaseType']);
-Route::get('dashboard',[DataController::class, 'dashboard']);
-Route::get('lab-tests',[DataController::class, 'labTest']);
-

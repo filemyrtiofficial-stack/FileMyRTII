@@ -24,10 +24,10 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type = null)
     {
-        $data = Setting::getSettingData('header-footer-setting');
-        return view('pages.setting.index', compact('data'));
+        $data = Setting::getSettingData($type);
+        return view('pages.setting.'.$type, compact('data', 'type'));
     }
 
     /**
@@ -48,16 +48,27 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'primary_logo' => "required",
-            'secondary_logo' => "required",
-            'footer_logo_tagline' => "required",
-            'address' => "required",
-            'email' => "required",
-            'contact_no' => "required"
 
+        if($request->type == 'payment') {
+            $validator = Validator::make($request->all(), [
+                'amount_type.*' => "required",
+                'amount.*' => "required|numeric",
+                'basic.*' => "required",
+                'advance.*' => "required",
 
-        ]);
+            ]);
+        }
+        else {
+
+            $validator = Validator::make($request->all(), [
+                'primary_logo' => "required",
+                'secondary_logo' => "required",
+                'footer_logo_tagline' => "required",
+                'address' => "required",
+                'email' => "required",
+                'contact_no' => "required"
+            ]);
+        }
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }

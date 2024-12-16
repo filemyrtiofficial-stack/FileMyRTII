@@ -167,10 +167,110 @@ class TemplateController extends Controller
     }
 
     public function updateSectionDetails(Request $request, $page_id) {
-        
+        $validation = [];
+        if($request->section_key == 'home_banner') {
+            $validation = [
+                'title' => "required",
+                'home_banner_description' => "required",
+                'home_banner_banner_mobile_image' => "required",
+                'home_banner_banner_desktop_image' => "required"
+            ];
+            
+            for($index = 0; $index < $request->banner_slider_list_row_count; $index++) {
+                $validation = array_merge($validation, [
+                    'home_banner_banner_review_slider_title_'.$index => "required",
+                    'home_banner_banner_review_slider_description_'.$index => "required",
+                    'home_banner_banner_review_slider_image_'.$index => "required"
+                    ]
+                );
+            }
+            if((!empty($request->home_banner_banner_link_title) && empty($request->home_banner_banner_link_url)) || (empty($request->home_banner_banner_link_title) && !empty($request->home_banner_banner_link_url))) {
+                $validation = array_merge($validation, [
+                    'home_banner_banner_link_title'=> "required",
+                    'home_banner_banner_link_url' => "required"
+                    ]
+                );
+            }
+        }
+        elseif($request->section_key == 'our_blogs') {
+            $validation = [
+                'title' => "required",
+            ];
+            for($index = 0; $index < $request->blog_count; $index++) {
+                $validation = array_merge($validation, [
+                    'blog_'.$index => "required",
+                    ]
+                );
+            }
+        }
+        elseif($request->section_key == 'how_it_works') {
+            $validation = [
+                'title' => "required",
+            ];
+            for($index = 0; $index < $request->how_it_work_count; $index++) {
+                $validation = array_merge($validation, [
+                    'how_it_work_'.$index => "required",
+                    ]
+                );
+            }
+            if((!empty($request->how_it_work_link_title) && empty($request->how_it_work_link_url)) || (empty($request->how_it_work_link_title) && !empty($request->how_it_work_link_url))) {
+                $validation = array_merge($validation, [
+                    'how_it_work_link_title'=> "required",
+                    'how_it_work_link_url' => "required"
+                    ]
+                );
+            }
+        }
+        elseif($request->section_key == 'service_tabs') {
+            $validation = [
+                'title' => "required",
+            ];
+            for($index = 0; $index < $request->service_tabs_service_count; $index++) {
+                $validation = array_merge($validation, [
+                    'service_tabs_service_'.$index => "required",
+                    ]
+                );
+            }
+        }
+        elseif($request->section_key == 'top_banner') {
+            $validation = [
+                'title' => "required",
+                'top_banner_desktop_image' => "required",
+                'top_banner_mobile_image' => "required"
+
+            ];
+        }
+        elseif($request->section_key == 'right_image_left_accordian') {
+            $validation = [
+            'title' => "required",
+            'image_1' => "required",
+            'accordian_description.*' => 'required',
+            'accordian_title.*' => 'required'
+            ];
+        }
+        elseif($request->section_key == 'right_image_left_text') {
+            $validation = [
+            // 'title' => "required",
+            'description' => "required",
+            'image_1' => "required",
+            ];
+        }
+        elseif($request->section_key == 'left_image_right_text') {
+            $validation = [
+            'title' => "required",
+            'description' => "required",
+            'image_1' => "required",
+            ];
+        }
+        $validator = Validator::make($request->all(), $validation);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
         $data = $this->templateRepository->updateSectionDetails($request, $page_id);
         return $data;
     }
+
+
 
     public function addPageSection(Request $request, $page_id) {
 

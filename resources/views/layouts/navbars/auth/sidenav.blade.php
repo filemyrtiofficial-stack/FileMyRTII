@@ -14,6 +14,13 @@
             </a>
           </li>
 
+          <li class="nav-item pl-3">
+            <a class="nav-link" href="{{route('roles.index')}}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Roles</span>
+            </a>
+          </li>
+
           
           <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('users.index') }}">
@@ -106,10 +113,22 @@
               <span class="menu-title">Sections</span>
             </a>
           </li>
+          <li class="nav-item mt-3">
+            <a class="nav-link" href="">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Settings</span>
+            </a>
+          </li>
            <li class="nav-item pl-3">
-            <a class="nav-link" href="{{ route('settings.index') }}">
+            <a class="nav-link" href="{{ route('settings.index',['header-footer-setting']) }}">
               <i class="icon-head menu-icon"></i>
-              <span class="menu-title">Setting</span>
+              <span class="menu-title">Header Footer</span>
+            </a>
+          </li>
+          <li class="nav-item pl-3">
+            <a class="nav-link" href="{{ route('settings.index',['payment']) }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Payment</span>
             </a>
           </li>
         </ul>

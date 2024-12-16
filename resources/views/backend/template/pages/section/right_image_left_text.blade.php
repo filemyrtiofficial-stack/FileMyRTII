@@ -41,24 +41,12 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-label">Image 1</label>
+                                                <label class="form-label">Image 1 @if(isset($data) && isset($data['image_1'])) <a href="{{ asset($data['image_1']) }}" target="blank"><img src="{{ asset($data['image_1']) }}" alt="" width="50"></a>@endif</label>
                                                 <div class="input-group">
-                                                    <input type="file" class=" upload-image dropify" id="image1">
+                                                    <input type="file" class=" upload-image dropify" id="image1" @if(isset($data) && isset($data['image_1'])) data-default-file="{{ asset($data['image_1']) }}" @endif>
                                                     <div class="image-collection mt-3" >
                                                         <input hidden type="text" value="{{$data['image_1'] ?? ''}}"  class="form-control image-input" name="image_1" data-lable="image_1" id="image_1">
                                                         <input placeholder="Alternative text" type="text" value="{{$data['image_1_alt'] ?? ''}}" id="image_1_alt" name="image_1_alt" class="form-control w-100">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="form-label">Image 2</label>
-                                                <div class="input-group">
-                                                    <input type="file" class=" upload-image dropify" id="image2">
-                                                    <div class="image-collection mt-3" >
-                                                        <input hidden type="text" value="{{$data['image_2'] ?? ''}}"  class="form-control image-input" name="image_2" data-lable="image_2" id="image_2">
-                                                        <input placeholder="Alternative text" type="text" value="{{$data['image_2_alt'] ?? ''}}" id="image_2_alt" name="image_2_alt" class="form-control w-100">
                                                     </div>
                                                 </div>
                                             </div>

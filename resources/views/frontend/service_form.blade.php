@@ -1,0 +1,343 @@
+@extends('frontend.layout.layout')
+
+@section('content')
+<style>
+    .hide {
+        display:none;
+    }
+</style>
+<header class="breadcrumb_banner bg_none">
+            <img class="img-fluid bg_img" src="images/about-us/about-banner.webp" alt="about us banner">
+                <div class="container">
+                    <div class="row banner_row">
+                        <div class="col-12 col-sm-12">
+                            <div class="breadcrumb">
+                               <ol>
+                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
+                                <li class="fs-24"><a href="javascript:void(0);">{{$service->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="javascript:void(0);">Personal RTI</a></li>
+                                <li class="fs-24 active">{{$service->name ?? ''}}</li>
+                               </ol>
+                            </div>
+                            <div class="breadcrumb_heading">
+                                <h1 class="title fs-72">Service Detail</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </header>
+
+        <section class="serviceform_section">
+            <div class="container">
+                <div class="row service-form-row">
+                    <div class="col-12 col-sm-9">
+                        <div class="service_form">
+                            <form action="{{route('frontend.service-form')}}" class="service-form" method="post">
+                                @csrf
+                                <input type="hidden" id="step_no" name="step_no" value="1">
+                                <input type="hidden" id="service_key" name="service_key" value="{{$service->id}}">
+                                <input type="hidden" id="application_no" name="application_no" value="">
+
+
+                                <div class="form_tab_wrapper">
+                                    <div class="form_tabs">
+                                        <ul class="form_tab_list">
+                                            <li><a class="form_tab_item active fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab1"><span>Personal Details</span></a></li>
+                                            <li><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab2"><span>{{$service->name ?? ''}}</span></a></li>
+                                            <li><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab3"><span>Payment Details</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <div class="form_row form_step_1">
+                                        
+                                        <div class="form_item">
+                                            <label for="first_name">First Name</label>
+                                            <input class="form_field" type="text" name="first_name" id="first_name" placeholder="" >
+                                        </div>
+                                    
+                                    
+                                        <div class="form_item">
+                                            <label for="last_name">Last Name</label>
+                                            <input class="form_field" type="text" name="last_name" id="last_name" placeholder="" >
+                                        </div>
+                                    
+                                    
+                                        <div class="form_item">
+                                            <label for="email">Email Address</label>
+                                            <input class="form_field" type="email" name="email" id="email" placeholder="" >
+                                        </div>
+                                    
+                                    
+                                        <div class="form_item">
+                                            <label for="phone_number">Phone Number</label>
+                                            <input class="form_field" type="tel" pattern="\d{3}[\s-]?\d{3}[\s-]?\d{4}" name="phone_number" id="phone_number" placeholder="" >
+                                        </div>
+                                    
+                                    
+                                        <div class="form_item">
+                                            <label for="address">Full Address</label>
+                                            <input class="form_field" type="text" name="address" id="address" placeholder="" >
+                                        </div>
+                                    
+                                    
+                                        <div class="form_item">
+                                            <label for="postal_code">Postal Code</label>
+                                            <input class="form_field" type="text" pattern="^\d{6}$" name="postal_code" id="postal_code" placeholder="" >
+                                        </div>
+                                        <div >
+                                
+                                            <button type="submit" class="theme-btn"><span>Next</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="form_row form_step_2 hide">
+                                        
+                                            @foreach($fields['field_type'] ?? [] as $key => $value)
+                                            <div class="form_item">
+                                            
+                                                <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
+                                                <input class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+                                            </div>
+                                            @endforeach
+                                        
+                                        
+                                            <div >
+                                        
+                                        <button type="submit" class="theme-btn"><span>Next</span></button>
+                                    </div>
+                                        
+                                    </div>
+                                    <div class="form_row form_step_3 hide">
+                                        
+                                        <div class="form_table">
+                                            <div class="form_info">
+                                                <div class="form_number">RTI Application No: <span id="application_number"></span></div>
+                                                <div class="upload_file">
+                                                    <button class="upload-file-btn">Upload File <span>+</span></button>
+                                                    <input type="file" name="file" />
+                                                </div>
+                                            </div>
+                                            <div class="form_table_detail">
+                                            @if(isset($payment) && isset($payment['amount_type']))
+                                                @foreach($payment['amount_type'] as $key =>  $value)
+                                                    <ul class="charge_list">
+                                                        <li>{{$payment['amount_type'][$key] ?? ''}}</li>
+                                                        <li>₹ {{$payment['amount'][$key] ?? ''}}</li>
+                                                        <li>
+                                                            <span class="check_icon_wrapper">
+                                                                @if($payment['basic'][$key] == 'yes')
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
+                                                                @else
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
+                                                                @endif
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_icon_wrapper">
+                                                                @if($payment['advance'][$key] == 'yes')
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
+                                                                @else
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
+                                                                @endif
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                @endforeach
+                                            @endif
+                                               
+                                                <ul class="charge_list option_list">
+                                                    <li>Choose An Option</li>
+                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
+                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form_action">
+                                        <div class="payment_icon">
+                                            <div class="razorpay">
+                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/razorpay.webp')}}" alt="razorpay icon">
+                                            </div>
+                                            <div class="visa">
+                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/visa.webp')}}" alt="visa icon">
+                                            </div>
+                                            <div class="paytm">
+                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/paytm.webp')}}" alt="paytm icon">
+                                            </div>
+                                            <div class="mastercard">
+                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/master-card.webp')}}" alt="mastercard icon">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="theme-btn"><span>Pay Now</span></button>
+                                    </div>
+                                </div>
+                                    
+                                </div>
+                             
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="service_sidebar">
+                            <div class="title">
+                                <h3>Why Choose File My RTI?</h3>
+                            </div>
+                            <ul class="sidebar_list">
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/profiles.webp')}}" alt="profile icon">
+                                    </span>
+                                    <span class="list_content">Lorem ipsum dolor sit amet consectetur. Proin lacinia.</span>
+                                </li>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/achieve-goal.webp')}}" alt="profile icon">
+                                    </span>
+                                    <span class="list_content">Lorem ipsum dolor sit amet consectetur. Proin lacinia.</span>
+                                </li>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/hassle-free.webp')}}" alt="profile icon">
+                                    </span>
+                                    <span class="list_content">Lorem ipsum dolor sit amet consectetur. Proin lacinia.</span>
+                                </li>
+                            </ul>
+                            <ul class="support_list">
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/call-support.png')}}" alt="call support icon">
+                                    </span>
+                                    <span class="list_content">Support Team:</span>
+                                </li>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/phone-icon.webp')}}" alt="phone icon">
+                                    </span>
+                                    <span class="list_content">Phone No: 1234567890</span>
+                                </li>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/mail-icon.webp')}}" alt="mail icon">
+                                    </span>
+                                    <span class="list_content">Email: support@FileMyRTI.com</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+     
+
+
+        <form method="post" id="razorsubmission" action="{{route('update.payment.success')}}">
+    @csrf
+    <input type="hidden" class="" id="razor_order_number" name="application_no" value="">
+    </form>
+
+
+@endsection
+@push('js')
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    $(document).on('submit', '.service-form', function(e){
+        e.preventDefault();
+        let action = $(this).attr('action');
+        let type = $(this).attr('method');
+        var data = new FormData($(this)[0]);
+        $.ajax({
+            url : action,
+            type :  type,
+            dataType : 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data :  data,
+            success :  function(response) {
+                if(response.step) {
+                    $('.form_step_'+response.step).removeClass('hide').siblings().addClass('hide');
+                    $('#step_no').val(response.step);
+                    if(response.step == 3) {
+                        $('#application_no').val(response.rti.application_no);
+                        $('#application_number').html(response.rti.application_no);
+                    }
+                    else if(response.step == 4) {
+                        finalrayzorpayment(response.rti)
+
+                    }
+                }
+            },
+            error :  function(error) {
+                $.each(error.responseJSON.errors, function(index, value) {
+                    console.log(value)
+                    index = index.replaceAll('.', '_')
+                    $('#' + index).parents().eq(0).append(
+                        `<span class="text-danger form-error-list">${value}</span>`)
+                })
+            }
+        });
+
+    });
+
+    function finalrayzorpayment(rti){
+            $('#razor_order_number').val(rti.application_no);
+            var options = {
+                "key": "{{ env('RAZORPAY_KEY') }}", // rzp_live_ILgsfZCZoFIKMb
+                "amount": (rti.charges*100), // 2000 paise = INR 20
+                "name": "FileMyRti",
+                "description": "Razor Payment",
+                "prefill": {
+                    "name": rti.first_name+" "+rti.last_name,
+                    "email": rti.email
+                },
+                "currency": "INR",
+                "image": "https://cdn.razorpay.com/logos/NSL3kbRT73axfn_medium.png",
+                "notes":{'order_id':rti.application_no},
+                "handler": function(reason_result){
+                    console.log(reason_result, 'reason_result')
+                    $('#razorsubmission').append('<input type="hidden" class="" name="razorpay_payment_id" value="'+reason_result.razorpay_payment_id+'"> <input type="hidden" class="" name="order_id" value="'+rti.application_no+'"> ');
+                    $('#razorsubmission').submit();
+                    $('.popup').css('display','block');
+                
+                },
+                "modal": {
+                    "ondismiss": function(){
+                            $('.popup').css('display','none');
+                            $('#proceed-to-payment').css("pointer-events", "visible");
+                            $('#proceed-to-payment').css("opacity", "1");
+                    }
+                },
+
+                "theme": {
+                    "color": "#F9BF37"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                var razorpay_paymentfail_id = response.error.metadata.payment_id;
+                var razorpay_paymentfail_order_id = response.error.metadata.order_id
+                $.ajax({
+                    url:  "{{route('update.payment.failed')}}",
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        razorpay_payment_id: razorpay_paymentfail_id ,order_id : razorpay_paymentfail_id,paymet_fail:response, application_no : rti.application_no
+                    }, 
+                    success: function (msg) {
+                        // saveshipping(); 
+                    // window.location.href = "{{url('checkout/order-success')}}";
+                    }
+                });
+            });
+            rzp1.open();
+            // e.preventDefault();
+        } 
+
+
+
+
+</script>
+@endpush

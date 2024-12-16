@@ -10,9 +10,14 @@ class TeamMember extends Model
     use HasFactory;
     protected $fillable = ['name', 'expertise', 'image', 'about', 'status', 'sequance'];
     public static function list($pagination, $filters = null) {
+        $filter_data = $filters;
+        unset($filters['ids']);
         $list = TeamMember::orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);
+        }
+        if(isset($filter_data['ids'])) {
+            $list->wherein('id', $filter_data['ids']);
         }
         if($pagination) {
             return $list->paginate(10);
