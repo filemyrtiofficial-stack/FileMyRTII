@@ -28,9 +28,9 @@
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label class="form-label">Image 1</label>
+                                        <label class="form-label">Image 1 @if(isset($data) && isset($data['image_1'])) <a href="{{ asset($data['image_1']) }}" target="blank"><img src="{{ asset($data['image_1']) }}" alt="" width="50"></a>@endif</label>
                                         <div class="input-group">
-                                            <input type="file" class=" upload-image dropify" id="image1">
+                                            <input type="file" class=" upload-image dropify" id="image1" @if(isset($data) && isset($data['image_1'])) data-default-file="{{ asset($data['image_1']) }}" @endif>
                                             <div class="image-collection mt-3" >
                                                 <input hidden type="text" value="{{$data['image_1'] ?? ''}}"  class="form-control image-input" name="image_1" data-lable="image_1" id="image_1">
                                                 <input placeholder="Alternative text" type="text" value="{{$data['image_1_alt'] ?? ''}}" id="image_1_alt" name="image_1_alt" class="form-control w-100">
@@ -43,40 +43,46 @@
                                 <hr>
                                 <h5>Accordian List</h5>
                                 <div class="accordian-list">
-                                    @if(isset($data))
+                                    @if(isset($data) && isset($data['accordian_title']))
                                         @foreach($data['accordian_title'] as $key => $value)
-                                            <div class="card mb-3">
+                                            <div class="card mb-3 accordian-item">
                                                 <div class="card-body">
                                                     <div class="form-group">
                                                         <label class="form-label">Title</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="accordian_title[]" value="{{$value}}">
+                                                            <input type="text" class="form-control accordian_title" name="accordian_title[]" value="{{$value}}" id="accordian_title_{{$key}}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="form-label">Description</label>
                                                         <div class="input-group">
-                                                            <textarea type="text" class="form-control editor1" name="accordian_description[]">{{$data['accordian_description'][$key]}}</textarea>
+                                                            <textarea type="text" class="form-control editor1 accordian_description" name="accordian_description[]" id="accordian_description_{{$key}}">{{$data['accordian_description'][$key]}}</textarea>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="card-footer text-right">
+                                                    <button type="button" class="btn btn-sm btn-danger remove-card">Remove</button>
                                                 </div>
                                             </div>
                                         @endforeach
                                     @else
-                                        <div class="card mb-3">
+                                        <div class="card mb-3 accordian-item">
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label class="form-label">Title</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" name="accordian_title[]">
+                                                        <input type="text" class="form-control accordian_title" name="accordian_title[]"id="accordian_title_0">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label">Description</label>
                                                     <div class="input-group">
-                                                        <textarea type="text" class="form-control editor1" name="accordian_description[]"></textarea>
+                                                        <textarea type="text" class="form-control editor1 accordian_description" name="accordian_description[]" id="accordian_description_0"></textarea>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="card-footer text-right">
+                                                <button type="button" class="btn btn-sm btn-danger remove-card">Remove</button>
                                             </div>
                                         </div>
                                     @endif
@@ -104,23 +110,41 @@
         addAccordian()
     });
     function addAccordian() {
-        $('.accordian-list').append(`<div class="card mb-3">
+        $('.accordian-list').append(`<div class="card mb-3 accordian-item">
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label class="form-label">Title</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="accordian_title[]">
+                                                    <input type="text" class="form-control accordian_title" name="accordian_title[]">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Description</label>
                                                 <div class="input-group">
-                                                    <textarea type="text" class="form-control editor1" name="accordian_description[]"></textarea>
+                                                    <textarea type="text" class="form-control editor1 accordian_description" name="accordian_description[]"></textarea>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="card-footer text-right">
+                                            <button type="button" class="btn btn-sm btn-danger remove-card">Remove</button>
+                                        </div>
                                     </div>`);
+                                    updateAccordianIds();
 
     }
+
+    function updateAccordianIds() {
+        $('.accordian-item').each(function(index, value) {
+            $(this).find('.accordian_title').attr('id', 'accordian_title_'+index);
+            $(this).find('.accordian_description').attr('id', 'accordian_description_'+index);
+
+        })
+    }
+
+    $(document).on('click', '.remove-card', function(e){
+        $(this).parents().eq(1).remove();
+        updateAccordianIds();
+
+    })
 </script>
 @endpush

@@ -86,8 +86,11 @@ class ServiceController extends Controller
     {
         $data = Service::get($id);
         $categories = ServiceCategory::list(false, ['status' => true]);
-
-        return view('pages.service.create', compact('data', 'categories'));
+        $fields = [];
+        if($data && !empty($data->fields)) {
+            $fields = json_decode($data->fields, true);
+        }
+        return view('pages.service.create', compact('data', 'categories', 'fields'));
 
     }
 

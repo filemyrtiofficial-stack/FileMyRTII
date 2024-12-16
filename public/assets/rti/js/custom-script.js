@@ -158,4 +158,26 @@
             });
         }
 
+
+        // about us page js
+
+        if ($('.vision_section .accordion_item').length) {
+            $('.accordion_item .accordion_title').on("click",function(){
+                $(this).siblings(".accordion_content").slideToggle(300);
+                $(this).parent().siblings().find(".accordion_content").slideUp(300);
+                $(this).parent().siblings().find(".accordion_title").removeClass("active");
+                $(this).toggleClass("active");
+            });
+        }
+
+        // service detail page form tab js
+        if ($('.form_tab_item').length) {
+            $('.form_tab_item').on("click",function(){  
+                $(".form_tab").removeClass('tab-active');
+                $(".form_tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
+                $(".form_tab_item").removeClass('active');
+                $(this).parent().find(".form_tab_item").addClass('active');
+            });
+        }
+
 })(jQuery);

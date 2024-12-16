@@ -48,6 +48,8 @@ use App\Http\Controllers\Template\TemplateController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\RoleController;
+
 
 
 
@@ -148,9 +150,13 @@ Route::get("subscribe-now", function(){
 		Route::get('/get-section', [SectionController::class, 'getSectionHtml'])->name('get-sections');
 		
 		Route::resource('template-section', SectionController::class); 
-		Route::resource('settings', SettingController::class); 
+		// Route::resource('settings/{type?}', SettingController::class); 
 		Route::resource('testimonials', TestimonialController::class); 
 		Route::resource('newsletter', NewsletterController::class); 
+		Route::resource('roles', RoleController::class); 
+
+		Route::get('/settings/{type?}', [SettingController::class, 'index'])->name('settings.index');
+		Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
 		
 		
@@ -166,6 +172,12 @@ Route::get("subscribe-now", function(){
 
 	});
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
+
+Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->name('frontend.service-form');
+Route::post('/udpate-payment-success', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
+Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
+
+Route::get('/apply/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service');
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 

@@ -81,7 +81,6 @@
 <script>
     $(document).on('click', '.team_member_add_more', function(e){
         e.preventDefault();
-        if($('.draggable').length < 3) {
 
             $('.team_list').append(`<div class="d-flex draggable" >
                                                         <div class="col-lg-9 mt-lg-0 ">
@@ -94,7 +93,6 @@
                                                         </div>
                                                         <div><button class="btn btn-sm btn-danger mt-4 team_member_remove"><i class="fa fa-trash"></i></button></div>
                                                     </div>`);
-        }
       
                                             updateServiceSequance();
     });

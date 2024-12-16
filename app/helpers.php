@@ -866,21 +866,41 @@ function blogOptions($selected = null)  {
     return $list;
 }
 
-function array_remove_null($item)
-{
-    if (!is_array($item)) {
-        return $item;
-    }
-
-   return collect($item)
-        ->reject(function ($item) {
-            return is_null($item);
-        })
-        ->flatMap(function ($item, $key) {
-
-            return is_numeric($key)
-                ? [array_remove_null($item)]
-                : [$key => array_remove_null($item)];
-        })
-        ->toArray();
+function permissionList($parent_id) {
+    $permissions = Spatie\Permission\Models\Permission::where(['parent_id' => $parent_id])->get();
 }
+
+function fieldList() {
+    return [
+        'input' => 'Input',
+        'textarea' => 'Textarea',
+        'boolean' => 'boolean',
+
+
+    ];
+}
+
+function fieldListOptions($selected = null)  {
+    $list = "";
+    foreach(fieldList() as $key => $value) {
+        $is_selected = "";
+        if($selected == $key) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$key.'" '.$is_selected.'>'.$value.'</option>';
+    }
+    return $list;
+}
+
+function booleanListOptions($selected = null)  {
+    $list = "";
+    foreach(BooleanList() as $key => $value) {
+        $is_selected = "";
+        if($selected == $key) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$key.'" '.$is_selected.'>'.$value['name'].'</option>';
+    }
+    return $list;
+}
+

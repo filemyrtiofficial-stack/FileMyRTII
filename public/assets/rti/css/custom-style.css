@@ -3,6 +3,8 @@
 @import url("fonts.css");
 @import url("default.css");
 @import url("responsive.css");
+@import url("about-us.css");
+@import url("service-detail.css");
 
 
 :root {
@@ -11,7 +13,7 @@
 	--theme-font: "Poppins", sans-serif;
 	--theme-body-font-size: 1rem;
 	--theme-body-font-weight: 400;
-	--theme-body-line-height: 1.3;
+	--theme-body-line-height: 1.5;
 	--theme-white-color: #ffffff;
     --theme-blue-color: #026cb6;
     --theme-blue-rgba: rgba(2, 107, 182, 1);
@@ -113,6 +115,9 @@ button {
 .fw-600 {font-weight: 600;}
 .fw-700 {font-weight: 700;}
 .fw-800 {font-weight: 800;}
+.text-left {text-align: left;}
+.text-right {text-align: right;}
+.text-center {text-align: center;}
 .d-none {display: none;}
 .img-fluid {
     max-width: 100%;
@@ -169,7 +174,6 @@ button {
     position: relative;
     overflow: hidden;
     background-color: var(--theme-btn-color);
-    
     padding: 0.536em 1.429em;
     font-weight: 600;
     border: 1px solid transparent;
@@ -596,6 +600,7 @@ button {
     }
     .menu > li > a {
         padding: 15px;
+        font-weight: 600;
     }
     .menu > li > a:hover, .menu > li > a:focus {
         color: var(--theme-white-color);
@@ -703,6 +708,7 @@ button {
     .nav_menu > li > a {
         padding: 15px;
         display: block;
+        font-weight: 600;
     }
     .nav_menu > li > a > .call {
         width: 30px;
@@ -1170,12 +1176,21 @@ button {
 }
 
 @media (max-width: 1199px) {
+    .header_bg_img {
+        min-height: 50.875vw;
+    }
     .slider_wrapper .slick-prev svg, .slider_wrapper .slick-next svg {
         width: 12px;
         height: 24px;
     }
     .slider_wrapper {
         max-width: 36.33333vw;
+    }
+}
+
+@media (max-width: 991px) {
+    .header_bg_img {
+        min-height: 60.875vw;
     }
 }
 
@@ -1267,6 +1282,7 @@ button {
 }
 .rti_tab_list li {
     display: inline-block;
+    width: calc((100% - 1.25vw * 2) / 4);
 }
 
 .rti_tab_list li a {
@@ -1275,7 +1291,9 @@ button {
     display: block;
     position: relative;
     width: 20.41667vw;
-    height: 6.5625vw;
+    width: 20.19555vw;
+    width: 100%;
+    height: 6.4625vw;
     text-align: center;
     display: flex;
     align-items: flex-end;
@@ -1283,11 +1301,11 @@ button {
     justify-content: center;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="392" height="126" viewBox="0 0 392 126" fill="none"><path opacity="0.2" d="M139.626 40.3688L139.91 40.619H140.288H391V326H1V1H95.0228L139.626 40.3688Z" stroke="%23026CB6" stroke-width="2"/></svg>');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: top left;
 }
 .rti_tab_list li a span {
-    color: var(--theme-blue-rgba-2);
+    color: var(--theme-blue-rgba-5);
     position: relative;
 }
 .rti_tab_list li a.active {
@@ -1351,6 +1369,7 @@ button {
     border-bottom: 1px solid #fff;
     visibility: hidden;
     opacity: 0;
+    font-weight: 400;
 }
 .rti_item .rti_scroll {
     position: relative;
@@ -1368,6 +1387,7 @@ button {
 }
 .rti_item:hover .rti_content {
     color: var(--theme-white-color);
+    font-weight: 700;
 }
 .rti_item:hover .rti_img {
     visibility: hidden;
@@ -1395,6 +1415,12 @@ button {
 .rti_item.active:hover .rti_content + .rti_content {
     visibility: visible;
     opacity: 1;
+}
+
+@media (max-width: 1199px) {
+    .rti_tab_list li a {
+        /* width: 21.89555vw; */
+    }
 }
 
 @media (max-width: 991px) {
@@ -1443,6 +1469,14 @@ button {
     }
     .rti_tab_slider .slick-next {
         right: -15px;
+    }
+    .rti_item {
+        height: 16.54167vw;
+        padding: 2.5625vw 1.04167vw;
+    }
+    .rti_item .rti_img {
+        width: 4.20833vw;
+        height: 4.20833vw;
     }
 }
 @media (max-width: 768px) {
@@ -1507,12 +1541,19 @@ button {
     }
 }
 
+@media (max-width: 360px) {
+    .rti_item .rti_img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
 /* RTI section end */
 
 /* process section start */
 .process_section {
     position: relative;
-    padding-top: 3.64583vw;
+    padding-top: 0;
     padding-bottom: 4.6875vw;
 }
 .process_section .row:nth-child(2) {
@@ -1553,6 +1594,31 @@ button {
 .process_title {
     margin-top: 0.833em;
     margin-bottom: 0.833em;
+}
+
+@media (max-width: 1199px) {
+    .process_section .process_row > *:not(:first-child) {
+        margin-top: 35px;
+    }
+    .process_section .process_row > *:not(:first-child) + * {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 991px) {
+    .process_icon {
+        width: 4.33333vw;
+        height: 4.33333vw;
+    }
+}
+
+@media (device-width: 820px) and (device-height: 1180px) and (orientation: portrait) {
+    .process_section .process_row > *:not(:first-child) {
+        margin-top: 38px;
+    }
+    .process_section .process_row > *:not(:first-child) + * {
+        margin-top: 76px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -1657,16 +1723,50 @@ button {
 .blog_cta .theme-btn {
     text-transform: capitalize;
 }
+@media (max-width: 1199px) {
+    .blog_cta {
+        margin-top: 5.38542vw;
+    }
+}
+@media (max-width: 991px) {
+    .blog_cta {
+        margin-top: 10.38542vw;
+    }
+    .blog_area {
+        -webkit-clip-path: polygon(0 0, 50% 0, 60% 17%, 100% 17%, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 50% 0, 60% 17%, 100% 17%, 100% 100%, 0 100%);
+    }
+}
 @media (max-width: 767px) {
     .blog_section {
         padding-top: 50px;
         padding-bottom: 50px;
     }
     .blog_area {
+        /* top: -170px; */
+        position: absolute;
+        top: 58%;
         padding: 15px 15px 30px;
+        -webkit-clip-path: polygon(0 0, 42% 0, 50% 17%, 100% 17%, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 42% 0, 50% 17%, 100% 17%, 100% 100%, 0 100%);
     }
     .blog_item {
         max-height: none;
+        min-height: auto;
+        margin-bottom: 120px;
+    }
+    .blog_section .row [class*="col-"]:last-child .blog_item {
+        margin-bottom: 0;
+    }
+    .blog_cta {
+        margin-top: 130px;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog_area {
+        -webkit-clip-path: polygon(0 0, 36% 0, 45% 17%, 100% 17%, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 36% 0, 45% 17%, 100% 17%, 100% 100%, 0 100%);
     }
 }
 /* blog section end */

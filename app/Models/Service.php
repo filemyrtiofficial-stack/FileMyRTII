@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'icon', 'status', 'description', 'category_id'];
+    protected $fillable = ['name', 'icon', 'status', 'description', 'category_id', 'fields'];
+    protected $with = ['slug'];
     
     public static function list($pagination, $filters = null) {
         $list = Service::orderBy('id', 'desc');

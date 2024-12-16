@@ -200,7 +200,7 @@
             dataType : 'json',
             success : function(response){
                 console.log('upload-image', response)
-              _this.parents().eq(0).find('.image-collection').show();
+            //   _this.parents().eq(0).find('.image-collection').show();
             //   _this.parents().eq(0).find('.img-preview').attr('src', response.da ta);
               _this.parents().eq(1).find('.image-input').val(response.data);
             //   console.log(_this.parents().eq(1).find('.image-input').attr('class'))
@@ -208,6 +208,12 @@
             error : function(error) {}
          });
       });
+      $(document).on('click', '.dropify-clear',function(e){
+            e.preventDefault();
+            $(this).parents().eq(2).find('.image-input').val(null);
+
+        });
+
    </script>
     <script>
     ClassicEditor.create(document.querySelector(".editor"));
@@ -247,6 +253,7 @@
             error: function(error) {
                 $.each(error.responseJSON.errors, function(index, value) {
                     console.log(value)
+                    index = index.replaceAll('.', '_')
                     $('#' + index).parents().eq(1).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
                 })

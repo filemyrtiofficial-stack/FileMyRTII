@@ -41,7 +41,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">Title</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" value="{{$data['home_banner_banner_link_title'] ?? ''}}" name="home_banner_banner_link_title" data-lable="home_banner_banner_link_title" id="home_banner_banner_link_title-0">
+                                                    <input type="text" class="form-control" value="{{$data['home_banner_banner_link_title'] ?? ''}}" name="home_banner_banner_link_title" data-lable="home_banner_banner_link_title" id="home_banner_banner_link_title">
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +49,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">Url</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" value="{{$data['home_banner_banner_link_url'] ?? ''}}" name="home_banner_banner_link_url" data-lable="home_banner_banner_link_url" id="home_banner_banner_link_url-0">
+                                                    <input type="text" class="form-control" value="{{$data['home_banner_banner_link_url'] ?? ''}}" name="home_banner_banner_link_url" data-lable="home_banner_banner_link_url" id="home_banner_banner_link_url">
                                                 </div>
                                             </div>
                                         </div>
@@ -64,9 +64,9 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-label">Mobile Banner</label>
+                                                <label class="form-label">Mobile Banner @if(isset($data) && isset($data['home_banner_banner_mobile_image'])) <a href="{{ asset($data['home_banner_banner_mobile_image']) }}" target="blank"><img src="{{ asset($data['home_banner_banner_mobile_image']) }}" alt="" width="50"></a>@endif</label>
                                                 <div class="input-group">
-                                                    <input type="file" class=" upload-image dropify" id="home_banner_banner_mobile_image">
+                                                    <input type="file" class=" upload-image dropify" id="home_banner_banner_mobile_image" @if(isset($data) && isset($data['home_banner_banner_mobile_image'])) data-default-file="{{ asset($data['home_banner_banner_mobile_image']) }}" @endif>
                                                     <div class="image-collection mt-3" >
                                                         <input hidden type="text" value="{{$data['home_banner_banner_mobile_image'] ?? ''}}"  class="form-control image-input" name="home_banner_banner_mobile_image" data-lable="home_banner_banner_mobile_image" id="home_banner_banner_mobile_image">
                                                         <input placeholder="Alternative text" type="text" value="{{$data['home_banner_banner_mobile_image_alt'] ?? ''}}" id="home_banner_banner_mobile_image_alt" name="home_banner_banner_mobile_image_alt" class="form-control w-100">
@@ -76,9 +76,9 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label class="form-label">Desktop Banner</label>
+                                                <label class="form-label">Desktop Banner @if(isset($data) && isset($data['home_banner_banner_desktop_image'])) <a href="{{ asset($data['home_banner_banner_desktop_image']) }}" target="blank"><img src="{{ asset($data['home_banner_banner_desktop_image']) }}" alt="" width="50"></a>@endif</label>
                                                 <div class="input-group">
-                                                    <input type="file" class=" upload-image dropify" id="home_banner_banner_desktop_image_input">
+                                                    <input type="file" class=" upload-image dropify" id="home_banner_banner_desktop_image_input" @if(isset($data) && isset($data['home_banner_banner_desktop_image'])) data-default-file="{{ asset($data['home_banner_banner_desktop_image']) }}" @endif>
                                                     <div class="image-collection mt-3" >
                                                         <input hidden type="text" value="{{$data['home_banner_banner_desktop_image'] ?? ''}}"  class="form-control image-input" name="home_banner_banner_desktop_image" data-lable="home_banner_banner_desktop_image" id="home_banner_banner_desktop_image">
                                                         <input placeholder="Alternative text" type="text" value="{{$data['home_banner_banner_desktop_image_alt'] ?? ''}}" id="home_banner_banner_desktop_image_alt" name="home_banner_banner_desktop_image_alt" class="form-control w-100">
@@ -124,7 +124,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-sm btn-danger mt-4 banner_slider_list_remove">Remove</button>
+                                                <button class="btn btn-sm btn-danger mt-4 banner_slider_list_remove" type="button">Remove</button>
 
                                             </div>
                                         </div>
@@ -156,6 +156,10 @@
 @endsection
 @push('js')
 <script>
+    $(document).on('click', '.banner_slider_list_remove', function(e){
+        $(this).parents().eq(2).remove();
+        restructureList();
+    })
     $(document).on('click', '.add-module-section', function(e){
         e.preventDefault();
     
@@ -198,7 +202,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-sm btn-danger mt-4 banner_slider_list_remove">Remove</button>
+                                            <button class="btn btn-sm btn-danger mt-4 banner_slider_list_remove" type="button">Remove</button>
 
                                         </div>
                                     </div>
