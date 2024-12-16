@@ -9,7 +9,6 @@ class ServiceCategory extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'icon', 'status'];
-    
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);

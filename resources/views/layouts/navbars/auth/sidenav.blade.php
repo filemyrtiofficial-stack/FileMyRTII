@@ -112,5 +112,17 @@
               <span class="menu-title">Setting</span>
             </a>
           </li>
+          <li class="nav-item mt-3">
+            <a class="nav-link" href="">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Newsletter Managment</span>
+            </a>
+          </li>
+          <li class="nav-item pl-3">
+            <a class="nav-link"  href="{{ route('newsletter.index') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Subscribers</span>
+            </a>
+          </li>
         </ul>
       </nav>

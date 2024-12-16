@@ -30,6 +30,41 @@
     <script src="{{asset('assets/rti/js/slick.min.js')}}"></script>
     <script src="{{asset('assets/rti/js/custom-script.js')}}"></script>
     @stack('js')
+    <script>
+        $(document).on('submit', '.form-submit', function(e) {
+        e.preventDefault();
+        let _this = $(this);
+        $('.form-error-list').remove();
+        var data = new FormData($(this)[0]);
+        var action = $(this).attr('action');
+        var method = $(this).attr('method');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: action,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: method, // For jQuery < 1.9
+            success: function(response) {
+                    _this.find('input').val(null);
+                    alert(response.message);
+            },
+            error: function(error) {
+                $.each(error.responseJSON.errors, function(index, value) {
+                    console.log(value)
+                    $('#' + index).parents().eq(0).append(
+                        `<span class="text-danger form-error-list">${value}</span>`)
+                })
+            }
+        });
+    })
+    </script>
 </body>
+
 
 </html>

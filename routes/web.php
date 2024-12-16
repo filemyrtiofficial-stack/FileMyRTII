@@ -47,12 +47,14 @@ use App\Http\Controllers\Template\MenuController;
 use App\Http\Controllers\Template\TemplateController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\NewsletterController;
 
 
 
 
 
-use App\Mail\MyTestEmail;
+use App\Mail\MyTestEmailphp;
+use App\Mail\NewsletterMail;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -61,6 +63,18 @@ Route::get("test-mail", function(){
 
     // The email sending is done using the to method on the Mail facade
     if(Mail::to('developmentd299@gmail.com')->send(new MyTestEmail())){
+		echo "yes";
+	}
+	else {
+		echo "no";
+	}
+});
+
+Route::get("subscribe-now", function(){
+	$name = "Test Coder";
+
+    // The email sending is done using the to method on the Mail facade
+    if(Mail::to('developmentd299@gmail.com')->send(new NewsletterMail())){
 		echo "yes";
 	}
 	else {
@@ -136,6 +150,7 @@ Route::get("test-mail", function(){
 		Route::resource('template-section', SectionController::class); 
 		Route::resource('settings', SettingController::class); 
 		Route::resource('testimonials', TestimonialController::class); 
+		Route::resource('newsletter', NewsletterController::class); 
 
 		
 		
@@ -150,7 +165,7 @@ Route::get("test-mail", function(){
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 	});
-
+Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 

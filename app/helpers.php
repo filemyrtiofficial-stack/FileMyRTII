@@ -865,3 +865,22 @@ function blogOptions($selected = null)  {
     }
     return $list;
 }
+
+function array_remove_null($item)
+{
+    if (!is_array($item)) {
+        return $item;
+    }
+
+   return collect($item)
+        ->reject(function ($item) {
+            return is_null($item);
+        })
+        ->flatMap(function ($item, $key) {
+
+            return is_numeric($key)
+                ? [array_remove_null($item)]
+                : [$key => array_remove_null($item)];
+        })
+        ->toArray();
+}

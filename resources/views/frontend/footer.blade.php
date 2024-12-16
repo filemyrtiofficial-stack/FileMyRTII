@@ -81,8 +81,11 @@
 
                 <div class="footer_subscribe">
                     <div class="footer_heading fs-24 fw-700">Remain Updated</div>
-                    <form action="#">
-                        <input class="form-field" type="email" placeholder="Your Email Address">
+                    <form action="{{route('subscribe-now')}}" class="form-submit" method="post">
+                        <div>
+
+                            <input class="form-field" type="email" placeholder="Your Email Address" name="email" id="email">
+                        </div>
                         <button class="theme-btn fs-24"><span>Sign up</span></button>
                     </form>
                 </div>

@@ -9,6 +9,9 @@ use App\Models\PageData;
 use App\Models\Page;
 use App\Models\SlugMaster;
 use App\Models\Blog;
+use App\Models\Newsletter;
+use App\Mail\NewsletterMail;
+use Illuminate\Support\Facades\Mail;
 class FrontendController extends Controller
 {
     public function index($slug = null) {
@@ -51,6 +54,31 @@ class FrontendController extends Controller
         $data = $request->only(['name', 'email', 'phone', 'subject', 'message']);
         Enquiry::create($data);
 
+        return response(['message' =>  'Thank you for connecting with us']);
+    }
+
+    // Newsletter Validation Code
+    public function sendNewsletter(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => "required|email",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $request->only(['email']);
+        $newsletter = Newsletter::where($data)->first();
+        if($newsletter) {
+            if($newsletter->status == false) {
+                $newsletter->update(['status' => true]);
+            }
+            else {
+                return response(['errors' => ['email' => 'You are already subscribed']], 422);
+            }
+        }
+        else {
+            $newsletter = Newsletter::create($data);
+        }
+        Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
         return response(['message' =>  'Thank you for connecting with us']);
     }
     public function blogListingAPI(Request $request) {
