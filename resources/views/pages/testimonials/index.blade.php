@@ -9,7 +9,7 @@
                   <form action="">
                             <div class="row">
                                     <div class="col-md-3">
-                                            <input type="text" name="name" class="form-control" placeholder="Search By Name" value="{{$_GET['name'] ?? ''}}">
+                                            <input type="text" name="search" class="form-control" placeholder="Search By Client Name/Comment" value="{{$_GET['search'] ?? ''}}">
                                     </div>
                                     <div class="col-md-3">
                                             <select  name="status" class="form-control">

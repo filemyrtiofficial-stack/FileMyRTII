@@ -12,10 +12,22 @@ class Blog extends Model
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
+       
         $list = Blog::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'title') {
+                        $list->where('title', 'like', '%'.$filter.'%');
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+       
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);
         }

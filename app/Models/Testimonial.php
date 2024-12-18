@@ -13,7 +13,21 @@ class Testimonial extends Model
     public static function list($pagination, $filters = null) {
         $list = Testimonial::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'search') {
+                        $list->where(function($query) use($filter) {
+                            $query->where('client_name', 'like', '%'.$filter.'%')
+                            ->orwhere('comment', 'like', '%'.$filter.'%');
+                        });
+                    }
+                    else {
+
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
         if($pagination) {
             return $list->paginate(10);

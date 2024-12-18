@@ -14,8 +14,8 @@
                                     <div class="col-md-3">
                                         <select  name="category_id" class="form-control">
                                                 <option value="">Select Category</option>
-                                                @foreach($list as $item)
-                                                        <option value="{{$item->category->name ?? ''}}">{{$item->category->name ?? ''}}</option>
+                                                @foreach(App\Models\ServiceCategory::list(false) as $item)
+                                                        <option value="{{$item->id ?? ''}}" {{isset($_GET['category_id']) && $_GET['category_id'] == $item->id ? 'selected' : ''}}>{{$item->name ?? ''}}</option>
                                                 @endforeach
                                         </select>
                                     </div>

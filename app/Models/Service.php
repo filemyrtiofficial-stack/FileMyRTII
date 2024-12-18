@@ -14,7 +14,17 @@ class Service extends Model
     public static function list($pagination, $filters = null) {
         $list = Service::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'name') {
+                        $list->where('name', 'like', '%'.$filter.'%');
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
         if($pagination) {
             return $list->paginate(10);

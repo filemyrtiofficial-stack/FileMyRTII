@@ -6,6 +6,10 @@
         display:none;
     }
 </style>
+<?php
+    $setting = App\Models\Setting::getSettingData('header-footer-setting');
+
+?>
 <header class="breadcrumb_banner bg_none">
             <img class="img-fluid bg_img" src="images/about-us/about-banner.webp" alt="about us banner">
                 <div class="container">
@@ -213,13 +217,13 @@
                                     <span class="list_icon">
                                         <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/phone-icon.webp')}}" alt="phone icon">
                                     </span>
-                                    <span class="list_content">Phone No: 1234567890</span>
+                                    <span class="list_content">Phone No: {{$setting['contact_no'] ?? ''}}</span>
                                 </li>
                                 <li>
                                     <span class="list_icon">
                                         <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/mail-icon.webp')}}" alt="mail icon">
                                     </span>
-                                    <span class="list_content">Email: support@FileMyRTI.com</span>
+                                    <span class="list_content">Email: {{$setting['email'] ?? ''}}</span>
                                 </li>
                             </ul>
                         </div>

@@ -20,7 +20,7 @@
                     <input hidden name="section_type" value="{{$_GET['type'] ?? ''}}">
                     @endif
                     <div class="row mt-5">
-                        <div class="col-8">
+                        <!-- <div class="col-8">
                             <div class="form-group"> 
                                 <label class="form-label">Title</label>
                                 <div class="input-group">
@@ -29,20 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                                <div class="form-group">
-                                    <label class="form-label">Status</label>
-                                    <div class="input-group">
-                                        <select name="status" id="status" class="form-control">
-                                            @foreach(commonStatus() as $key => $item)
-                                            <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
-                                                selected @endif>
-                                                {{$item['name']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                       
                         <div class="col-12">
                             <div class="form-group"> 
                                 <label class="form-label">Description</label>
@@ -62,7 +49,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <?php
                         $fields = [];
                         if(isset($_GET['type'])) {
@@ -101,10 +88,38 @@
                                         </div>
                                     </div>
                                 </div>
+                                @else
+                                <div class="col-6">
+                                <div class="form-group"> 
+                                    <label class="form-label">{{$fields['label'] ?? ''}}</label>
+                                    <div class="input-group">
+                                        @if($fields['type'] == 'input')
+                                            <input id="{{$fields['name']}}" name="{{$fields['name']}}" value="{{$data[$fields['name']] ?? ''}}" class="form-control" type="text" placeholder="Title">
+                                        @elseif($fields['type'] == 'image')
+                                        <input type="file" class=" upload-image dropify" id="images" @if(isset($data)) data-default-file="{{asset($details[$fields['name']] ?? '')}}" @endif>
+                                        <div class="image-collection mt-3" >
+                                            <input hidden type="text" value="{{$details[$fields['name']] ?? ''}}"  class="form-control image-input" name="{{$fields['name']}}" data-lable="{{$fields['name']}}" id="{{$fields['name']}}">
+                                            <input placeholder="Alternative text" type="text" value="{{$details[$fields['name'].'_alt'] ?? ''}}" id="{{$fields['name']}}_alt" name="{{$fields['name']}}_alt" class="form-control w-100">
+                                        </div>
+                                        @elseif($fields['type'] == 'textarea')
+                                        <textarea name="description" class="form-control" id="{{$fields['name']}}">{{$data[$fields['name']] ?? ''}}</textarea>
+                                        @elseif($fields['type'] == 'select')
+                                        <select name="status" id="status" class="form-control">
+                                            @foreach($fields['options'] as $key => $item)
+                                            <option value="{{$key}}" @if(isset($data['status']) && $data['status']==$key)
+                                                selected @endif>
+                                                {{$item['name']}}</option>
+                                            @endforeach
+                                        </select>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                                 @endif
                             @endforeach
                         
                         @endif
+                       
                     </div>
                     <div class="mt-5 text-right">
                         <button class="btn btn-primary">Submit</button>

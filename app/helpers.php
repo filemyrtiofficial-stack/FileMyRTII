@@ -816,9 +816,16 @@ function sectionTypeList() {
                     'required' => true
                 ],
                 [
+                    'type' => 'select',
+                    'label' => 'Status',
+                    'name' => 'status',
+                    'required' => true,
+                    'options' => commonStatus()
+                ],
+                [
                     'type' => 'image',
                     'label' => 'Icon',
-                    'name' => 'icon',
+                    'name' => 'image',
                     'required' => true
                 ],
                 [
@@ -827,18 +834,68 @@ function sectionTypeList() {
                     'name' => 'description',
                     'required' => true
                 ],
+                
             ]
         ],
             'footer_banner' => [
             'title' => 'footer Banner',
             'fields' => [
                 [
+                    'type' => 'input',
+                    'label' => 'Title',
+                    'name' => 'title',
+                    'required' => true
+                ],
+                [
+                    'type' => 'select',
+                    'label' => 'Status',
+                    'name' => 'status',
+                    'required' => true,
+                    'options' => commonStatus()
+                ],
+                [
+                    'type' => 'image',
+                    'label' => 'Icon',
+                    'name' => 'image',
+                    'required' => true
+                ],
+                [
+                    'type' => 'textarea',
+                    'label' => 'Description',
+                    'name' => 'description',
+                    'required' => true
+                ],
+                [
                     "type" => 'link',
                     'lable' => "File My RTI Now"
                     
                 ],
             ]
-        ]
+            ],
+            'why_choose' => [
+                'title' => 'Why Choose',
+                'fields' => [
+                    [
+                        'type' => 'input',
+                        'label' => 'Title',
+                        'name' => 'title',
+                        'required' => true
+                    ],
+                    [
+                        'type' => 'select',
+                        'label' => 'Status',
+                        'name' => 'status',
+                        'required' => true,
+                        'options' => commonStatus()
+                    ],
+                    [
+                        'type' => 'image',
+                        'label' => 'Icon',
+                        'name' => 'image',
+                        'required' => true
+                    ],
+                ]
+            ]
     ];
 }
 

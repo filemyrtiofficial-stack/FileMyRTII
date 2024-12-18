@@ -13,7 +13,18 @@ class Newsletter extends Model
         $filters = array_remove_null($filters);
         $list = Newsletter::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'email') {
+                        $list->where('email' , 'like', '%'.$filter.'%');
+                    }
+                    else {
+
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
         if($pagination) {
             return $list->paginate(10);

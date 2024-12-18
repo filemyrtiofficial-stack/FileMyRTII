@@ -49,8 +49,8 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => "required|unique:sections,title",
-            'description' => "required",
+            'title' => "required",
+            // 'description' => "required",
 
 
         ]);

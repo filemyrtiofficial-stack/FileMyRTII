@@ -14,8 +14,19 @@ class ServiceCategory extends Model
         unset($filters['ids']);
         $list = ServiceCategory::with('services.slug')->orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'name') {
+                        $list->where('name', 'like', '%'.$filter.'%');
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+       
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);
         }
