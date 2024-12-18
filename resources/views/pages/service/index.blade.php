@@ -4,7 +4,36 @@
 @include('layouts.navbars.auth.topnav', ['title' => 'Service Management'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
-
+        <div class="card mb-3">
+            <div class="card-body">
+                  <form action="">
+                            <div class="row">
+                                    <div class="col-md-3">
+                                            <input type="text" name="name" class="form-control" placeholder="Search By Name" value="{{$_GET['name'] ?? ''}}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select  name="category_id" class="form-control">
+                                                <option value="">Select Category</option>
+                                                @foreach($list as $item)
+                                                        <option value="{{$item->category->name ?? ''}}">{{$item->category->name ?? ''}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <select  name="status" class="form-control">
+                                                    <option value="">Select Status</option>
+                                                    @foreach(commonStatus() as $key =>  $value)
+                                                            <option value="{{$key}}" {{isset($_GET['status']) && $_GET['status'] == $key ? 'selected' : ''}}>{{$value['name'] ?? ''}}</option>
+                                                    @endforeach
+                                            </select>
+                                    </div>
+                                    <div class="col-12">
+                                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                    </div>
+                            </div>
+                  </form>
+            </div>
+        </div>
         <div class="card mb-4">
             <div class="card-header  list-header">
                 <h4>Service</h4>
