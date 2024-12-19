@@ -188,6 +188,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        // LaravelSocialiteSocialiteServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        // 'Socialite' => LaravelSocialiteFacadesSocialite::class,
     ])->toArray(),
 
 ];

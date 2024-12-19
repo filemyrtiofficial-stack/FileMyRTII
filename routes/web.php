@@ -49,7 +49,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 
 
 
@@ -171,6 +171,18 @@ Route::get("subscribe-now", function(){
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 	});
+
+
+	Route::get('google', function(){
+
+		return view('googleAuth');
+		
+		});
+		Route::get('auth/google', [FrontendAuthController::class, 'redirectToGoogle']);
+		Route::get('callback', [FrontendAuthController::class, 'handleGoogleCallback']);
+
+
+
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
 
 Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->name('frontend.service-form');
