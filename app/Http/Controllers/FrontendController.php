@@ -39,8 +39,12 @@ class FrontendController extends Controller
         }
         abort(404);
     }
-    public function about() {
-        return view('frontend.about');
+    public function blogDetail($slug) {
+        $data = Blog::wherehas('slugMaster', function($query) use($slug) {
+            $query->where(['linkable_type' => 'blogs', 'slug' => $slug]);
+        })->first();
+        return view('frontend.blog_details', compact('data'));
+
     }
     public function service($id = null) {
         $data = ourServices()[$id];

@@ -4,6 +4,7 @@
 @import url("default.css");
 @import url("responsive.css");
 @import url("about-us.css");
+@import url("contact-us.css");
 @import url("service-detail.css");
 
 
@@ -405,7 +406,7 @@ button {
         left: 0;
         right: 0;
         width: 100%;
-        padding: 4.16667vw 0 3.64583vw;
+        padding: 3.16667vw 0 3.64583vw;
         min-width: 50rem;
         height: auto;
         min-height: 250px;
@@ -477,7 +478,7 @@ button {
         display: inline-block;
         color: var(--theme-btn-color);
         font-weight: 600;
-        margin-bottom: 0.929em;
+        margin-bottom: 0.529em;
     }
     ul.mega_menu ul {
         margin: 0;
@@ -485,7 +486,7 @@ button {
         list-style: none;
     }
     ul.mega_menu ul li {
-        margin-bottom: 1em;
+        margin-bottom: 0.25em;
     }
     ul.mega_menu ul li:last-child {
         margin-bottom: 0;
@@ -1202,8 +1203,8 @@ button {
         background-image: none !important;
     }
     .section_banner .mobile_img {
-        display: block;
-        position: relative;
+        /* display: block; */
+        /* position: relative; */
     }
     .section_banner .mobile_img::before {
         content: "";
@@ -1412,9 +1413,13 @@ button {
 .rti_item.active:hover .rti_scroll {
     margin-top: -50%;
 }
+.rti_item.active:hover .rti_content {
+    font-weight: 400;
+}
 .rti_item.active:hover .rti_content + .rti_content {
     visibility: visible;
     opacity: 1;
+    font-weight: 400;
 }
 
 @media (max-width: 1199px) {
@@ -1778,8 +1783,8 @@ button {
 }
 .cta_section .cta_bg {
     position: relative;
-    padding-top: 6.77083vw;
-    padding-bottom: 6.77083vw;
+    padding-top: 3.90625vw;
+    padding-bottom: 3.90625vw;
 }
 .cta_section .cta_bg::before {
     content: "";
@@ -1823,8 +1828,8 @@ button {
 }
 @media (min-width: 1920px) {
     .cta_section .cta_bg {
-        padding-top: 8.125rem;
-        padding-bottom: 8.125rem;
+        padding-top: 4.6875rem;
+        padding-bottom: 4.6875rem;
     }
 }
 /* cta section end */

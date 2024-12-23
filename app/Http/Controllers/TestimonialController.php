@@ -9,11 +9,11 @@ use App\Interfaces\TestimonialInterface;
 use Validator;
 class TestimonialController extends Controller
 {
-    private TestimonialRepository $thestimonialRepository;
+    private TestimonialRepository $testimonialRepository;
 
-    public function __construct(TestimonialInterface $thestimonialRepository)
+    public function __construct(TestimonialInterface $testimonialRepository)
     {
-        $this->testimonialRepository = $thestimonialRepository;
+        $this->testimonialRepository = $testimonialRepository;
     }
 
     /**
@@ -57,6 +57,7 @@ class TestimonialController extends Controller
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
+        
         $data = $this->testimonialRepository->store($request);
         return $data;
     }

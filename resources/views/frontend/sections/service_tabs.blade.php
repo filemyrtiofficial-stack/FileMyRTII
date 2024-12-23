@@ -42,21 +42,24 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                         ?>
                                         @foreach($item[0]['services'] ?? [] as $key =>  $item)
                                             <div class="rti_block">
-                                                <div class="rti_item">
-                                                    <div class="rti_scroll">
-                                                        <div class="rti_img">
-                                                            <img class="img-fluid"
-                                                                src="{{asset($item['icon'] ?? '')}}" alt="">
-                                                        </div>
-                                                        <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
-                                                        @if(isset($item['description_enable']) && $item['description_enable'] == 'yes')
-                                                            <div>
-                                                                <p>{{$item['description'] ?? ''}}</p>
+                                                <a href="{{route('frontend.service',[$item->slug->slug ?? ''])}}">
+                                                    <div class="rti_item">
+                                                        <div class="rti_scroll">
+                                                            <div class="rti_img">
+                                                                <img class="img-fluid"
+                                                                    src="{{asset($item['icon'] ?? '')}}" alt="">
                                                             </div>
-                                                        @endif
-                                                        <a href="{{route('frontend.service',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
+                                                            <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
+                                                            @if(isset($item['description_enable']) && $item['description_enable'] == 'yes')
+                                                                <div>
+                                                                    <p>{{$item['description'] ?? ''}}</p>
+                                                                </div>
+                                                            @endif
+                                                            <span href="{{route('frontend.service',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</span>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </a>
+                                               
                                             </div>
                                         @endforeach
                                        

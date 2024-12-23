@@ -72,6 +72,12 @@
     font-weight: 500 !important;
 
 }
+span.permission-list {
+    background: #1a3e5c;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
     </style>
 </head>
 <body>

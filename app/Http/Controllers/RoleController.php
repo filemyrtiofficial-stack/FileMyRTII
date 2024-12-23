@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
+use App\Repositories\RoleRepository;
+use App\Interfaces\RoleInterface;
+use Validator;
 
 class RoleController extends Controller
 {
+    private RoleRepository $roleRepository;
+
+    public function __construct(RoleInterface $roleRepository)
+    {
+        $this->roleRepository = $roleRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('pages.role.index');
+        $list = Role::with('permissions')->get();
+        return view('pages.role.index', compact('list'));
 
     }
 
@@ -36,7 +48,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => "required|unique:roles,name",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $this->roleRepository->store($request);
+        return $data;
     }
 
     /**
@@ -58,7 +77,12 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Role::with('permissions')->where(['id' => $id])->first();
+        $permissions = array_column($data['permissions']->toArray(), 'name');
+
+        return view('pages.role.create', compact('data', 'permissions'));
+
+
     }
 
     /**
@@ -70,7 +94,14 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => "required|unique:roles,name,".$id,
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $this->roleRepository->update($request, $id);
+        return $data;
     }
 
     /**
@@ -81,6 +112,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $data = $this->roleRepository->delete($id);
+            return response(['message' => 'Data is successfully deleted']);
+        } catch (Exception $ex) {
+            return response(['error' => $ex->getMessage()], 500);
+        }
     }
 }

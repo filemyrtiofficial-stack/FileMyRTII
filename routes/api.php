@@ -73,7 +73,13 @@ Route::get('create-permission', function(){
                 'Delete Section Data'
             ],
             'Setting' => [
-                'Manage Setting'
+                'Header Footer',
+                'Payment'
+
+            ],
+            'Newsletter' => [
+                'Manage Newsletter Data',
+
             ],
 
         ];

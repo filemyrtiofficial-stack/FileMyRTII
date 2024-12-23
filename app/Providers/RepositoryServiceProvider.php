@@ -43,6 +43,8 @@ use App\Repositories\SettingRepository;
 use App\Interfaces\SettingInterface;
 use App\Repositories\TestimonialRepository;
 use App\Interfaces\TestimonialInterface;
+use App\Repositories\RoleRepository;
+use App\Interfaces\RoleInterface;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -71,6 +73,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TemplateInterface::Class, TemplateRepository::class);
         $this->app->bind(SettingInterface::Class, SettingRepository::class);
         $this->app->bind(TestimonialInterface::Class, TestimonialRepository::class);
+        $this->app->bind(RoleInterface::Class, RoleRepository::class);
 
 
     }

@@ -923,8 +923,9 @@ function blogOptions($selected = null)  {
     return $list;
 }
 
-function permissionList($parent_id) {
+function permissionList($parent_id = 0) {
     $permissions = Spatie\Permission\Models\Permission::where(['parent_id' => $parent_id])->get();
+    return $permissions;
 }
 
 function fieldList() {
@@ -977,3 +978,4 @@ function array_remove_null($item)
         })
         ->toArray();
 }
+

@@ -470,6 +470,7 @@
 @media (max-width: 991px) {
     .breadcrumb ol li:not(:first-child)::before {
         left: 5%;
+        left: 0;
     }
     .about_area {
         padding-left: 0;

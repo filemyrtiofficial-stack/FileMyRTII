@@ -190,6 +190,7 @@ Route::post('/udpate-payment-success', [FrontendController::class, 'udpatePaymen
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
 
 Route::get('/apply/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service');
+Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 

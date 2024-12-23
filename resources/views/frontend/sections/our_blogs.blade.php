@@ -30,7 +30,7 @@ $blogs = App\Models\Blog::list(false, ['ids' => json_decode($data['blog_list'], 
                                     <p>{{$value['title'] ?? ''}}
                                     </p>
                                 </div>
-                                <a href="" class="theme-btn-link fs-28">Read more</a>
+                                <a href="{{route('blog-details',[$value->slugMaster->slug ?? ''])}}" class="theme-btn-link fs-28">Read more</a>
                             </div>
                         </div>
                     </div>

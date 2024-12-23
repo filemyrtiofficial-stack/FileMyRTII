@@ -262,6 +262,15 @@ class TemplateController extends Controller
             'image_1' => "required",
             ];
         }
+        elseif($request->section_key == 'our_team') {
+            $validation = [
+            'title' => "required",
+            'image_1' => "required",
+            ];
+            for($index = 0; $index < $request->team_count; $index++) {
+                $validation['team_'.$index] = 'required';
+            }
+        }
         $validator = Validator::make($request->all(), $validation);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
