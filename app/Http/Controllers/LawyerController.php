@@ -3,17 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Lawyer;
+use App\Repositories\LawyerRepository;
+use App\Interfaces\LawyerInterface;
+use Validator;
 
 class LawyerController extends Controller
 {
+
+    private LawyerRepository $LawyerRepository;
+
+    public function __construct(LawyerInterface $lawyerRepository)
+    {
+        $this->lawyerRepository = $lawyerRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $list = Lawyer::list(true, $request->all());
+        return view('pages.lawyers.index', compact('list'));
     }
 
     /**
@@ -21,9 +34,9 @@ class LawyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('pages.lawyers.create');
     }
 
     /**
@@ -34,7 +47,22 @@ class LawyerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'first_name' => "required",
+            'dob' => "required",
+            'phone' => "required",
+            'email' => "required",
+            'status' => "required",
+            'qualification' => "required",
+            'image' => "required|image",
+            'experience' => "required",
+            'address' => "required"
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $this->lawyerRepository->store($request);
+        return $data;
     }
 
     /**
@@ -56,7 +84,9 @@ class LawyerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Lawyer::get($id);
+
+        return view('pages.lawyers.create', compact('data'));
     }
 
     /**
@@ -68,7 +98,22 @@ class LawyerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'first_name' => "required",
+            'dob' => "required",
+            'phone' => "required",
+            'email' => "required",
+            'status' => "required",
+            'qualification' => "required",
+            'image' => "required|image",
+            'experience' => "required",
+            'address' => "required"
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $this->lawyerRepository->update($request, $id);
+        return $data;
     }
 
     /**
@@ -79,6 +124,11 @@ class LawyerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $data = $this->lawyerRepository->delete($id);
+            return response(['message' => 'Data is successfully deleted']);
+        } catch (Exception $ex) {
+            return response(['error' => $ex->getMessage()], 500);
+        }
     }
 }

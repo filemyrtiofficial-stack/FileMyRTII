@@ -50,6 +50,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
+use App\Http\Controllers\LawyerController;
 
 
 
@@ -130,6 +131,7 @@ Route::get("subscribe-now", function(){
 		Route::resource('service-category', ServiceCategoryController::class);       
 		Route::resource('services', ServiceController::class);    
 		
+		Route::resource('lawyers', LawyerController::class);  
 		Route::post('/upload-images', [TemplateController::class, 'uploadImages'])->name('upload-images');
 		
 
