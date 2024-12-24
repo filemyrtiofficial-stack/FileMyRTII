@@ -11,6 +11,7 @@ class Page extends Model
     protected $fillable = ['title', 'description', 'status'];
     
     public static function list($pagination, $filters = null) {
+        unset($filters['page']);
         $list = Page::orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);

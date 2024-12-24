@@ -11,6 +11,8 @@ class Testimonial extends Model
     protected $fillable = ['client_name', 'image', 'status', 'comment'];
     
     public static function list($pagination, $filters = null) {
+        unset($filters['page']);
+
         $list = Testimonial::orderBy('id', 'desc');
         if(!empty($filters)) {
             foreach($filters as $key => $filter) {

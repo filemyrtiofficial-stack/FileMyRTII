@@ -7,7 +7,7 @@ $blogs = App\Models\Blog::list(false, ['ids' => json_decode($data['blog_list'], 
 <section class="blog_section">
     <div class="container">
         <div class="section_heading">
-            <h4 class="fs-56 fw-700">{!! $data['our_blogs_title'] ?? '' !!}</h4>
+            <h4 class="fs-56 fw-700">{!! $data['title'] ?? '' !!}</h4>
         </div>
         <div class="row">
             

@@ -10,6 +10,7 @@ class Newsletter extends Model
     use HasFactory;
     protected $fillable = ['email', 'status', 'token'];
     public static function list($pagination, $filters = null) {
+        unset($filters['page']);
         $filters = array_remove_null($filters);
         $list = Newsletter::orderBy('id', 'desc');
         if(!empty($filters)) {

@@ -4,6 +4,7 @@ use App\Interfaces\TemplateInterface;
 use Carbon\Carbon;
 use App\Models\Page;
 use App\Models\PageData;
+use App\Models\ServiceData;
 use App\Models\SlugMaster;
 use App\Models\SeoMaster;
 use Session;
@@ -25,14 +26,10 @@ class TemplateRepository implements TemplateInterface {
         $data = ['title' => $request['title'], 'description' => $request->description, 'status' => $request->status];
         $page = Page::where('id', $id)->first();
         $page->update($data);
-        // $page_data = PageData::create(['page_id' => $page->id])->first();
-        // if(!$page_data ) {
-
-        //     PageData::create(['page_id' => $page->id, 'data' => json_encode($request->all())]);
-        // }
-        // else {
-        //     $page->update(['data' => json_encode($request->all())]);
-        // }
+        $seo_data = $request->only(['meta_title', 'meta_keywords', 'meta_description']);
+        $seo_data['linkable_type'] = 'pages';
+        $seo_data['linkable_id'] = $page->id;
+        SeoMaster::createUpdateSeo( $seo_data);
         if(!empty($request->update_array)) {
 
             $update_array = json_decode($request->update_array, true);
@@ -77,21 +74,41 @@ class TemplateRepository implements TemplateInterface {
 
     public function updateSectionDetails($request, $page_id, $id = null) {
 
-        if($request->key == null) {
-
-            $sequance = 1;
-            $pages = PageData::where(['page_id' => $page_id])->orderBy('sequance', 'desc')->first();
-            if($pages) {
-                $sequance = $pages->sequance + 1;
+        if($request->page_type == 'service') {
+            if($request->key == null) {
+    
+                $sequance = 1;
+                $pages = ServiceData::where(['service_id' => $page_id])->orderBy('sequance', 'desc')->first();
+                if($pages) {
+                    $sequance = $pages->sequance + 1;
+                }
+                ServiceData::create(['service_id' => $page_id, 'section_key' => $request->section_key, 'data' => json_encode($request->all()), 'sequance' => $sequance]);
             }
-            PageData::create(['page_id' => $page_id, 'section_key' => $request->section_key, 'data' => json_encode($request->all()), 'sequance' => $sequance]);
+            else {
+                ServiceData::where(['id' => $request->key])->update([ 'data' => json_encode($request->all())]);
+    
+            } 
+            Session::flash("success", "Data successfully added");
+            return response(['message' => "Data successfully added", 'redirect' => route('services.edit',$page_id)]);
         }
         else {
-            PageData::where(['id' => $request->key])->update([ 'data' => json_encode($request->all())]);
 
-        } 
-        Session::flash("success", "Data successfully added");
-        return response(['message' => "Data successfully added", 'redirect' => route('pages.edit',$page_id)]);
+            if($request->key == null) {
+    
+                $sequance = 1;
+                $pages = PageData::where(['page_id' => $page_id])->orderBy('sequance', 'desc')->first();
+                if($pages) {
+                    $sequance = $pages->sequance + 1;
+                }
+                PageData::create(['page_id' => $page_id, 'section_key' => $request->section_key, 'data' => json_encode($request->all()), 'sequance' => $sequance]);
+            }
+            else {
+                PageData::where(['id' => $request->key])->update([ 'data' => json_encode($request->all())]);
+    
+            } 
+            Session::flash("success", "Data successfully added");
+            return response(['message' => "Data successfully added", 'redirect' => route('pages.edit',$page_id)]);
+        }
     }
 
     public function deleteSection($id) {

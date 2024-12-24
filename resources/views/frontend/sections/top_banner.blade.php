@@ -17,7 +17,7 @@
                 </div>
         </header>
 
-@if($key == 0 && $slug == 'blogs')
+@if(isset($slug) && $key == 0 && $slug == 'blogs')
 @include('frontend.sections.blog_listing')
 
 @endif

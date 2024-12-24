@@ -43,12 +43,23 @@ class FrontendController extends Controller
         $data = Blog::wherehas('slugMaster', function($query) use($slug) {
             $query->where(['linkable_type' => 'blogs', 'slug' => $slug]);
         })->first();
+        if(!$data) {
+            abort(404);
+        }
         return view('frontend.blog_details', compact('data'));
 
     }
-    public function service($id = null) {
-        $data = ourServices()[$id];
-        return view('frontend.service', compact('data', 'id'));
+   
+    public function serviceDetails($service_slug) {
+        $service = Service::wherehas('slug', function($query) use($service_slug){
+            $query->where('slug', $service_slug);
+        })->where('status', 1)->select('services.*')->first();
+        if(!$service) {
+            abort(404);
+        }
+        $page_section = $service->serviceData;
+        $seo = $service->seo;
+        return view('frontend.service_details', compact('service', 'page_section', 'seo'));
     }
 
     public function sendEnquiry(Request $request) {
@@ -135,7 +146,7 @@ class FrontendController extends Controller
             $field_data = [];
             $validation = [];
             foreach($fields['field_type'] ?? [] as $key => $value) {
-                if($fields['is_required'][$key] == 'yes') {
+                if(isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes') {
                     
                     $validation[Str::slug($fields['field_lable'][$key])] = 'required';
                 }

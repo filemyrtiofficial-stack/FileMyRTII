@@ -126,7 +126,11 @@ Route::get("subscribe-now", function(){
 		Route::resource('blogs', BlogController::class);       
 		Route::resource('team-members', TeamMemberController::class);       
 		Route::post('/update-menu-node', [MenuController::class, 'updateMenuNode'])->name('menu.MenuNodeStore');
-		Route::resource('menu-setting', MenuController::class);       
+		Route::resource('menu-setting', MenuController::class);    
+		
+		Route::get('/update-services-section/{services_id}/{section_type}/{id?}', [ServiceController::class, 'getSectionservices'])->name('get-services-section');
+		Route::delete('/delete-services-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-services-section');
+
 		Route::resource('service-category', ServiceCategoryController::class);       
 		Route::resource('services', ServiceController::class);    
 		
@@ -188,8 +192,9 @@ Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->na
 Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->name('frontend.service-form');
 Route::post('/udpate-payment-success', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
+Route::get('/apply/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
 
-Route::get('/apply/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service');
+Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');

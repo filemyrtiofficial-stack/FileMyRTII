@@ -13,7 +13,17 @@ class Section extends Model
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
-        $list = Section::orderBy('id', 'desc');
+        unset($filters['order_by']);
+        unset($filters['order_by_type']);
+        unset($filters['limit']);
+        unset($filters['page']);
+
+
+        $order_by_key = $filter_data['order_by'] ?? 'id';
+        $order_by_type = $filter_data['order_by_type'] ?? 'desc';
+
+
+        $list = Section::orderBy($order_by_key, $order_by_type);
         if(!empty($filters)) {
             $list->where($filters);
         }
@@ -21,7 +31,11 @@ class Section extends Model
             $list->wherein('id', $filter_data['ids']);
         }
         if($pagination) {
-            return $list->paginate(10);
+            $limit = 10;
+            if(isset($filter_data['limit'])) {
+                $limit = $filter_data['limit'];
+            }
+            return $list->paginate($limit);
         }
         else {
             return $list->get();

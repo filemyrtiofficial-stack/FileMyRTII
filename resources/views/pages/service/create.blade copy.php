@@ -14,146 +14,35 @@
     @endif
     <div class="d-flex justify-content-center mb-5">
         <div class="row col-lg-12">
-            <div class="col-lg-8 mt-lg-0 mt-4">
+        <div class="col-lg-8 mt-lg-0 mt-4">
                 <div class="card mt-4">
                     <div class="card-header">
                         <h4>{{isset($data['id']) ? 'Edit' : 'New'}} Service</h4>
                     </div>
                     <div class="card-body pt-0">
                         <div class="row mt-5">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label">Name</label>
+                            <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
                                     <div class="input-group">
                                         <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control enable-slug"
-                                        type="text" placeholder="Name">
+                                            type="text" placeholder="Name">
                                     </div>
-                                </div>
                             </div>
-                            
-
-                            
-                          
-
-                          
+                            </div>
                             <div class="col-6">
-                                <div class="form-group">
-                                    <label class="form-label">Icon @if(isset($data) && isset($data['icon'])) <a target="blank" href="{{ asset($data['icon'] ) }}"><img width="50" src="{{ asset($data['icon'] ) }}" alt=""></a> @endif</label>
-                                    <div class="input-group">
-                                        <input name="icon" type="file" class="form-control dropify" id="icon"  @if(isset($data)) data-default-file="{{ asset($data['icon'] ?? '') }}" @endif>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label">Description</label>
-                                    <div class="input-group">
-                                        <textarea name="description" class="form-control editor" id="description" rows="5">{{$data['description'] ?? ''}}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mt-4">
-                    <div class="card-header">
-                      <h5>Section List</h5>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sectionSelectionModalCenter">Select Section</button>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class=" mt-5">
-                        <div class="accordion" id="sortable_product">
-                          @foreach($data->serviceData ?? [] as $key => $item)
-                            <?php
-                            $item_data = templateList()[$item->section_key] ?? [];
-                            $details = json_decode($item->data, true);
-                            ?>
-                            <div class="card draggable"  id="row{{  $item->id }}"  draggable="true" productID="{{ $item->id}}">
-                              <div class="card-header" id="headingOne" style="background: #e3e3e3;;">
-                                <h2 class="mb-0">
-                                      <strong>{{$item_data['section_name'] ?? ''}} </strong>
-                                </h2>
-                                  <h4>({!! $details['title'] ?? '' !!})</h4>
-                                <div class="accordian-actions">
-                                  <a href="{{route('get-services-section',[$data->id, $item->section_key, $item->id])}}" class="btn btn-sm btn-secondary">Edit</a>
-                                  <button href="{{route('delete-services-section',[$item->id])}}" class="btn btn-sm btn-danger ml-3 delete-btn">Delete</button>
-
-                                </div>
-                              </div>
-                            </div>
-                          @endforeach
-                        </div>
-
-                        </div>
-                    </div>
-                </div>
-              
-                <div class="card mt-4">
-                        <div class="card-header">
-                        <h5>FAQ</h5>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Question</th>
-                                            <th>Answer</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="faq-list">
-                                        @if(!isset($data))
-                                        <tr>
-                                            <th><textarea name="question[]" class="form-control" id="" required></textarea></th>
-                                            <th><textarea name="answer[]" class="form-control" id="" required></textarea></th>
-                                            <th><button class="btn btn-sm btn-danger remove-faq-item" type="button"><i
-                                            class="fa fa-trash"></i></button></th>
-    
-                                        </tr>
-                                        @elseif(!empty($data->faq) && isset($faqs['answer']))
-                                        <?php $faqs = json_decode($data->faq, true);?>
-                                        
-
-                                            @for($index = 0; $index < count($faqs['answer'] ); $index++)
-                                                <tr>
-                                                <th><textarea name="question[]" class="form-control" id="" required>{{$faqs['question'][$index] ?? ''}}</textarea>
-                                                </th>
-                                                <th><textarea name="answer[]" class="form-control" id="" required>{{$faqs['answer'][$index] ?? ''}}</textarea></th>
-                                                    <th><button class="btn btn-sm btn-danger remove-faq-item" type="button"><i
-                                                    class="fa fa-trash"></i></button></th>
-                                                </tr>
-                                            @endfor
-                                        @endif
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-sm btn-secondary add-more-faq" type="button">Add More Faq</button>
-                            </div>
-                        </div>
-                    </div>
-                <div class="mt-5 text-right">
-                    <button class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="card mt-4">
-                    <div class="card-header">
-                      <h5>SEO Details</h5>
-                    </div>
-                  <div class="card-body pt-0">
-                        <div class="row mt-5">
-                            <div class="col-12">
-                                <div class="form-group">
+                            <div class="form-group">
                                     <label class="form-label">Slug</label>
                                     <div class="input-group">
                                         <input id="slug" name="slug" value="{{$data->slug->slug ?? ''}}" class="form-control"
-                                            type="text" placeholder="slug">
+                                            type="text" placeholder="Slug">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
+
+                            
+                            <div class="col-6">
+                            <div class="form-group">
                                     <label class="form-label">Category</label>
                                     <div class="input-group">
                                         <select name="category" id="category" class="form-control">
@@ -167,7 +56,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label class="form-label">Status</label>
                                     <div class="input-group">
@@ -181,44 +71,58 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="mt-3">
-                            <h5 class="ml-2">Meta Details</h5>
-                            <hr>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <label class="form-label">Meta Title</label>
+                                    <label class="form-label">Icon @if(isset($data) && isset($data['icon'])) <a target="blank" href="{{ asset($data['icon'] ) }}"><img width="50" src="{{ asset($data['icon'] ) }}" alt=""></a> @endif</label>
                                     <div class="input-group">
-                                        <input id="meta_title" name="meta_title" value="{{$data->seo->meta_title ?? ''}}" class="form-control"
-                                            type="text" placeholder="meta_title">
+                                        <input name="icon" type="file" class="form-control dropify" id="icon"  @if(isset($data)) data-default-file="{{ asset($data['icon'] ?? '') }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label">Mobile Banner @if(isset($data) && isset($data['mobile_banner'])) <a target="blank" href="{{ asset($data['mobile_banner'] ) }}"><img width="50" src="{{ asset($data['mobile_banner'] ) }}" alt=""></a> @endif</label>
+                                    <div class="input-group">
+                                        <input name="mobile_banner" type="file" class="form-control dropify" id="mobile_banner"  @if(isset($data)) data-default-file="{{ asset($data['mobile_banner'] ?? '') }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label">Desktop Banner @if(isset($data) && isset($data['desktop_banner'])) <a target="blank" href="{{ asset($data['desktop_banner'] ) }}"><img width="50" src="{{ asset($data['desktop_banner'] ) }}" alt=""></a> @endif</label>
+                                    <div class="input-group">
+                                        <input name="desktop_banner" type="file" class="form-control dropify" id="desktop_banner"  @if(isset($data)) data-default-file="{{ asset($data['desktop_banner'] ?? '') }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label">Image 1 @if(isset($data) && isset($data['image_1'])) <a target="blank" href="{{ asset($data['image_1'] ) }}"><img width="50" src="{{ asset($data['image_1'] ) }}" alt=""></a> @endif</label>
+                                    <div class="input-group">
+                                        <input name="image_1" type="file" class="form-control dropify" id="image_1"  @if(isset($data)) data-default-file="{{ asset($data['image_1'] ?? '') }}" @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label">Image 2 @if(isset($data) && isset($data['image_2'])) <a target="blank" href="{{ asset($data['image_2'] ) }}"><img width="50" src="{{ asset($data['image_2'] ) }}" alt=""></a> @endif</label>
+                                    <div class="input-group">
+                                        <input name="image_2" type="file" class="form-control dropify" id="image_2"  @if(isset($data)) data-default-file="{{ asset($data['image_2'] ?? '') }}" @endif>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label">Meta Keywords</label>
+                                    <label class="form-label">Description</label>
                                     <div class="input-group">
-                                        <input id="meta_keywords" name="meta_keywords" value="{{$data->seo->meta_keywords ?? ''}}" class="form-control"
-                                            type="text" placeholder="meta_keywords">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label">Meta Description</label>
-                                    <div class="input-group">
-                                        <textarea id="meta_description" name="meta_description" class="form-control"
-                                            type="text" placeholder="meta_description">{{$data->seo->meta_description ?? ''}}</textarea>
+                                        <textarea name="description" class="form-control editor" id="description" rows="5">{{$data['description'] ?? ''}}</textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-5 float-right">
-                            <button class="btn btn-primary">Submit</button>
-                        </div>
-                  </div>
-              </div>
-              
-              <div class="card mt-4">
+                    </div>
+                </div>
+                <div class="card mt-4">
                     <div class="card-header">
                         <h4>Form Fields</h4>
                     </div>
@@ -226,7 +130,7 @@
                     <div class="row field-list">
                             @if(isset($fields) && isset($fields['field_type']))
                                 @foreach($fields['field_type'] as $key => $field)
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="card mt-3">
                                         <div class="card-body">
                                             <div class="form-group hide">
@@ -262,7 +166,7 @@
                                 </div>
                                 @endforeach
                             @else
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="card mt-3">
                                         <div class="card-body">
                                             <div class="form-group hide">
@@ -302,53 +206,57 @@
                     </div>
                     </div>
                 </div>
-          </div>
+                <div class="card mt-4">
+                        <div class="card-header">
+                        <h5>FAQ</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                        <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Question</th>
+                                            <th>Answer</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="faq-list">
+                                        @if(!isset($data))
+                                        <tr>
+                                            <th><textarea name="question[]" class="form-control" id="" required></textarea></th>
+                                            <th><textarea name="answer[]" class="form-control" id="" required></textarea></th>
+                                            <th><button class="btn btn-sm btn-danger remove-faq-item" type="button"><i
+                                            class="fa fa-trash"></i></button></th>
+    
+                                        </tr>
+                                        @elseif(!empty($data->faq))
+                                        <?php $faqs = json_decode($data->faq, true);?>
+                                        
+
+                                            @for($index = 0; $index < count($faqs['answer'] ); $index++)
+                                                <tr>
+                                                <th><textarea name="question[]" class="form-control" id="" required>{{$faqs['question'][$index] ?? ''}}</textarea>
+                                                </th>
+                                                <th><textarea name="answer[]" class="form-control" id="" required>{{$faqs['answer'][$index] ?? ''}}</textarea></th>
+                                                    <th><button class="btn btn-sm btn-danger remove-faq-item" type="button"><i
+                                                    class="fa fa-trash"></i></button></th>
+                                                </tr>
+                                            @endfor
+                                        @endif
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-sm btn-secondary add-more-faq" type="button">Add More Faq</button>
+                            </div>
+                        </div>
+                    </div>
+                <div class="mt-5 text-right">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+            </div>
         </div>
         
     </div>  
 </form>
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="sectionSelectionModalCenter" tabindex="-1" role="dialog" aria-labelledby="sectionSelectionModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Section List</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          @foreach(templateList() as $key => $section)
-          <div class="col-md-3 mb-3"  >
-
-            <div class="card add-section1" data-key="{{$key}}" data-name="{{$section['section_name']}}">
-              <div class="card-header p-0">
-              <img src="{{asset('assets/section/'.$key.'.PNG')}}" class="w-100">
-
-              </div>
-              <div class="card-body">
-                
-              <a href="{{route('get-services-section', [$data->id, $key])}}">
-              {{$section['section_name']}}
-            </a>
-
-              </div>
-            </div>
-          </div>
-          @endforeach
-        </div>
-                                        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 @endsection
 @push('js')
@@ -357,7 +265,7 @@
         console.log(
             '{{fieldListOptions()}}'
         )
-        $('.field-list').append(`  <div class="col-md-12">
+        $('.field-list').append(`  <div class="col-md-6">
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <div class="form-group hide">

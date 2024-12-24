@@ -12,6 +12,8 @@ class TeamMember extends Model
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
+        unset($filters['page']);
+
         $list = TeamMember::orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);

@@ -11,6 +11,8 @@ class TemplateSectionField extends Model
     protected $fillable = ['template_section_id', 'field_lable', 'machine_key', 'field_key', 'field_data'];
     
     public static function list($pagination, $filters = null) {
+        unset($filters['page']);
+
         $list = TemplateSectionField::orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);

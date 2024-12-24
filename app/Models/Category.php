@@ -11,6 +11,7 @@ class Category extends Model
     protected $fillable = ['status', 'name'];
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
+        unset($filters['page']);
         
         $list = Category::orderBy('id', 'desc');
         if(!empty($filters)) {

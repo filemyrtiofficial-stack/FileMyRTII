@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('page_data', function (Blueprint $table) {
+        Schema::create('service_data', function (Blueprint $table) {
             $table->id();
-            $table->integer('page_id')->nullable();
+            $table->integer('service_id')->nullable();
             $table->integer('template_section_id')->nullable();
             $table->text('data')->nullable();
             $table->integer('sequance')->default(1);
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('page_data');
+        Schema::dropIfExists('service_data');
     }
 };

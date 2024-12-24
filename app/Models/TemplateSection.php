@@ -11,6 +11,8 @@ class TemplateSection extends Model
     protected $fillable = ['section', 'description', 'slug'];
     
     public static function list($pagination, $filters = null) {
+        unset($filters['page']);
+
         $list = TemplateSection::orderBy('id', 'desc');
         if(!empty($filters)) {
             $list->where($filters);

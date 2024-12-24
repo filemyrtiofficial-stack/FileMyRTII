@@ -83,8 +83,8 @@ class BlogRepository implements BlogInterface {
    
 
     public function delete($id) {
-        $data = Blog::where(['id' => $id])->first();
-        if($data) {
+        $blog = Blog::where(['id' => $id])->first();
+        if($blog) {
             if($blog->blogCategories) {
                 $blog->blogCategories()->delete();
             }
@@ -98,7 +98,7 @@ class BlogRepository implements BlogInterface {
                 $blog->seo()->delete();
             }
             
-            $data->delete();
+            $blog->delete();
         }
         else {
             throw new Exception("Invalid blog");

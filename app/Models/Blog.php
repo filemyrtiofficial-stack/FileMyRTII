@@ -13,6 +13,8 @@ class Blog extends Model
         $filter_data = $filters;
         unset($filters['ids']);
         unset($filters['limit']);
+        unset($filters['page']);
+
 
        
         $list = Blog::orderBy('id', 'desc');

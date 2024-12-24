@@ -257,7 +257,7 @@ class TemplateController extends Controller
         }
         elseif($request->section_key == 'left_image_right_text') {
             $validation = [
-            'title' => "required",
+            // 'title' => "required",
             'description' => "required",
             'image_1' => "required",
             ];
@@ -292,6 +292,7 @@ class TemplateController extends Controller
             $data = json_decode($data->data, true);
         }
         $template = templateList()[$section_key];
+        $page_type = "page";
         // print_r(json_encode( $template));
        return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data'));
     }

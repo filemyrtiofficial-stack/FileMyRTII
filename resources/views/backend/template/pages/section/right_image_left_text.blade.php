@@ -5,6 +5,7 @@
 @csrf
 <input type="hidden" name="section_key" value="{{$section_key}}">
 <input type="hidden" name="key" value="{{$id}}">
+<input type="hidden" name="page_type" value="{{$page_type}}">
 
     <div class="d-flex justify-content-center mb-5">
         <div class="col-lg-9 mt-lg-0 mt-4">
