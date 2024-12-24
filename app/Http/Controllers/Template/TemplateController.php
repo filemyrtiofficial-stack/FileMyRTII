@@ -262,6 +262,12 @@ class TemplateController extends Controller
             'image_1' => "required",
             ];
         }
+        elseif($request->section_key == 'faqs') {
+            $validation = [
+            'question.*' => "required",
+            'answer.*' => "required",
+            ];
+        }
         elseif($request->section_key == 'our_team') {
             $validation = [
             'title' => "required",
@@ -294,7 +300,7 @@ class TemplateController extends Controller
         $template = templateList()[$section_key];
         $page_type = "page";
         // print_r(json_encode( $template));
-       return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data'));
+       return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data', 'page_type'));
     }
 
     public function deleteSectionPage($id) {

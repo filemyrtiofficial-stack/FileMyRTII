@@ -96,147 +96,8 @@ function getIds($data, $key) {
 }
 
 
-function ourServices() {
-    return [
-        'standard-quality-assurance'=>[
-            'icon' => asset('frontend/images/icon/standard-quality-assurance.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Standard Quality Assurance",
-            'short_description' => "Enhance Trust and Quality Seamlessly: Achieve NABH Accrediation with our expert guidance. Boost your hospital's credibility and patient trust effortlessly!"
-        ],
-        'hospital-outline-and-tariff-structuring' => [
-            'icon' => asset('frontend/images/icon/hospital-outline-and-tariff-structuring.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Hospital Outline and tariff structuring",
-            'short_description' => "Enhance visiblity and market appeal with a comprehensive and accurate hospital profiles."
-        ],
-        'cashless-empanelment' => [
-            'icon' => asset('frontend/images/icon/cashless-empanelment.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Cashless Empanelment",
-            'short_description' => "Make Patient Access Simple and Smooth: Make healthcare accessible through partnership with insurance provider, corporate tie-ups and government PSU'S"
-        ],
-        'revenue-cycle-management' => [
-            'icon' => asset('frontend/images/icon/revenue-cycle-management.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Revenue Cycle Management (RCM)",
-            'short_description' => "Optimize Financial Operations Effortlessly: Enahance financial performance through efficient, transparent automated billing and claims managment."
-        ],
-        'health-information-exchange' => [
-            'icon' => asset('frontend/images/icon/health-information-exchange.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Health Information Exchange",
-            'short_description' => "Broadern Your Service Readh Easily: Our user-friendly mobile app enable patients to access their health information, Schecule appointments and communicate with healthcare providers seamlessly."
-        ],
-        'brand' => [
-            'icon' => asset('frontend/images/icon/brand.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Brand",
-            'short_description' => "Conduct audits regularly to ensure that every partner  location strictly adheres to Gratis Healthcare's brand guildlines..."
-        ],
-        'marketing-and-outreach'  => [
-            'icon' => asset('frontend/images/icon/marketing-and-outreach.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Marketing and Outreach",
-            'short_description' => "Increase visibility and Attract More Patients: Elevate your online presence and attract new patients with our targated marketing strategies."
-        ],
-        'community-engagement' => [
-            'icon' => asset('frontend/images/icon/community-engagement.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Community Engagement",
-            'short_description' => "Organize health camps, workshops, and seminars to educate the public, offer free health screenings, and promote wellness."
-        ],
-        'financial-planning-and-sustainability' => [
-            'icon' => asset('frontend/images/icon/financial-planning-and-sustainability.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Financial planning and Sustainability",
-            'short_description' => "Ensure the long-term financial health and sustainability of the hospital network throgh strategic planning and efficient operations."
-        ],
-        'patient-centric-excellence' => [
-            'icon' => asset('frontend/images/icon/patient-centric-excellence.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Patient-Centric Excellence",
-            'short_description' => "Focus on delivering and exceptional patient experience by prioritizing care, comfront and convenience."
-        ],
-        'training-and-support' => [
-            'icon' => asset('frontend/images/icon/training-and-support.png'),
-            'banner' => asset('frontend/images/service-banner.jpeg'),
-            "name" => "Training & Support",
-            'short_description' => "A robust training & support programs covering medical protocols, use of technology customer service and managment best practices."
-        ]
-        ];
-
-}
 
 
-function faqList() {
-    return [
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ],
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ],
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ],
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ],
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ],
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ],
-        [
-            'question' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum. "
-        ]
-        ];
-}
-
-function testimonials() {
-    return [
-        [
-            'name' => 'Lorem',
-            'star' => 3,
-            "feedback" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum.'
-        ],
-        [
-            'name' => 'Lorem',
-            'star' => 5,
-            "feedback" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum.'
-        ],
-        [
-            'name' => 'Lorem',
-            'star' => 5,
-            "feedback" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum.'
-        ],
-        [
-            'name' => 'Lorem',
-            'star' => 5,
-            "feedback" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum.'
-        ],
-        [
-            'name' => 'Lorem',
-            'star' => 5,
-            "feedback" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum.'
-        ],
-        [
-            'name' => 'Lorem',
-            'star' => 5,
-            "feedback" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tempus libero nisl, congue lobortis libero maximus eu. Nullam feugiat congue tristique. Nulla justo dui, suscipit ac nulla ut, condimentum sollicitudin turpis. Suspendisse at blandit orci. Sed faucibus quam in ultricies hendrerit. Sed lacinia mauris eu justo maximus condimentum.'
-        ]
-    ];
-
-}
 function checkSlug($slug, $id = null) {
     $check_slug = App\Models\SlugMaster::where('slug', $slug);
     if($id != null) {
@@ -757,6 +618,11 @@ function templateList() {
             'our_team' => [
                 "section_name" => "Our Team",
                 'key' => 'our_team'
+               
+            ],
+            'faqs' => [
+                "section_name" => "Faqs",
+                'key' => 'faqs'
                
             ],
                 

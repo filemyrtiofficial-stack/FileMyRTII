@@ -56,6 +56,7 @@
                         </div>
                     </div>
                 </div>
+                @if(isset($data))
                 <div class="card mt-4">
                     <div class="card-header">
                       <h5>Section List</h5>
@@ -88,50 +89,8 @@
                         </div>
                     </div>
                 </div>
-              
-                <div class="card mt-4">
-                        <div class="card-header">
-                        <h5>FAQ</h5>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Question</th>
-                                            <th>Answer</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="faq-list">
-                                        @if(!isset($data))
-                                        <tr>
-                                            <th><textarea name="question[]" class="form-control" id="" required></textarea></th>
-                                            <th><textarea name="answer[]" class="form-control" id="" required></textarea></th>
-                                            <th><button class="btn btn-sm btn-danger remove-faq-item" type="button"><i
-                                            class="fa fa-trash"></i></button></th>
-    
-                                        </tr>
-                                        @elseif(!empty($data->faq) && isset($faqs['answer']))
-                                        <?php $faqs = json_decode($data->faq, true);?>
-                                        
-
-                                            @for($index = 0; $index < count($faqs['answer'] ); $index++)
-                                                <tr>
-                                                <th><textarea name="question[]" class="form-control" id="" required>{{$faqs['question'][$index] ?? ''}}</textarea>
-                                                </th>
-                                                <th><textarea name="answer[]" class="form-control" id="" required>{{$faqs['answer'][$index] ?? ''}}</textarea></th>
-                                                    <th><button class="btn btn-sm btn-danger remove-faq-item" type="button"><i
-                                                    class="fa fa-trash"></i></button></th>
-                                                </tr>
-                                            @endfor
-                                        @endif
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-sm btn-secondary add-more-faq" type="button">Add More Faq</button>
-                            </div>
-                        </div>
-                    </div>
+                @endif
+             
                 <div class="mt-5 text-right">
                     <button class="btn btn-primary">Submit</button>
                 </div>
@@ -212,9 +171,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-5 float-right">
+                        <!-- <div class="mt-5 float-right">
                             <button class="btn btn-primary">Submit</button>
-                        </div>
+                        </div> -->
                   </div>
               </div>
               
@@ -306,11 +265,14 @@
         </div>
         
     </div>  
+    <input type="text" id="update_array" name="update_array" hidden>
+
 </form>
 
 
 
 <!-- Modal -->
+ @if(isset($data))
 <div class="modal fade" id="sectionSelectionModalCenter" tabindex="-1" role="dialog" aria-labelledby="sectionSelectionModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
@@ -349,7 +311,7 @@
     </div>
   </div>
 </div>
-
+@endif
 @endsection
 @push('js')
 <script>
