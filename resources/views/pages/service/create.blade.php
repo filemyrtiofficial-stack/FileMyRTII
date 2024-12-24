@@ -2,6 +2,11 @@
 
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Service Management'])
+<style>
+    .hide {
+        display:none;
+    }
+</style>
 <form method="POST" action="{{isset($data['id']) ? route('services.update', $data['id']) : route('services.store')}}" enctype="multipart/form-data" class="form-submit" method="post">
     @csrf
     @if(isset($data['id']))
@@ -95,7 +100,7 @@
                             <div class="col-md-6">
                                 <div class="card mt-3">
                                     <div class="card-body">
-                                        <div class="form-group">
+                                        <div class="form-group hide">
                                             <label for="">Field Type</label> <br>
                                             <div class="input-group">
                                                 <select type="text" name="field_type[]" class="form-control" required>
@@ -131,7 +136,7 @@
                             <div class="col-md-6">
                                 <div class="card mt-3">
                                     <div class="card-body">
-                                        <div class="form-group">
+                                        <div class="form-group hide">
                                             <label for="">Field Type</label> <br>
                                             <div class="input-group">
                                                 <select type="text" name="field_type[]" class="form-control" required>
@@ -185,7 +190,7 @@
         $('.field-list').append(`  <div class="col-md-6">
                             <div class="card mt-3">
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    <div class="form-group hide">
                                         <label for="">Field Type</label> <br>
                                         <div class="input-group">
                                         <select type="text" name="field_type[]" class="form-control" required>

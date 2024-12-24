@@ -18,8 +18,8 @@
                             <div class="breadcrumb">
                                <ol>
                                 <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <li class="fs-24"><a href="javascript:void(0);">{{$service->name ?? ''}}</a></li>
-                                <li class="fs-24"><a href="javascript:void(0);">Personal RTI</a></li>
+                                <!-- <li class="fs-24"><a href="javascript:void(0);">{{$service->name ?? ''}}</a></li> -->
+                                <li class="fs-24"><a href="javascript:void(0);">{{$service->category->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$service->name ?? ''}}</li>
                                </ol>
                             </div>
@@ -46,71 +46,83 @@
                                 <div class="form_tab_wrapper">
                                     <div class="form_tabs">
                                         <ul class="form_tab_list">
-                                            <li><a class="form_tab_item active fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab1"><span>Personal Details</span></a></li>
-                                            <li><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab2"><span>{{$service->name ?? ''}}</span></a></li>
-                                            <li><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab3"><span>Payment Details</span></a></li>
+                                            <li id="form_step_tab_1"><a class="form_tab_item active fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab1"><span class="step">step 1</span><span class="title">Personal Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_2"><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab2"><span class="step">step 2</span><span class="title">{{$service->name ?? ''}}</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_3"><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab3"><span class="step">step 3</span><span class="title">Payment Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div>
 
                                     <div class="form_row form_step_1">
+                                        <div class="form_data">
+                                            
+                                            <div class="form_item">
+                                                <label for="first_name">First Name</label>
+                                                <input class="form_field" type="text" name="first_name" id="first_name" placeholder="" >
+                                            </div>
                                         
-                                        <div class="form_item">
-                                            <label for="first_name">First Name</label>
-                                            <input class="form_field" type="text" name="first_name" id="first_name" placeholder="" >
+                                        
+                                            <div class="form_item">
+                                                <label for="last_name">Last Name</label>
+                                                <input class="form_field" type="text" name="last_name" id="last_name" placeholder="" >
+                                            </div>
+                                        
+                                        
+                                            <div class="form_item">
+                                                <label for="email">Email Address</label>
+                                                <input class="form_field" type="email" name="email" id="email" placeholder="" >
+                                            </div>
+                                        
+                                        
+                                            <div class="form_item">
+                                                <label for="phone_number">Phone Number</label>
+                                                <input class="form_field" type="tel" pattern="\d{3}[\s-]?\d{3}[\s-]?\d{4}" name="phone_number" id="phone_number" placeholder="" >
+                                            </div>
+                                        
+                                        
+                                            <div class="form_item">
+                                                <label for="address">Full Address</label>
+                                                <input class="form_field" type="text" name="address" id="address" placeholder="" >
+                                            </div>
+                                        
+                                        
+                                            <div class="form_item">
+                                                <label for="postal_code">Postal Code</label>
+                                                <input class="form_field" type="text" pattern="^\d{6}$" name="postal_code" id="postal_code" placeholder="" >
+                                            </div>
                                         </div>
-                                    
-                                    
-                                        <div class="form_item">
-                                            <label for="last_name">Last Name</label>
-                                            <input class="form_field" type="text" name="last_name" id="last_name" placeholder="" >
-                                        </div>
-                                    
-                                    
-                                        <div class="form_item">
-                                            <label for="email">Email Address</label>
-                                            <input class="form_field" type="email" name="email" id="email" placeholder="" >
-                                        </div>
-                                    
-                                    
-                                        <div class="form_item">
-                                            <label for="phone_number">Phone Number</label>
-                                            <input class="form_field" type="tel" pattern="\d{3}[\s-]?\d{3}[\s-]?\d{4}" name="phone_number" id="phone_number" placeholder="" >
-                                        </div>
-                                    
-                                    
-                                        <div class="form_item">
-                                            <label for="address">Full Address</label>
-                                            <input class="form_field" type="text" name="address" id="address" placeholder="" >
-                                        </div>
-                                    
-                                    
-                                        <div class="form_item">
-                                            <label for="postal_code">Postal Code</label>
-                                            <input class="form_field" type="text" pattern="^\d{6}$" name="postal_code" id="postal_code" placeholder="" >
-                                        </div>
-                                        <div >
-                                
-                                            <button type="submit" class="theme-btn"><span>Next</span></button>
+                                        <div class="form_action_wrap">
+                                            <div class="form_action">
+                                                <button type="submit" class="theme-btn"><span>Next</span></button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form_row form_step_2 hide">
-                                        
+                                        <div class="form_data">
+                                            
                                             @foreach($fields['field_type'] ?? [] as $key => $value)
                                             <div class="form_item">
                                             
                                                 <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
+                                                @if($fields['field_type'] == 'textarea') 
+                                                    <textarea class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+                                                    </textarea>
+                                                @else
                                                 <input class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+
+                                                @endif
                                             </div>
                                             @endforeach
+                                        </div>
                                         
-                                        
-                                            <div >
-                                        
-                                        <button type="submit" class="theme-btn"><span>Next</span></button>
+                                        <div class="form_action_wrap">
+                                        <div class="form_action">
+                                            <button type="button" class="theme-btn back-btn" data-tab="form_step_1" data-index="2"><span>Previous</span></button>
+                                            <button type="submit" class="theme-btn"><span>Next</span></button>
+                                        </div>
                                     </div>
-                                        
+                                                
                                     </div>
                                     <div class="form_row form_step_3 hide">
                                         
@@ -156,24 +168,27 @@
                                                     <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
                                                 </ul>
                                             </div>
+                                            <div class="form_action_wrap">
+                                                <div class="form_action">
+                                                    <div class="payment_icon">
+                                                        <div class="razorpay">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/razorpay.webp')}}" alt="razorpay icon">
+                                                        </div>
+                                                        <div class="visa">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/visa.webp')}}" alt="visa icon">
+                                                        </div>
+                                                        <div class="paytm">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/paytm.webp')}}" alt="paytm icon">
+                                                        </div>
+                                                        <div class="mastercard">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/master-card.webp')}}" alt="mastercard icon">
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="theme-btn"><span>Pay Now</span></button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form_action">
-                                        <div class="payment_icon">
-                                            <div class="razorpay">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/razorpay.webp')}}" alt="razorpay icon">
-                                            </div>
-                                            <div class="visa">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/visa.webp')}}" alt="visa icon">
-                                            </div>
-                                            <div class="paytm">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/paytm.webp')}}" alt="paytm icon">
-                                            </div>
-                                            <div class="mastercard">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/master-card.webp')}}" alt="mastercard icon">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="theme-btn"><span>Pay Now</span></button>
-                                    </div>
+
                                 </div>
                                     
                                 </div>
@@ -247,6 +262,31 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+    $(document).on('click', '.back-btn', function(e){
+        let target = $(this).attr('data-tab');
+        let tab_index = parseInt($(this).attr('data-index'));
+
+        $('.'+target).removeClass('hide').siblings().addClass('hide');
+        $('#step_no').val(tab_index-1);
+        for(let index = 1; index < tab_index; index++) {
+            $('#form_step_tab_'+index).find('a').addClass('active');
+            console.log(index < tab_index-1);
+            if(index < tab_index-1) {
+                $('#form_step_tab_'+index).find('.step_check').show();
+            }
+            else {
+                $('#form_step_tab_'+index).find('.step_check').hide();
+
+            }
+            
+
+        }
+        $('#form_step_tab_'+tab_index).find('a').removeClass('active');
+        $('#form_step_tab_'+tab_index).find('.step_check').hide();
+
+
+
+    });
     $(document).on('submit', '.service-form', function(e){
         e.preventDefault();
         let action = $(this).attr('action');
@@ -263,6 +303,16 @@
             success :  function(response) {
                 if(response.step) {
                     $('.form_step_'+response.step).removeClass('hide').siblings().addClass('hide');
+                    for(let index = 1; index <= response.step; index++) {
+
+                        $('#form_step_tab_'+index).find('a').addClass('active');
+                        if(index < response.step) {
+
+                            $('#form_step_tab_'+index).find('.step_check').show();
+                        }
+
+                    }
+                    // $('#form_step_tab_'+response.step).siblings().find('a').removeClass('active')
                     $('#step_no').val(response.step);
                     if(response.step == 3) {
                         $('#application_no').val(response.rti.application_no);

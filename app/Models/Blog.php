@@ -12,6 +12,8 @@ class Blog extends Model
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
+        unset($filters['limit']);
+
        
         $list = Blog::orderBy('id', 'desc');
         if(!empty($filters)) {
@@ -32,7 +34,11 @@ class Blog extends Model
             $list->wherein('id', $filter_data['ids']);
         }
         if($pagination) {
-            return $list->paginate(10);
+            $limit = 10;
+            if(isset($filter_data['limit'])) {
+                $limit = $filter_data['limit'];
+            }
+            return $list->paginate($limit);
         }
         else {
             return $list->get();

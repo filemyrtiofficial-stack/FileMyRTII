@@ -95,10 +95,12 @@ class FrontendController extends Controller
         return response(['message' =>  'Thank you for connecting with us']);
     }
     public function blogListingAPI(Request $request) {
-        // $request->merge(['status' =>  2]);
-        $blogs = Blog::list(true, $request->all());
+        $request->merge(['status' =>  2]);
+        $blogs = Blog::list(true, ['title' => $request->search, 'limit' => 2]);
         $html = view('frontend.template.blog_listing', compact('blogs'))->render();
-        return response(['data' => $blogs, 'html' => $html]);
+        $pages = ($blogs->toArray());
+        $page = ['current_page' => $pages['current_page'], 'last_page' => $pages['last_page'], 'next_page' => $pages['current_page']+1];
+        return response(['pages' => $page, 'html' => $html]);
     }
 
     public function serviceForm($service_slug = null) {
@@ -122,7 +124,6 @@ class FrontendController extends Controller
                 'phone_number' => "required",
                 'address' => "required",
                 'postal_code' => "required|digits:6",
-                
     
             ]);
             if($validator->fails()) {

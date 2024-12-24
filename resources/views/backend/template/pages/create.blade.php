@@ -85,7 +85,7 @@
           <div class="col-lg-8 mt-lg-0 mt-4">
               <div class="card mt-4">
                   <div class="card-header">
-                      <h5>{{isset($data['id']) ? 'Edit' : 'New'}} Blog</h5>
+                      <h5>{{isset($data['id']) ? 'Edit' : 'New'}} Page</h5>
                   </div>
                   <div class="card-body pt-0">
                         <div class="row mt-5">

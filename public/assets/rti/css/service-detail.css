@@ -133,9 +133,20 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    /* column-gap: 2.1875vw;
+    row-gap: 2.1875vw; */
+    padding-right: 7.5vw;
+}
+.form_data {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     column-gap: 2.1875vw;
     row-gap: 2.1875vw;
-    padding-right: 7.5vw;
 }
 .form_item {
     margin-bottom: 2.08333vw;
@@ -143,7 +154,7 @@
     width: calc((100% - 2.1875vw) / 2);
 }
 .form_step_2 .form_item:last-child {
-    width: 100%;
+    /* width: 100%; */
 }
 .form_item label {
     font-size: 1.25vw;
@@ -208,12 +219,21 @@
     background-repeat: no-repeat;
 }
 .service_form .theme-btn {
+    /* display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    margin-left: auto; */
+}
+.form_action_wrap {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    margin-left: auto;
+    flex-wrap: wrap;
+    width: 100%;
 }
 .form_action {
     display: -webkit-box;
@@ -224,9 +244,21 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    margin-top: 2.86458vw;
-    padding-right: 7.5vw;
+    width: 100%;
+    /* padding-right: 7.5vw; */
 }
+.form_step_1 .form_action .theme-btn {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    margin-left: auto;
+}
+.form_step_3 .form_action {
+    margin-top: 2.86458vw;
+}
+
 .payment_icon {
     display: -webkit-box;
     display: -moz-box;

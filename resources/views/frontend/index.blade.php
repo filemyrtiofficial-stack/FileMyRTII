@@ -23,6 +23,8 @@ $data = json_decode($section->data, true);
 <script>
     blogList()
     function blogList(data) {
+        $('.blog_pagination').html('');
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -34,12 +36,27 @@ $data = json_decode($section->data, true);
             data : data,
             dataType : 'json',
             success : function(response) {
-                $('.blog-listing').html(response.html)
+                $('.blog-listing').append(response.html)
+                if(response.pages.current_page < response.pages.last_page) {
+                    $('.blog_pagination').html(`<button class="load-more-blog theme-btn" data-page="${response.pages.next_page}"><span>Load More</span></button>`)
+                }
+               
             },
             error :  function(error) {
 
             }
         })
     }
+    $(document).on('keyup', '.search-blog', function(e){
+        $('.blog-listing').html('');
+        blogList({search : $(this).val(), 'page'  : 1});
+        
+    });
+    $(document).on('click', '.load-more-blog', function(e){
+        let search = $('.search-blog').val();
+        let page = $(this).attr('data-page');
+        blogList({search : search, 'page'  : page});
+
+    });
 </script>
 @endpush

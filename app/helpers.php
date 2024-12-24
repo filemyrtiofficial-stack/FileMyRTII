@@ -932,7 +932,7 @@ function fieldList() {
     return [
         'input' => 'Input',
         'textarea' => 'Textarea',
-        'boolean' => 'boolean',
+        // 'boolean' => 'boolean',
 
 
     ];
