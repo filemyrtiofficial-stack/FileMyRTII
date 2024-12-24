@@ -13,6 +13,14 @@ class Service extends Model
     
     public static function list($pagination, $filters = null) {
         unset($filters['page']);
+        unset($filters['order_by']);
+        unset($filters['order_by_type']);
+        unset($filters['limit']);
+        
+
+
+        $order_by_key = $filter_data['order_by'] ?? 'id';
+        $order_by_type = $filter_data['order_by_type'] ?? 'desc';
 
         $list = Service::orderBy('id', 'desc');
         if(!empty($filters)) {

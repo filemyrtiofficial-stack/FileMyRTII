@@ -12,12 +12,19 @@ class Blog extends Model
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
+        unset($filters['order_by']);
+        unset($filters['order_by_type']);
         unset($filters['limit']);
         unset($filters['page']);
 
 
+        $order_by_key = $filter_data['order_by'] ?? 'id';
+        $order_by_type = $filter_data['order_by_type'] ?? 'desc';
+
+
+
        
-        $list = Blog::orderBy('id', 'desc');
+        $list = Blog::orderBy($order_by_key, $order_by_type);
         if(!empty($filters)) {
             foreach($filters as $key => $filter) {
                 if($filter != null) {
