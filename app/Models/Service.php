@@ -60,7 +60,7 @@ class Service extends Model
     }
    
     public function serviceData() {
-        return $this->hasMany(serviceData::class, 'service_id', 'id')->orderBy('sequance');
+        return $this->hasMany(ServiceData::class, 'service_id', 'id')->orderBy('sequance');
     }
   
 }
