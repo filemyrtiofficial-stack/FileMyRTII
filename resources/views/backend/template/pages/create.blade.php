@@ -93,7 +93,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Name</label>
                                     <div class="input-group">
-                                        <input id="title" name="title" value="{{$data['title'] ?? ''}}" class="form-control"
+                                        <input id="title" name="title" value="{{$data['title'] ?? ''}}" class="form-control enable-slug"
                                             type="text" placeholder="title">
                                     </div>
                                     </div>

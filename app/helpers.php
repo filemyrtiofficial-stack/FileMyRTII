@@ -625,6 +625,11 @@ function templateList() {
                 'key' => 'faqs'
                
             ],
+            'accordian_with_side_tabing' => [
+                "section_name" => "Accordian with side tabing",
+                'key' => 'accordian_with_side_tabing'
+               
+            ],
                 
 
       

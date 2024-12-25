@@ -1222,6 +1222,7 @@ button {
         margin-left: auto;
         margin-right: auto;
         margin-top: 20px;
+        display: none;
     }
     .testimonial_slide .profile {
         width: 50px;

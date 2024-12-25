@@ -42,7 +42,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                         ?>
                                         @foreach($item[0]['services'] ?? [] as $key =>  $item)
                                             <div class="rti_block">
-                                                <a href="{{route('frontend.service',[$item->slug->slug ?? ''])}}">
+                                                <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}">
                                                     <div class="rti_item">
                                                         <div class="rti_scroll">
                                                             <div class="rti_img">
@@ -55,7 +55,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                     <p>{{$item['description'] ?? ''}}</p>
                                                                 </div>
                                                             @endif
-                                                            <span href="{{route('frontend.service',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</span>
+                                                            <span class="theme-btn-link">Apply Now</span>
                                                         </div>
                                                     </div>
                                                 </a>

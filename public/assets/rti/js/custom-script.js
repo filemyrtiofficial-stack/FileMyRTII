@@ -36,38 +36,38 @@
 
         // RTI tab slider only in mobile
 
-        // const $window = $(window);
-        // const $slick_slider = $('.rti_tab_slider');
-        // // $('.rti_tab_slider li').wrap('<div></div>');
-        // const settings = {
-        // slidesToShow: 1,
-        // slidesToScroll: 1,
-        // infinite: false,
-        // mobileFirst: true,
-        // prevArrow: '<button type="button" class="slick-prev"><svg width="18" height="36" viewBox="0 0 18 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.76459 19.0665L11.2501 27.552L13.3711 25.431L5.94609 18.006L13.3711 10.581L11.2501 8.45996L2.76459 16.9455C2.48339 17.2268 2.32541 17.6082 2.32541 18.006C2.32541 18.4037 2.48339 18.7852 2.76459 19.0665Z" fill="black"/></svg></button>',
-        // nextArrow: '<button type="button" class="slick-next"><svg width="18" height="36" viewBox="0 0 18 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.2354 19.0665L6.74991 27.552L4.62891 25.431L12.0539 18.006L4.62891 10.581L6.74991 8.45996L15.2354 16.9455C15.5166 17.2268 15.6746 17.6082 15.6746 18.006C15.6746 18.4037 15.5166 18.7852 15.2354 19.0665Z" fill="black"/></svg></button>',
-        // responsive: [
-        //         {
-        //         breakpoint: 767,
-        //         settings: {
-        //             slidesToShow: 3
-        //             }
-        //         },
-        //         {
-        //         breakpoint: 992,
-        //         settings: "unslick",
-        //         },
-        // ],
-        // };
-        // $slick_slider.slick(settings);
-        // $window.on('resize', function() {
-        // if ($window.width() > 992) {
-        //     $slick_slider.slick('unslick');
-        //     return
-        // }
-        // if ( ! $slick_slider.hasClass('slick-initialized'))
-        //     return $slick_slider.slick(settings);
-        // });  
+        const $window = $(window);
+        const $slick_slider = $('.rti_tab_slider');
+        // $('.rti_tab_slider li').wrap('<div></div>');
+        const settings = {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: false,
+        mobileFirst: true,
+        prevArrow: '<button type="button" class="slick-prev"><svg width="18" height="36" viewBox="0 0 18 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.76459 19.0665L11.2501 27.552L13.3711 25.431L5.94609 18.006L13.3711 10.581L11.2501 8.45996L2.76459 16.9455C2.48339 17.2268 2.32541 17.6082 2.32541 18.006C2.32541 18.4037 2.48339 18.7852 2.76459 19.0665Z" fill="black"/></svg></button>',
+        nextArrow: '<button type="button" class="slick-next"><svg width="18" height="36" viewBox="0 0 18 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.2354 19.0665L6.74991 27.552L4.62891 25.431L12.0539 18.006L4.62891 10.581L6.74991 8.45996L15.2354 16.9455C15.5166 17.2268 15.6746 17.6082 15.6746 18.006C15.6746 18.4037 15.5166 18.7852 15.2354 19.0665Z" fill="black"/></svg></button>',
+        responsive: [
+                {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 3
+                    }
+                },
+                {
+                breakpoint: 992,
+                settings: "unslick",
+                },
+        ],
+        };
+        $slick_slider.slick(settings);
+        $window.on('resize', function() {
+        if ($window.width() > 992) {
+            $slick_slider.slick('unslick');
+            return
+        }
+        if ( ! $slick_slider.hasClass('slick-initialized'))
+            return $slick_slider.slick(settings);
+        });  
 
 
 
@@ -196,6 +196,83 @@
             });
         }
 
-       
+        // contact us page js
+
+        if ($('.contact_faq_tab .faq_item').length) {
+            $('.faq_item .faq_title').on("click",function(){
+                $(this).siblings(".faq_content").slideToggle(300);
+                $(this).parent().siblings().find(".faq_content").slideUp(300);
+                $(this).parent().siblings().find(".faq_title").removeClass("active");
+                $(this).toggleClass("active");
+            });
+        }
+
+        // contact tabs
+        if ($('.contact_faq_tab_content .contact_faq_tab').length) {
+            const $listItem = $('.contact_faq_list li');
+            $('.contact_faq_tab').first().addClass('active');
+            $listItem.first().addClass('active');
+            $('.contact_faq_list li a').click(function(e) {
+                e.preventDefault();
+                $('.contact_faq_tab').removeClass('active');
+                $listItem.removeClass('active');
+                const targetTab = $(this).attr('href');
+                $(targetTab).addClass('active');
+                $(this).parent().addClass('active');
+                const $activeListItem = $('.contact_faq_list li.active');
+                const $prevItem = $activeListItem.prev();
+                console.log($activeListItem);
+                if ($prevItem.length) {
+                    $listItem.css('border-bottom','1px solid rgba(212, 212, 212, 0.5)');
+                    $activeListItem.css('border', 'none')
+                    $prevItem.css('border', 'none');
+                }
+            });
+        }
+
+        // $('.form_yes').hide();
+        // $('.form_no').hide();
+    
+        // // Show/hide form based on selected radio button
+        // $('input[name="rti_option"]').change(function() {
+        //     if ($(this).is('#rti_no')) {
+        //         $('.form_yes').show(); // Show the form for applying RTI
+        //         $('.form_no').hide(); // Hide the message for already applied RTI
+        //     } else {
+        //         $('.form_yes').hide(); // Hide the form for applying RTI
+        //         $('.form_no').show(); // Show the message for already applied RTI
+        //     }
+        // });
+
+        function toggleForm() {
+            if ($('#rti_yes').is(':checked')) {
+                $('.form_yes').show();
+                $('.form_no').hide();
+            } else {
+                $('.form_yes').hide();
+                $('.form_no').show();
+            }
+        }
+    
+        $('.form_yes').hide();
+        $('.form_no').hide();
+    
+
+        toggleForm();
+    
+
+        $('input[name="rti_option"]').change(function() {
+            toggleForm();
+        });
+        
+        // service detail page form tab js
+        if ($('.form_tab_item').length) {
+            $('.form_tab_item').on("click",function(){  
+                $(".form_tab").removeClass('tab-active');
+                $(".form_tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
+                $(".form_tab_item").removeClass('active');
+                $(this).parent().find(".form_tab_item").addClass('active');
+            });
+        }
 
 })(jQuery);

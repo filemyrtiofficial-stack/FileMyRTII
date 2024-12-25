@@ -117,7 +117,14 @@ class FrontendController extends Controller
         $service = Service::wherehas('slug', function($query) use($service_slug){
             $query->where('slug', $service_slug);
         })->first();
-        $fields = json_decode($service->fields, true);
+        if(!$service) {
+            abort(404);
+        }
+        $fields = [];
+        if(!empty($service->fields)) {
+              $fields = json_decode($service->fields, true);
+        }
+        
         $payment = Setting::getSettingData('payment');
         return view('frontend.service_form', compact('service', 'fields', 'payment'));
     } 
