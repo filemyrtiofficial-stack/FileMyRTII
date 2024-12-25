@@ -15,50 +15,116 @@
                     <div class="card-header">
                         <h5>FAQS</h5>
                     </div>
-                    <div class=" catgeory-list">
-
-                        <div class="card-body pt-0">
-                            <div class="category-list-item" id="category-list-item-0">
-
-                                    <div class="card mt-3 category-card">
-                                        <div class="card-header">
-                                            <div class="form-group">
-                                                    <label class="form-label">Category</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control category"  name="catgeory[]" id="question_0">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="category-faq">
-    
-                                            <div class="category-faq-item">
-                                                <div class="card-body">
-                                                    <div class="form-group">
-                                                            <label class="form-label">Question</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control question"  name="question[]" id="question_0">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                            <label class="form-label">Answer</label>
-                                                            <div class="input-group">
-                                                                <textarea type="text" class="form-control answer"  name="answer[]" id="answer_0"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer text-right">
-                                                    <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
+                    <div class="card-body">
+                        <div class="col-12">
+                                <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" id="title">
                                     </div>
-                                   
+                                </div>
                             </div>
-                            <div class="text-right mt-3">
-                                <button type="button" class="btn btn-sm btn-secondary add-more" data-type="faq" data-target="category-list-item-0">Add More</button>
+                    </div>
+                    <div class=" category-list">
+
+                        @if(!empty($id)) 
+                            @foreach($data['category'] as $key =>  $value)
+                            <div class="card-body pt-0">
+                                <div class="category-list-item" id="category-list-item-0">
+
+                                        <div class="card mt-3 category-card">
+                                            <div class="card-header">
+                                                <div class="form-group">
+                                                        <label class="form-label">Category</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control category" value="{{$value}}" name="category[]" id="category_{{$key}}">
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                        <button class="btn btn-sm btn-danger remove-category-card" type="button">Remove</button>
+                                                    </div>
+                                            </div>
+                                            <div class="category-faq">
+                                            @foreach($data['answer_'.$key] as $answer_key =>  $answer_value)
+                                                <div class="category-faq-item">
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                                <label class="form-label">Question</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control question"  name="question_{{$key}}[]" id="question_{{$key}}_{{$answer_key}}" value="{{$data['question_'.$key][$answer_key] ?? ''}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="form-label">Answer</label>
+                                                                <div class="input-group">
+                                                                    <textarea type="text" class="form-control answer"  name="answer_{{$key}}[]" id="answer_{{$key}}_{{$answer_key}}">{{$answer_value}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer text-right">
+                                                        <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                            
+                                        </div>
+                                    
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" class="btn btn-sm btn-secondary add-more" data-type="faq" data-target="category-list-item-0">Add More</button>
+                                </div>
                             </div>
-                        </div>
+                            @endforeach
+                        @else
+                            <div class="card-body pt-0">
+                                <div class="category-list-item" id="category-list-item-0">
+
+                                        <div class="card mt-3 category-card">
+                                            <div class="card-header">
+                                                <div class="form-group">
+                                                        <label class="form-label">Category</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control category"  name="category[]" id="category_0">
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button class="btn btn-sm btn-danger remove-category-card" type="button">Remove</button>
+                                                </div>
+                                            </div>
+                                            <div class="category-faq">
+        
+                                                <div class="category-faq-item">
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                                <label class="form-label">Question</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control question"  name="question_0[]" id="question_0_0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="form-label">Answer</label>
+                                                                <div class="input-group">
+                                                                    <textarea type="text" class="form-control answer"  name="answer_0[]" id="answer_0_0"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer text-right">
+                                                        <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" class="btn btn-sm btn-secondary add-more" data-type="faq" data-target="category-list-item-0">Add More</button>
+                                </div>
+                            </div>
+                        @endif
+                     
+
                     </div>
     
                 </div>
@@ -78,7 +144,7 @@
     $(document).on('click', '.add-more', function(e){
         let type = $(this).attr('data-type');
         let card =`<div class="category-faq-item">
-                        <div class="card-body category-faq-item">
+                        <div class="card-body">
                         <div class="form-group">
                                 <label class="form-label">Question</label>
                                 <div class="input-group">
@@ -101,7 +167,7 @@
             $('#'+target).find('.category-faq').append(card);
         }
         else {
-            $('.catgeory-list').append(` <div class="card-body pt-0 category-list-item">
+            $('.category-list').append(` <div class="card-body pt-0 category-list-item">
                         <div class="row">
 
                             <div class="col-12 ">
@@ -110,8 +176,11 @@
                                         <div class="form-group">
                                                 <label class="form-label">Category</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control category"  name="catgeory[]" id="question_0">
+                                                    <input type="text" class="form-control category"  name="category[]" id="category_0">
                                             </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <button class="btn btn-sm btn-danger remove-category-card" type="button">Remove</button>
                                         </div>
                                     </div>
                                     <div class="category-faq">
@@ -134,20 +203,29 @@
     });
 
     $(document).on('click', '.remove-card', function(){
-        $(this).parents().eq(2).remove();
+        $(this).parents().eq(1).remove();
         updateSequance();
     });
+
+    $(document).on('click', '.remove-category-card', function(){
+        $(this).parents().eq(4).remove();
+        updateSequance();
+    });
+    
     function updateSequance() {
         let index = 0;
         $('.category-list-item').each(function(){
             $(this).attr('id', 'category-list-item-'+index);
+            $(this).find('.category').attr('id', 'category_'+index);
+
             $(this).find('.add-more').attr('data-target', 'category-list-item-'+index);
-            index = index+1;
             var child_index = 0;
-            $('#category-list-item-'+index+'.category-faq-item').each(function(){
+            $('#category-list-item-'+index+' .category-faq-item').each(function(){
                 $(this).find('.answer').attr('name', 'answer_'+index+"[]").attr('id', 'answer_'+index+"_"+child_index);
                 $(this).find('.question').attr('name', 'question_'+index+"[]").attr('id', 'question_'+index+"_"+child_index);
+                child_index = child_index+1;
             });
+            index = index+1;
         });
         // let index = 0;
         // $('.faqs-card').each(function(){

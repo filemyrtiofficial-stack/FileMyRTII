@@ -152,9 +152,9 @@
         // Close all dropdowns when clicking outside the menu
         $(document).on("click",function (e) {
             if (!$(e.target).closest('.menu').length) {
-                $('.has-dropdown > .arrow-btn').removeClass('active');
-                $('.mega_menu_wrapper').slideUp(300).removeClass('show');
-                $('.mega_menu ul').slideUp(300).removeClass('show');
+                // $('.has-dropdown > .arrow-btn').removeClass('active');
+                // $('.mega_menu_wrapper').slideUp(300).removeClass('show');
+                // $('.mega_menu ul').slideUp(300).removeClass('show');
             }
         });
 

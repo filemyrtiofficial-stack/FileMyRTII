@@ -277,6 +277,19 @@ class TemplateController extends Controller
                 $validation['team_'.$index] = 'required';
             }
         }
+        elseif($request->section_key == 'accordian_with_side_tabing') {
+            $validation = [
+                'category.*' => "required",
+            ];
+            for($index = 0; $index < count($request->category); $index++) {
+                $validation = array_merge($validation, [
+                    'question_'.$index.'.*' => "required",
+                    'answer_'.$index.'.*' => "required",
+                    
+                    ]
+                );
+            }
+        }
         $validator = Validator::make($request->all(), $validation);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
