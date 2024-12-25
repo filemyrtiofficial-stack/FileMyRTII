@@ -144,9 +144,9 @@
             $(this).find('.add-more').attr('data-target', 'category-list-item-'+index);
             index = index+1;
             var child_index = 0;
-            $(this).find('.category-faq-item').each(function(){
-                $(this).find('.answer').attr('name', 'answer_'+index+"[]").attr('id', 'answer_'+index"_"+child_index);
-                $(this).find('.question').attr('name', 'question_'+index+"[]").attr('id', 'question_'+index"_"+child_index);
+            $('#category-list-item-'+index+'.category-faq-item').each(function(){
+                $(this).find('.answer').attr('name', 'answer_'+index+"[]").attr('id', 'answer_'+index+"_"+child_index);
+                $(this).find('.question').attr('name', 'question_'+index+"[]").attr('id', 'question_'+index+"_"+child_index);
             });
         });
         // let index = 0;
