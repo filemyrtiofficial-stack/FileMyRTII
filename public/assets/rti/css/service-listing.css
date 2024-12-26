@@ -1,0 +1,105 @@
+
+.process_section_inner {
+    position: relative;
+    background-color: #F8F8F8;
+    padding-top: 4.6875vw !important;
+}
+
+.testimonials_section {
+    position: relative;
+    padding: 7.8125vw 0;
+    overflow: hidden;
+}
+.testimonial_head_row {
+    margin-bottom: 3.125vw;
+}
+.testimonial_head_row .section_heading > *,
+.testimonial_head_row .section_heading > h2,
+.testimonial_head_row .section_heading > h3,
+.testimonial_head_row .section_heading > h4 {
+    font-size: 2.91667vw;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.testimonial_item {
+    position: relative;
+    text-align: center;
+    margin-top: 7.29167vw;
+    margin-bottom: 2.60417vw;
+    padding: 5.72917vw 3.64583vw 1.82292vw;
+    background-color: #F8F8F8;
+    -webkit-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial_img_wrap {
+    position: absolute;
+    left: 50%;
+    top: -30%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    width: 8.33333vw;
+    height: 8.33333vw;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+}
+
+.testimonial_profile_name > *,
+.testimonial_profile_name > h2,
+.testimonial_profile_name > h3,
+.testimonial_profile_name > h4,
+.testimonial_profile_name > h5 {
+    font-size: 1.45833vw;
+    font-weight: 700;
+    margin-bottom: 1.25em;
+}
+.testimonial_content,
+.testimonial_content p {
+    font-size: 1.25vw;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.quote_left,
+.quote_right {
+    position: absolute;
+}
+.quote_left {
+    top: -13%;
+    left: 0;
+}
+.quote_right {
+    bottom: -12%;
+    right: 0;
+}
+
+.testimonial_client_slider .slick-list {
+    margin-left: -1.5625vw;
+    margin-right: -1.5625vw;
+}
+.testimonial_client_slider .slick-slide {
+    padding-left: 1.5625vw;
+    padding-right: 1.5625vw;
+}
+.testimonial_client_btn_wrap {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    justify-content: flex-end;
+}

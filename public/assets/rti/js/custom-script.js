@@ -275,4 +275,41 @@
             });
         }
 
+
+        // service listing page testimonial client slider
+
+        if ($('.testimonial_client_slider').length) {
+            $('.testimonial_client_slider').slick({
+                 dots: false,
+                 arrows: true,
+                 infinite: true,
+                 speed: 300,
+                 slidesToShow: 2,
+                 slidesToScroll: 1,
+                 autoplay: true,
+                 autoplaySpeed: 2000,
+                 pauseOnHover: true,
+                 pauseOnFocus: true,
+                 prevArrow: $(".prev_btn"),
+                 nextArrow: $(".next_btn"),
+                 responsive: [
+                      {
+                          breakpoint: 1024,
+                          settings: {
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      },
+                      {
+                          breakpoint: 600,
+                          settings: {
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      }
+                 ]
+            });
+          }
+  
+
 })(jQuery);
