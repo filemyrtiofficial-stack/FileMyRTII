@@ -39,7 +39,7 @@
           </li>
 
           <li class="nav-item pl-3">
-            <a class="nav-link" href="{{ route('users.index') }}">
+            <a class="nav-link" href="{{ route('lawyers.index') }}">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Lawyer manager</span>
             </a>
