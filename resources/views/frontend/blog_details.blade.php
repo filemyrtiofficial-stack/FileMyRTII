@@ -60,20 +60,22 @@
                                     </div>
                                     <div class="comment_form_area">
                                         <div class="comment_form">
-                                            <form action="">
+                                            <form action="{{route('blog-Comment')}}" class="contctus-form-submit" method="post">
+                                            
+                                                <input type="hidden" name="blog_id" id="contact_blog_id"   value="{!! $data['id'] ?? '' !!}">
                                                 <div class="form_item col_2">
                                                     <div class="form_item">
-                                                        <input class="form_field" type="text" name="f_name" id="" placeholder="First Name">
+                                                        <input class="form_field" type="text" name="first_name" id="contact_first_name" placeholder="First Name">
                                                     </div>
                                                     <div class="form_item">
-                                                        <input class="form_field" type="text" name="l_name" id="" placeholder="Last Name">
+                                                        <input class="form_field" type="text" name="last_name" id="contact_last_name" placeholder="Last Name">
                                                     </div>
                                                 </div>
                                                 <div class="form_item">
-                                                    <input class="form_field" type="email" name="email" id="" placeholder="E-mail">
+                                                    <input class="form_field" type="email" name="email" id="contact_email" placeholder="E-mail">
                                                 </div>
                                                 <div class="form_item">
-                                                    <textarea class="form_field" rows="3" type="text" name="study_year" id="" placeholder="Comment"></textarea>
+                                                    <textarea class="form_field" rows="3" type="text" name="comment" id="contact_comment" placeholder="Comment"></textarea>
                                                 </div>
                                                 <button type="submit" class="theme-btn"><span>Submit</span></button>
                                             </form>
@@ -90,12 +92,8 @@
                                     <h5 class="heading">Topics</h5>
                                 </div>
                                 <div class="topic_list_wrap">
-                                    <ul class="topic_list">
-                                        <li class="topic_item active"><a href="javascript:void(0);">Lorem ipsum sit</a></li>
-                                        <li class="topic_item"><a href="javascript:void(0);">Lorem ipsum dolor sit </a></li>
-                                        <li class="topic_item"><a href="javascript:void(0);">Lorem ipsum sit</a></li>
-                                        <li class="topic_item"><a href="javascript:void(0);">Lorem ipsum dolor sit arcu</a></li>
-                                        <li class="topic_item"><a href="javascript:void(0);">Lorem ipsum sit</a></li>
+                                    <ul class="topic_list" id="topics-list">
+                                     
                                     </ul>
                                 </div>
                             </div>
@@ -107,11 +105,9 @@
                                 </div>
                                 <div class="related_blog_list_wrap">
                                     <ul class="related_blog_list">
-                                        <li class="related_blog_item active"><a href="javascript:void(0);">Lorem ipsum dolor sit amet, cosect etadaaur vitae arc  elit.</a></li>
-                                        <li class="related_blog_item"><a href="javascript:void(0);">Lorem ipsum dolor sit amet, cosect vitae arc  elit.</a></li>
-                                        <li class="related_blog_item"><a href="javascript:void(0);">Lorem ipsum dolor sit amet, cosect vitae arc  elit.</a></li>
-                                        <li class="related_blog_item"><a href="javascript:void(0);">Lorem ipsum dolor sit amet, cosect vitae arc  elit.</a></li>
-                                        <li class="related_blog_item"><a href="javascript:void(0);">Lorem ipsum dolor sit amet, cosect vitae arc  elit.</a></li>
+                                        @foreach($relatedBlogs as $blog )
+                                        <li class="related_blog_item active"><a href="{{$blog->slug}}">{{$blog->title}}</a></li>
+                                      @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -122,6 +118,7 @@
             
         </section>
 
+<<<<<<< HEAD
         
 @if(!empty($footer_banner)) 
 <section class="cta_section">
@@ -140,8 +137,36 @@
 @endif
         
   
+=======
+
+
+>>>>>>> feature/blog-details
 @endsection
 @push('js')
 
+<script>
+        $(document).ready(function() {
+           
+            $('.blog_post_content h2').each(function() {
+                var text = $(this).text();
+                var trime_text = text.trim().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+                $(this).attr('id', trime_text);
+                $('#topics-list').append('<li class="topic_item"><a href="#'+trime_text+'">' +text + '</a></li>');
+              
+            });
+            $('#topics-list li:first').addClass('active');
+
+            $('.topic_item').click(function(e) {
+                e.preventDefault(); 
+                $(this).siblings().removeClass('active');       
+                $(this).addClass('active');
+                var targetId = $(this).find('a').attr('href'); 
+                
+            $('html, body').animate({
+                scrollTop: $(targetId).offset().top-150 
+            }, 1000); 
+           });
+        });
+    </script>
 @endpush
 
