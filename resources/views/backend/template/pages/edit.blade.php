@@ -247,7 +247,7 @@
 
             <div class="card add-section1" data-key="{{$key}}" data-name="{{$section['section_name']}}">
               <div class="card-header p-0">
-              <img src="{{asset('assets/section/'.$key.'.PNG')}}" class="w-100">
+              <img src="{{asset('assets/section/'.$key.'.png')}}" class="w-100">
 
               </div>
               <div class="card-body">

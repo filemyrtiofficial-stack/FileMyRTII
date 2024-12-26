@@ -45,10 +45,10 @@
                                 <div class="blog_post_share">
                                     <div class="blog_share_heading">Share :</div>
                                     <ul class="blog_share_list">
-                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="images/blog-detail/fb_icon.webp" alt=""></a></li>
-                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="images/blog-detail/twitterx_icon.webp" alt=""></a></li>
-                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="images/blog-detail/linkedin_icon.webp" alt=""></a></li>
-                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="images/blog-detail/email_link_icon.webp" alt=""></a></li>
+                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="{{asset('assets/rti/images/blog-detail/fb_icon.webp')}}" alt=""></a></li>
+                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="{{asset('assets/rti/images/blog-detail/twitterx_icon.webp')}}" alt=""></a></li>
+                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="{{asset('assets/rti/images/blog-detail/linkedin_icon.webp')}}" alt=""></a></li>
+                                        <li><a href="javascript:void(0);"><img class="img-fluid" src="{{asset('assets/rti/images/blog-detail/email_link_icon.webp')}}" alt=""></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -122,7 +122,23 @@
             
         </section>
 
-
+        
+@if(!empty($footer_banner)) 
+<section class="cta_section">
+    <div class="cta_bg">
+        <img class="cta_bg_img bg_img" src="{{asset($footer_banner['image'] ?? '')}}" alt="{{asset($footer_banner['image_alt'] ?? '')}}">
+        <div class="container">
+            <div class="cta_text">
+                <div class="section_heading">
+                    <h4 class="fs-56 fw-700">{{$footer_banner['description'] ?? ''}}</h4>
+                </div>
+                <a href="{{$footer_banner['link_url'] ?? ''}}" class="theme-btn"><span>{{$footer_banner['link_title'] ?? ''}}</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+        
   
 @endsection
 @push('js')

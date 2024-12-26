@@ -78,6 +78,9 @@ span.permission-list {
     padding: 10px;
     border-radius: 10px;
 }
+.cke_browser_webkit {
+    width: 100% !important;
+}
     </style>
 </head>
 <body>
@@ -173,7 +176,8 @@ span.permission-list {
 
 </script>
   <!-- End custom js for this page-->
-  <script src='https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.12.1/ckeditor.js"></script>
+  <!-- <script src='https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js'></script> -->
     @stack('js');
 
     @if(session()->has('success'))
@@ -222,7 +226,15 @@ span.permission-list {
 
    </script>
     <script>
-    ClassicEditor.create(document.querySelector(".editor"));
+   
+
+$(document).ready(function() {
+  $(".editor").each(function(_, ckeditor) {
+    CKEDITOR.replace(ckeditor);
+  });
+
+});
+
 
      $('.dropify').dropify();
 

@@ -22,6 +22,7 @@ use Razorpay\Api\Api;
 use DB;
 use Log;
 use Session;
+use App\Models\Section;
 class FrontendController extends Controller
 {
     public function index($slug = null) {
@@ -47,7 +48,14 @@ class FrontendController extends Controller
         if(!$data) {
             abort(404);
         }
-        return view('frontend.blog_details', compact('data'));
+        $footer_banner = Section::list(false, ['status' => 1, 'type' => 'footer_banner']);
+        if($footer_banner) {
+            if(count($footer_banner) > 0) {
+                $footer_banner = $footer_banner[0];
+                $footer_banner = json_decode($footer_banner->data, true);
+            }
+        }
+        return view('frontend.blog_details', compact('data', 'footer_banner'));
 
     }
    
