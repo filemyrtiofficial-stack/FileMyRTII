@@ -143,5 +143,25 @@
               <span class="menu-title">Subscribers</span>
             </a>
           </li>
+          <li class="nav-item mt-3">
+            <a class="nav-link" href="">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Enquiry</span>
+            </a>
+          </li>
+          <li class="nav-item pl-3">
+            <a class="nav-link"  href="{{ route('enquiries.index') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Enquiry List</span>
+            </a>
+          </li>
+          <li class="nav-item pl-3">
+            <a class="nav-link"  href="{{ route('rti.applications.list') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">RTI Applications</span>
+            </a>
+          </li>
+
+          
         </ul>
       </nav>

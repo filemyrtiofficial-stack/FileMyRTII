@@ -58,6 +58,7 @@
                                             <div class="contact_form_heading">
                                                 Lorem ipsum dolor sit ametcerat mi auctor
                                             </div>
+                                            <form action="{{route('contact-form')}}" class="contctus-form-submit" method="post">
                                             <div class="contact_option_list">
                                                 <div class="contact_option custom_radio"><input type="radio" id="rti_yes" name="rti_option" checked><label for="rti_yes">I have already applied RTI</label></div>
                                                 <div class="contact_option custom_radio"><input type="radio" id="rti_no" name="rti_option"><label for="rti_no">I Want to apply RTI</label></div>
@@ -68,10 +69,10 @@
                                                 </div>
                                                 <div class="form_yes">
                                                     <div class="rti_form">
-                                                        <form action="">
+                                                   
                                                             <div class="form_item">
-                                                                <select class="form_field custom_select" name="reason" id="">
-                                                                    <option value="selected">Please select a reason</option>
+                                                                <select class="form_field custom_select" name="reason" id="contact_reason">
+                                                                    <option value="">Please select a reason</option>
                                                                     <option value="reason1">Lorem ipsum dolor sit amet.</option>
                                                                     <option value="reason2">Lorem ipsum dolor sit amet.</option>
                                                                     <option value="reason3">Lorem ipsum dolor sit amet.</option>
@@ -79,23 +80,24 @@
                                                             </div>
                                                             <div class="form_item col_2">
                                                                 <div class="form_item">
-                                                                    <input class="form_field" type="text" name="study_year" id="" placeholder="Name">
+                                                                    <input class="form_field" type="text" name="name" id="contact_name" placeholder="Name">
                                                                 </div>
                                                                 <div class="form_item">
-                                                                    <input class="form_field" type="tel" name="study_year" id="" placeholder="Phone No">
+                                                                    <input class="form_field" type="tel" name="phone_number" id="contact_phone_number" placeholder="Phone No">
                                                                 </div>
                                                             </div>
                                                             <div class="form_item">
-                                                                <input class="form_field" type="email" name="email" id="" placeholder="E-mail">
+                                                                <input class="form_field" type="email" name="email" id="contact_email" placeholder="E-mail">
                                                             </div>
                                                             <div class="form_item">
-                                                                <input class="form_field" type="text" name="study_year" id="" placeholder="Message">
+                                                                <input class="form_field" type="text" name="message" id="contact_message" placeholder="Message">
                                                             </div>
                                                             <button type="submit" class="theme-btn"><span>Submit</span></button>
-                                                        </form>
+                                                   
                                                     </div>
                                                 </div>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

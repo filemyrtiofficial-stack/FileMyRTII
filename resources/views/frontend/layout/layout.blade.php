@@ -62,7 +62,45 @@
                 })
             }
         });
-    })
+    });
+    $(document).on('submit', '.contctus-form-submit', function(e) {
+        e.preventDefault();
+        $('.form-error-list').remove();
+        var data = new FormData($(this)[0]);
+        var action = $(this).attr('action');
+        var method = $(this).attr('method');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: action,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: method, // For jQuery < 1.9
+            success: function(response) {
+            if(response.redirect) {
+                window.location.href = response.redirect;
+            }
+            else {
+
+                window.location.reload();
+            }
+            },
+            error: function(error) {
+                $.each(error.responseJSON.errors, function(index, value) {
+                    console.log(value)
+                    index = index.replaceAll('.', '_')
+                    $('#contact_' + index).parents().eq(0).append(
+                        `<span class="text-danger form-error-list">${value}</span>`)
+                })
+            }
+        });
+    });
+
     </script>
 </body>
 

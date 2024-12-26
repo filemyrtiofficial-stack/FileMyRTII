@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Enquiry;
+use App\Models\EnquiryForm;
 use App\Repositories\EnquiryRepository;
 use App\Interfaces\EnquiryInterface;
 class EnquiryController extends Controller
@@ -18,8 +18,9 @@ class EnquiryController extends Controller
 
 
     public function index(Request $request) {
-        $list = Enquiry::list(true, $request->all());
+        $list = EnquiryForm::list(true, $request->all());
         return view('pages.enquiry.index', compact('list'));
+        
     }
      /**
      * Remove the specified resource from storage.

@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Models\SlugMaster;
 use App\Models\Blog;
 use App\Models\Newsletter;
+use App\Models\EnquiryForm;
 use App\Mail\NewsletterMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Service;
@@ -271,6 +272,27 @@ class FrontendController extends Controller
             Log::error('PAYMENT_FAILURE_ERROR: '.$th->getMessage());
             return response()->json(['success' => false, 'error' => 'Internal Server Error'], 500);
         }
+    }
+
+       // Newsletter Validation Code
+       public function contactusForm(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'reason' => "required|max:255",
+            'name' => "required|max:255",
+            'email' => "required|email|max:255",
+            'phone_number' => "required|numeric|digits:10"
+          
+            
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+         $data = $request->only(['email','reason','name','phone_number','rti_option','message']);
+    
+       $EnquiryForm = EnquiryForm::create($data);
+      
+        // Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
+        return response(['message' =>  'Thank you for connecting with us']);
     }
 
 }

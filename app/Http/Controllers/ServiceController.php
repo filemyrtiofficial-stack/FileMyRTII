@@ -10,6 +10,7 @@ use App\Interfaces\ServiceInterface;
 use Validator;
 use Illuminate\Support\Str;
 use App\Models\ServiceData;
+use App\Models\RtiApplication;
 class ServiceController extends Controller
 {
     private ServiceRepository $serviceRepository;
@@ -274,5 +275,12 @@ class ServiceController extends Controller
         } catch (Exception $ex) {
             return response(['error' => $ex->getMessage()], 500);
         }
+    }
+
+    public function rtiApplicationsList(Request $request) {
+        // echo "hello";die('kkk');
+        $list = RtiApplication::list(true, $request->all());
+        return view('pages.rti-applications.index', compact('list'));
+        
     }
 }

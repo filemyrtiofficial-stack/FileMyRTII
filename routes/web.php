@@ -120,7 +120,7 @@ Route::get("subscribe-now", function(){
 		// Route::resource('lab-tests', LabTestController::class);    
 		// Route::resource('ambulances', AmbulanceController::class);    
 		Route::resource('users', UserController::class);       
-		// Route::resource('enquiries', EnquiryController::class);       
+		Route::resource('enquiries', EnquiryController::class);       
 		// Route::resource('labs', LabController::class);       
 		Route::resource('categories', CategoryController::class);    
 		Route::resource('blogs', BlogController::class);       
@@ -128,6 +128,8 @@ Route::get("subscribe-now", function(){
 		Route::post('/update-menu-node', [MenuController::class, 'updateMenuNode'])->name('menu.MenuNodeStore');
 		Route::resource('menu-setting', MenuController::class);    
 		
+		Route::get('/rtiapplications', [ServiceController::class, 'rtiApplicationsList'])->name('rti.applications.list');
+
 		Route::get('/update-services-section/{services_id}/{section_type}/{id?}', [ServiceController::class, 'getSectionservices'])->name('get-services-section');
 		Route::delete('/delete-services-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-services-section');
 
@@ -198,6 +200,7 @@ Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetai
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
+Route::post('/contact-us', [FrontendController::class, 'contactusForm'])->name('contact-form');
 
 
 
