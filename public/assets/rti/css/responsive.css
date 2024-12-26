@@ -38,6 +38,10 @@
   .rti_tab_list .fs-28,
   .rti_item .fs-28 {
     font-size: 1.45833vw;
+    
+  }
+  .rti_item .fs-28 {
+    font-size: 1.04167vw;
   }
 
 
@@ -124,7 +128,7 @@
         font-size: 16px;
     }
     .rti_item .fs-28 {
-        font-size: 14px;
+        font-size: 12px;
     }
     .process_flow .fs-36 {
         font-size: 20px;
