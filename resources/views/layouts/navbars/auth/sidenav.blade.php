@@ -64,6 +64,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ route('categories.index') }}">Category</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('blogs.index') }}">List</a></li>
+                <li class="nav-item"><a class="nav-link"  href="{{ route('blog.comment.list') }}">Comment</a></li>
               </ul>
             </div>
           </li>
@@ -161,6 +162,7 @@
               <span class="menu-title">RTI Applications</span>
             </a>
           </li>
+          
 
           
         </ul>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\BlogComment;
 use App\Repositories\BlogRepository;
 use App\Interfaces\BlogInterface;
 use Validator;
@@ -140,6 +141,13 @@ class BlogController extends Controller
         } catch (Exception $ex) {
             return response(['error' => $ex->getMessage()], 500);
         }
+    }
+
+    public function blogCommentList(Request $request) {
+        
+        $list = BlogComment::list(true, $request->all());
+        return view('pages.blog.blog-comment.index', compact('list'));
+        
     }
 
 

@@ -123,7 +123,8 @@ Route::get("subscribe-now", function(){
 		Route::resource('users', UserController::class);       
 		Route::resource('enquiries', EnquiryController::class);       
 		// Route::resource('labs', LabController::class);       
-		Route::resource('categories', CategoryController::class);    
+		Route::resource('categories', CategoryController::class);   
+		Route::get('/blogcomment', [BlogController::class, 'blogCommentList'])->name('blog.comment.list'); 
 		Route::resource('blogs', BlogController::class);       
 		Route::resource('team-members', TeamMemberController::class);       
 		Route::post('/update-menu-node', [MenuController::class, 'updateMenuNode'])->name('menu.MenuNodeStore');
@@ -203,6 +204,7 @@ Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blo
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 Route::post('/contact-us', [FrontendController::class, 'contactusForm'])->name('contact-form');
+Route::post('/blog-Comment', [FrontendController::class, 'blogComment'])->name('blog-Comment');
 
 
 
