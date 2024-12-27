@@ -159,6 +159,15 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                <label class="form-label">Author Name</label>
+                                    <div class="input-group">
+                                        <input id="author" name="author" value="{{$data->author ?? ''}}" class="form-control"
+                                            type="text" placeholder="Author Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label class="form-label">Publish Date</label>
                                     <div class="input-group">
                                         <input id="publish_date" name="publish_date" value="{{$data['publish_date'] ?? ''}}" class="form-control"

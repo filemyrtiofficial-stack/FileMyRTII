@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'slug', 'short_description', 'description', 'status', 'thumbnail', 'banner', 'publish_date'];
+    protected $fillable = ['title', 'slug', 'short_description', 'description', 'status', 'thumbnail', 'banner', 'publish_date','author','user_id'];
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);

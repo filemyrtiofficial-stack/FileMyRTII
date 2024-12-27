@@ -630,6 +630,11 @@ function templateList() {
                 'key' => 'accordian_with_side_tabing'
                
             ],
+            'testimonial_slider' => [
+                "section_name" => "Testimonial Slider",
+                'key' => 'testimonial_slider'
+               
+            ],
                 
 
       
@@ -850,3 +855,25 @@ function array_remove_null($item)
         ->toArray();
 }
 
+function shareUrl() {
+    $url =  Illuminate\Support\Facades\URL::current();
+    return [
+        'facebook' =>'https://www.facebook.com/sharer/sharer.php?u=' . $url,
+        'tweeter' =>'https://twitter.com/intent/tweet?url=' . $url,
+        'linkedin' =>'https://www.linkedin.com/shareArticle?url=' . $url,
+        'blogurl' => $url
+
+    ];
+}
+
+function TestimonialOptions($selected = null)  {
+    $list = "";
+    foreach(App\Models\Blog::list(false) as $item) {
+        $is_selected = "";
+        if($selected == $item->id) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->title.'</option>';
+    }
+    return $list;
+}

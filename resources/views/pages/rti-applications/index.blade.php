@@ -12,6 +12,22 @@
                                                 <input type="text" name="search" class="form-control" placeholder="Search By Email/Name/contact no." value="{{$_GET['search'] ?? ''}}">
                                         </div>
                                         <div class="col-md-3">
+                                        <select  name="service_id" class="form-control">
+                                                <option value="">Select Service</option>
+                                                @foreach(App\Models\Service::list(false) as $item)
+                                                        <option value="{{$item->id ?? ''}}" {{isset($_GET['service_id']) && $_GET['service_id'] == $item->id ? 'selected' : ''}}>{{$item->name ?? ''}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select  name="lawyer_id" class="form-control">
+                                                <option value="">Select Lawyer</option>
+                                                @foreach(App\Models\Lawyer::list(false) as $item)
+                                                        <option value="{{$item->id ?? ''}}" {{isset($_GET['lawyer_id']) && $_GET['lawyer_id'] == $item->id ? 'selected' : ''}}>{{$item->first_name ?? ''}} {{$item->last_name ?? ''}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                        <div class="col-md-3">
                                             <select  name="status" class="form-control">
                                                     <option value="">Select Status</option>
                                                     @foreach(commonStatus() as $key =>  $value)

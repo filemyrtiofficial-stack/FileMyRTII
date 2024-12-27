@@ -9,11 +9,12 @@ use App\Models\BlogCategory;
 use App\Models\BlogFaq;
 use Session;
 use Exception;
+
 class BlogRepository implements BlogInterface {
 
     public function store($request) {
-        $data = $request->only(['title', 'slug', 'short_description', 'description', 'status', 'publish_date']);
-       
+        $data = $request->only(['title', 'slug', 'short_description', 'description', 'status', 'publish_date','author']);
+        $data['user_id'] = auth()->user()->id;
         $data['thumbnail'] = uploadFile($request, 'thumbnail', 'blog');
         $data['banner'] = uploadFile($request, 'feature_image', 'blog');
         $blog = Blog::create($data);
@@ -27,6 +28,8 @@ class BlogRepository implements BlogInterface {
             SeoMaster::createUpdateSeo( $seo_data);
 
         }
+        Session::flash("success", "Data successfully added");
+
         return response(['message' => "Data successfully added"]);
     }
 
@@ -54,8 +57,8 @@ class BlogRepository implements BlogInterface {
     }
     
     public function update($request, $id) {
-        $data = $request->only(['title', 'slug', 'short_description', 'description', 'status', 'publish_date']);
-       
+        $data = $request->only(['title', 'slug', 'short_description', 'description', 'status', 'publish_date','author']);
+        $data['user_id'] = auth()->user()->id;
         if($request->hasFile('thumbnail')){
             $data['thumbnail'] = uploadFile($request, 'thumbnail', 'blog');
         }
@@ -75,6 +78,7 @@ class BlogRepository implements BlogInterface {
             SlugMaster::createUpdateSlug(['slug' => $request['slug'], 'linkable_id' => $id, 'linkable_type' => "blogs"]);
         }
         SeoMaster::createUpdateSeo( $seo_data);
+        Session::flash("success", "Data successfully updated");
 
         return response(['message' => "Data successfully added"]);
     }
