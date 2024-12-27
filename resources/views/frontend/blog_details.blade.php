@@ -140,14 +140,20 @@
 
 <script>
         $(document).ready(function() {
-           
+        var h2_count =   $('.blog_post_content h2').length;
+        if(h2_count >0) {
+       
             $('.blog_post_content h2').each(function() {
                 var text = $(this).text();
                 var trime_text = text.trim().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
                 $(this).attr('id', trime_text);
+                $('.topic_wrap').show();
                 $('#topics-list').append('<li class="topic_item"><a href="#'+trime_text+'">' +text + '</a></li>');
               
             });
+        }else{
+            $('.topic_wrap').hide();
+        }
             $('#topics-list li:first').addClass('active');
 
             $('.topic_item').click(function(e) {
