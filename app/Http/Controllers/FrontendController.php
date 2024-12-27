@@ -58,8 +58,6 @@ class FrontendController extends Controller
                 $footer_banner = json_decode($footer_banner->data, true);
             }
         }
-        return view('frontend.blog_details', compact('data', 'footer_banner'));
-
      
         $categoryIds = $data->blogCategories->pluck('category_id');
        
@@ -68,7 +66,7 @@ class FrontendController extends Controller
         })->limit(8)->get();
        
     
-        return view('frontend.blog_details', compact('data','relatedBlogs'));
+        return view('frontend.blog_details', compact('data','relatedBlogs', 'footer_banner'));
     }
 
     public function serviceDetails($service_slug)

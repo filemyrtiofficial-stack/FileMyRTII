@@ -118,7 +118,6 @@
             
         </section>
 
-<<<<<<< HEAD
         
 @if(!empty($footer_banner)) 
 <section class="cta_section">
@@ -137,10 +136,6 @@
 @endif
         
   
-=======
-
-
->>>>>>> feature/blog-details
 @endsection
 @push('js')
 
