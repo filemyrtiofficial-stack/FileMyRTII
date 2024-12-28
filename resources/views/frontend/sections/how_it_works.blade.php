@@ -1,4 +1,4 @@
-<section class="process_section ">
+<section class="process_section {!! $data['class_name'] ?? '' !!}">
     <div class="container">
         <div class="row process_head_row">
             <div class="col-12 col-sm-9">

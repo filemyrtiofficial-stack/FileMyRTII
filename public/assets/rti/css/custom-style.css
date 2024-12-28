@@ -949,7 +949,7 @@ button {
 .footer_heading {
     color: var(--theme-white-color);
     letter-spacing: 0.2px;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 .footer_nav {
     position: relative;

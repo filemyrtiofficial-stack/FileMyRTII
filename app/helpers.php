@@ -868,12 +868,12 @@ function shareUrl() {
 
 function TestimonialOptions($selected = null)  {
     $list = "";
-    foreach(App\Models\Blog::list(false) as $item) {
+    foreach(App\Models\Testimonial::list(false) as $item) {
         $is_selected = "";
         if($selected == $item->id) {
             $is_selected = "selected";
         }
-        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->title.'</option>';
+        $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->client_name.'</option>';
     }
     return $list;
 }

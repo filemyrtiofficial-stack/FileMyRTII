@@ -30,15 +30,15 @@
                                 <hr>
                                 <div class="form-group">
                                     <label class="form-label"><strong>Testimonial</strong></label>
-                                    <div class="blog_list" id="sortable_product">
-                                        @if(isset($data['blog_count']))
-                                            @for($index = 0; $index < $data['blog_count']; $index++)
+                                    <div class="testimonial_list" id="sortable_product">
+                                        @if(isset($data['testimonial_count']))
+                                            @for($index = 0; $index < $data['testimonial_count']; $index++)
                                                 <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
                                                     <div class="col-lg-9 mt-lg-0">
                                                         <div class="card-body">
-                                                            <select name="blog_{{$index}}" id="blog_{{$index}}" class="form-control blog" data-index="{{$index}}">
-                                                                <option value="">Select Blog</option>    
-                                                            {!! TestimonialOptions($data['blog_'.$index]) !!}
+                                                            <select name="testimonial_{{$index}}" id="testimonial_{{$index}}" class="form-control testimonial" data-index="{{$index}}">
+                                                                <option value="">Select testimonial</option>    
+                                                            {!! TestimonialOptions($data['testimonial_'.$index]) !!}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -50,8 +50,8 @@
                                             <div class="d-flex draggable"  id="row0"  draggable="true" productID="0">
                                                 <div class="col-lg-9 mt-lg-0">
                                                     <div class="card-body">
-                                                        <select name="blog_0" id="blog_0" class="form-control blog" data-index="0">
-                                                            <option value="">Select Blog</option>    
+                                                        <select name="testimonial_0" id="testimonial_0" class="form-control testimonial" data-index="0">
+                                                            <option value="">Select Testimonial</option>    
                                                         {!! TestimonialOptions() !!}
                                                         </select>
                                                     </div>
@@ -60,9 +60,9 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <button class="btn btn-sm btn-secondary service_tabs_add_more" data-tag="blog" type="button">Add More</button>
-                                    <input type="hidden" id="blog_count" name="blog_count" value="{{$data['blog_count'] ?? '1'}}">
-                                    <input type="hidden" id="blog_list" name="blog_list"  value="{{$data['blog_list'] ?? ''}}">
+                                    <button class="btn btn-sm btn-secondary service_tabs_add_more" data-tag="testimonial" type="button">Add More</button>
+                                    <input type="hidden" id="testimonial_count" name="testimonial_count" value="{{$data['testimonial_count'] ?? '1'}}">
+                                    <input type="hidden" id="testimonial_list" name="testimonial_list"  value="{{$data['testimonial_list'] ?? ''}}">
 
                                 </div>
                             </div>
@@ -85,11 +85,11 @@
         e.preventDefault();
         if($('.draggable').length < 3) {
 
-            $('.blog_list').append(`<div class="d-flex draggable" >
+            $('.testimonial_list').append(`<div class="d-flex draggable" >
                                                         <div class="col-lg-9 mt-lg-0 ">
                                                             <div class="card-body">
-                                                                <select name="blog_0" id="blog_0" class="form-control blog">
-                                                                    <option value="">Select Blog</option> 
+                                                                <select name="testimonial_0" id="testimonial_0" class="form-control testimonial">
+                                                                    <option value="">Select testimonial</option> 
                                                                     <?php echo TestimonialOptions();?>
                                                                 </select>
                                                             </div>
@@ -101,27 +101,27 @@
                                             updateServiceSequance();
     });
     function updateServiceSequance(){
-        let tag = 'blog';
+        let tag = 'testimonial';
       
         $('.draggable').each(function(index, value){
             $(this).attr('id', 'row'+index).attr('productID', index);
             $(this).find('.'+tag).attr('name', tag+"_"+index).attr('id', tag+"_"+index).attr('data-index', index);
             
         });
-        $('#blog_count').val($('.'+tag).length);
+        $('#testimonial_count').val($('.'+tag).length);
         var values = [];
-        $('.blog').each(function(index, value){
+        $('.testimonial').each(function(index, value){
             values.push($(this).val());
         }) 
-        $('#blog_list').val(JSON.stringify(values));
+        $('#testimonial_list').val(JSON.stringify(values));
     }
     $(document).on('click', '.service_tabs_remove', function(e){
         $(this).parents().eq(1).remove();
         updateServiceSequance();
     });
-    $(document).on('change', '.blog', function(e){
+    $(document).on('change', '.testimonial', function(e){
        
-        var services = $('#blog_list').val();
+        var services = $('#testimonial_list').val();
         if(services != '') {
             services = JSON.parse(services);
         }

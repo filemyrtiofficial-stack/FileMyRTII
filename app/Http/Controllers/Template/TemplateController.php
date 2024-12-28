@@ -222,9 +222,10 @@ class TemplateController extends Controller
             }
         }
         elseif($request->section_key == 'service_tabs') {
-            $validation = [
-                'title' => "required",
-            ];
+            // $validation = [
+            //     'title' => "required",
+            // ];
+            $validation = [];
             for($index = 0; $index < $request->service_tabs_service_count; $index++) {
                 $validation = array_merge($validation, [
                     'service_tabs_service_'.$index => "required",
