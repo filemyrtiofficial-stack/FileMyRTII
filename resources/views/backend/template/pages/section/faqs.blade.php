@@ -29,7 +29,7 @@
                                         <div class="form-group">
                                                 <label class="form-label">Answer</label>
                                                 <div class="input-group">
-                                                    <textarea type="text" class="form-control answer"  name="answer[]" id="answer_0"></textarea>
+                                                    <textarea type="text" class="form-control answer editor"  name="answer[]" id="answer_0"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                                         <div class="form-group">
                                                 <label class="form-label">Answer</label>
                                                 <div class="input-group">
-                                                    <textarea type="text" class="form-control answer"  name="answer[]" id="answer_0"></textarea>
+                                                    <textarea type="text" class="form-control answer editor"  name="answer[]" id="answer_0"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -92,6 +92,10 @@
             index = index+1;
 
         });
+        $(".editor").each(function(_, ckeditor) {
+            CKEDITOR.replace(ckeditor);
+        });
+
     }
 </script>
 @endpush

@@ -57,7 +57,7 @@
                                                         <div class="form-group">
                                                                 <label class="form-label">Answer</label>
                                                                 <div class="input-group">
-                                                                    <textarea type="text" class="form-control answer"  name="answer_{{$key}}[]" id="answer_{{$key}}_{{$answer_key}}">{{$answer_value}}</textarea>
+                                                                    <textarea type="text" class="form-control answer editor"  name="answer_{{$key}}[]" id="answer_{{$key}}_{{$answer_key}}">{{$answer_value}}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -105,7 +105,7 @@
                                                         <div class="form-group">
                                                                 <label class="form-label">Answer</label>
                                                                 <div class="input-group">
-                                                                    <textarea type="text" class="form-control answer"  name="answer_0[]" id="answer_0_0"></textarea>
+                                                                    <textarea type="text" class="form-control answer editor"  name="answer_0[]" id="answer_0_0"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -154,7 +154,7 @@
                         <div class="form-group">
                                 <label class="form-label">Answer</label>
                                 <div class="input-group">
-                                    <textarea type="text" class="form-control answer"  name="answer[]" id="answer_0"></textarea>
+                                    <textarea type="text" class="form-control answer editor"  name="answer[]" id="answer_0"></textarea>
                             </div>
                         </div>
                     </div>
@@ -226,6 +226,9 @@
                 child_index = child_index+1;
             });
             index = index+1;
+        });
+        $(".editor").each(function(_, ckeditor) {
+            CKEDITOR.replace(ckeditor);
         });
         // let index = 0;
         // $('.faqs-card').each(function(){

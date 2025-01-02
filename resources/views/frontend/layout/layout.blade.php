@@ -11,6 +11,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('assets/rti/css/custom-style.css')}}">
+    <style>
+        .testimonial_img_wrap img {
+            border-radius :50%;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,7 +57,7 @@
             type: method, // For jQuery < 1.9
             success: function(response) {
                     _this.find('input').val(null);
-                    alert(response.message);
+                  
             },
             error: function(error) {
                 $.each(error.responseJSON.errors, function(index, value) {

@@ -19,6 +19,14 @@
                         <div class="row mt-5">
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label class="form-label">Class Name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="class_name" id="class_name" value="{{$data['class_name'] ?? ''}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label class="form-label">Title</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="title" id="title" value="{{$data['title'] ?? ''}}">

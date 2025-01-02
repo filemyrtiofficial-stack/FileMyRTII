@@ -6,7 +6,13 @@
                             <div class="breadcrumb">
                                <ol>
                                 <li class="fs-24"><a href="/">Home</a></li>
-                                <li class="fs-24 active">{{$data['title'] ?? ''}}</li>
+                                @if(isset($data['breadcrum_label']))
+                                    @foreach($data['breadcrum_label'] as $key => $value)
+                                <li class="fs-24 @if($key == count($data['breadcrum_label'])-1) active @endif"><a href="{{$data['breadcrum_label'][$key]}}">{{$value}}</a></li>
+
+                                    @endforeach
+                                @endif
+                                <!-- <li class="fs-24 active">{{$data['title'] ?? ''}}</li> -->
                                </ol>
                             </div>
                             <div class="breadcrumb_heading">

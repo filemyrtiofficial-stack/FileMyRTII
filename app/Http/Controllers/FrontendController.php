@@ -47,7 +47,7 @@ class FrontendController extends Controller
     {
         $data = Blog::wherehas('slugMaster', function ($query) use ($slug) {
             $query->where(['linkable_type' => 'blogs', 'slug' => $slug]);
-        })->first();
+        })->where('status', 2)->first();
         if (!$data) {
             abort(404);
         }
@@ -58,10 +58,12 @@ class FrontendController extends Controller
                 $footer_banner = json_decode($footer_banner->data, true);
             }
         }
+  
+
      
         $categoryIds = $data->blogCategories->pluck('category_id');
        
-        $relatedBlogs = Blog::where('id','!=', $data->id)->whereHas('blogCategories', function ($query) use ($categoryIds) {
+        $relatedBlogs = Blog::where('id','!=', $data->id)->where('status', 2)->whereHas('blogCategories', function ($query) use ($categoryIds) {
             $query->whereIn('category_id', $categoryIds);
         })->limit(8)->get();
        

@@ -5,8 +5,9 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
 
 
 
-<section class="rti_section ">
+<section class="rti_section {!! $data['class_name'] ?? '' !!}">
             <div class="container">
+                @if(isset($data['title']) && !empty($data['title']))
                 <div class="row">
                     <div class="col-12 col-sm-9">
                         <div class="section_heading">
@@ -14,9 +15,8 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                         </div>
                     </div>
                 </div>
-                <div class="row">
-
-                </div>
+                @endif
+               
                 <div class="row">
                     <div class="col-12">
                         <div class="rti_tab_wrapper">
@@ -40,9 +40,10 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                         <?php
                                             $item = collect($service_categories)->where('id', $data['service_tabs_service_'.$index])->where('status', true)->values();
                                         ?>
+
                                         @foreach($item[0]['services'] ?? [] as $key =>  $item)
                                             <div class="rti_block">
-                                                <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}">
+                                            @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
                                                     <div class="rti_item">
                                                         <div class="rti_scroll">
                                                             <div class="rti_img">
@@ -50,15 +51,40 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                     src="{{asset($item['icon'] ?? '')}}" alt="">
                                                             </div>
                                                             <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
-                                                            @if(isset($item['description_enable']) && $item['description_enable'] == 'yes')
-                                                                <div>
-                                                                    <p>{{$item['description'] ?? ''}}</p>
+                                                            @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
+                                                              
+                                                                <div class="rti_content">
+                                                                    {!! $item['description'] ?? '' !!}
                                                                 </div>
+                                                                <a href="{{route('frontend.service',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Know More</a>
+                                                                
                                                             @endif
-                                                            <span class="theme-btn-link">Apply Now</span>
+                                                            <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
                                                         </div>
                                                     </div>
-                                                </a>
+                                            @else
+                                                <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}">
+                                                        <div class="rti_item">
+                                                            <div class="rti_scroll">
+                                                                <div class="rti_img">
+                                                                    <img class="img-fluid"
+                                                                        src="{{asset($item['icon'] ?? '')}}" alt="">
+                                                                </div>
+                                                                <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
+                                                                @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
+                                                                
+                                                                    <div class="rti_content">
+                                                                        <p>{{$item['description'] ?? ''}}</p>
+                                                                    </div>
+                                                                    <a href="javascript:void(0);" class="theme-btn-link">Know More</a>
+                                                                    
+                                                                @endif
+                                                                <span class="theme-btn-link">Apply Now</span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                            @endif
+                                               
                                                
                                             </div>
                                         @endforeach
@@ -68,7 +94,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                             <div class="rti_item active">
                                                 <div class="rti_scroll">
                                                     <div class="rti_img">
-                                                        <img class="img-fluid" src="images/think-question.webp" alt="">
+                                                        <img class="img-fluid" src="{{asset('assets/rti/images/think-question.webp')}}" alt="">
                                                     </div>
                                                     <div class="rti_content fs-28">Can't find what you need?</div>
                                                     <div class="rti_content more_content fs-28">We're ready to help-just submit your request</div>

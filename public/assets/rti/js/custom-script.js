@@ -276,6 +276,8 @@
         }
 
 
+        // service listing page js
+        
         // service listing page testimonial client slider
 
         if ($('.testimonial_client_slider').length) {
@@ -294,7 +296,7 @@
                  nextArrow: $(".next_btn"),
                  responsive: [
                       {
-                          breakpoint: 1024,
+                          breakpoint: 768,
                           settings: {
                               slidesToShow: 1,
                               slidesToScroll: 1

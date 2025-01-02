@@ -43,7 +43,7 @@
                                                     <h4>{{$data['question_'.$key][$answer_key] ?? ''}}</h4>
                                                 </div>
                                                 <div class="faq_content">
-                                                    <p>{{$answer_value}}</p>
+                                                    <p>{!! $answer_value!!}</p>
                                                 </div>
                                             </div>
                                             @endforeach
@@ -56,7 +56,7 @@
                                     <div id="contact_form" class="contact_faq_tab">
                                         <div class="contact_form">
                                             <div class="contact_form_heading">
-                                                Lorem ipsum dolor sit ametcerat mi auctor
+                                                We're here to help
                                             </div>
                                             <form action="{{route('contact-form')}}" class="contctus-form-submit" method="post">
                                             <div class="contact_option_list">
@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="contact_form_option">
                                                 <div class="form_no">
-                                                    <button type="submit" class="theme-btn"><span>Apply Now</span></button>
+                                                    <a href="/backend/public/services" class="theme-btn"><span>Apply Now</span></a>
                                                 </div>
                                                 <div class="form_yes">
                                                     <div class="rti_form">

@@ -15,6 +15,7 @@ class RtiApplication extends Model
         $filter_data = $filters;
         unset($filters['page']);
         unset($filters['search']);
+        unset($filters['service_id']);
 
         $filters = array_remove_null($filters);
         $list = RtiApplication::orderBy('id', 'desc');
@@ -36,6 +37,11 @@ class RtiApplication extends Model
                     ->orwhere('last_name', 'like', '%' . $filter_data['search'] . '%')
                     ->orwhere('email', 'like', '%' . $filter_data['search'] . '%')
                     ->orwhere('phone_number', 'like', '%' . $filter_data['search'] . '%');
+            });
+        }
+        if (isset($filter_data['service_id']) && !empty($filter_data['service_id'])) {
+            $list->wherehas('service', function($query) use($filter_data){
+                $query->where('id', 'like', '%'.$filter_data['service_id'].'%');
             });
         }
         if ($pagination) {

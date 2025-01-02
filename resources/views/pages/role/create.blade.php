@@ -67,7 +67,6 @@
 <script>
     $(document).on('change', '.parents-permissions', function(e){
         let target = $(this).attr('data-target');
-        alert(this.checked)
         if(this.checked) {
 
             $('.'+target).attr('checked', 'checked');

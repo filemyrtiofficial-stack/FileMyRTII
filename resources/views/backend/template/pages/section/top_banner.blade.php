@@ -63,7 +63,29 @@
                                 </div>
                             </div>
                             
-
+                            <hr>
+                            <div class="col-12 table-responsive">
+                                <label for="">Breakdrumbs</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Lable</th>
+                                            <th>Link</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="add-more-breaddrum-list">
+                                        <tr>
+                                            <td><input type="text" class="form-control" name="breadcrum_label[]"></td>
+                                            <td><input type="text" class="form-control" name="breadcrum_url[]"></td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-danger remove-breadcrum"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" class="btn btn-sm btn-secondary add-more-breaddrum">Add More Breadcrum</button>
+                            </div>
 
 
                             </div>
@@ -79,3 +101,20 @@
     </div>
 </form>
 @endsection
+
+@push('js')
+<script>
+    $(document).on('click', '.add-more-breaddrum', function(e){
+        $('#add-more-breaddrum-list').append(`  <tr>
+                                            <td><input type="text" class="form-control" name="breadcrum_label[]"></td>
+                                            <td><input type="text" class="form-control" name="breadcrum_url[]"></td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-danger remove-breadcrum"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>`);
+    });
+    $(document).on('click', '.remove-breadcrum', function(e){
+        $(this).parents().eq(1).remove();
+    });
+</script>
+@endpush

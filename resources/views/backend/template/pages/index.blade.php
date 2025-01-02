@@ -39,7 +39,7 @@
                                     <div class="d-flex px-3 py-1">
                                         
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->title}}</h6>
+                                            <h6 class="mb-0 text-sm"><a href="{{url($item->slugMaster->slug ?? '')}}" tagret="blank">{{$item->title}}</a></h6>
                                         </div>
                                     </div>
                                 </td>

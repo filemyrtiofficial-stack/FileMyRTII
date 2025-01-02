@@ -11,7 +11,10 @@ class Testimonial extends Model
     protected $fillable = ['client_name', 'image', 'status', 'comment'];
     
     public static function list($pagination, $filters = null) {
+        $filter_data = $filters;
         unset($filters['page']);
+        unset($filters['ids']);
+
 
         $list = Testimonial::orderBy('id', 'desc');
         if(!empty($filters)) {
@@ -30,6 +33,10 @@ class Testimonial extends Model
                     }
                 }
             }
+        }
+         
+        if(isset($filter_data['ids'])) {
+            $list->wherein('id', $filter_data['ids']);
         }
         if($pagination) {
             return $list->paginate(10);
