@@ -26,7 +26,8 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                         <?php
                                             $item = collect($service_categories)->where('id', $data['service_tabs_service_'.$index])->where('status', true)->values();
                                         ?>
-                                        <li><a class="rti_tab_item {{$index == 0 ? 'active': ''}} fs-28" href="javascript:void(0);" data-toggle="tab" data-id="rti_tab{{$index}}"><span>{{ $item[0]['name'] ?? ''}}</span></a></li>
+                                       
+                                        <li><a class="rti_tab_item {{ (!isset($data['service_tab']) && $index == 0) ||(isset($data['service_tab']) && $data['service_tab'] == $index) ? 'active': ''}} fs-28" href="javascript:void(0);" data-toggle="tab" data-id="rti_tab{{$index}}"><span>{{ $item[0]['name'] ?? ''}}</span></a></li>
                                     @endfor
                             
                                 </ul>
@@ -34,9 +35,9 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                         </div>
                         <div class="rti_tab_details">
                             @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
-                                <div class="rti_tab {{$index == 0 ? 'tab-active': ''}}" data-id="rti_tab{{$index}}">
+                                <div class="rti_tab {{ (!isset($data['service_tab']) && $index == 0) ||(isset($data['service_tab']) && $data['service_tab'] == $index) ? 'tab-active': ''}} " data-id="rti_tab{{$index}}">
                                     <div class="rti_wrapper">
-                                        
+
                                         <?php
                                             $item = collect($service_categories)->where('id', $data['service_tabs_service_'.$index])->where('status', true)->values();
                                         ?>
@@ -56,7 +57,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                 <div class="rti_content">
                                                                     {!! $item['description'] ?? '' !!}
                                                                 </div>
-                                                                <a href="{{route('frontend.service',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Know More</a>
+                                                                <a href="{{route('frontend.service',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" class="theme-btn-link">Know More</a>
                                                                 
                                                             @endif
                                                             <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
@@ -71,14 +72,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                         src="{{asset($item['icon'] ?? '')}}" alt="">
                                                                 </div>
                                                                 <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
-                                                                @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
-                                                                
-                                                                    <div class="rti_content">
-                                                                        <p>{{$item['description'] ?? ''}}</p>
-                                                                    </div>
-                                                                    <a href="javascript:void(0);" class="theme-btn-link">Know More</a>
-                                                                    
-                                                                @endif
+                                                              
                                                                 <span class="theme-btn-link">Apply Now</span>
                                                             </div>
                                                         </div>

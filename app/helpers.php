@@ -635,6 +635,11 @@ function templateList() {
                 'key' => 'testimonial_slider'
                
             ],
+            'why_choose' => [
+                "section_name" => "Why Choose",
+                'key' => 'why_choose'
+               
+            ],
                 
 
       
@@ -770,6 +775,24 @@ function sectionTypeList() {
                         'name' => 'image',
                         'required' => true
                     ],
+                    [
+                        'type' => 'image',
+                        'label' => 'Icon 2',
+                        'name' => 'image_2',
+                        'required' => true
+                    ],
+                    [
+                        'type' => 'textarea',
+                        'label' => 'Description',
+                        'name' => 'description',
+                        'required' => true
+                    ],
+                    [
+                        'type' => 'numeric',
+                        'label' => 'Sequance',
+                        'name' => 'sequance',
+                        'required' => true
+                    ],
                 ]
             ]
     ];
@@ -876,4 +899,18 @@ function TestimonialOptions($selected = null)  {
         $list .= '<option value="'.$item->id.'" '.$is_selected.'>'.$item->client_name.'</option>';
     }
     return $list;
+}
+
+function partition() {
+    return [
+        '5-6' => [
+            'column_1' => 'col-sm-5',
+            'column_2' => 'col-sm-6',
+        ],
+        '6-6' => [
+            'column_1' => 'col-sm-6',
+            'column_2' => 'col-sm-6',
+
+        ]
+    ];
 }

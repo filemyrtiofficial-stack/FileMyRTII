@@ -54,7 +54,8 @@
                                             @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
                                                 <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
                                                     <div class="col-lg-9 mt-lg-0">
-                                                        <div class="card-body">
+                                                        <div class="card-body d-flex">
+                                                        <input type="radio" name="service_tab" class="service_tab" value="{{$index}}" @if(isset($data['service_tab']) && $data['service_tab'] == $index) checked @endif>
                                                             <select name="service_tabs_service_{{$index}}" id="service_tabs_service_{{$index}}" class="form-control service_tabs_service" data-index="{{$index}}">
                                                                 <option value="">Select Service</option>    
                                                             {!! serviceCategoryOptions($data['service_tabs_service_'.$index]) !!}
@@ -68,7 +69,8 @@
 
                                             <div class="d-flex draggable"  id="row0"  draggable="true" productID="0">
                                                 <div class="col-lg-9 mt-lg-0">
-                                                    <div class="card-body">
+                                                    <div class="card-body d-flex">
+                                                    <input type="radio" name="service_tab" class="service_tab" value="0">
                                                         <select name="service_tabs_service_0" id="service_tabs_service_0" class="form-control service_tabs_service" data-index="0">
                                                             <option value="">Select Service</option>    
                                                         {!! serviceCategoryOptions() !!}
@@ -105,13 +107,16 @@
 
             $('.service_tabs_service_list').append(`<div class="d-flex draggable" >
                                                         <div class="col-lg-9 mt-lg-0 ">
-                                                            <div class="card-body">
+                                                            <div class="card-body d-flex ">
+                                                              <input type="radio" name="service_tab" class="service_tab">
                                                                 <select name="service_tabs_service_0" id="service_tabs_service_0" class="form-control service_tabs_service">
                                                                     <option value="">Select Service</option> 
                                                                     <?php echo serviceCategoryOptions();?>
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                       
+
                                                         <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
                                                     </div>`);
         }
@@ -124,6 +129,7 @@
         $('.draggable').each(function(index, value){
             $(this).attr('id', 'row'+index).attr('productID', index);
             $(this).find('.'+tag).attr('name', tag+"_"+index).attr('id', tag+"_"+index).attr('data-index', index);
+            $(this).find('.service_tab').val(index)
             
         });
         $('#service_tabs_service_count').val($('.'+tag).length);
@@ -158,6 +164,7 @@
         updateServiceSequance();
        
 
-    })
+    });
+   
     </script>
 @endpush

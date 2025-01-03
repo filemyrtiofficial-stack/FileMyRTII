@@ -17,26 +17,63 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="row">
-                            <div class="col-12 faq-list">
-                                <div class="card mt-3 faqs-card">
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                                <label class="form-label">Question</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control question"  name="question[]" id="question_0">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                                <label class="form-label">Answer</label>
-                                                <div class="input-group">
-                                                    <textarea type="text" class="form-control answer editor"  name="answer[]" id="answer_0"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer text-right">
-                                        <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
+                            <div class="col-12">
+                                <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        <div class="input-group">
+                                        <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" id="title">
+
                                     </div>
                                 </div>
+                            </div>
+                           
+                            <div class="col-12 faq-list">
+                                @if($id != null)
+                               
+                                    @if(isset($data['question']))
+                                        @foreach($data['question'] as $key =>  $value)
+                                            <div class="card mt-3 faqs-card">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                            <label class="form-label">Question</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control question"  name="question[]" id="question_{{$key}}" value="{{$value}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <label class="form-label">Answer</label>
+                                                            <div class="input-group">
+                                                                <textarea type="text" class="form-control answer editor"  name="answer[]" id="answer_{{$key}}">{{$data['answer'][$key] ?? ''}}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer text-right">
+                                                    <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                @else
+                                    <div class="card mt-3 faqs-card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                    <label class="form-label">Question</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control question"  name="question[]" id="question_0">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                    <label class="form-label">Answer</label>
+                                                    <div class="input-group">
+                                                        <textarea type="text" class="form-control answer editor"  name="answer[]" id="answer_0"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="text-right mt-3">
@@ -81,7 +118,7 @@
 
     });
     $(document).on('click', '.remove-card', function(){
-        $(this).parents().eq(2).remove();
+        $(this).parents().eq(1).remove();
         updateSequance();
     });
     function updateSequance() {

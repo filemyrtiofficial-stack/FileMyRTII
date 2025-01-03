@@ -26,7 +26,7 @@
 
 .serviceform_section {
     position: relative;
-    padding: 6.77083vw 0 8.33333vw;
+    padding: 4.77083vw 0 6.33333vw;
 }
 .service-form-row {
     /* column-gap: 1.14583vw; */
@@ -70,7 +70,7 @@
     --theme-blue-rgba-5: rgba(2, 107, 182, 0.5);
     --theme-blue-rgba-2: rgba(2, 107, 182, 0.2);
     color: rgba(3, 132, 212, 0.6);
-    font-size: 1.45833vw;
+    font-size: 1.25833vw;
     font-weight: 400;
     position: relative;
     width: 100%;
@@ -146,12 +146,17 @@
     flex-wrap: wrap;
     width: 100%;
     column-gap: 2.1875vw;
-    row-gap: 2.1875vw;
+    row-gap: 1.1875vw;
 }
 .form_item {
-    margin-bottom: 2.08333vw;
+    margin-bottom: 1.18333vw;
     position: relative;
     width: calc((100% - 2.1875vw) / 2);
+}
+.form_item .form-error-list {
+    color: #f00;
+    margin-top: 5px;
+    display: inline-block;
 }
 .form_step_2 .form_item:last-child {
     /* width: 100%; */
@@ -247,6 +252,16 @@
     width: 100%;
     /* padding-right: 7.5vw; */
 }
+.form_step_1 .form_item label {
+    position: relative;
+}
+.form_step_1 .form_item label::after {
+    content: "*";
+    position: absolute;
+    top: 0px;
+    right: -13px;
+    color: #F00;
+}
 .form_step_1 .form_action .theme-btn {
     display: -webkit-box;
     display: -moz-box;
@@ -254,6 +269,10 @@
     display: -webkit-flex;
     display: flex;
     margin-left: auto;
+    padding: 0.536em 1.786em;
+}
+.form_step_2 .form_action .theme-btn {
+    padding: 0.536em 1.786em;
 }
 .form_step_3 .form_action {
     margin-top: 2.86458vw;
@@ -581,6 +600,54 @@
     margin-right: -5px;
 }
 /* service detail sidebar end */
+/* success message for form */
+.success_toast_msg {
+    position: fixed;
+    z-index: 999;
+    top: 30%;
+    right: 30px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+  }
+  
+  .success_toast_msg .toast_content {
+    display: flex;
+    align-items: center;
+  }
+  .success_toast_msg.active {
+    transform: translateX(0%);
+}
+  .toast_content .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 35px;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+  }
+  .toast_content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+  }
+  .message .text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #333333;
+  }
+  .message .text.text-1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0e9e32;
+  }
+/* success message for form end */
 
 @media (max-width: 1199px) {
     .form_row {
@@ -660,7 +727,7 @@
     }
     .form_tab_list li a .title {
         position: absolute;
-        top: -5.30208vw;
+        top: -7.30208vw;
         font-size: 3vw;
         display: none;
         font-weight: 600;

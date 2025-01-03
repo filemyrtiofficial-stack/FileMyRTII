@@ -135,8 +135,12 @@ Route::get("subscribe-now", function(){
 		Route::get('/update-services-section/{services_id}/{section_type}/{id?}', [ServiceController::class, 'getSectionservices'])->name('get-services-section');
 		Route::delete('/delete-services-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-services-section');
 
+		Route::resource('services', ServiceController::class);  
+
+		Route::get('/update-service-category-section/{service_category_id}/{section_type}/{id?}', [ServiceCategoryController::class, 'getSectionservices'])->name('get-service-category-section');
+		Route::delete('/delete-service-category-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-service-category-section');
+ 
 		Route::resource('service-category', ServiceCategoryController::class);       
-		Route::resource('services', ServiceController::class);    
 		
 		Route::resource('lawyers', LawyerController::class);  
 		Route::post('/upload-images', [TemplateController::class, 'uploadImages'])->name('upload-images');
@@ -198,8 +202,9 @@ Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->
 Route::post('/udpate-payment-success', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
 Route::get('/apply/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
+Route::get('/service/{service_category}/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 
-Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
+// Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
 Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->name('search-blogs');
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');

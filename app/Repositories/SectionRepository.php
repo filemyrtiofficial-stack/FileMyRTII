@@ -10,13 +10,13 @@ use Exception;
 class SectionRepository implements SectionInterface {
 
     public function store($request) {
-        $service = Section::create(['title' => $request['title'], 'description' => $request->description, 'type' => $request->section_type, 'status' => $request->status, 'data' => json_encode($request->all())]);
+        $service = Section::create(['title' => $request['title'], 'description' => $request->description, 'type' => $request->section_type, 'status' => $request->status, 'data' => json_encode($request->all()), 'sequance' => $request->sequance ?? 1]);
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added", 'redirect' => route('template-section.index')]);
     }
     
     public function update($request, $id) {
-        $service = Section::where('id', $id)->update(['title' => $request['title'], 'description' => $request->description,'data' => json_encode($request->all()), 'status' => $request->status]);
+        $service = Section::where('id', $id)->update(['title' => $request['title'], 'description' => $request->description,'data' => json_encode($request->all()), 'status' => $request->status, 'sequance' => $request->sequance ?? 1]);
         Session::flash("success", "Data successfully updated");
         return response(['message' => "Data successfully updated"]);
     }

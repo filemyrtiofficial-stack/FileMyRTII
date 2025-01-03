@@ -95,8 +95,11 @@
                                     <div class="input-group">
                                         @if($fields['type'] == 'input')
                                             <input id="{{$fields['name']}}" name="{{$fields['name']}}" value="{{$data[$fields['name']] ?? ''}}" class="form-control" type="text" placeholder="Title">
-                                        @elseif($fields['type'] == 'image')
-                                        <input type="file" class=" upload-image dropify" id="images" @if(isset($data)) data-default-file="{{asset($details[$fields['name']] ?? '')}}" @endif>
+                                        @elseif($fields['type'] == 'numeric')
+                                            <input id="{{$fields['name']}}" name="{{$fields['name']}}" value="{{$data[$fields['name']] ?? ''}}" class="form-control" type="number" placeholder="Title">
+                                    
+                                            @elseif($fields['type'] == 'image')
+                                        <input type="file" class=" upload-image dropify" id="{{$fields['name']}}" @if(isset($data)) data-default-file="{{asset($details[$fields['name']] ?? '')}}" @endif>
                                         <div class="image-collection mt-3" >
                                             <input hidden type="text" value="{{$details[$fields['name']] ?? ''}}"  class="form-control image-input" name="{{$fields['name']}}" data-lable="{{$fields['name']}}" id="{{$fields['name']}}">
                                             <input placeholder="Alternative text" type="text" value="{{$details[$fields['name'].'_alt'] ?? ''}}" id="{{$fields['name']}}_alt" name="{{$fields['name']}}_alt" class="form-control w-100">

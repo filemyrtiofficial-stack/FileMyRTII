@@ -7,6 +7,7 @@ use App\Models\ServiceCategory;
 use App\Repositories\ServiceCategoryRepository;
 use App\Interfaces\ServiceCategoryInterface;
 use Validator;
+use App\Models\ServiceCategoryData;
 
 class ServiceCategoryController extends Controller
 {
@@ -120,4 +121,26 @@ class ServiceCategoryController extends Controller
             return response(['error' => $ex->getMessage()], 500);
         }
     }
+
+    public function getSectionServices($page_id, $section_key, $id = null) {
+        $data = [];
+        if($id != null) {
+            $data = ServiceCategoryData::where(['service_category_id' => $page_id, 'id' => $id])->first();
+            $data = json_decode($data->data, true);
+        }
+        $template = templateList()[$section_key];
+        // print_r(json_encode( $template));
+        $page_type = "service-category";
+       return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data', 'page_type'));
+    }
+
+    public function deleteSectionServices($id) {
+        try {
+            $data = $this->serviceRepository->deleteSection($id);
+            return response(['message' => 'Data is successfully deleted']);
+        } catch (Exception $ex) {
+            return response(['error' => $ex->getMessage()], 500);
+        }
+    }
+
 }

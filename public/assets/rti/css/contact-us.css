@@ -61,7 +61,7 @@
     border-bottom: 1px solid rgba(212, 212, 212, 0.5);
 }
 .contact_faq_list li:last-child {
-    border: none;
+    border: none !important;
 }
 .contact_faq_list li.active {
     border: none;
@@ -111,6 +111,7 @@
 }
 .contact_faq_tab .faq_title.active > *::before {
     content: "-";
+    color: var(--theme-btn-color);
 }
 
 .contact_faq_tab .faq_item {
@@ -197,6 +198,7 @@
     margin-bottom: 2.08333vw;
     position: relative;
     width: 100%;
+    text-align: left;
 }
 .rti_form .form_item .custom_select {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="18" viewBox="0 0 32 18" fill="none"><path d="M1 1L15.9127 16.4269" stroke="%237F7F7F" stroke-width="2" stroke-linecap="round"/><path d="M30.6406 1L15.7279 16.4269" stroke="%237F7F7F" stroke-width="2" stroke-linecap="round"/></svg>');
@@ -234,10 +236,14 @@
     appearance: none;
     background-color: var(--theme-white-color);
     background-clip: padding-box;
-    border: 1px solid rgba(3, 132, 212, 0.50);
-    border-radius: var(--bs-border-radius);
+    border: 1px solid rgba(144, 144, 144, 0.81);
     background-color: rgba(255, 255, 255, 0.93);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
 }
 .rti_form .theme-btn {
     padding: 0.714em 3.214em;
@@ -258,6 +264,9 @@
 }
 .form_no {
     text-align: center;
+}
+.rti_form .theme-btn::before {
+    left: -1px;
 }
 
 @media (max-width: 1199px) {

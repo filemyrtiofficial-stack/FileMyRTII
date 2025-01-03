@@ -8,8 +8,7 @@
                                 <li class="fs-24"><a href="/">Home</a></li>
                                 @if(isset($data['breadcrum_label']))
                                     @foreach($data['breadcrum_label'] as $key => $value)
-                                <li class="fs-24 @if($key == count($data['breadcrum_label'])-1) active @endif"><a href="{{$data['breadcrum_label'][$key]}}">{{$value}}</a></li>
-
+                                    <li class="fs-24 @if($key == count($data['breadcrum_label'])-1) active @endif">@if($key == count($data['breadcrum_label'])-1) {{$value}} @else <a href="{{$data['breadcrum_label'][$key]}}">{{$value}}</a> @endif </li>
                                     @endforeach
                                 @endif
                                 <!-- <li class="fs-24 active">{{$data['title'] ?? ''}}</li> -->
@@ -18,6 +17,10 @@
                             <div class="breadcrumb_heading">
                                 <h1 class="title fs-72">{{$data['title'] ?? ''}}</h1>
                             </div>
+                            @if(isset($data['link_title']) && !empty($data['link_title']))
+                            <a href="{{$data['link_url']}}" class="theme-btn"><span>{{$data['link_title']}}</span></a>
+
+                            @endif
                         </div>
                     </div>
                 </div>

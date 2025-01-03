@@ -35,10 +35,10 @@
     margin-bottom: 2.60417vw;
 }
 .rti_detail_section .rti_item .fs-28 {
-    font-size: 1.25vw;
+    font-size: 1vw;
     font-weight: 700;
 }
-.rti_detail_section .rti_item .rti_content {
+.rti_detail_section .rti_item .rti_content:first-child {
     margin-top: 1.25em;
     margin-bottom: 1em;
 }
@@ -58,7 +58,7 @@
 }
 .rti_detail_section .rti_item.active .rti_content + .rti_content {
     margin-top: 0;
-    font-style: italic;
+    font-style: normal;
     visibility: visible;
     opacity: 1;
     font-weight: 400;
@@ -108,6 +108,7 @@
     position: absolute;
     left: 50%;
     top: -22%;
+    top: -16%;
     transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
@@ -142,11 +143,11 @@
     position: absolute;
 }
 .quote_left {
-    top: -10%;
+    top: -7%;
     left: 0;
 }
 .quote_right {
-    bottom: -9%;
+    bottom: -6%;
     right: 0;
 }
 
@@ -177,18 +178,37 @@
     height: 3.64583vw;
 }
 
+.process_section.process_section_inner .process_row > *:not(:first-child) .process_flow {
+    padding-bottom: 8.6875vw;
+}
+.process_section.process_section_inner .process_row > *:not(:first-child) {
+    margin-top: 3.00417vw;
+}
+.process_section.process_section_inner .process_row > *:not(:first-child) + * {
+    margin-top: 6.20833vw;
+}
+.process_section.process_section_inner .process_row > *:not(:first-child) + * .process_flow {
+    padding-bottom: 8.6875vw;
+}
+.process_section.process_section_inner .process_row > *:not(:first-child) .process_flow {
+    padding-bottom: 6.6875vw;
+}
+
 @media (max-width: 1199px) {
     .rti_detail_section .rti_item .fs-28 {
-        font-size: 14px;
+        font-size: 13px;
     }
     .rti_detail_section .rti_item .rti_content p {
-        font-size: 14px;
+        font-size: 13px;
     }
     .rti_detail_section .rti_item {
-        height: 25.22917vw;
+        height: 26.22917vw;
     }
     .rti_detail_section .rti_item .theme-btn-link {
         font-size: 12px;
+    }
+    .rti_detail_section .rti_item .rti_content + .rti_content {
+        margin-top: 5px;
     }
 
     .testimonial_profile_name > *,
@@ -221,7 +241,7 @@
 
 @media (max-width: 991px) {
     .rti_detail_section .rti_item {
-        height: 30.22917vw;
+        height: 27.22917vw;
     }
     .rti_detail_section .rti_item:hover .rti_scroll {
         margin-top: -22%;
@@ -251,7 +271,7 @@
 
 @media (max-width: 768px) {
     .rti_detail_section .rti_item {
-        height: 32.22917vw;
+        height: 30.22917vw;
     }
     .rti_detail_section .rti_block:last-child .rti_item {
         padding-top: 4.2625vw;
@@ -306,7 +326,7 @@
         height: 80px;
     }
     .testimonial_img_wrap {
-        top: -15%;
+        top: -8%;
     }
     .testimonial_item {
         margin-top: 20.29167vw;
@@ -347,7 +367,7 @@
         font-size: 16px;
     }
     .rti_detail_section .rti_item {
-        height: 260px;
+        height: 285px;
     }
     .rti_detail_section .rti_item:hover .rti_scroll {
         margin-top: -18%;

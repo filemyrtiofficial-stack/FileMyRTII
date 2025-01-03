@@ -24,6 +24,7 @@ use DB;
 use Log;
 use Session;
 use App\Models\Section;
+use App\Models\ServiceCategory;
 class FrontendController extends Controller
 {
     public function index($slug = null)
@@ -34,7 +35,7 @@ class FrontendController extends Controller
             $slug = 'root';
         }
         $page = Page::with('pageData')->join('slug_masters', 'slug_masters.linkable_id', '=', 'pages.id')
-            ->where(['slug_masters.linkable_type' => 'pages', 'slug_masters.slug' => $slug])->select('pages.*')->first();
+            ->where(['slug_masters.linkable_type' => 'pages', 'slug_masters.slug' => $slug])->where('pages.status', 1)->select('pages.*')->first();
         if ($page) {
 
             $page_section = $page->pageData;
@@ -71,17 +72,40 @@ class FrontendController extends Controller
         return view('frontend.blog_details', compact('data','relatedBlogs', 'footer_banner'));
     }
 
-    public function serviceDetails($service_slug)
+    public function serviceDetails($service_category = null, $service_slug = null)
     {
-        $service = Service::wherehas('slug', function ($query) use ($service_slug) {
-            $query->where('slug', $service_slug);
-        })->where('status', 1)->select('services.*')->first();
-        if (!$service) {
-            abort(404);
+        if($service_slug != null) {
+
+            $service = Service::wherehas('slug', function ($query) use ($service_slug) {
+                $query->where('slug', $service_slug);
+            })->where('status', 1)->select('services.*')->first();
+            if (!$service) {
+                abort(404);
+            }
+            $page_section = $service->serviceData;
+            $seo = $service->seo;
+            $page_type = "service";
+            // $breadcrums = [
+            //     [
+            //         'label' => "Service"
+            //     ]
+                
+            // ]
+            return view('frontend.service_details', compact('service', 'page_section', 'seo', 'page_type'));
         }
-        $page_section = $service->serviceData;
-        $seo = $service->seo;
-        return view('frontend.service_details', compact('service', 'page_section', 'seo'));
+        else if($service_category != null) {
+            $service = ServiceCategory::with('serviceData')->join('slug_masters', 'slug_masters.linkable_id', '=', 'service_categories.id')
+            ->where(['slug_masters.linkable_type' => 'service_category', 'slug_masters.slug' => $service_category])->where('service_categories.status', 1)->select('service_categories.*')->first();
+            if (!$service) {
+                abort(404);
+            }
+            $page_section = $service->serviceData;
+            $seo = $service->seo;
+            return view('frontend.service_details', compact('service', 'page_section', 'seo'));
+        }
+        else {
+           return $this->index('service');
+        }
     }
 
     public function sendEnquiry(Request $request)
@@ -124,7 +148,7 @@ class FrontendController extends Controller
         } else {
             $newsletter = Newsletter::create($data);
         }
-        Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
+        // Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
         return response(['message' =>  'Thank you for connecting with us']);
     }
     public function blogListingAPI(Request $request)
@@ -150,7 +174,10 @@ class FrontendController extends Controller
         }
 
         $payment = Setting::getSettingData('payment');
-        return view('frontend.service_form', compact('service', 'fields', 'payment'));
+
+        $why_choose = Section::list(false, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc']);
+       
+        return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose'));
     }
 
     public function serviceFormAction(Request $request)

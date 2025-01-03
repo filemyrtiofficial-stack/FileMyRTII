@@ -62,6 +62,29 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">CTA Button</label>
+                                    <div class="input-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Title</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['link_title'] ?? ''}}" name="link_title" data-lable="link_title" id="link_title">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Url</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['link_url'] ?? ''}}" name="link_url" data-lable="link_url" id="link_url">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             
                             <hr>
                             <div class="col-12 table-responsive">
@@ -75,6 +98,17 @@
                                         </tr>
                                     </thead>
                                     <tbody id="add-more-breaddrum-list">
+                                        @if($id != null && isset($data['breadcrum_label']))
+                                            @foreach($data['breadcrum_label'] as $key => $value)
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="breadcrum_label[]" value="{{ $value}}"></td>
+                                                    <td><input type="text" class="form-control" name="breadcrum_url[]" value="{{$data['breadcrum_url'][$key] ?? ''}}"></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-danger remove-breadcrum"><i class="fa fa-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
                                         <tr>
                                             <td><input type="text" class="form-control" name="breadcrum_label[]"></td>
                                             <td><input type="text" class="form-control" name="breadcrum_url[]"></td>
@@ -82,6 +116,8 @@
                                                 <button type="button" class="btn btn-sm btn-danger remove-breadcrum"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
+                                        @endif
+                                       
                                     </tbody>
                                 </table>
                                 <button type="button" class="btn btn-sm btn-secondary add-more-breaddrum">Add More Breadcrum</button>

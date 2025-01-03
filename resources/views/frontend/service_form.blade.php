@@ -202,24 +202,19 @@
                                 <h3>Why Choose File My RTI?</h3>
                             </div>
                             <ul class="sidebar_list">
+                                @foreach($why_choose as $item)
+                                <?php
+                                    
+                                    $item_data = json_decode($item->data, true);
+                                    ?>
                                 <li>
                                     <span class="list_icon">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/profiles.webp')}}" alt="profile icon">
+                                        <img class="img-fluid" src="{{asset($item_data['image'] ?? '')}}" alt="profile icon">
                                     </span>
-                                    <span class="list_content">Lorem ipsum dolor sit amet consectetur. Proin lacinia.</span>
+                                    <span class="list_content"><strong>{{$item_data['title'] ?? ''}}</strong> - {{$item_data['description'] ?? ''}}</span>
                                 </li>
-                                <li>
-                                    <span class="list_icon">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/achieve-goal.webp')}}" alt="profile icon">
-                                    </span>
-                                    <span class="list_content">Lorem ipsum dolor sit amet consectetur. Proin lacinia.</span>
-                                </li>
-                                <li>
-                                    <span class="list_icon">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/hassle-free.webp')}}" alt="profile icon">
-                                    </span>
-                                    <span class="list_content">Lorem ipsum dolor sit amet consectetur. Proin lacinia.</span>
-                                </li>
+                                @endforeach
+                                
                             </ul>
                             <ul class="support_list">
                                 <li>

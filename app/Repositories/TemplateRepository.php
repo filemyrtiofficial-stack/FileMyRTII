@@ -7,6 +7,7 @@ use App\Models\PageData;
 use App\Models\ServiceData;
 use App\Models\SlugMaster;
 use App\Models\SeoMaster;
+use App\Models\ServiceCategoryData;
 use Session;
 use Exception;
 class TemplateRepository implements TemplateInterface {
@@ -90,6 +91,23 @@ class TemplateRepository implements TemplateInterface {
             } 
             Session::flash("success", "Data successfully added");
             return response(['message' => "Data successfully added", 'redirect' => route('services.edit',$page_id)]);
+        }
+        if($request->page_type == 'service-category') {
+            if($request->key == null) {
+    
+                $sequance = 1;
+                $pages = ServiceCategoryData::where(['service_category_id' => $page_id])->orderBy('sequance', 'desc')->first();
+                if($pages) {
+                    $sequance = $pages->sequance + 1;
+                }
+                ServiceCategoryData::create(['service_category_id' => $page_id, 'section_key' => $request->section_key, 'data' => json_encode($request->all()), 'sequance' => $sequance]);
+            }
+            else {
+                ServiceCategoryData::where(['id' => $request->key])->update([ 'data' => json_encode($request->all())]);
+    
+            } 
+            Session::flash("success", "Data successfully added");
+            return response(['message' => "Data successfully added", 'redirect' => route('service-category.edit',$page_id)]);
         }
         else {
 

@@ -17,11 +17,23 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-8">
                                 <div class="form-group">
                                         <label class="form-label">Title</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" value="{{$data['title'] ?? ''}}" name="title" id="title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                        <label class="form-label">Partition</label>
+                                        <div class="input-group">
+                                            <select type="text" class="form-control" value="{{$data['partition'] ?? ''}}" name="partition" id="partition">
+                                                @foreach(partition() as $key => $value)
+                                                    <option value="{{$key}}">{{$key}}</option>
+                                                @endforeach    
+                                            </select>
                                     </div>
                                 </div>
                             </div>
@@ -34,6 +46,29 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">CTA Button</label>
+                                    <div class="input-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Title</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['link_title'] ?? ''}}" name="link_title" data-lable="link_title" id="link_title">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Url</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['link_url'] ?? ''}}" name="link_url" data-lable="link_url" id="link_url">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             <div class="col-12">
                                 <div class="form-group">

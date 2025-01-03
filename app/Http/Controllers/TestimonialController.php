@@ -48,10 +48,10 @@ class TestimonialController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'client_name' => "required|unique:testimonials,client_name",
+            'client_name' => "required",
             'status' => "required",
             'comment' => "required",
-            'image' => "required"
+            // 'image' => "required"
 
         ]);
         if($validator->fails()) {
@@ -96,10 +96,10 @@ class TestimonialController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'client_name' => "required|unique:testimonials,client_name",
+            'client_name' => "required",
             'status' => "required",
             'comment' => "required",
-            'image' => "required"
+            // 'image' => "required"
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);

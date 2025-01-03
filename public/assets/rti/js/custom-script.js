@@ -221,11 +221,13 @@
                 $(this).parent().addClass('active');
                 const $activeListItem = $('.contact_faq_list li.active');
                 const $prevItem = $activeListItem.prev();
-                console.log($activeListItem);
+                $('.contact_faq_list li:last-child').css('border', 'none');
+                // console.log($activeListItem);
                 if ($prevItem.length) {
                     $listItem.css('border-bottom','1px solid rgba(212, 212, 212, 0.5)');
                     $activeListItem.css('border', 'none')
                     $prevItem.css('border', 'none');
+                    $('.contact_faq_list li:last-child').css('border', 'none');
                 }
             });
         }
@@ -312,6 +314,17 @@
                  ]
             });
           }
+
+        //   service detail faq section js
+
+        if ($('.single_faq').length) {
+            $('.single_faq .faq_title').on('click', function () {
+                $(this).siblings(".faq_content").slideToggle(300);
+                $(this).parent().siblings().find(".faq_content").slideUp(300);
+                $(this).parent().siblings().find(".faq_title").removeClass("active");
+                $(this).toggleClass("active");
+            });
+        }
   
 
 })(jQuery);

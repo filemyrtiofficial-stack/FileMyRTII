@@ -9,6 +9,7 @@
 @import url("blog-listing.css");
 @import url("blog-detail.css");
 @import url("service-listing.css");
+@import url("service-detail-page.css");
 
 
 :root {
@@ -1717,6 +1718,7 @@ button {
     -webkit-box-orient: vertical;
     line-clamp: 3;
     -webkit-line-clamp: 3;
+    min-height: 5.72917vw;
 }
 .blog_area .theme-btn-link {
     margin-top: 1.429em;
@@ -1762,13 +1764,16 @@ button {
     .blog_item {
         max-height: none;
         min-height: auto;
-        margin-bottom: 120px;
+        margin-bottom: 100px;
     }
     .blog_section .row [class*="col-"]:last-child .blog_item {
         margin-bottom: 0;
     }
     .blog_cta {
         margin-top: 130px;
+    }
+    .blog_area .blog_text {
+        min-height: auto;
     }
 }
 

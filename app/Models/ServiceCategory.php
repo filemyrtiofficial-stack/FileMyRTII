@@ -48,6 +48,17 @@ class ServiceCategory extends Model
         return $this->hasMany(Service::class, 'category_id', 'id')->where('status', true);
     }
    
+      
+    public function slug() {
+        return $this->hasOne(SlugMaster::class, 'linkable_id', 'id')->where('linkable_type', 'service_category');
+    }
+    public function seo() {
+        return $this->hasOne(SeoMaster::class, 'linkable_id', 'id')->where('linkable_type', 'service_category');
+    }
+   
+    public function serviceData() {
+        return $this->hasMany(ServiceCategoryData::class, 'service_category_id', 'id')->orderBy('sequance');
+    }
   
 }
 

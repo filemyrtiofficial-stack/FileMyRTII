@@ -131,12 +131,24 @@
 .blog_post_content {
     position: relative;
 }
-.blog_post_content h2,
-.blog_post_content h3 {
-    font-size: 2.91667vw;
+.blog_post_content h2 {
+    font-size: 1.87667vw;
     font-weight: 700;
     margin-bottom: 0.357em;
     margin-top: 1.071em;
+}
+.blog_post_content h3 {
+    font-size: 1.68667vw;
+    font-weight: 700;
+    margin-bottom: 0.357em;
+    margin-top: 1.071em;
+}
+.blog_post_content h2 strong,
+.blog_post_content h3 strong,
+.blog_post_content h4 strong,
+.blog_post_content h5 strong,
+.blog_post_content h6 strong {
+    font-weight: unset;
 }
 .blog_post_content h2:first-child,
 .blog_post_content h3:first-child {
@@ -181,8 +193,27 @@
 .blog_post_content p:last-child {
     margin-bottom: 20px;
 }
+.blog_post_content a {
+    color: var(--theme-btn-color);
+}
 .blog_post_content table {
     width: 100%;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-color: #8a8a8a;
+    border-style: solid;
+    color: rgba(255, 255, 255, 0.80);
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.blog_post_content table thead {
+    background-color: rgb(242 242 242);
+}
+.blog_post_content table td, .blog_post_content table th {
+    border-width: 2px;
+    border-color: #8a8a8a;
+    border-style: solid;
+    padding: 5px;
 }
 .blog_post_content table tr th,
 .blog_post_content table tr td {
@@ -326,6 +357,10 @@
     .blog_post_list li {
         font-size: 14px;
     }
+    .blog_post_content h2,
+    .blog_post_content h3 {
+        font-size: 22px;
+    }
     .blog_post_content h4,
     .blog_post_content h5,
     .blog_post_content h6 {
@@ -356,6 +391,17 @@
     .comment_form .form_item .form_field {
         font-size: 14px;
     }
+    .blog_post_content p + p {
+        margin-top: 15px;
+    }
+    .blog_post_content ul li,
+    .blog_post_content ol li {
+        font-size: 14px;
+    }
+    .blog_post_content table tr th,
+    .blog_post_content table tr td {
+        font-size: 14px;
+    }
     
 }
 
@@ -371,9 +417,11 @@
     .blog_post_list li + li::before {
         left: -10px;
     }
-    .blog_post_content h2,
+    .blog_post_content h2 {
+        font-size: 24px;
+    }
     .blog_post_content h3 {
-        font-size: 30px;
+        font-size: 20px;
     }
     .blog_post_content p {
         font-size: 16px;
@@ -381,7 +429,11 @@
     .blog_post_content h4,
     .blog_post_content h5,
     .blog_post_content h6 {
-        font-size: 22px;
+        font-size: 18px;
+    }
+    .blog_post_content table tr th,
+    .blog_post_content table tr td {
+        font-size: 16px;
     }
     .blog_post_share {
         padding: 20px 0;
