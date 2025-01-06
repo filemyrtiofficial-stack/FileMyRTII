@@ -15,7 +15,7 @@
                                </ol>
                             </div>
                             <div class="breadcrumb_heading">
-                                <h1 class="title fs-72">{{$data['title'] ?? ''}}</h1>
+                                <h1 class="title fs-72">{!! $data['title'] ?? '' !!}</h1>
                             </div>
                             @if(isset($data['link_title']) && !empty($data['link_title']))
                             <a href="{{$data['link_url']}}" class="theme-btn"><span>{{$data['link_title']}}</span></a>

@@ -9,7 +9,7 @@
                 <div class="blog_text fs-28 fw-600">
                     <p>{{$value['title'] ?? ''}}</p>
                 </div>
-                <a href="{{route('blog-details',[$value->slugMaster->slug ?? ''])}}" class="theme-btn-link fs-28">Read more</a>
+                <div class="text-right"><a href="{{route('blog-details',[$value->slugMaster->slug ?? ''])}}" class="theme-btn-link fs-28">Read more</a></div>
             </div>
         </div>
     </div>

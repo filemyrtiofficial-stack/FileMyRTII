@@ -1842,3 +1842,6 @@ button {
     }
 }
 /* cta section end */
+.text-right {
+    text-align: right;
+}
