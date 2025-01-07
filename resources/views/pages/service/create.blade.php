@@ -224,7 +224,7 @@
                                 <div class="col-md-12">
                                     <div class="card mt-3">
                                         <div class="card-body">
-                                            <div class="form-group hide">
+                                            <div class="form-group">
                                                 <label for="">Field Type</label> <br>
                                                 <div class="input-group">
                                                     <select type="text" name="field_type[]" class="form-control" required>
@@ -322,7 +322,7 @@
         $('.field-list').append(`  <div class="col-md-12">
                             <div class="card mt-3">
                                 <div class="card-body">
-                                    <div class="form-group hide">
+                                    <div class="form-group">
                                         <label for="">Field Type</label> <br>
                                         <div class="input-group">
                                         <select type="text" name="field_type[]" class="form-control" required>

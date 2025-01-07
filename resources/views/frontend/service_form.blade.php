@@ -105,7 +105,7 @@
                                             <div class="form_item">
                                             
                                                 <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
-                                                @if($fields['field_type'] == 'textarea') 
+                                                @if($value == 'textarea') 
                                                     <textarea class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
                                                     </textarea>
                                                 @else
@@ -124,7 +124,7 @@
                                     </div>
                                                 
                                     </div>
-                                    <div class="form_row form_step_3 hide">
+                                    <div class="form_row form_step_3">
                                         
                                         <div class="form_table">
                                             <div class="form_info">
