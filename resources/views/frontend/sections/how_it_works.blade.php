@@ -6,9 +6,11 @@
                     <h3 class="fs-56 fw-700">{!! $data['title'] ?? '' !!}</h3>
                 </div>
             </div>
+            @if(isset($data['how_it_work_link_title']) && !empty($data['how_it_work_link_title']))
             <div class="col-12 col-sm-3 know-more">
                 <a href="{!! $data['how_it_work_link_url'] ?? '' !!}" class="theme-btn"><span>{!! $data['how_it_work_link_title'] ?? '' !!}</span></a>
             </div>
+            @endif
         </div>
         <div class="row process_row">
             <?php

@@ -56,7 +56,7 @@ use App\Http\Controllers\LawyerController;
 
 
 
-use App\Mail\MyTestEmailphp;
+use App\Mail\MyTestEmail;
 use App\Mail\NewsletterMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -65,7 +65,7 @@ Route::get("test-mail", function(){
 	$name = "Test Coder";
 
     // The email sending is done using the to method on the Mail facade
-    if(Mail::to('developmentd299@gmail.com')->send(new MyTestEmail())){
+    if(Mail::to('developmentd299@gmail.com')->send(new App\Mail\MyTestEmail())){
 		echo "yes";
 	}
 	else {
