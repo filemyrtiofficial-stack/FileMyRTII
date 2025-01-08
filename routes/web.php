@@ -201,7 +201,7 @@ Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->na
 Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->name('frontend.service-form');
 Route::post('/udpate-payment-success', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
-Route::get('/apply/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
+Route::get('/apply/{service_category}/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
 Route::get('/service/{service_category}/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 
 // Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');

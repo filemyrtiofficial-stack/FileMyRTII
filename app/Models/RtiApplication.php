@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RtiApplication extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id'];
 
     public static function list($pagination, $filters = null)
     {
@@ -55,5 +55,10 @@ class RtiApplication extends Model
     public function service()
     {
         return $this->belongsTo(Service::class, 'service_id', 'id');
+    }
+
+    public function serviceCategory()
+    {
+        return $this->belongsTo(ServiceCategory::class, 'service_category_id', 'id');
     }
 }

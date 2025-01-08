@@ -65,6 +65,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Application No   </th>
                               
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Name   </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Category   </th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Status
                                 </th>
@@ -110,11 +111,17 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->service->name ?? ''}}</h6>
+                                            <h6 class="mb-0 text-sm">{{$item->service->name ?? ($item->service_id == 0 ? "Custom Request" : '')}}</h6>
                                         </div>
                                     </div>
                                 </td>
-                                
+                                <td>
+                                    <div class="d-flex px-3 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{$item->serviceCategory->name ?? ''}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
 
                                   <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>

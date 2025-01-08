@@ -160,8 +160,21 @@ class FrontendController extends Controller
         return response(['pages' => $page, 'html' => $html]);
     }
 
-    public function serviceForm($service_slug = null)
+    public function serviceForm($service_category, $service_slug = null)
     {
+
+        $why_choose = Section::list(false, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc']);
+        $payment = Setting::getSettingData('payment');
+        $service_category = ServiceCategory::wherehas('slug', function ($query) use ($service_category) {
+            $query->where('slug', $service_category);
+        })->first();
+        if($service_slug == 'custom-request') {
+            $service = ['id' => 0, 'name' => "Custom Request"];
+            $service = (object) $service;
+            $fields = [];
+        return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose', 'service_category'));
+
+        }
         $service = Service::wherehas('slug', function ($query) use ($service_slug) {
             $query->where('slug', $service_slug);
         })->first();
@@ -173,17 +186,15 @@ class FrontendController extends Controller
             $fields = json_decode($service->fields, true);
         }
 
-        $payment = Setting::getSettingData('payment');
 
-        $why_choose = Section::list(false, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc']);
        
-        return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose'));
+        return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose', 'service_category'));
     }
 
     public function serviceFormAction(Request $request)
     {
         $service = Service::where(['id' => $request->service_key])->first();
-        $fields = json_decode($service->fields, true);
+        $fields = isset($service->fields,) ? json_decode($service->fields, true) : [];
         if ($request->step_no == 1) {
 
             $validator = Validator::make($request->all(), [
@@ -202,6 +213,13 @@ class FrontendController extends Controller
         } elseif ($request->step_no == 2) {
             $field_data = [];
             $validation = [];
+            if($request->service_key == '0') {
+                $validation['rti_query'] = 'required';
+
+                if($request->pio_addr == 'yes') {
+                    $validation['pio_address'] = 'required';
+                }
+            }
             foreach ($fields['field_type'] ?? [] as $key => $value) {
                 if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes') {
 
@@ -219,6 +237,7 @@ class FrontendController extends Controller
             $input['field_data'] = $field_data;
             $data = $request->only(['first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code']);
             $data['service_id'] = $request->service_key;
+            $data['service_category_id'] = $request->category_id;
             $data['service_fields'] = json_encode($input);
             $data['status'] = 1;
             $data['application_no'] =  $this->generateApplicationNumber();
@@ -287,7 +306,6 @@ class FrontendController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('PAYMENT_STORE_ERROR' . $th->getMessage());
-
             return response()->json(['success' => false, 'error' => 'Internal Server Error'], 500);
         }
     }

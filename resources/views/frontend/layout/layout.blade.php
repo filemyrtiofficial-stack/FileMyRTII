@@ -15,6 +15,12 @@
         .testimonial_img_wrap img {
             border-radius :50%;
         }
+        .form_tab_item .title {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
 

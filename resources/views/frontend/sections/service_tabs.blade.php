@@ -64,7 +64,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                         </div>
                                                     </div>
                                             @else
-                                                <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}">
+                                                <a href="{{route('frontend.service.form',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}">
                                                         <div class="rti_item">
                                                             <div class="rti_scroll">
                                                                 <div class="rti_img">
@@ -83,17 +83,19 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                             </div>
                                         @endforeach
                                        
-                                        
                                         <div class="rti_block rti_block_ad">
-                                            <div class="rti_item active">
-                                                <div class="rti_scroll">
-                                                    <div class="rti_img">
-                                                        <img class="img-fluid" src="{{asset('assets/rti/images/think-question.webp')}}" alt="">
+                                            <a href="{{route('frontend.service.form',[$item->category->slug->slug ?? '', 'custom-request'])}}">
+                                                
+                                                <div class="rti_item active">
+                                                    <div class="rti_scroll">
+                                                        <div class="rti_img">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/think-question.webp')}}" alt="">
+                                                        </div>
+                                                        <div class="rti_content fs-28">Can't find what you need?</div>
+                                                        <div class="rti_content more_content fs-28">We're ready to help-just submit your request</div>
                                                     </div>
-                                                    <div class="rti_content fs-28">Can't find what you need?</div>
-                                                    <div class="rti_content more_content fs-28">We're ready to help-just submit your request</div>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

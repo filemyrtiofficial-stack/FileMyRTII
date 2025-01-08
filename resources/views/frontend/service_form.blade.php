@@ -18,8 +18,7 @@
                             <div class="breadcrumb">
                                <ol>
                                 <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <!-- <li class="fs-24"><a href="javascript:void(0);">{{$service->name ?? ''}}</a></li> -->
-                                <li class="fs-24"><a href="javascript:void(0);">{{$service->category->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="javascript:void(0);">{{$service_category->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$service->name ?? ''}}</li>
                                </ol>
                             </div>
@@ -41,6 +40,7 @@
                                 <input type="hidden" id="step_no" name="step_no" value="1">
                                 <input type="hidden" id="service_key" name="service_key" value="{{$service->id}}">
                                 <input type="hidden" id="application_no" name="application_no" value="">
+                                <input type="hidden" id="category_id" name="category_id" value="{{$service_category->id}}">
 
 
                                 <div class="form_tab_wrapper">
@@ -101,19 +101,38 @@
                                     <div class="form_row form_step_2 hide">
                                         <div class="form_data">
                                             
-                                            @foreach($fields['field_type'] ?? [] as $key => $value)
-                                            <div class="form_item">
-                                            
-                                                <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
-                                                @if($value == 'textarea') 
-                                                    <textarea class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
-                                                    </textarea>
-                                                @else
-                                                <input class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+                                            @if($service->name == 'Custom Request')
+                                                <div class="form_item">
+                                                    <label for="rt_query">RTI Query</label>
+                                                    <input class="form_field" type="text" name="rti_query" id="rti_query" placeholder="">
+                                                </div>
+                                                <div class="form_item">
+                                                    <label for="pio_addr">Do you know the PIO Address? (Yes/No)</label>
+                                                    <div class="radio_sec">
+                                                        <div class="radio_btn"><label><input type="radio" id="yes" name="pio_addr" value="yes" class="pio_addr">Yes</label></div>
+                                                        <div class="radio_btn"><label><input type="radio" id="no" name="pio_addr" value="no" class="pio_addr" checked>No</label></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form_item" id="pio_address_section" style="display:none;">
+                                                    <label for="pio_address">PIO Address</label>
+                                                    <input class="form_field" type="text" name="pio_address" id="pio_address" placeholder="">
+                                                </div>
+                                            @else
+                                                @foreach($fields['field_type'] ?? [] as $key => $value)
+                                                <div class="form_item">
+                                                    
+                                                
+                                                    <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
+                                                    @if($value == 'textarea') 
+                                                        <textarea class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+                                                        </textarea>
+                                                    @else
+                                                    <input class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
 
-                                                @endif
-                                            </div>
-                                            @endforeach
+                                                    @endif
+                                                </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                         
                                         <div class="form_action_wrap">
@@ -124,7 +143,7 @@
                                     </div>
                                                 
                                     </div>
-                                    <div class="form_row form_step_3">
+                                    <div class="form_row form_step_3 hide">
                                         
                                         <div class="form_table">
                                             <div class="form_info">
@@ -257,6 +276,16 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+    $(document).on('change', '.pio_addr', function(e) {
+        if($(this).val() == 'yes') {
+            $('#pio_address_section').show();
+        }
+        else {
+            $('#pio_address_section').hide();
+
+        }
+    });
+   
     $(document).on('click', '.back-btn', function(e){
         let target = $(this).attr('data-tab');
         let tab_index = parseInt($(this).attr('data-index'));
@@ -287,6 +316,7 @@
         let action = $(this).attr('action');
         let type = $(this).attr('method');
         var data = new FormData($(this)[0]);
+        $('.form-error-list').remove();
         $.ajax({
             url : action,
             type :  type,
