@@ -30,7 +30,6 @@ class FrontendController extends Controller
     public function index($slug = null)
     {
 
-
         if ($slug == null) {
             $slug = 'root';
         }
@@ -240,6 +239,8 @@ class FrontendController extends Controller
             $data['service_category_id'] = $request->category_id;
             $data['service_fields'] = json_encode($input);
             $data['status'] = 1;
+            $data['payment_status'] = 'pending';
+
             $data['application_no'] =  $this->generateApplicationNumber();
             $data['user_id'] = $this->updateUser($request);
             if (!empty($request->application_no)) {
@@ -297,7 +298,7 @@ class FrontendController extends Controller
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
             $payment = $api->payment->fetch($paymentResponse['razorpay_payment_id']);
             $response = $payment->capture(['amount' => $payment['amount']]);
-            $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => json_encode($response), 'status' => 2]);
+            $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => json_encode($response), 'status' => 2, 'payment_status' => 'paid']);
 
             Session::flash('success', 'Payment Successful');
             DB::commit();
@@ -313,7 +314,6 @@ class FrontendController extends Controller
     public function updatePaymentFailure(Request $request)
     {
         DB::beginTransaction();
-        print_r(json_encode($request->all()));
         try {
             $responseData = $request->input('response', []);
             $errorData = $responseData['error'] ?? [];

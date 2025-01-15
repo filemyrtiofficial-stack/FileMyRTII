@@ -283,4 +283,19 @@ class ServiceController extends Controller
         return view('pages.rti-applications.index', compact('list'));
         
     }
+
+    public function view(Request $request, $id) {
+        // echo "hello";die('kkk');
+
+        $data = RtiApplication::get($id);
+        $service_name = json_decode($data->service_fields, true);
+        $fields = [];
+        if ($data->service && !empty($data->service->fields)) {
+            $fields = json_decode($data->service->fields, true);
+        }
+        $field_data = json_decode($data['service_fields'], true); 
+        // print_r(gettype( $data['service_fields']));die;
+        return view('pages.rti-applications.view', compact('data', 'service_name', 'fields', 'field_data'));
+        
+    }
 }
