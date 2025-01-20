@@ -163,7 +163,7 @@ class FrontendController extends Controller
     public function serviceForm($service_category, $service_slug = null)
     {
 
-        $why_choose = Section::list(false, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc']);
+        $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
         $payment = Setting::getSettingData('payment');
         $service_category = ServiceCategory::wherehas('slug', function ($query) use ($service_category) {
             $query->where('slug', $service_category);
@@ -318,8 +318,7 @@ public function udpatePaymentSuccess(Request $request)
 
             Session::flash('success', 'Payment Successful');
             DB::commit();
-            $why_choose = Section::list(false, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc']);
-          
+            $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
 
             return view('frontend.thank_you', compact('rti', 'why_choose'));
             //return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
