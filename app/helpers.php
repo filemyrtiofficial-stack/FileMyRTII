@@ -831,6 +831,8 @@ function fieldList() {
     return [
         'input' => 'Input',
         'textarea' => 'Textarea',
+        'date' => 'Date',
+
         // 'boolean' => 'boolean',
 
 

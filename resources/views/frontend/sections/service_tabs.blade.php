@@ -60,7 +60,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                 <a href="{{route('frontend.service',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" class="theme-btn-link">Know More</a>
                                                                 
                                                             @endif
-                                                            <a href="{{route('frontend.service.form',[$item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
+                                                            <a href="{{route('frontend.service.form',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
                                                         </div>
                                                     </div>
                                             @else

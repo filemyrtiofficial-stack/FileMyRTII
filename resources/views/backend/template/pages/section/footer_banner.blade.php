@@ -44,7 +44,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="custom-banner-list" @if(isset($data['custom_banner']) && $data['custom_banner'] == 'no')  style="display:none" @endif>
+                                        <div class="custom-banner-list"
+                                        @if(empty($id) || (isset($data['custom_banner']) && $data['custom_banner'] == 'no'))style="display:none" @endif
+                                        >
+                                        <!-- @if(!isset($data) || (isset($data['custom_banner']) && $data['custom_banner'] == 'no'))  style="display:none" @endif -->
                                             <div class="row">
                                                 <!-- <div class="col-12">
                                                     <div class="form-group">

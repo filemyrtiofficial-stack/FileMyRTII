@@ -188,7 +188,7 @@
                                 <div class="col-md-12">
                                     <div class="card mt-3">
                                         <div class="card-body">
-                                            <div class="form-group hide">
+                                            <div class="form-group">
                                                 <label for="">Field Type</label> <br>
                                                 <div class="input-group">
                                                     <select type="text" name="field_type[]" class="form-control" required>
@@ -212,6 +212,29 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="date-other-validation" @if($fields['field_type'][$key] != "date")style="display:none;" @endif>
+                                                <div class="form-group">
+                                                    <label for="">Minimum Date</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="date" name="minimum_date[]" class="form-control" value="{{$fields['minimum_date'][$key] ?? null}}">
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Maximum Date</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="date" name="maximum_date[]" class="form-control" value="{{$fields['maximum_date'][$key] ?? null}}">
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Dependency Date Field</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="" name="dependency_date_field[]" class="form-control" value="{{$fields['dependency_date_field'][$key] ?? ''}}">
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="card-footer text-right">
                                             <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
@@ -227,7 +250,7 @@
                                             <div class="form-group">
                                                 <label for="">Field Type</label> <br>
                                                 <div class="input-group">
-                                                    <select type="text" name="field_type[]" class="form-control" required>
+                                                    <select type="text" name="field_type[]" class="form-control field_type" required>
                                                         {!! fieldListOptions() !!}
                                                     </select>
                                                 </div>
@@ -246,6 +269,29 @@
                                                     <select type="text" name="is_required[]" class="form-control" required>
                                                             {!! booleanListOptions() !!}
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="date-other-validation" style="display:none;">
+                                                <div class="form-group">
+                                                    <label for="">Minimum Date</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="date" name="minimum_date[]" class="form-control" >
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Maximum Date</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="date" name="maximum_date[]" class="form-control" >
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Dependency Date Field</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="" name="dependency_date_field[]" class="form-control" >
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -315,17 +361,23 @@
 @endsection
 @push('js')
 <script>
+    $(document).on('change', '.field_type', function(){
+        if($(this).val() == 'date') {
+            $(this).parents().eq(2).find('.date-other-validation').show();
+        }
+        else {
+            $(this).parents().eq(2).find('.date-other-validation').hide();
+        }
+    });
     $(document).on('click', '.add-more', function(e){
-        console.log(
-            '{{fieldListOptions()}}'
-        )
+       
         $('.field-list').append(`  <div class="col-md-12">
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="">Field Type</label> <br>
                                         <div class="input-group">
-                                        <select type="text" name="field_type[]" class="form-control" required>
+                                        <select type="text" name="field_type[]" class="form-control field_type" required>
                                                     <?php echo fieldListOptions(); ?>
                                             </select>
                                         </div>
@@ -344,6 +396,29 @@
                                             <select type="text" name="is_required[]" class="form-control" required>
                                             <?php echo booleanListOptions(); ?>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="date-other-validation" style="display:none;">
+                                        <div class="form-group">
+                                            <label for="">Minimum Date</label> <br>
+                                            <div class="input-group">
+                                            <input type="date" name="minimum_date[]" class="form-control" >
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Maximum Date</label> <br>
+                                            <div class="input-group">
+                                            <input type="date" name="maximum_date[]" class="form-control" >
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Dependency Date Field</label> <br>
+                                            <div class="input-group">
+                                            <input type="" name="dependency_date_field[]" class="form-control" >
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

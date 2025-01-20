@@ -53,17 +53,19 @@
                                        
                                         @if(isset($data['why_choosecount']))
                                             @for($index = 0; $index < $data['why_choosecount']; $index++)
-                                                <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
-                                                    <div class="col-lg-9 mt-lg-0">
-                                                        <div class="card-body">
-                                                            <select name="why_choose{{$index}}" id="why_choose_{{$index}}" class="form-control why_choose data-index="{{$index}}">
-                                                                <option value="">Select </option>    
-                                                            {!! sectionTemplateOptions('why_choose',$data['why_choose_'.$index]) !!}
-                                                            </select>
+                                                @if(isset($data['why_choose_'.$index]))
+                                                    <div class="d-flex draggable"  id="row{{$index}}"  draggable="true" productID="{{$index}}">
+                                                        <div class="col-lg-9 mt-lg-0">
+                                                            <div class="card-body">
+                                                                <select name="why_choose{{$index}}" id="why_choose_{{$index}}" class="form-control why_choose data-index="{{$index}}">
+                                                                    <option value="">Select </option>    
+                                                                {!! sectionTemplateOptions('why_choose',$data['why_choose_'.$index]) !!}
+                                                                </select>
+                                                            </div>
                                                         </div>
+                                                        <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
                                                     </div>
-                                                    <div><button class="btn btn-sm btn-danger mt-4 service_tabs_remove"><i class="fa fa-trash"></i></button></div>
-                                                </div>
+                                                @endif
                                             @endfor
                                         @else
 
