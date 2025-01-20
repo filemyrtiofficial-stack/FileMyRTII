@@ -199,10 +199,11 @@ Route::get("subscribe-now", function(){
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
 
 Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->name('frontend.service-form');
-Route::post('/udpate-payment-success', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
+Route::post('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
 Route::get('/apply/{service_category}/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
 Route::get('/service/{service_category}/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
+// Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1	');
 
 // Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');

@@ -297,7 +297,7 @@ class FrontendController extends Controller
         }
     }
 
-    public function udpatePaymentSuccess(Request $request)
+public function udpatePaymentSuccess(Request $request)
     {
         $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
 
@@ -318,11 +318,15 @@ class FrontendController extends Controller
 
             Session::flash('success', 'Payment Successful');
             DB::commit();
+            $why_choose = Section::list(false, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc']);
+          
 
-            return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
+            return view('frontend.thank_you', compact('rti', 'why_choose'));
+            //return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('PAYMENT_STORE_ERROR' . $th->getMessage());
+            // print_r(json_encode($th->getMessage()));
             return response()->json(['success' => false, 'error' => 'Internal Server Error'], 500);
         }
     }

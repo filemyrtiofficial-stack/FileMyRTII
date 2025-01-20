@@ -602,7 +602,7 @@
 /* service detail sidebar end */
 /* success message for form */
 .success_toast_msg {
-    position: fixed;
+    position: absolute;
     z-index: 999;
     top: 30%;
     right: 30px;
@@ -649,6 +649,51 @@
   }
 /* success message for form end */
 
+/* thank you message start */
+.thankyou_msg_wrap {
+    margin-right: 24px;
+}
+.thankyou_msg {
+    position: relative;
+    text-align: center;
+    background-color: #F8F8F8;
+    padding: 4.20833vw 8.59375vw;
+    box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 0px 4px 23.2px 0px rgba(0, 0, 0, 0.15);
+}
+.thankyou_img {
+    max-width: 12.76042vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.60417vw;
+}
+.thankyou_heading * {
+    font-size: 2.91667vw;
+    font-weight: 700;
+    margin-bottom: 2.60417vw;
+    max-width: 790px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.thankyou_app_msg {
+    font-size: 1.875vw;
+    font-weight: 700;
+    margin-bottom: 0.694em;
+}
+.thankyou_app_msg span {
+    color: var(--theme-btn-color);
+}
+.thankyou_msg_detail,
+.thankyou_msg_detail p {
+    margin-bottom: 0;
+    font-size: 1.25vw;
+    margin-bottom: 3.125vw;
+}
+/* thank you message end */
+
 @media (max-width: 1199px) {
     .form_row {
         padding-right: 2.5vw;
@@ -689,7 +734,20 @@
         -moz-transform: translateY(-83%);
         -ms-transform: translateY(-83%);
         -o-transform: translateY(-83%);
-}
+    }
+    .thankyou_heading * {
+        font-size: 30px;
+    }
+    .thankyou_msg {
+        padding: 9.20833vw 8.59375vw;
+    }
+    .thankyou_app_msg {
+        font-size: 20px;
+    }
+    .thankyou_msg_detail,
+    .thankyou_msg_detail p {
+        font-size: 16px;
+    }
 }
 @media (max-width: 991px) {
     .form_tab_list li a .step {
@@ -701,6 +759,9 @@
     }
     .form_tab_list li a .title {
         font-size: 13px;
+    }
+    .thankyou_msg {
+        padding: 14.20833vw 8.59375vw;
     }
 }
 @media (max-width: 767px) {
@@ -894,5 +955,24 @@
     }
     .support_list li:not(:first-child) .list_icon {
         width: 14px;
+    }
+    .thankyou_msg_wrap {
+        margin-right: 0;
+    }
+    .thankyou_img {
+        max-width: 100%;
+        width: 50%;
+        margin-bottom: 16px;
+    }
+    .thankyou_heading * {
+        margin-bottom: 20px;
+    }
+    .thankyou_msg {
+        padding-left: 3.59375vw;
+        padding-right: 3.59375vw;
+    }
+    .thankyou_msg_detail,
+    .thankyou_msg_detail p {
+        margin-bottom: 20px;
     }
 }
