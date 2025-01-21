@@ -191,7 +191,7 @@
                                             <div class="form-group">
                                                 <label for="">Field Type</label> <br>
                                                 <div class="input-group">
-                                                    <select type="text" name="field_type[]" class="form-control" required>
+                                                    <select type="text" name="field_type[]" class="form-control field_type" required>
                                                         {!! fieldListOptions($fields['field_type'][$key]) !!}
                                                     </select>
                                                 </div>

@@ -19,20 +19,22 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                
                 <div class="row">
                     <div class="col-12">
-                        <div class="rti_tab_wrapper">
-                            <div class="rti_tabs">
-                                <ul class="rti_tab_list rti_tab_slider">
-                                    @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
-                                        <?php
-                                            $item = collect($service_categories)->where('id', $data['service_tabs_service_'.$index])->where('status', true)->values();
-                                        ?>
-                                       
-                                        <li><a class="rti_tab_item {{ (!isset($data['service_tab']) && $index == 0) ||(isset($data['service_tab']) && $data['service_tab'] == $index) ? 'active': ''}} fs-28" href="javascript:void(0);" data-toggle="tab" data-id="rti_tab{{$index}}"><span>{{ $item[0]['name'] ?? ''}}</span></a></li>
-                                    @endfor
-                            
-                                </ul>
+                        @if($data['service_tabs_service_count'] > 1)
+                            <div class="rti_tab_wrapper">
+                                <div class="rti_tabs">
+                                    <ul class="rti_tab_list rti_tab_slider">
+                                        @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
+                                            <?php
+                                                $item = collect($service_categories)->where('id', $data['service_tabs_service_'.$index])->where('status', true)->values();
+                                            ?>
+                                        
+                                            <li><a class="rti_tab_item {{ (!isset($data['service_tab']) && $index == 0) ||(isset($data['service_tab']) && $data['service_tab'] == $index) ? 'active': ''}} fs-28" href="javascript:void(0);" data-toggle="tab" data-id="rti_tab{{$index}}"><span>{{ $item[0]['name'] ?? ''}}</span></a></li>
+                                        @endfor
+                                
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="rti_tab_details">
                             @for($index = 0; $index < $data['service_tabs_service_count']; $index++)
                                 <div class="rti_tab {{ (!isset($data['service_tab']) && $index == 0) ||(isset($data['service_tab']) && $data['service_tab'] == $index) ? 'tab-active': ''}} " data-id="rti_tab{{$index}}">

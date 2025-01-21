@@ -602,7 +602,7 @@
 /* service detail sidebar end */
 /* success message for form */
 .success_toast_msg {
-    position: absolute;
+    position: fixed;
     z-index: 999;
     top: 30%;
     right: 30px;

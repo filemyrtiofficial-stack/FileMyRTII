@@ -40,15 +40,19 @@
 .service_about_area .about_title *,
 .service_about_area .about_title h2,
 .service_about_area .about_title h3,
-.service_about_area .about_title h4 {
+.service_about_area .about_title h4,
+.service_about_area h3,
+.service_about_area h2,
+.service_about_area h4
+ {
     font-size: 2.91667vw;
     font-weight: 700;
     margin-bottom: 0.429em;
     line-height: 1.15;
     margin-top: 1.429em;
 }
-.service_about_area .about_content,
-.service_about_area .about_content p {
+.service_about_area .about_content, .service_about_area,
+.service_about_area .about_content p, .service_about_area p {
     font-size: 1.25vw;
     line-height: 1.42;
     margin-bottom: 1.25em;
@@ -230,7 +234,7 @@
 
 
 @media (max-width: 1199px) {
-    .service_about_area .about_content,
+    .service_about_area .about_content, .service_about_area,
     .service_about_area .about_content p {
         font-size: 14px;
     }
@@ -284,12 +288,17 @@
     .service_about_area .about_title *,
     .service_about_area .about_title h2,
     .service_about_area .about_title h3,
-    .service_about_area .about_title h4 {
+    .service_about_area .about_title h4,
+    .service_about_area h3,
+    .service_about_area h2,
+    .service_about_area h4 {
         font-size: 30px;
         margin-top: 0.571em;
     }
     .service_about_area .about_content,
-    .service_about_area .about_content p {
+    .service_about_area,
+    .service_about_area .about_content p,
+    .service_about_area p {
         font-size: 16px;
     }
     .reason_list_wrap {

@@ -916,3 +916,12 @@ function partition() {
         ]
     ];
 }
+
+function encryptString($string) {
+    return Illuminate\Support\Facades\Crypt::encryptString($string);
+}
+
+
+function decryptString($string) {
+    return Illuminate\Support\Facades\Crypt::decryptString($string);
+}

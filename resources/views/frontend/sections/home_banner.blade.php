@@ -7,7 +7,7 @@
                     <div class="header_text">
                         <h1 class="title">{!! $data['title'] ?? '' !!}</h1>
                         <p class="fs-24">{!! $data['home_banner_description'] ?? '' !!}</p>
-                        <a href="{!! $data['home_banner_banner_link_url'] ?? '' !!}" class="theme-btn"><span>{!! $data['home_banner_banner_link_title'] ?? '' !!}</span></a>
+                        <a href="{{config('app.base_url')}}{!! $data['home_banner_banner_link_url'] ?? '' !!}" class="theme-btn"><span>{!! $data['home_banner_banner_link_title'] ?? '' !!}</span></a>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">

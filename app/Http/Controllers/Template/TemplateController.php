@@ -10,6 +10,7 @@ use App\Repositories\TemplateRepository;
 use App\Interfaces\TemplateInterface;
 use Validator;
 use App\Models\PageData;
+use Illuminate\Support\Facades\Crypt;
 class TemplateController extends Controller
 {
     private TemplateRepository $templateRepository;
@@ -137,31 +138,17 @@ class TemplateController extends Controller
     }
 
     public function uploadImages(Request $request) {
-        $key = "file";
-        $path = "test";
-        $file_list = [];
-        $path = '/upload/'.$path;
-        $image_list = uploadFile($request, 'file', 'test');
-        return response(['data'=>$image_list]);
+       
         
+        $key = "file";
         if($request->hasFile($key))
         {
-            $files = $request->file($key);
-            foreach($files as $file){
-    
-                $filenameWithExt = $file->getClientOriginalName();
-                return response(['data'=>$filenameWithExt]);
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename.'_'.time().'.'.$extension;
-                $destinationPath = public_path().$path ;
-                $file->move($destinationPath,$fileNameToStore);
-    
-                // $path = $file->storeAs('public/'.$path,$fileNameToStore);
-                array_push($file_list, $path."/".$fileNameToStore);
-            }
+            $path = "rti-application";
+            // $path = '/upload/'.$path;
+            $image_list = uploadFile($request, 'file', $path);
+            return response(['data'=>$image_list, 'preview_path' => route('preview-document',Crypt::encryptString($image_list))]);
+           
         }
-        return response(['data'=>$file_list]);
 
 
     }
@@ -324,5 +311,11 @@ class TemplateController extends Controller
         } catch (Exception $ex) {
             return response(['error' => $ex->getMessage()], 500);
         }
+    }
+
+    public function previewDocument($string) {
+        // print_r(Crypt::decryptString($string));
+        $string = Crypt::decryptString($string);
+        return view('preview-document', compact('string'));
     }
 }

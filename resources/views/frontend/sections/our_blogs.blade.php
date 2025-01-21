@@ -44,7 +44,7 @@ $blogs = App\Models\Blog::list(false, ['ids' => json_decode($data['blog_list'], 
          
         </div>
         <div class="blog_cta">
-            <a href="javascipt:void(0);" class="theme-btn"><span>View all blogs</span></a>
+            <a href="{{config('app.base_url')}}/blogs" class="theme-btn"><span>View all blogs</span></a>
         </div>
     </div>
 </section>

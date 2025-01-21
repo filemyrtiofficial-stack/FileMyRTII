@@ -10,6 +10,7 @@
 @import url("blog-detail.css");
 @import url("service-listing.css");
 @import url("service-detail-page.css");
+@import url("dashboard.css");
 
 
 :root {
@@ -1734,6 +1735,196 @@ button {
 .blog_cta .theme-btn {
     text-transform: capitalize;
 }
+
+/* modal login css start */
+.modal_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    overflow: hidden;
+    display: none;
+}
+.modal_bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+}
+.modal_login_wrap {
+    position: absolute;
+    position: fixed;
+    z-index: 11;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 460px;
+}
+.modal_login {
+    background-color: var(--theme-btn-color);
+    padding: 1.875vw 1.66667vw;
+}
+.modal_header {
+    position: relative;
+}
+.modal_header .heading {
+    font-size: 1.45833vw;
+    text-transform: uppercase;
+    color: var(--theme-white-color);
+    text-align: center;
+    font-weight: 400;
+    padding-bottom: 1.071em;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+.modal_header .close {
+    border: none;
+    box-shadow: none;
+    background: none;
+    padding: 0;
+    position: absolute;
+    top: -5px;
+    right: 0;
+}
+.modal_header .close img {
+    width: 1.875vw;
+    height: 1.875vw;
+}
+.modal_body {
+    position: relative;
+    padding: 1.5625vw 0 0;
+}
+.modal_body .theme-btn {
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 400;
+}
+.modal_body .theme-btn:hover {
+    border-color: transparent;
+}
+.modal_body .theme-btn::before {
+    display: none;
+}
+.modal_action_top {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1.5625vw;
+}
+.modal_action_top .theme-btn.google {
+    background-color: var(--theme-white-color);
+    color: var(--theme-btn-color);
+    font-size: 1.04167vw;
+    font-weight: 700;
+    width: 100%;
+    align-items: center;
+}
+.modal_action_top .theme-btn.google img {
+    width: 2.08333vw;
+    height: 2.08333vw;
+    margin-right: 1.25vw;
+}
+.modal_action_top .theme-btn.guest {
+    background-color: transparent;
+    color: var(--theme-white-color);
+    font-size: 1.04167vw;
+    font-weight: 400;
+    width: 100%;
+    align-items: center;
+    border: 2px solid var(--theme-white-color);
+}
+.modal_action_top .theme-btn.guest img {
+    width: 2.08333vw;
+    height: 2.08333vw;
+    margin-right: 1.25vw;
+}
+.modal_action_bottom {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 14px;
+}
+.modal_action_bottom .theme-btn {
+    background-color: var(--theme-white-color);
+    color: rgba(0, 0, 0, 0.50);
+    flex: 0 0 auto;
+    width: calc((100% - 14px) / 2 );
+}
+.modal_content_top {
+    margin-top: 1.82292vw;
+    margin-bottom: 1.82292vw;
+}
+.modal_content_top,
+.modal_content_top p {
+    font-size: 1.25vw;
+    text-align: center;
+    color: var(--theme-white-color);
+    text-transform: uppercase;  
+}
+.modal_content_top p {
+    margin-bottom: 0;
+}
+.modal_content_bottom {
+    margin-top: 1.25vw;
+}
+.modal_content_bottom,
+.modal_content_bottom p {
+    font-size: 1.04167vw;
+    text-align: center;
+    color: var(--theme-white-color);
+}
+.modal_content_bottom p {
+    margin-bottom: 0;
+}
+.modal_body .form_item {
+    margin-bottom: 1.18333vw;
+    position: relative;
+    width: calc((100% - 2.1875vw) / 2);
+}
+.modal_body .form_item label {
+    font-size: 1.25vw;
+    display: inline-block;
+    margin-bottom: 0.333em;
+    color: rgba(0, 0, 0, 0.6);
+}
+.modal_body .form_item .form_field {
+    display: block;
+    width: 100%;
+    padding: 0.6em 1em;
+    font-size: 1.25vw;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--theme-text-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--theme-white-color);
+    background-clip: padding-box;
+    border: 1px solid rgba(3, 132, 212, 0.50);
+    background-color: rgba(255, 255, 255, 0.93);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-shadow: 0px 14px 34px 0px rgba(32, 104, 246, 0.20);
+    backdrop-filter: blur(25px);
+}
+/* modal login css end */
+
 @media (max-width: 1199px) {
     .blog_cta {
         margin-top: 5.38542vw;
@@ -1842,6 +2033,3 @@ button {
     }
 }
 /* cta section end */
-.text-right {
-    text-align: right;
-}

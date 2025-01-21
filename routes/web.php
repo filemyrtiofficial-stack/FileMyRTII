@@ -89,22 +89,13 @@ Route::get("subscribe-now", function(){
 //     Mail::to("developmentd299@gmail.com")->send(new App\Mail\MyTestEmail());
 // });
 
-// Route::post('/send-enquiry', [FrontendController::class, 'sendEnquiry'])->name('send-enquiry');
-// Route::get('/service/{id}', [FrontendController::class, 'service'])->name('service-page');
 
-
-// Route::get('/about-us', [FrontendController::class, 'about'])->name('about');
-// Route::get('/service', [FrontendController::class, 'service'])->name('service');
-
-
-// Route::get('/', function(){
-// 	return view('coming-soon');
-// });
-// Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
 	Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 	Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.perform');
 	// Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 	Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
+	Route::post('/upload-images', [TemplateController::class, 'uploadImages'])->name('upload-images');
+	Route::get('/preview-document/{document?}', [TemplateController::class, 'previewDocument'])->name('preview-document');
 
 	Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
 	Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
@@ -113,16 +104,9 @@ Route::get("subscribe-now", function(){
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 	Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 		Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-		// Route::resource('hospitals', HospitalController::class);  
-		// Route::resource('specialities', SpecializationController::class);    
-		// Route::resource('doctors', DoctorController::class);    
-		// Route::resource('disease', DiseaseController::class);    
-		// Route::resource('disease-types', DiseaseTypeController::class);    
-		// Route::resource('lab-tests', LabTestController::class);    
-		// Route::resource('ambulances', AmbulanceController::class);    
+		 
 		Route::resource('users', UserController::class);       
 		Route::resource('enquiries', EnquiryController::class);       
-		// Route::resource('labs', LabController::class);       
 		Route::resource('categories', CategoryController::class);   
 		Route::get('/blogcomment', [BlogController::class, 'blogCommentList'])->name('blog.comment.list'); 
 		Route::resource('blogs', BlogController::class);       
@@ -143,7 +127,6 @@ Route::get("subscribe-now", function(){
 		Route::resource('service-category', ServiceCategoryController::class);       
 		
 		Route::resource('lawyers', LawyerController::class);  
-		Route::post('/upload-images', [TemplateController::class, 'uploadImages'])->name('upload-images');
 		
 
 		Route::get('/update-page-section/{page_id}/{section_type}/{id?}', [TemplateController::class, 'getSectionPage'])->name('get-page-section');
@@ -172,15 +155,6 @@ Route::get("subscribe-now", function(){
 		Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
 		
-		
-		// Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
-		// Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');
-		// Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-		// Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-		// Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static'); 
-		// Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
-		// Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
-		// Route::get('/{page}', [PageController::class, 'index'])->name('page');
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 	});
@@ -188,12 +162,23 @@ Route::get("subscribe-now", function(){
 
 	Route::get('google', function(){
 
-		return view('googleAuth');
-		
-		});
-		Route::get('auth/google', [FrontendAuthController::class, 'redirectToGoogle']);
-		Route::get('callback', [FrontendAuthController::class, 'handleGoogleCallback']);
+	return view('googleAuth');
+	
+	});
+	Route::get('auth/google', [FrontendAuthController::class, 'redirectToGoogle']);
+	Route::get('callback', [FrontendAuthController::class, 'handleGoogleCallback']);
+	Route::post('customer-signin', [FrontendAuthController::class, 'customerLogin'])->name('customer.login');
+	Route::post('customer-logout', [FrontendAuthController::class, 'logout'])->name('customer.logout');
+	Route::post('customer-register', [FrontendAuthController::class, 'register'])->name('customer.register');
 
+	Route::post('forgot-password', [FrontendAuthController::class, 'forgotPassword'])->name('customer.forgot-password');
+	Route::get('reset-password/{email}/{date}', [FrontendAuthController::class, 'resetPassword'])->name('customer.reset-password');
+	Route::post('update-password', [FrontendAuthController::class, 'updatePassword'])->name('customer.update-password');
+
+
+	
+	
+	
 
 
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');

@@ -146,16 +146,26 @@
                                     </div>
                                                 
                                     </div>
-                                    <div class="form_row form_step_3 hide">
+                                    <div class="form_row form_step_3 hide1">
                                         
                                         <div class="form_table">
                                             <div class="form_info">
                                                 <div class="form_number">RTI Application No: <span id="application_number"></span></div>
-                                                <div class="upload_file">
+                                                <div class="upload_file" id="upload_file-section">
                                                     <button class="upload-file-btn">Upload File <span>+</span></button>
-                                                    <input type="file" name="file" />
+                                                    <input type="file" name="file" id="document-upload" />
+                                                    
                                                 </div>
+                                                <div class="upload_file hide" id="preview-section">
+                                                    <a class="upload-file-btn" target="blank">Preview </a>
+                                                    <span class="remove-file">X</span>
+                                                    
+                                                </div>
+
+                                               
+                                                <input type="hidden" name="document" class="image-input" />
                                             </div>
+                                            <a href="" class="hide" id="preview-dodument" target="blank">Preview</a>
                                             <div class="form_table_detail">
                                             @if(isset($payment) && isset($payment['amount_type']))
                                                 @foreach($payment['amount_type'] as $key =>  $value)
@@ -279,6 +289,54 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+    $(document).on('click', '.remove-file', function(){
+        $('#preview-section').addClass('hide').find('a').attr('href' , null);
+        $('#upload_file-section').removeClass('hide')
+        $('.image-input').val(null)
+
+    });
+ $(document).on('change', '#document-upload', function () {
+        let _this = $(this);
+         let uploadedFile = document.getElementById($(this).attr('id')).files[0];
+         var form_data = new FormData();
+         form_data.append("file", uploadedFile);
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+         $.ajax({
+            url: "{{route('upload-images')}}",
+            method: "POST",
+            data: form_data,
+            cache : false,
+            processData: false,
+            contentType: false,
+            dataType : 'json',
+            success : function(response){
+                console.log('upload-image', response)
+                $('#upload_file-section').addClass('hide');
+                // _this.parents().eq(0).find('.upload-file-btn').text('Uploaded');
+              _this.parents().eq(1).find('.image-input').val(response.data);
+              console.log(_this.parents().eq(1).find('.image-input').attr('class'));
+                      $('#preview-section').removeClass('hide').find('a').attr('href' , response.preview_path);
+
+            },
+            error : function(error) {}
+         });
+      });
+// $(document).on('change', "#document-upload", function (e) {
+//                 file = this.files[0];
+//                 if (file) {
+//                     let reader = new FileReader();
+//                     reader.onload = function (event) {
+//                       console.log(event.target.result)
+//                       $('#preview-dodument').attr('href' , event.target.result).removeClass('hide');
+//                     };
+//                     reader.readAsDataURL(file);
+//                 }
+//             });
+
     $(document).on('change', '.pio_addr', function(e) {
         if($(this).val() == 'yes') {
             $('#pio_address_section').show();

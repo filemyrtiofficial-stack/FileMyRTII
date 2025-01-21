@@ -21,6 +21,9 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        .hide {
+            display: none;
+        }
     </style>
 </head>
 
@@ -30,7 +33,7 @@
 
         @yield('content')
 
-
+        @include('frontend.partials.login-register')
 
     </main>
     <div class="success_toast_msg ">  
@@ -54,6 +57,39 @@
     <script src="{{asset('assets/rti/js/custom-script.js')}}"></script>
     @stack('js')
     <script>
+
+        $(document).on('submit', '.authentication', function(e){
+            e.preventDefault();
+        let _this = $(this);
+        $('.form-error-list').remove();
+        var data = $(this).serialize();
+        var action = $(this).attr('action');
+        var method = $(this).attr('method');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: action,
+            data: data,
+            type: 'post', // For jQuery < 1.9
+            dataType : 'json',
+            success: function(response) {
+                  if(response.status == 'success') {
+                    window.location.reload();
+                  }
+            },
+            error: function(error) {
+                $.each(error.responseJSON.errors, function(index, value) {
+                    console.log(value)
+                    _this.find('input[name='+index+']').parents().eq(0).append(
+                        `<span class="text-danger form-error-list">${value}</span>`)
+                })
+            }
+        });
+        });
+
         $(document).on('submit', '.form-submit', function(e) {
         e.preventDefault();
         let _this = $(this);

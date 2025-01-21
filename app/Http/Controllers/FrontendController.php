@@ -201,7 +201,7 @@ class FrontendController extends Controller
                 'first_name' => "required",
                 'last_name' => "required",
                 'email' => "required|email",
-                'phone_number' => "required",
+                'phone_number' => "required|digits:10",
                 'address' => "required",
                 'postal_code' => "required|digits:6",
 
@@ -269,7 +269,7 @@ class FrontendController extends Controller
         } else {
             $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
             $service_fields = json_decode($rti->service_fields, true);
-            $service_fields['user_document'] = uploadFile($request, 'file', 'user_files');
+            $service_fields['user_document'] =  $request->document; //uploadFile($request, 'file', 'user_files');
             $rti->update(['charges' => $request->charges, 'service_fields' => json_encode($service_fields)]);
             return response(['step' => 4, 'rti' => $rti, 'service_fields' => $service_fields]);
         }
@@ -288,7 +288,7 @@ class FrontendController extends Controller
 
     private function generateApplicationNumber()
     {
-        $application_no = date('Y') . date('m') . rand(0000, 9999);
+        $application_no = date('y') . date('m') . rand(0000, 9999);
         $check_application_no = RtiApplication::where('application_no', $application_no)->first();
         if (!$check_application_no) {
             return $application_no;
@@ -376,7 +376,7 @@ public function udpatePaymentSuccess(Request $request)
 
         $EnquiryForm = EnquiryForm::create($data);
 
-        // Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
+        Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
         return response(['message' =>  'Thank you for connecting with us']);
     }
 

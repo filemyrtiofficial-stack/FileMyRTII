@@ -17,7 +17,6 @@ $data = json_decode($section->data, true);
 @include('frontend.sections.' . $section->section_key)
 @endforeach
 
-
 @endsection
 @push('js')
 <script>

@@ -325,6 +325,21 @@
                 $(this).toggleClass("active");
             });
         }
+        $(document).on("click", ".login-modal", function(){
+            $(".modal_wrapper").css("display", "block");
+            $('.nav_btn .toggler').toggleClass('active');
+            $('.mobile_menu').toggleClass('active');
+        });
+        $(".modal_wrapper .close").on("click", function(){
+            $(".modal_wrapper").css("display", "none");
+            $('#login-step-1').removeClass('hide').siblings().addClass('hide');
+        });
+        $(document).on('click', '.singin-register-btn', function(e){
+            e.preventDefault();
+            let target = $(this).attr('data-target');
+            $('#'+target).removeClass('hide').siblings().addClass('hide');
+
+        });
   
 
 })(jQuery);

@@ -36,7 +36,7 @@
                     <div class="section_heading">
                         <h4 class="fs-56 fw-700">{{$detail['description'] ?? ''}}</h4>
                     </div>
-                    <a href="{{$detail['link_url'] ?? ''}}" class="theme-btn"><span>{{$detail['link_title'] ?? ''}}</span></a>
+                    <a href="{{config('app.base_url')}}{{$detail['link_url'] ?? ''}}" class="theme-btn"><span>{{$detail['link_title'] ?? ''}}</span></a>
                 </div>
             </div>
         </div>
