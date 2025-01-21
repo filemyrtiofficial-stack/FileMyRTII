@@ -65,16 +65,17 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Application No   </th>
                               
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Name   </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Category   </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Category </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Payment Status </th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Status
                                 </th>
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
-                                {{-- <th
+                                <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Action</th> --}}
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,12 +123,26 @@
                                         </div>
                                     </div>
                                 </td>
+                                <td>
+                                    <div class="d-flex px-3 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{$item->payment_status ?? ''}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
 
                                   <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
+                                </td>
+                                <td class="align-middle text-end">
+                                    <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                   
+                                        <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
+                                            href="{{route('rtiapplication.view', $item->id)}}">View</a>
+                                    </div>
                                 </td>
                                 
                             </tr>

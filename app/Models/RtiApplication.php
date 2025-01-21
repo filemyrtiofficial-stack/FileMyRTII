@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RtiApplication extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status'];
 
     public static function list($pagination, $filters = null)
     {
@@ -49,6 +49,11 @@ class RtiApplication extends Model
         } else {
             return $list->get();
         }
+    }
+
+    public static function get($id) {
+        
+        return RtiApplication::find($id);
     }
 
 

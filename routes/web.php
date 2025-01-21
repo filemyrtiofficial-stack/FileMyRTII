@@ -115,6 +115,7 @@ Route::get("subscribe-now", function(){
 		Route::resource('menu-setting', MenuController::class);    
 		
 		Route::get('/rtiapplications', [ServiceController::class, 'rtiApplicationsList'])->name('rti.applications.list');
+		Route::get('/rtiapplications/{id?}', [ServiceController::class, 'view'])->name('rtiapplication.view');
 
 		Route::get('/update-services-section/{services_id}/{section_type}/{id?}', [ServiceController::class, 'getSectionservices'])->name('get-services-section');
 		Route::delete('/delete-services-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-services-section');
