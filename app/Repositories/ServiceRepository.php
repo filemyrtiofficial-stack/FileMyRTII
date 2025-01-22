@@ -9,6 +9,11 @@ use App\Models\SeoMaster;
 
 use Session;
 use Exception;
+use App\Models\RtiApplicationLawyer;
+use App\Models\RtiApplication;
+
+use App\Jobs\SendEmail;
+
 class ServiceRepository implements ServiceInterface {
 
     public function store($request) {
@@ -106,6 +111,15 @@ class ServiceRepository implements ServiceInterface {
             throw new Exception("Invalid section");
 
         }
+    }
+
+    public function assignLawyer($id, $request) {
+        $rti = RtiApplication::get($id);
+        RtiApplicationLawyer::create(['application_id' => $id, 'lawyer_id' => $request['lawyer']]);
+        SendEmail::dispatch('assign-lawyer', $rti);
+
+        Session::flash("success", "Lawyer is successfully assigned");
+        return response(['message' => "Lawyer is successfully assigned"]);
     }
 
 

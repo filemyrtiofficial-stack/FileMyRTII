@@ -6,5 +6,7 @@ interface ServiceInterface {
     public function update($data, $id);
     public function delete($id);
     public function deleteSection($id);
+    public function assignLawyer($id, $data);
+
 
 }

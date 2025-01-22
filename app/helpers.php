@@ -13,6 +13,25 @@ function commonStatus() {
         ];
 }
 
+
+function applicationStatus() {
+    return [
+            1 => [
+                'name' => 'Pending',
+                'class' => 'text-warning'
+            ],
+            2 => [
+                'name' => 'Approved',
+                'class' => 'text-info'
+            ],
+            3 => [
+                'name' => 'Filed',
+                'class' => 'text-success'
+            ]
+        ];
+}
+
+
 function blogStatus() {
     return [
             1 => [

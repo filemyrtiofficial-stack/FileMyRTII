@@ -41,30 +41,167 @@
             <div class="col-md-3 stretch-card transparent">
                 <div class="card card-dark-blue">
                 <div class="card-body">
-                    <p class="mb-4">Total User</p>
-                    <p class="fs-30 mb-2">20</p>
+                    <p class="mb-4">Active Lawyers</p>
+                    <p class="fs-30 mb-2">{{count($lawyers)}}</p>
                 </div>
                 </div>
             </div>
             <div class="col-md-3 stretch-card transparent">
                 <div class="card card-light-blue">
                 <div class="card-body">
-                    <p class="mb-4">Total Enquiry</p>
-                    <p class="fs-30 mb-2">30</p>
+                    <p class="mb-4">Approved RTI</p>
+                    <p class="fs-30 mb-2">{{count($approved_application)}}</p>
                 </div>
                 </div>
             </div>
             <div class="col-md-3 stretch-card transparent">
                 <div class="card card-light-danger">
                 <div class="card-body">
-                    <p class="mb-4">Pending Enquiry</p>
-                    <p class="fs-30 mb-2">20</p>
+                    <p class="mb-4">Pending RTI</p>
+                    <p class="fs-30 mb-2">{{count($pending_application)}}</p>
                 </div>
                 </div>
             </div>
             
+            <div class="col-md-6 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                       <h4> Total RTI</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-danger">Total</h4>
+                                <br>
+                                <h5>{{count($applications)}}</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-danger">Pending</h4>
+                                <br>
+                                <h5>{{count($pending_application)}}</h5>
+                            </div>
+                            <div class="col-md-3">
+                            <h4 class="text-danger">Approved</h4>
+                                <br>
+                                <h5>{{count($approved_application)}}</h5>
+                            </div>
+                            <div class="col-md-3">
+                            <h4 class="text-danger">Filed</h4>
+                                <br>
+                                <h5>{{count($filed_application)}}</h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                  <div class="card-header">
+                      <h4>Today Applications</h4>
+                  </div>
+                  <div class="card-body">
+                  <div class="table-responsive p-0">
+                          <table class="table align-items-center mb-0">
+                              <thead>
+                                  <tr>
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Application No   </th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Name   </th>
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email
+                                      </th>
+                                     
+                                      
+                                      
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number   </th>
+                                    
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Name   </th>
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Category </th>
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Payment Status </th>
+                                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                          Status
+                                      </th>
+                                   
+                                      <th
+                                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                          Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach($today_applications as $item)
+                                  <tr>
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->application_no}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->first_name}} {{$item->last_name}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->email}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->phone_number}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->service->name ?? ($item->service_id == 0 ? "Custom Request" : '')}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->serviceCategory->name ?? ''}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <div class="d-flex px-3 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-sm">{{$item->payment_status ?? ''}}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+      
+                                        <td>
+                                          <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{applicationStatus()[$item->status]['name'] ??''}}</b></span>
+                                      </td>
+                                     
+                                      <td class="align-middle text-end">
+                                          <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                         
+                                              <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
+                                                  href="{{route('rtiapplication.view', $item->id)}}">View</a>
+                                          </div>
+                                      </td>
+                                      
+                                  </tr>
+                                  @endforeach
+      
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+                </div>
+               
+            </div>
           </div>
-         
           
 
 @endsection

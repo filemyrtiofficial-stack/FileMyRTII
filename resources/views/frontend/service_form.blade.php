@@ -46,9 +46,9 @@
                                 <div class="form_tab_wrapper">
                                     <div class="form_tabs">
                                         <ul class="form_tab_list">
-                                            <li id="form_step_tab_1"><a class="form_tab_item active fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab1"><span class="step">step 1</span><span class="title">Personal Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
-                                            <li id="form_step_tab_2"><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab2"><span class="step">step 2</span><span class="title">{{$service->name ?? ''}}</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
-                                            <li id="form_step_tab_3"><a class="form_tab_item fs-28" href="javascript:void(0);" data-toggle="tab" data-id="form_tab3"><span class="step">step 3</span><span class="title">Payment Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_1"><a class="form_tab_item1 active fs-28" href="javascript:void(0);" data-toggle1="tab" data-id="form_tab1"><span class="step">step 1</span><span class="title">Personal Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_2"><a class="form_tab_item1 fs-28" href="javascript:void(0);" data-toggle1="tab" data-id="form_tab2"><span class="step">step 2</span><span class="title">{{$service->name ?? ''}}</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_3"><a class="form_tab_item1 fs-28" href="javascript:void(0);" data-toggle1="tab" data-id="form_tab3"><span class="step">step 3</span><span class="title">Payment Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                                     </div>
                                                 
                                     </div>
-                                    <div class="form_row form_step_3 hide1">
+                                    <div class="form_row form_step_3 hide">
                                         
                                         <div class="form_table">
                                             <div class="form_info">

@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\ResetPassword;
+use App\Mail\ApplicationRegister;
+use App\Mail\AssignLawyer;
 use Mail;
 class SendEmail implements ShouldQueue
 {
@@ -34,6 +36,12 @@ class SendEmail implements ShouldQueue
     {
         if($this->type == 'reset-password') {
             $email = new ResetPassword($this->details);
+        }
+        elseif($this->type == 'application-register') {
+            $email = new ApplicationRegister($this->details);
+        }
+        elseif($this->type == 'assign-lawyer') {
+            $email = new AssignLawyer($this->details);
         }
         Mail::to($this->details['email'])->send($email);
     }

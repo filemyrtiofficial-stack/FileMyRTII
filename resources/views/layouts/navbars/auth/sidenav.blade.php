@@ -14,7 +14,7 @@
             </a>
           </li>
 
-          <li class="nav-item pl-3">
+          <!-- <li class="nav-item pl-3">
             <a class="nav-link" href="{{route('roles.index')}}">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Roles</span>
@@ -26,6 +26,12 @@
             <a class="nav-link" href="{{ route('users.index') }}">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">Users</span>
+            </a>
+          </li> -->
+          <li class="nav-item pl-3">
+            <a class="nav-link" href="{{ route('customers.index') }}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Customers</span>
             </a>
           </li>
 
@@ -97,20 +103,20 @@
           </li>
           <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('menu-setting.index') }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Menu</span>
             </a>
           </li>
          
           <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('pages.index') }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Pages</span>
             </a>
           </li>
           <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('template-section.index') }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Sections</span>
             </a>
           </li>
@@ -122,13 +128,13 @@
           </li>
            <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('settings.index',['header-footer-setting']) }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Header Footer</span>
             </a>
           </li>
           <li class="nav-item pl-3">
             <a class="nav-link" href="{{ route('settings.index',['payment']) }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Payment</span>
             </a>
           </li>
@@ -140,7 +146,7 @@
           </li>
           <li class="nav-item pl-3">
             <a class="nav-link"  href="{{ route('newsletter.index') }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Subscribers</span>
             </a>
           </li>
@@ -152,13 +158,13 @@
           </li>
           <li class="nav-item pl-3">
             <a class="nav-link"  href="{{ route('enquiries.index') }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Enquiry List</span>
             </a>
           </li>
           <li class="nav-item pl-3">
             <a class="nav-link"  href="{{ route('rti.applications.list') }}">
-              <i class="icon-head menu-icon"></i>
+              <i class="icon-query menu-icon"></i>
               <span class="menu-title">RTI Applications</span>
             </a>
           </li>

@@ -58,4 +58,35 @@ class Customer extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public static function list($pagination, $filters = null) {
+        $filter_data = $filters;
+        unset($filters['ids']);
+        $list = Customer::orderBy('id', 'desc');
+        if(!empty($filters)) {
+            $list->where($filters);
+        }
+        if(isset($filter_data['ids'])) {
+            $list->wherein('id', $filter_data['ids']);
+        }
+        if($pagination) {
+            return $list->paginate(10);
+        }
+        else {
+            return $list->get();
+
+        }
+    }
+    public static function get($id) {
+        return Customer::find($id);
+    }
+
+
+    public function getFullNameAttribute()
+    {
+    	return $this->first_name." ".$this->last_name;
+    }
+
+    public function rtiApplications() {
+        return $this->hasMany(RtiApplication::class, 'user_id', 'id');
+    }
 }

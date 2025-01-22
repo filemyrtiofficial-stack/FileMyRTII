@@ -51,6 +51,9 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\LawyerController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerController;
+
 
 
 
@@ -62,15 +65,34 @@ use Illuminate\Support\Facades\Mail;
 
 
 Route::get("test-mail", function(){
-	$name = "Test Coder";
+	return view('frontend.profile.rti-file');
+// 	header("Content-type: application/vnd.ms-word");
+//   header("Content-Disposition: attachment;Filename=document_name.doc");    
+//   echo '<html>
+// 	<body>
+// 		<h2 style="color:rgb(50,150,200);">How to use Text Color?</h2>
+// 		<h3 style="color:rgba(220,30,100,1);"> 1. Add a style attribute to the text element you want to colorize or use internal CSS.</h3>
+// 		<h4 style="color:#1A8D7E"> 2. Specify the color using RGB, RGBA or HEX code.</h4>
+// 	</body>
+// </html>';
+//   echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+//   echo "<body>";
+//   echo "<b>My first document</b><br>";
+//   echo "<b style='color:rgba(220,30,100,1);'>hello1</b>";
 
-    // The email sending is done using the to method on the Mail facade
-    if(Mail::to('developmentd299@gmail.com')->send(new App\Mail\MyTestEmail())){
-		echo "yes";
-	}
-	else {
-		echo "no";
-	}
+//   echo "</body>";
+//   echo "</html>";
+
+
+	// $name = "Test Coder";
+
+    // // The email sending is done using the to method on the Mail facade
+    // if(Mail::to('developmentd299@gmail.com')->send(new App\Mail\MyTestEmail())){
+	// 	echo "yes";
+	// }
+	// else {
+	// 	echo "no";
+	// }
 });
 
 Route::get("subscribe-now", function(){
@@ -114,6 +136,7 @@ Route::get("subscribe-now", function(){
 		Route::post('/update-menu-node', [MenuController::class, 'updateMenuNode'])->name('menu.MenuNodeStore');
 		Route::resource('menu-setting', MenuController::class);    
 		
+		Route::post('/assign-lawyer/{id}', [ServiceController::class, 'assignLawyer'])->name('rti.applications.assign.lawyer');
 		Route::get('/rtiapplications', [ServiceController::class, 'rtiApplicationsList'])->name('rti.applications.list');
 		Route::get('/rtiapplications/{id?}', [ServiceController::class, 'view'])->name('rtiapplication.view');
 
@@ -128,6 +151,8 @@ Route::get("subscribe-now", function(){
 		Route::resource('service-category', ServiceCategoryController::class);       
 		
 		Route::resource('lawyers', LawyerController::class);  
+		Route::resource('customers', CustomerController::class);  
+
 		
 
 		Route::get('/update-page-section/{page_id}/{section_type}/{id?}', [TemplateController::class, 'getSectionPage'])->name('get-page-section');
@@ -178,9 +203,11 @@ Route::get("subscribe-now", function(){
 
 
 	
+Route::get('my-rti/{application_no?}', [FrontendCustomerController::class, 'myRti'])->name('my-rti');
 	
 	
 
+	
 
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
 
@@ -189,7 +216,7 @@ Route::post('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
 Route::get('/apply/{service_category}/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
 Route::get('/service/{service_category}/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
-// Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1	');
+Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1	');
 
 // Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
@@ -197,6 +224,8 @@ Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->nam
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 Route::post('/contact-us', [FrontendController::class, 'contactusForm'])->name('contact-form');
 Route::post('/blog-Comment', [FrontendController::class, 'blogComment'])->name('blog-Comment');
+
+
 
 
 

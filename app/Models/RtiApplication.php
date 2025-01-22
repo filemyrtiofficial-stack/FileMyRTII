@@ -16,15 +16,23 @@ class RtiApplication extends Model
         unset($filters['page']);
         unset($filters['search']);
         unset($filters['service_id']);
-
+        unset($filters['order_by']);
+        unset($filters['order_by_type']);
         $filters = array_remove_null($filters);
-        $list = RtiApplication::orderBy('id', 'desc');
+        $order_by_key = $filter_data['order_by'] ?? 'id';
+        $order_by_type = $filter_data['order_by_type'] ?? 'desc';
+
+        $list = RtiApplication::orderBy($order_by_key, $order_by_type);
         if (!empty($filters)) {
             foreach ($filters as $key => $filter) {
                 if ($filter != null) {
                     if ($key == 'email') {
                         $list->where('email', 'like', '%' . $filter . '%');
-                    } else {
+                    }
+                    elseif ($key == 'date') {
+                        $list->wheredate('created_at', $filter);
+                    }
+                    else {
 
                         $list->where($key, $filter);
                     }
@@ -65,5 +73,10 @@ class RtiApplication extends Model
     public function serviceCategory()
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id', 'id');
+    }
+
+    public function lawyers()
+    {
+        return $this->belongsToMany(Lawyer::class, 'rti_application_lawyers', 'application_id', 'lawyer_id')->orderByPivot('created_at', 'desc');
     }
 }

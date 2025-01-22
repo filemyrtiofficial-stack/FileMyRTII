@@ -7,7 +7,7 @@ use App\Models\Lawyer;
 use App\Repositories\LawyerRepository;
 use App\Interfaces\LawyerInterface;
 use Validator;
-
+use Carbon\Carbon;
 class LawyerController extends Controller
 {
 
@@ -49,13 +49,13 @@ class LawyerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'first_name' => "required",
-            'dob' => "required",
-            'phone' => "required",
-            'email' => "required",
+            'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
+            'phone' => "required|numeric|digits:10",
+            'email' => "required|email|unique:lawyers,email",
             'status' => "required",
             'qualification' => "required",
             'image' => "required|image",
-            'experience' => "required",
+            'experience' => "required|numeric",
             'address' => "required"
         ]);
         if($validator->fails()) {
@@ -100,15 +100,17 @@ class LawyerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'first_name' => "required",
-            'dob' => "required",
-            'phone' => "required",
-            'email' => "required",
+            'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
+            'phone' => "required|numeric|digits:10",
+            'email' => "required|email|unique:lawyers,email,".$id,
             'status' => "required",
             'qualification' => "required",
-            'image' => "required|image",
-            'experience' => "required",
+            'image' => "nullable|image",
+            'experience' => "required|numeric",
             'address' => "required"
+
         ]);
+        
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }

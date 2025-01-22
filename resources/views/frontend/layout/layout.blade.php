@@ -11,6 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('assets/rti/css/custom-style.css')}}">
+    @stack('style')
+
     <style>
         .testimonial_img_wrap img {
             border-radius :50%;

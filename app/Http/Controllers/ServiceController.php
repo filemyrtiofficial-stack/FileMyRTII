@@ -285,17 +285,40 @@ class ServiceController extends Controller
     }
 
     public function view(Request $request, $id) {
-        // echo "hello";die('kkk');
-
         $data = RtiApplication::get($id);
+        if(!$data) {
+            abort(404);
+        }
         $service_name = json_decode($data->service_fields, true);
         $fields = [];
         if ($data->service && !empty($data->service->fields)) {
             $fields = json_decode($data->service->fields, true);
         }
         $field_data = json_decode($data['service_fields'], true); 
-        // print_r(gettype( $data['service_fields']));die;
         return view('pages.rti-applications.view', compact('data', 'service_name', 'fields', 'field_data'));
         
     }
+
+
+    public function assignLawyer($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'lawyer' => "required",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            $application = RtiApplication::get($id);
+            if(!$application) {
+                return response(['errors' => ['lawyer' => "Application is not exist"]], 422);
+    
+            }
+            $data = $this->serviceRepository->assignLawyer($id, $request);
+            return $data;
+        } catch (\Throwable $th) {
+            return response(['error' => "Something went wrong ".$th->getMessage()], 500);
+        }
+    }
+
 }

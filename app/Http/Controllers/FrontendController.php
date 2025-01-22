@@ -25,6 +25,8 @@ use Log;
 use Session;
 use App\Models\Section;
 use App\Models\ServiceCategory;
+use App\Jobs\SendEmail;
+
 class FrontendController extends Controller
 {
     public function index($slug = null)
@@ -280,8 +282,9 @@ class FrontendController extends Controller
     {
         $user = Customer::where(['email' => $request->email])->first();
         if (!$user) {
-            $data = $request->only(['first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code']);
-            $data['password'] = bcrypt($request->phone_no);
+            $data = $request->only(['first_name', 'last_name', 'email', 'address', 'postal_code']);
+            $data['phone_no'] = $request->phone_number;
+            $data['password'] = bcrypt($request->phone_number);
             $user = Customer::create($data);
         }
         return $user->id;
@@ -298,7 +301,7 @@ class FrontendController extends Controller
         }
     }
 
-public function udpatePaymentSuccess(Request $request)
+    public function udpatePaymentSuccess(Request $request)
     {
         $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
 
@@ -319,9 +322,17 @@ public function udpatePaymentSuccess(Request $request)
 
             Session::flash('success', 'Payment Successful');
             DB::commit();
-            $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
+            SendEmail::dispatch('application-register', $rti);
 
-            return view('frontend.thank_you', compact('rti', 'why_choose'));
+            $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
+            $footer_banner = Section::list(false, ['status' => 1, 'type' => 'footer_banner']);
+            if($footer_banner) {
+                if(count($footer_banner) > 0) {
+                    $footer_banner = $footer_banner[0];
+                    $footer_banner = json_decode($footer_banner->data, true);
+                }
+            }
+            return view('frontend.thank_you', compact('rti', 'why_choose', 'footer_banner'));
             //return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -376,7 +387,7 @@ public function udpatePaymentSuccess(Request $request)
 
         $EnquiryForm = EnquiryForm::create($data);
 
-        Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
+        Mail::to($request->email)->send(new NewsletterMail($newsletter));
         return response(['message' =>  'Thank you for connecting with us']);
     }
 
