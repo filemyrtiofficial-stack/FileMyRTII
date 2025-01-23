@@ -327,8 +327,10 @@
         }
         $(document).on("click", ".login-modal", function(){
             $(".modal_wrapper").css("display", "block");
-            $('.nav_btn .toggler').toggleClass('active');
-            $('.mobile_menu').toggleClass('active');
+            if($('.mobile_menu').hasClass('active')) {
+                $('.nav_btn .toggler').toggleClass('active');
+                $('.mobile_menu').toggleClass('active');
+            }
         });
         $(".modal_wrapper .close").on("click", function(){
             $(".modal_wrapper").css("display", "none");

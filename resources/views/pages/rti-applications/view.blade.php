@@ -10,7 +10,7 @@
                 <h4>RTI Applications</h4>
             </div>
             <div class="card-body">
-                <div class="table-responsive p-0">
+                <div class="table-responsive1 p-0">
                        
                             <div class="row">
                                 <div class="col-md-4">
@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h5 class="card-title">{{ $data->payment_status ?? ''}}</h5>
+                                    <h5 class="card-title {{paymentStatus()[$data->payment_status]['class'] ??''}}">{{ paymentStatus()[$data->payment_status]['name'] ??''}}</h5>
                                 </div>
                             </div>
                             <hr>
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h5 class="card-title">{{ commonStatus()[$data->status]['name'] ??''}}</h5>
+                                    <h5 class="card-title {{applicationStatus()[$data->status]['class'] ??''}}">{{ applicationStatus()[$data->status]['name'] ??''}}</h5>
                                 </div>
                             </div>
                             <hr>

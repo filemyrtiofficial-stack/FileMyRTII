@@ -14,7 +14,7 @@
         "laravel-frontend-presets/argon": "^2.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/socialite": "^5.16",
+        "laravel/socialite": "^5.17",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
         "maatwebsite/excel": "*",

@@ -21,6 +21,9 @@
     .title {
         text-align:center;
     }
+    .text-span {
+        display:none;
+    }
 </style>
 </head>
 <body>
@@ -33,12 +36,12 @@
 
     <p>From</p>
     <p>
-        <input type="text" name="full_name" class="text-input" placeholder="Full Name">
-        <span class="text-span"></span>
+        <input type="text" name="full_name" class="text-input" placeholder="Full Name" value="{{$data->fullName}}">
+        <span class="text-span">{{$data->fullName}}</span>
     </p> 
     <p>
-    <input type="text" name="address" class="text-input" placeholder="Address">
-    <span class="text-span"></span>
+    <input type="text" name="address" class="text-input" placeholder="Address" value="{{$data->address}}">
+    <span class="text-span">{{$data->address}}</span>
     </p>
     <p>[City, State, Pin Code]</p> 
     <p>[Email Address]</p> 

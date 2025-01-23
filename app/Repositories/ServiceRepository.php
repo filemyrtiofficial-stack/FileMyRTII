@@ -117,7 +117,7 @@ class ServiceRepository implements ServiceInterface {
         $rti = RtiApplication::get($id);
         RtiApplicationLawyer::create(['application_id' => $id, 'lawyer_id' => $request['lawyer']]);
         SendEmail::dispatch('assign-lawyer', $rti);
-
+        $rti->update(['lawyer_id' => $request['lawyer']]);
         Session::flash("success", "Lawyer is successfully assigned");
         return response(['message' => "Lawyer is successfully assigned"]);
     }

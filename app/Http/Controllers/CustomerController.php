@@ -46,7 +46,9 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Customer::get($id);
+
+        return view('pages.customers.show', compact('data'));
     }
 
     /**

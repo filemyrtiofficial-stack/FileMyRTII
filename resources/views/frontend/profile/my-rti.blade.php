@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="profile_action">
-                            <a class="profile_btn" href="#">Change Password</a>
+                            <a class="profile_btn login-modal" href="javascript:void(0);">Change Password</a>
                             <a class="profile_btn" href="#">Logout</a>
                         </div>
                     </div>

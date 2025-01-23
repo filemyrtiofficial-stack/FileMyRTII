@@ -26,7 +26,7 @@
 
 .serviceform_section {
     position: relative;
-    padding: 4.77083vw 0 6.33333vw;
+    padding: 2.77083vw 0 6.33333vw;
 }
 .service-form-row {
     /* column-gap: 1.14583vw; */
@@ -86,6 +86,12 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: top left;
+}
+.form_tabs li a .title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .form_tab_list li a .step {
     display: -webkit-box;

@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Mail\ResetPassword;
 use App\Mail\ApplicationRegister;
 use App\Mail\AssignLawyer;
+use App\Mail\ApproveRti;
 use Mail;
 class SendEmail implements ShouldQueue
 {
@@ -42,6 +43,13 @@ class SendEmail implements ShouldQueue
         }
         elseif($this->type == 'assign-lawyer') {
             $email = new AssignLawyer($this->details);
+        }
+        elseif($this->type == 'approve-rti') {
+            $email = new ApproveRti($this->details);
+        }
+        else {
+            $email = new ApplicationRegister($this->details);
+
         }
         Mail::to($this->details['email'])->send($email);
     }

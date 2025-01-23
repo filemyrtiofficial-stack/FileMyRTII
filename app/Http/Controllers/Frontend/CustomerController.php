@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RtiApplication;
+use App\Jobs\SendEmail;
+
 class CustomerController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
@@ -25,5 +27,21 @@ class CustomerController extends Controller
             }
             return view('frontend.profile.view-my-rti', compact('data'));
         }
+    }
+
+
+    public function approvedARTI(Request $request, $application_no) {
+        $filter = ['user_id' => auth()->guard('customers')->id(), 'application_no' => $application_no];
+        $data = RtiApplication::list(false, $filter);
+        if(count($data) > 0) {
+            $data = $data[0] ?? [];
+            $data->update(['signature_type' => $request->signature_type, 'signature_image' => $request->signature, 'status' => 2]);
+            $rti = RtiApplication::get($data['id']);
+            SendEmail::dispatch('approve-rti', $rti);
+            return response(['status' => 'success']);
+
+        }
+        
+
     }
 }

@@ -22,6 +22,7 @@
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email ID
                                 </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Total Applications</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Status
                                 </th>
@@ -49,7 +50,7 @@
                                 </td>
                                 <td class="align-middle text-sm">{{$item->phone?? ''}}</td>
                                 <td class="align-middle text-sm">{{$item->email?? ''}}</td>
-
+                                <td class="align-middle text-center"><a target="blank" href="{{route('rti.applications.list')}}?lawyer_id={{$item->id}}">{{count($item->rtiApplications)}}</a></td>
                                 <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>

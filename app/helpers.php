@@ -31,6 +31,20 @@ function applicationStatus() {
         ];
 }
 
+function paymentStatus() {
+    return [
+            'pending' => [
+                'name' => 'Pending',
+                'class' => 'text-danger'
+            ],
+            'paid' => [
+                'name' => 'Paid',
+                'class' => 'text-success'
+            ],
+           
+        ];
+}
+
 
 function blogStatus() {
     return [

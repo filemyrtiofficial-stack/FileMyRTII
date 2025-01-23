@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class RtiApplication extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image'];
 
     public static function list($pagination, $filters = null)
     {
         $filter_data = $filters;
         unset($filters['page']);
-        unset($filters['search']);
+        // unset($filters['search']);
         unset($filters['service_id']);
         unset($filters['order_by']);
         unset($filters['order_by_type']);
@@ -29,6 +29,16 @@ class RtiApplication extends Model
                     if ($key == 'email') {
                         $list->where('email', 'like', '%' . $filter . '%');
                     }
+                    elseif ($key == 'search') {
+                        $list->where(function($query) use($filter){
+                            $query->where('application_no', 'like', "%".$filter."%")
+                            ->orwhere('first_name', 'like', "%".$filter."%")
+                            ->orwhere('last_name', 'like', "%".$filter."%")
+                            ->orwhere('email', 'like', "%".$filter."%")
+                            ->orwhere('phone_number', 'like', "%".$filter."%");
+
+                        });
+                    }
                     elseif ($key == 'date') {
                         $list->wheredate('created_at', $filter);
                     }
@@ -39,17 +49,10 @@ class RtiApplication extends Model
                 }
             }
         }
-        if (isset($filter_data['search']) && !empty($filter_data['search'])) {
-            $list->where(function ($query) use ($filter_data) {
-                $query->where('first_name', 'like', '%' . $filter_data['search'] . '%')
-                    ->orwhere('last_name', 'like', '%' . $filter_data['search'] . '%')
-                    ->orwhere('email', 'like', '%' . $filter_data['search'] . '%')
-                    ->orwhere('phone_number', 'like', '%' . $filter_data['search'] . '%');
-            });
-        }
+       
         if (isset($filter_data['service_id']) && !empty($filter_data['service_id'])) {
             $list->wherehas('service', function($query) use($filter_data){
-                $query->where('id', 'like', '%'.$filter_data['service_id'].'%');
+                $query->where('id',$filter_data['service_id']);
             });
         }
         if ($pagination) {
@@ -79,4 +82,15 @@ class RtiApplication extends Model
     {
         return $this->belongsToMany(Lawyer::class, 'rti_application_lawyers', 'application_id', 'lawyer_id')->orderByPivot('created_at', 'desc');
     }
+
+    public function lawyer()
+    {
+        return $this->belongsTo(Lawyer::class, 'lawyer_id', 'id');
+    }
+
+    public function getFullNameAttribute()
+    {
+    	return $this->first_name." ".$this->last_name;
+    }
+
 }

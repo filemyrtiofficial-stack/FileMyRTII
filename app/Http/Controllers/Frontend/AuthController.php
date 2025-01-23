@@ -13,6 +13,8 @@ use Mail;
 use App\Mail\ResetPassword;
 use App\Jobs\SendEmail;
 use Carbon\Carbon;
+use session;
+use Hash;
 class AuthController extends Controller
 {
     public function __construct()
@@ -42,9 +44,9 @@ class AuthController extends Controller
 
             if($finduser){
 
-                Auth::login($finduser);
+                Auth::guard('customers')->login($finduser);
 
-                return redirect('/home');
+                return redirect('/my-rti');
 
             }else{
 
@@ -54,9 +56,8 @@ class AuthController extends Controller
                     'google_id'=> $user->id
 
                 ]);
-                Auth::login($newUser);
-                print_r(json_encode($newUser));
-                return redirect('/home');
+                Auth::guard('customers')->login($newUser);
+                return redirect('/my-rti');
 
             }
 
@@ -78,8 +79,8 @@ class AuthController extends Controller
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
-        if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response(['status' => 'success']);
+        if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password, 'google_id' => NULL])) {
+            return response(['status' => 'success', 'redirect' => route('my-rti')]);
         }
 
         return response(['errors' => ['password' => 'The provided credentials do not match our records.']], 422);
@@ -114,9 +115,10 @@ class AuthController extends Controller
         ]);
         if($newUser) {
             Auth::guard('customers')->login($newUser);
-            return response(['status' => 'success']);
+            return response(['status' => 'success', 'redirect' => route('my-rti')]);
 
         }
+
         return response(['errors' => ['password' => 'Something went wrong']], 422);
        
     }
@@ -134,7 +136,7 @@ class AuthController extends Controller
         }
         SendEmail::dispatch('reset-password', $customer);
         // Mail::to( $request->email)->send(new ResetPassword($customer));
-        return response(['status' => 'success']);
+        return response(['status' => 'success', 'message' => "Password reset mail has been to send to you register mail"]);
 
 
         
@@ -183,6 +185,32 @@ class AuthController extends Controller
         return response(['status' => "success"]);
 
 
+    }
+
+    public function changePassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|min:6',
+            'password' => 'required|min:6',
+            'confirm_password' => "required||same:password"
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $customer = auth()->guard('customers')->user();
+
+        if(!$customer) {
+            return response(['errors' => ['confirm_password' => "Something went wrong"]], 422);
+        }
+        elseif( ! Hash::check($request->current_password,  $customer->password ) )
+        {
+            return response(['errors' => ['current_password' => "Current password is invalid"]], 422);
+        }
+
+        
+
+        $customer->password = $request->password;
+        $customer->save();
+        return response(['status' => "success", "message" => "Password is successfully updated"]);
     }
 
 }

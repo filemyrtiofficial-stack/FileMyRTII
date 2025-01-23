@@ -62,10 +62,11 @@ use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerControll
 use App\Mail\MyTestEmail;
 use App\Mail\NewsletterMail;
 use Illuminate\Support\Facades\Mail;
-
+use App\Models\RtiApplication;
 
 Route::get("test-mail", function(){
-	return view('frontend.profile.rti-file');
+	$data = RtiApplication::where(['application_no' => '2024122287'])->first();
+	return view('frontend.profile.rti-file', compact('data'));
 // 	header("Content-type: application/vnd.ms-word");
 //   header("Content-Disposition: attachment;Filename=document_name.doc");    
 //   echo '<html>
@@ -191,7 +192,7 @@ Route::get("subscribe-now", function(){
 	return view('googleAuth');
 	
 	});
-	Route::get('auth/google', [FrontendAuthController::class, 'redirectToGoogle']);
+	Route::get('auth/google', [FrontendAuthController::class, 'redirectToGoogle'])->name("auth.google");
 	Route::get('callback', [FrontendAuthController::class, 'handleGoogleCallback']);
 	Route::post('customer-signin', [FrontendAuthController::class, 'customerLogin'])->name('customer.login');
 	Route::post('customer-logout', [FrontendAuthController::class, 'logout'])->name('customer.logout');
@@ -200,11 +201,14 @@ Route::get("subscribe-now", function(){
 	Route::post('forgot-password', [FrontendAuthController::class, 'forgotPassword'])->name('customer.forgot-password');
 	Route::get('reset-password/{email}/{date}', [FrontendAuthController::class, 'resetPassword'])->name('customer.reset-password');
 	Route::post('update-password', [FrontendAuthController::class, 'updatePassword'])->name('customer.update-password');
+	Route::post('change-password', [FrontendAuthController::class, 'changePassword'])->name('customer.change-password');
 
 
+	
 	
 Route::get('my-rti/{application_no?}', [FrontendCustomerController::class, 'myRti'])->name('my-rti');
 	
+Route::post('approve-rti/{application_no?}', [FrontendCustomerController::class, 'approvedARTI'])->name('approve-rti');
 	
 
 	

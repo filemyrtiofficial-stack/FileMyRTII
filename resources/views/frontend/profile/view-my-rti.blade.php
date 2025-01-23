@@ -87,6 +87,29 @@
                                         <li @if($data->status >= 2) class="active" @endif><a href="javascript:void(0);">2</a><span>Approval</span></li>
                                         <li @if($data->status == 3) class="active" @endif><a href="javascript:void(0);">3</a><span>Filed</span></li>
                                     </ul>
+
+                                    <div class="signing-procedure">
+                                       <form action="{{route('approve-rti', $data->application_no)}}" class="form-submit" method="post">
+                                            @csrf
+                                        <div>
+                                                <input type="radio" name="signature_type" checked id="electronic-signature" value="elecronic">
+                                                <label for="electronic-signature">Electronic Signature</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="signature_type" id="upload-scanned-signation" value="image">
+                                                <label for="upload-scanned-signation">Upload Scanned Signation</label>
+                                                <input type="file" name="file" id="document-upload" />
+                                                <div class="upload_file hide" id="preview-section">
+                                                    <img class="upload-file-img" target="blank">
+                                                    
+                                                    <input type="hidden" name="signature" class="image-input" />
+                                                </div>
+
+                                                
+                                            </div>
+                                            <button>Submit</button>
+                                       </form>
+                                    </div>
                                 </div>
                             </div>
                             <div id="tab2" class="contact_faq_tab">
@@ -508,3 +531,34 @@
 
 @endsection
 
+@push('js')
+<script>
+    $(document).on('change', '#document-upload', function () {
+        let _this = $(this);
+         let uploadedFile = document.getElementById($(this).attr('id')).files[0];
+         var form_data = new FormData();
+         form_data.append("file", uploadedFile);
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+         $.ajax({
+            url: "{{route('upload-images')}}",
+            method: "POST",
+            data: form_data,
+            cache : false,
+            processData: false,
+            contentType: false,
+            dataType : 'json',
+            success : function(response){
+                $('.upload-file-img').attr('src', response.data);
+              $('.image-input').val(response.data);
+
+
+            },
+            error : function(error) {}
+         });
+      });
+</script>
+@endpush

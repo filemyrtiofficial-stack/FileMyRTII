@@ -180,7 +180,7 @@
                                       </td>
       
                                         <td>
-                                          <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{applicationStatus()[$item->status]['name'] ??''}}</b></span>
+                                          <span class="{{applicationStatus()[$item->status]['class'] ??''}}"><b>{{applicationStatus()[$item->status]['name'] ??''}}</b></span>
                                       </td>
                                      
                                       <td class="align-middle text-end">

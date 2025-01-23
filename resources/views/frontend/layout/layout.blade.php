@@ -79,7 +79,21 @@
             dataType : 'json',
             success: function(response) {
                   if(response.status == 'success') {
-                    window.location.reload();
+                    if(response.redirect) {
+                        window.location.href = response.redirect;
+                    }
+                    else if(response.message) {
+                        $('.success_toast_msg').addClass('active').find('.success-message').html(response.message);
+                        _this.find('input').val("");
+                        setTimeout(() => {
+                            $('.success_toast_msg').removeClass('active');
+
+                        }, 2000);
+                    }
+                    else {
+
+                        window.location.reload();
+                    }
                   }
             },
             error: function(error) {
