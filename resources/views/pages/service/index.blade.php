@@ -86,7 +86,7 @@
                                 </td>
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                   
+                                    <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" href="{{route('service-template.index',$item->id)}}">Template</a>
                                     <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                     href="{{route('frontend.service',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" target="blank">View</a>
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"

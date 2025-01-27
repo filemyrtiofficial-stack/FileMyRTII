@@ -42,7 +42,7 @@
                                 </form>
 
                                 </li>
-                                <li class="fs-28"><a   class="login-modal" href="{{config('app.base_url')}}/my-rti">My RTI</a></li>
+                                <li class="fs-28"><a    href="{{config('app.base_url')}}/my-rti">My RTI</a></li>
 
                                 @endif
 

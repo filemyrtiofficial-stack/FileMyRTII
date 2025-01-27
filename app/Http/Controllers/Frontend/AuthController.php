@@ -206,8 +206,6 @@ class AuthController extends Controller
             return response(['errors' => ['current_password' => "Current password is invalid"]], 422);
         }
 
-        
-
         $customer->password = $request->password;
         $customer->save();
         return response(['status' => "success", "message" => "Password is successfully updated"]);

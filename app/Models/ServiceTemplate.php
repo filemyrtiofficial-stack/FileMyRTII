@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class ServiceTemplate extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'icon', 'status', 'description', 'category_id', 'fields', 'faq', 'mobile_banner', 'desktop_banner', 'image_1', 'image_2'];
-    protected $with = ['slug'];
-    
+    protected $fillable = ['service_id', 'template_name', 'template', 'title', 'sub_title'];
     public static function list($pagination, $filters = null) {
         unset($filters['page']);
         unset($filters['order_by']);
@@ -22,7 +20,7 @@ class Service extends Model
         $order_by_key = $filter_data['order_by'] ?? 'id';
         $order_by_type = $filter_data['order_by_type'] ?? 'desc';
 
-        $list = Service::orderBy('id', 'desc');
+        $list = ServiceTemplate::orderBy('id', 'desc');
         if(!empty($filters)) {
             foreach($filters as $key => $filter) {
                 if($filter != null) {
@@ -45,26 +43,7 @@ class Service extends Model
         }
     }
     public static function get($id) {
-        return Service::find($id);
+        return ServiceTemplate::find($id);
     }
 
-    public function category() {
-        return $this->belongsTo(ServiceCategory::class, 'category_id', 'id');
-    }
-   
-    public function slug() {
-        return $this->hasOne(SlugMaster::class, 'linkable_id', 'id')->where('linkable_type', 'services');
-    }
-    public function seo() {
-        return $this->hasOne(SeoMaster::class, 'linkable_id', 'id')->where('linkable_type', 'services');
-    }
-   
-    public function serviceData() {
-        return $this->hasMany(ServiceData::class, 'service_id', 'id')->orderBy('sequance');
-    }
-
-    public function templates() {
-        return $this->hasMany(ServiceTemplate::class, 'service_id', 'id');
-    }
-  
 }

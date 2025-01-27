@@ -321,4 +321,8 @@ class ServiceController extends Controller
         }
     }
 
+    public function rtiApplicationTemplate() {
+        return view('pages.service.template.index');
+    }
+
 }

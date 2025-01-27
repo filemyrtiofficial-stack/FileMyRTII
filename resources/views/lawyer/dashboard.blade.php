@@ -21,19 +21,22 @@
                                 <img class="img-fluid" src="images/service-listing/profile-1.webp" alt="">
                             </div>
                             <div class="profile_name">
-                                <div class="p_name">{{auth()->guard('customers')->user()->fullName}}</div>
-                                <div class="p_email">{{auth()->guard('customers')->user()->email}}</div>
+                                <div class="p_name">{{auth()->guard('lawyers')->user()->fullName}}</div>
+                                <div class="p_email">{{auth()->guard('lawyers')->user()->email}}</div>
                             </div>
                         </div>
                         <div class="profile_action">
-                            <a class="profile_btn login-modal" href="javascript:void(0);">Change Password</a>
+                            <a class="profile_btn change-password-modal" href="javascript:void(0);">Change Password</a>
+                                <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                        class="profile_btn">
+                                        Logout
+                                    </a>
+                                <form role="form" method="post" action="{{ route('lawyer.logout') }}" id="logout-form">
+                                    @csrf
+                                    
+                                </form>
+
                             <!-- <a class="profile_btn" href="#">Logout</a> -->
-                            <a href="{{ route('customer.logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                class="profile_btn">
-                                Logout
-                            </a>
-                                
                         </div>
                     </div>
                     <div class="my_application">
@@ -62,10 +65,7 @@
                                         </div>
                                         <div class="col-12 col-sm-3">
                                             <div class="app_action">
-                                                @if($item->payment_status == 'pending')
-                                                <a class="theme-btn" href="javascript:void(0);">Pay Now</a>
-                                                @endif
-                                                <a class="theme-btn" href="{{route('my-rti', $item->application_no)}}">Details</a>
+                                                <a class="theme-btn" href="{{route('lawyer.my-rti', $item->application_no)}}">Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -80,4 +80,5 @@
         </section>
         
 @endsection
+
 

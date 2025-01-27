@@ -53,6 +53,10 @@ use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\LawyerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerController;
+use App\Http\Controllers\Lawyer\AuthController as LawyerAuthController;
+use App\Http\Controllers\Lawyer\RtiController as LawyerRtiController;
+use App\Http\Controllers\ServiceTemplateController;
+
 
 
 
@@ -65,7 +69,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\RtiApplication;
 
 Route::get("test-mail", function(){
-	$data = RtiApplication::where(['application_no' => '2024122287'])->first();
+	$data = RtiApplication::where(['application_no' => $_GET['application_no']])->first();
 	return view('frontend.profile.rti-file', compact('data'));
 // 	header("Content-type: application/vnd.ms-word");
 //   header("Content-Disposition: attachment;Filename=document_name.doc");    
@@ -144,7 +148,12 @@ Route::get("subscribe-now", function(){
 		Route::get('/update-services-section/{services_id}/{section_type}/{id?}', [ServiceController::class, 'getSectionservices'])->name('get-services-section');
 		Route::delete('/delete-services-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-services-section');
 
+		
 		Route::resource('services', ServiceController::class);  
+
+		Route::resource('{service_id}/service-template', ServiceTemplateController::class);  
+
+		
 
 		Route::get('/update-service-category-section/{service_category_id}/{section_type}/{id?}', [ServiceCategoryController::class, 'getSectionservices'])->name('get-service-category-section');
 		Route::delete('/delete-service-category-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-service-category-section');
@@ -187,11 +196,21 @@ Route::get("subscribe-now", function(){
 	});
 
 
-	Route::get('google', function(){
+	Route::group([ 'prefix' => 'lawyer'], function () {
+		Route::get('login', [LawyerAuthController::class, 'login'])->name("lawyer.login");
+		Route::post('signin', [LawyerAuthController::class, 'signin'])->name('lawyer.singin');
+		Route::post('logout', [LawyerAuthController::class, 'logout'])->name('lawyer.logout');
 
-	return view('googleAuth');
-	
+
+		Route::get('myrti/{application_no?}', [LawyerRtiController::class, 'myRti'])->name('lawyer.my-rti');
+		Route::get('draft-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.draft-rti');
+		Route::post('draft-rti/{application_no?}', [LawyerRtiController::class, 'processRTIApplication'])->name('lawyer.send-for-approval');
+		
+
+		
+
 	});
+	
 	Route::get('auth/google', [FrontendAuthController::class, 'redirectToGoogle'])->name("auth.google");
 	Route::get('callback', [FrontendAuthController::class, 'handleGoogleCallback']);
 	Route::post('customer-signin', [FrontendAuthController::class, 'customerLogin'])->name('customer.login');
@@ -201,15 +220,15 @@ Route::get("subscribe-now", function(){
 	Route::post('forgot-password', [FrontendAuthController::class, 'forgotPassword'])->name('customer.forgot-password');
 	Route::get('reset-password/{email}/{date}', [FrontendAuthController::class, 'resetPassword'])->name('customer.reset-password');
 	Route::post('update-password', [FrontendAuthController::class, 'updatePassword'])->name('customer.update-password');
-	Route::post('change-password', [FrontendAuthController::class, 'changePassword'])->name('customer.change-password');
 
 
-	
-	
-Route::get('my-rti/{application_no?}', [FrontendCustomerController::class, 'myRti'])->name('my-rti');
-	
-Route::post('approve-rti/{application_no?}', [FrontendCustomerController::class, 'approvedARTI'])->name('approve-rti');
-	
+	Route::group(['middleware' => 'customer-auth'], function () {
+
+		Route::post('change-password', [FrontendAuthController::class, 'changePassword'])->name('customer.change-password');
+		Route::get('my-rti/{application_no?}', [FrontendCustomerController::class, 'myRti'])->name('my-rti');
+		Route::post('approve-rti/{application_no?}', [FrontendCustomerController::class, 'approvedARTI'])->name('approve-rti');
+	});
+
 
 	
 
@@ -220,7 +239,7 @@ Route::post('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
 Route::get('/apply/{service_category}/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
 Route::get('/service/{service_category}/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
-Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1	');
+// Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1	');
 
 // Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
@@ -228,6 +247,7 @@ Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->nam
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 Route::post('/contact-us', [FrontendController::class, 'contactusForm'])->name('contact-form');
 Route::post('/blog-Comment', [FrontendController::class, 'blogComment'])->name('blog-Comment');
+
 
 
 

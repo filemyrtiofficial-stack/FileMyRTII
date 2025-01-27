@@ -326,7 +326,15 @@
             });
         }
         $(document).on("click", ".login-modal", function(){
-            $(".modal_wrapper").css("display", "block");
+            $(".customer-modal_wrapper").css("display", "block");
+            if($('.mobile_menu').hasClass('active')) {
+                $('.nav_btn .toggler').toggleClass('active');
+                $('.mobile_menu').toggleClass('active');
+            }
+        });
+
+        $(document).on("click", ".change-password-modal", function(){
+            $(".lawyer-modal_wrapper").css("display", "block");
             if($('.mobile_menu').hasClass('active')) {
                 $('.nav_btn .toggler').toggleClass('active');
                 $('.mobile_menu').toggleClass('active');

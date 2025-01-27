@@ -11,33 +11,35 @@ class LawyerRepository implements LawyerInterface {
 
     public function store($request) {
         $lawyer = Lawyer::create([
-                                    'first_name' => $request['first_name'], 
-                                    'last_name' => $request['last_name'], 
-                                    'dob' => $request['dob'],
-                                    'phone' => $request['phone'], 
-                                    'email' => $request['email'], 
+                                    'first_name' => $request->first_name, 
+                                    'last_name' => $request->last_name, 
+                                    'dob' => $request->dob,
+                                    'phone' => $request->phone, 
+                                    'email' => $request->email, 
                                     'status' => $request->status, 
-                                    'qualification' => $request['qualification'], 
+                                    'qualification' => $request->qualification, 
                                     'about' => $request->about, 
                                     'image' => uploadFile($request, 'image', 'lawyer'), 
-                                    'experience' => $request['experience'], 
-                                    'address' => $request->address]);
+                                    'experience' => $request->experience, 
+                                    'address' => $request->address,
+                                    'password' => bcrypt($request->phone)]);
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added"]);
     }
     
     public function update($request, $id) {
         $data = [
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name'],
-            'dob' => $request['dob'],
-            'phone' => $request['phone'],
-            'email' => $request['email'],
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'dob' => $request->dob,
+            'phone' => $request->phone,
+            'email' => $request->email,
             'status' => $request->status,
-            'qualification' => $request['qualification'],
+            'qualification' => $request->qualification,
             'about' => $request->about,
-            'experience' => $request['experience'],
-            'address' => $request->address
+            'experience' => $request->experience,
+            'address' => $request->address,
+            'password' => bcrypt($request->phone)
         ];
       
         $image = uploadFile($request, 'image', 'lawyer');

@@ -47,6 +47,10 @@ return [
         'customers' => [
             'driver' => 'session',
             'provider' => 'customers',
+        ],
+        'lawyers' => [
+            'driver' => 'session',
+            'provider' => 'lawyers',
         ]
     ],
 
@@ -81,6 +85,11 @@ return [
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
+        ],
+
+        'lawyers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Lawyer::class,
         ],
 
 

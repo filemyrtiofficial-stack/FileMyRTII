@@ -34,8 +34,16 @@
     <main>
 
         @yield('content')
+        @if(!auth()->guard('customers')->check())
+            @include('frontend.partials.login-register')
+        @else
+            @include('frontend.partials.change-password')
+        @endif
+        @if(auth()->guard('lawyers')->check())
+            @include('lawyer.auth.lawyer-change-password')
+        @endif
 
-        @include('frontend.partials.login-register')
+
 
     </main>
     <div class="success_toast_msg ">  

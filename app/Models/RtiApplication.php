@@ -22,7 +22,7 @@ class RtiApplication extends Model
         $order_by_key = $filter_data['order_by'] ?? 'id';
         $order_by_type = $filter_data['order_by_type'] ?? 'desc';
 
-        $list = RtiApplication::orderBy($order_by_key, $order_by_type);
+        $list = RtiApplication::with('service')->orderBy($order_by_key, $order_by_type);
         if (!empty($filters)) {
             foreach ($filters as $key => $filter) {
                 if ($filter != null) {
@@ -92,5 +92,12 @@ class RtiApplication extends Model
     {
     	return $this->first_name." ".$this->last_name;
     }
+
+
+    public function lastRevision()
+    {
+        return $this->hasOne(RtiApplicationRevision::class, 'application_id', 'id')->orderBy('id', 'desc');
+    }
+
 
 }
