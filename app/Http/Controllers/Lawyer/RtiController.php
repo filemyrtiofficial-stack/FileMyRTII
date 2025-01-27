@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\RtiApplication;
 use App\Jobs\SendEmail;
 use App\Models\RtiApplicationRevision;
+use PDF;
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
@@ -21,21 +22,57 @@ class RtiController extends Controller
             $data = RtiApplication::list(false, $request->all());
             if(count($data) > 0) {
                 $data = $data[0] ?? [];
-                $fields = [];
+                $service_fields = [];
                 if($data->service && !empty($data->service->fields)) {
-                    $fields = json_decode($data->service->fields, true);
+                    $service_fields = json_decode($data->service->fields, true);
+                }
+                $revision_data = [];
+                if( $data->lastRevision) {
+                    $revision_data = json_decode($data->lastRevision->details, true);
                 }
             }
             else {
                 abort(404);
             }
-            return view('lawyer.view-my-rti', compact('data', 'fields'));
+            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data'));
         }
     }
 
     public function draftApplication($application_no) {
+
+
+        
         $data = RtiApplication::where(['application_no' => $application_no])->first();
-	    return view('frontend.profile.rti-file', compact('data'));
+        $revision = $data->lastRevision;
+        // print_r(json_encode($revision));
+        $field_data = json_decode($revision->details, true);
+        $html = $revision->serviceTemplate->template;
+
+        // print_r( $data->signature_image);die;
+        foreach($field_data as $key => $value) {
+            $html = str_replace("[".$key."]", $value, $html);
+        }
+        $signature = "";
+
+        if(!empty($data->signature_image)) {
+
+            
+                    $signature = public_path($data->signature_image);
+                    $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
+        }
+
+//         $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
+//         	header("Content-type: application/vnd.ms-word");
+//   header("Content-Disposition: attachment;Filename=document_name.doc");    
+//   echo $html;
+//   die;
+
+
+        // 
+	    // return view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
+
+        $pdf = PDF::loadView('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
+        return $pdf->stream();
     }
 
     public function processRTIApplication(Request $request, $application_no) {

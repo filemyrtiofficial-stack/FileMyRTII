@@ -80,16 +80,19 @@
                 </td>
             </tr>
 
-            <?php
-            $fields = json_decode($data->service_fields, true)['field_data'] ?? [];
-            ?>
-            @foreach( $fields  as $field)
-            <tr>
-                <td>{{$field['lable'] ?? ''}}</td>
-                <th><input type="text" name="{{str_replace('-', '_', Illuminate\Support\Str::slug($field['lable']))}}" value="{{$field['value'] ?? ''}}"></th>
+          
+
+            @foreach($service_fields['field_type'] ?? '' as $key => $value)
+            @php
+                $field_key =  Illuminate\Support\Str::slug($service_fields['field_lable'][$key]);
+                $label_key = str_replace('-', '_',$field_key);
+            @endphp
+                <tr>
+                    <td>{{$service_fields['field_lable'][$key] ?? ''}}</td>
+                    <th><input type="text" name="{{$label_key }}" value="{{$revision_data[$label_key ] ?? ( $fields[$field_key]['value'] ?? '')}}"> </th>
 
 
-            </tr>
+                </tr>
             @endforeach
             
         </tbody>

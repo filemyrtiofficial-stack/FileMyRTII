@@ -13,6 +13,29 @@ function commonStatus() {
         ];
 }
 
+function formAdditionalFields() {
+    return [
+        'customer' => [
+            'name' => 'Customer',
+        ],
+        'lawyer' => [
+            'name' => 'Lawyer',
+        ],
+        ];
+}
+
+function formAdditionalFieldOptions($selected = null)  {
+    $list = "";
+    foreach(formAdditionalFields() as $key => $value) {
+        $is_selected = "";
+        if($selected == $key) {
+            $is_selected = "selected";
+        }
+        $list .= '<option value="'.$key.'" '.$is_selected.'>'.$value['name'].'</option>';
+    }
+    return $list;
+}
+
 
 function applicationStatus() {
     return [

@@ -222,29 +222,31 @@ class FrontendController extends Controller
                 }
             }
             foreach ($fields['field_type'] ?? [] as $key => $value) {
-                $validation_string = '';
-                if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes') {
-                    $validation_string = 'required';
-                }
-                if($value == 'date') {
-                    $validation_string .= '|date';
-                    if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key])) {
-                        $validation_string .= "|before:".$fields['maximum_date'][$key];
+                if( isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] != "lawyer") {
+                    $validation_string = '';
+                    if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes') {
+                        $validation_string = 'required';
                     }
-                    if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key])) {
-                        $validation_string .= "|after_or_equal:".$fields['minimum_date'][$key];
+                    if($value == 'date') {
+                        $validation_string .= '|date';
+                        if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key])) {
+                            $validation_string .= "|before:".$fields['maximum_date'][$key];
+                        }
+                        if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key])) {
+                            $validation_string .= "|after_or_equal:".$fields['minimum_date'][$key];
+                        }
+                        if(isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
+                            $field_key = Str::slug($fields['dependency_date_field'][$key]);
+                            $validation_string .= "|after_or_equal:".$request[$field_key];
+                        }
                     }
-                    if(isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
-                        $field_key = Str::slug($fields['dependency_date_field'][$key]);
-                        $validation_string .= "|after_or_equal:".$request[$field_key];
-                    }
-                }
-                if($validation_string != '') {
-                    $validation[Str::slug($fields['field_lable'][$key])] =  $validation_string;
+                    if($validation_string != '') {
+                        $validation[Str::slug($fields['field_lable'][$key])] =  $validation_string;
 
+                    }
+                    $slug_key = Str::slug($fields['field_lable'][$key]);
+                    $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
                 }
-                $slug_key = Str::slug($fields['field_lable'][$key]);
-                $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
             }
 
             $validator = Validator::make($request->all(), $validation);

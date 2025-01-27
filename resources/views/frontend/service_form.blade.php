@@ -119,21 +119,23 @@
                                                 </div>
                                             @else
                                                 @foreach($fields['field_type'] ?? [] as $key => $value)
-                                                <div class="form_item">
-                                                    
-                                                
-                                                    <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
-                                                    @if($value == 'textarea') 
-                                                        <textarea class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
-                                                        </textarea>
-                                                    @elseif($value == 'date') 
-                                                    <input class="form_field" type="date" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
+                                                    @if( isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] != "lawyer")
+                                                        <div class="form_item">
+                                                            
+                                                        
+                                                            <label for="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
+                                                            @if($value == 'textarea') 
+                                                                <textarea class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+                                                                </textarea>
+                                                            @elseif($value == 'date') 
+                                                            <input class="form_field" type="date" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
 
-                                                    @else
-                                                    <input class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
+                                                            @else
+                                                            <input class="form_field" type="text" name="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" id="{{Illuminate\Support\Str::slug($fields['field_lable'][$key])}}" placeholder="" >
 
+                                                            @endif
+                                                        </div>
                                                     @endif
-                                                </div>
                                                 @endforeach
                                             @endif
                                         </div>

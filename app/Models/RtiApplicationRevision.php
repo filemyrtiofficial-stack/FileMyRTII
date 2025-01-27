@@ -9,4 +9,8 @@ class RtiApplicationRevision extends Model
 {
     use HasFactory;
     protected $fillable = ['application_id', 'details', 'template', 'status', 'signature', 'customer_change_request', 'template_id'];
+
+    public function serviceTemplate() {
+        return $this->belongsTo(ServiceTemplate::class, 'template_id', 'id');
+    }
 }
