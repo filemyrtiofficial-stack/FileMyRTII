@@ -29,7 +29,9 @@
         <div class="card mb-4">
             <div class="card-header  list-header">
                 <h4>Testimonial</h4>
+                @if(auth()->user()->can('Create Testimonial'))
                 <a href="{{route('testimonials.create')}}" class="btn btn-primary float-end">Add Testimonial</a>
+                @endif
             </div>
             <div class="card-body mt-3">
                 <div class="table-responsive p-0">
@@ -46,9 +48,11 @@
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
+                                @if(auth()->user()->can('Edit Testimonial') || auth()->user()->can('Delete Testimonial') )
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -73,15 +77,20 @@
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
+                                @if(auth()->user()->can('Edit Testimonial') || auth()->user()->can('Delete Testimonial') )
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                   
-                                        <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
-                                            href="{{route('testimonials.edit', $item->id)}}">Edit</a>
+                                        @if(auth()->user()->can('Edit Testimonial'))
+                                            <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
+                                                href="{{route('testimonials.edit', $item->id)}}">Edit</a>
+                                        @endif
+                                        @if(auth()->user()->can('Delete Testimonial'))
                                         <a href="{{route('testimonials.destroy', $item->id)}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
+                                        @endif
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
 

@@ -1,5 +1,8 @@
 @extends('frontend.layout.layout')
+@push('style')
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
 
+@endpush
 @section('content')
 <style>
     .hide {
@@ -119,7 +122,7 @@
                                                 </div>
                                             @else
                                                 @foreach($fields['field_type'] ?? [] as $key => $value)
-                                                    @if( isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] != "lawyer")
+                                                @if( !isset($fields['form_field_type'][$key]) || (isset($fields['form_field_type'][$key])  && strtolower($fields['form_field_type'][$key]) != "lawyer"))
                                                         <div class="form_item">
                                                             
                                                         
@@ -155,7 +158,7 @@
                                                 <div class="form_number">RTI Application No: <span id="application_number"></span></div>
                                                 <div class="upload_file" id="upload_file-section">
                                                     <button class="upload-file-btn">Upload File <span>+</span></button>
-                                                    <input type="file" name="file" id="document-upload" />
+                                                    <input type="file" name="file[]" id="document-upload" multiple/>
                                                     
                                                 </div>
                                                 <div class="upload_file hide" id="preview-section">
@@ -167,7 +170,10 @@
                                                
                                                 <input type="hidden" name="document" class="image-input" />
                                             </div>
-                                            <a href="" class="hide" id="preview-dodument" target="blank">Preview</a>
+                                            <div class="preview" id="preview">
+
+                                            </div>
+                                            <!-- <a href="" class="hide" id="preview-dodument" target="blank">Preview</a> -->
                                             <div class="form_table_detail">
                                             @if(isset($payment) && isset($payment['amount_type']))
                                                 @foreach($payment['amount_type'] as $key =>  $value)
@@ -299,34 +305,47 @@
     });
  $(document).on('change', '#document-upload', function () {
         let _this = $(this);
-         let uploadedFile = document.getElementById($(this).attr('id')).files[0];
-         var form_data = new FormData();
-         form_data.append("file", uploadedFile);
+        var data = new FormData($('.service-form')[0]);
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
          $.ajax({
-            url: "{{route('upload-images')}}",
+            url: "{{route('upload-multiple-files')}}",
             method: "POST",
-            data: form_data,
+            data: data,
             cache : false,
             processData: false,
             contentType: false,
             dataType : 'json',
             success : function(response){
-                console.log('upload-image', response)
-                $('#upload_file-section').addClass('hide');
-                // _this.parents().eq(0).find('.upload-file-btn').text('Uploaded');
-              _this.parents().eq(1).find('.image-input').val(response.data);
-              console.log(_this.parents().eq(1).find('.image-input').attr('class'));
-                      $('#preview-section').removeClass('hide').find('a').attr('href' , response.preview_path);
+                $.each(response.data, function(index, value){
+
+                    $('#preview').append(`<div class="preview-item">
+                                                    
+                                                        <a href="${value.path}" target="blank">
+                                                            <embed src="{{url('/')}}${value.file}" width="50" height="50" />
+                                                            <input hidden value="${value.file}" name="documents[]">
+                                                        </a>
+                                                        <button type="button" class="delete-icon"></button>
+                                                    </div>`);
+                })
+            //     console.log('upload-image', response)
+            //     $('#upload_file-section').addClass('hide');
+            //     // _this.parents().eq(0).find('.upload-file-btn').text('Uploaded');
+            //   _this.parents().eq(1).find('.image-input').val(response.data);
+            //   console.log(_this.parents().eq(1).find('.image-input').attr('class'));
+            //           $('#preview-section').removeClass('hide').find('a').attr('href' , response.preview_path);
 
             },
             error : function(error) {}
          });
       });
+      $(document).on('click', '.remove-document', function(e){
+        e.preventDefault();
+        $(this).parents().eq(1).remove();
+      })
 // $(document).on('change', "#document-upload", function (e) {
 //                 file = this.files[0];
 //                 if (file) {
@@ -478,7 +497,9 @@
             // e.preventDefault();
         } 
 
-
+    $(document).on('click', '.delete-icon', function(){
+        $(this).parents().eq(0).remove();
+      });
 
 
 </script>

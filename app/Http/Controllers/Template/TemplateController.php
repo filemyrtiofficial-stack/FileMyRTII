@@ -18,6 +18,10 @@ class TemplateController extends Controller
     public function __construct(TemplateInterface $templateRepository)
     {
         $this->templateRepository = $templateRepository;
+        $this->middleware(['can:Manage Pages']); 
+        $this->middleware(['can:Delete Pages'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Pages'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Pages'], ['only' => ['edit', 'update']]); 
     }
     /**
      * Display a listing of the resource.
@@ -149,6 +153,28 @@ class TemplateController extends Controller
             return response(['data'=>$image_list, 'preview_path' => route('preview-document',Crypt::encryptString($image_list))]);
            
         }
+
+
+    }
+
+
+    public function uploadMultipleImages(Request $request) {
+       
+        
+        $path = "rti-application";
+        // $path = '/upload/'.$path;
+        $image_list = multipleFiles($request, 'file', $path);
+       
+        return response(['data'=>$image_list]);
+        // $key = "file";
+        // if($request->hasFile($key))
+        // {
+        //     $path = "rti-application";
+        //     // $path = '/upload/'.$path;
+        //     $image_list = multipleFiles($request, 'file', $path);
+        //     return response(['data'=>$image_list]);
+           
+        // }
 
 
     }

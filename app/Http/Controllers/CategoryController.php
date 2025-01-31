@@ -14,6 +14,10 @@ class CategoryController extends Controller
     public function __construct(CategoryInterface $categoryRepository)
     {
        $this->categoryRepository = $categoryRepository;
+       $this->middleware(['can:Manage Blog Category']); 
+       $this->middleware(['can:Delete Blog Category'], ['only' => ['destroy']]); 
+       $this->middleware(['can:Create Blog Category'], ['only' => ['create', 'store']]); 
+       $this->middleware(['can:Edit Blog Category'], ['only' => ['edit', 'update']]); 
     }
 
     /**

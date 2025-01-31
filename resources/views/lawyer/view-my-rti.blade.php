@@ -1,5 +1,8 @@
 @extends('frontend.layout.layout')
+@push('style')
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
 
+@endpush
 @section('content')
 
         
@@ -279,50 +282,11 @@
                                 </div>
                             </div>
                             <div id="tab6" class="contact_faq_tab">
-                                <div class="contact_faq_heading">
-                                    <h2>Top queries</h2>
+                                <div class="contact_faq_heading text-center">
+                                    <h2>Enter Tracking No.</h2>
                                 </div>
                                 <div class="faq_item_wrap">
-                                    <div class="faq_item">
-                                        <div class="faq_title active">
-                                            <h4>What are the modes of payment for paying for RTI on OnlineRTI?</h4>
-                                        </div>
-                                        <div class="faq_content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum risus dui, vel placerat mi auctor vitae. Fusce id felis nec ligula aliquam sagittis ornare vel diam. Duis vulputate odio ut mi vulputate posuere. Aenean dapibus vehicula pharetra. Curabitur</p>
-                                        </div>
-                                    </div>
-                                    <div class="faq_item">
-                                        <div class="faq_title">
-                                            <h4>Can I apply RTI to private bodies?</h4>
-                                        </div>
-                                        <div class="faq_content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum risus dui, vel placerat mi auctor vitae. Fusce id felis nec ligula aliquam sagittis ornare vel diam. Duis vulputate odio ut mi vulputate posuere. Aenean dapibus vehicula pharetra. Curabitur</p>
-                                        </div>
-                                    </div>
-                                    <div class="faq_item">
-                                        <div class="faq_title">
-                                            <h4>Do you handle only Bangalore related RTIs or other cities as well?</h4>
-                                        </div>
-                                        <div class="faq_content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum risus dui, vel placerat mi auctor vitae. Fusce id felis nec ligula aliquam sagittis ornare vel diam. Duis vulputate odio ut mi vulputate posuere. Aenean dapibus vehicula pharetra. Curabitur</p>
-                                        </div>
-                                    </div>
-                                    <div class="faq_item">
-                                        <div class="faq_title">
-                                            <h4>Is this a private organization?</h4>
-                                        </div>
-                                        <div class="faq_content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum risus dui, vel placerat mi auctor vitae. Fusce id felis nec ligula aliquam sagittis ornare vel diam. Duis vulputate odio ut mi vulputate posuere. Aenean dapibus vehicula pharetra. Curabitur</p>
-                                        </div>
-                                    </div>
-                                    <div class="faq_item">
-                                        <div class="faq_title">
-                                            <h4>I have paid for my RTI. What next?</h4>
-                                        </div>
-                                        <div class="faq_content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fermentum risus dui, vel placerat mi auctor vitae. Fusce id felis nec ligula aliquam sagittis ornare vel diam. Duis vulputate odio ut mi vulputate posuere. Aenean dapibus vehicula pharetra. Curabitur</p>
-                                        </div>
-                                    </div>
+                                   @include('lawyer.tab-section.tacking-number')
                                 </div>
                             </div>
                             <div id="tab7" class="contact_faq_tab">
@@ -526,9 +490,8 @@
 <script>
     $(document).on('change', '#document-upload', function () {
         let _this = $(this);
-         let uploadedFile = document.getElementById($(this).attr('id')).files[0];
-         var form_data = new FormData();
-         form_data.append("file", uploadedFile);
+        var form_data = new FormData($(this).closest('form')[0]);
+
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -561,7 +524,7 @@
         $.each(data, function(index, value){
             html = html.replaceAll("["+value['name']+"]", value['value']);
         });
-        $('.draft-rti-html').html(html)
+        $('.draft-rti-html1').html(html)
 
     }
    

@@ -37,7 +37,9 @@
         <div class="card mb-4">
             <div class="card-header  list-header">
                 <h4>Service</h4>
+                @if(auth()->user()->can('Create Service'))
                 <a href="{{route('services.create')}}" class="btn btn-primary float-end">Add Service</a>
+                @endif
             </div>
             <div class="card-body mt-3">
                 <div class="table-responsive p-0">
@@ -85,14 +87,21 @@
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
                                 <td class="align-middle text-end">
+                                    
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                    <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" href="{{route('service-template.index',$item->id)}}">Template</a>
+                                    @if(auth()->user()->can('Manage Service Template'))
+                                    <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" href="{{route('service-template.index',$item->id)}}">Template</a>
+                                    @endif
                                     <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                     href="{{route('frontend.service',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" target="blank">View</a>
+                                    @if(auth()->user()->can('Edit Service'))
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('services.edit', $item->id)}}">Edit</a>
+                                    @endif
+                                    @if(auth()->user()->can('Delete Service'))
                                         <a href="{{route('services.destroy', $item->id)}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
+                                    @endif
                                     </div>
                                 </td>
                             </tr>

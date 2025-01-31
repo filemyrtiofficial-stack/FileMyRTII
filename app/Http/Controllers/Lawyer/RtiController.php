@@ -8,6 +8,8 @@ use App\Models\RtiApplication;
 use App\Jobs\SendEmail;
 use App\Models\RtiApplicationRevision;
 use PDF;
+use Validator;
+use App\Models\RtiApplicationTracking;
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
@@ -73,6 +75,7 @@ class RtiController extends Controller
 
         $pdf = PDF::loadView('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
         return $pdf->stream();
+        return "tets";
     }
 
     public function processRTIApplication(Request $request, $application_no) {
@@ -83,14 +86,43 @@ class RtiController extends Controller
             'application_id' =>  $application->id, 
             'template_id' => $request->template_id,
             'details' => json_encode($input), 
-
-            // 'template', 
-            // 'status', 
-            // 'signature', 
-            // 'customer_change_request'
         ]);
-        return response(['status' => 'success', 'Message' => "Applicatio  Number : ".$application_no." is sent to user for approval."]);
+        $application->url = route('my-rti', $application_no);
+        SendEmail::dispatch('draft-rti', $application);
 
+        return response(['status' => 'success', 'message' => "Application  Number : ".$application_no." is sent to user for approval."]);
+
+    }
+
+    public function assignCourierTracking(Request $request, $revision_id) {
+        $validator = Validator::make($request->all(), [
+            'courier_name' => "required",
+            'courier_tracking_number' => "required",
+            'courier_date' => "required|date",
+            'charges' => "required|numeric",
+            'address' => "required"
+
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            
+            $revision = RtiApplicationRevision::find($revision_id);
+            if($revision) {
+                $data = $request->only(['courier_name', 'courier_date', 'courier_tracking_number', 'charges', 'address']);
+                $data['documents'] = [$request->documents];
+                $data['application_id'] = $revision->application_id;
+                $data['revision_id'] = $revision->id;
+                RtiApplicationTracking::create($data);
+            }
+            return response(['status' => 'success', 'message' => "Tracking details are successfully added"]);
+                
+                
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
     }
 
 }

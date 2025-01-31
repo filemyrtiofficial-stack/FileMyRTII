@@ -16,6 +16,10 @@ class ServiceTemplateController extends Controller
     public function __construct(ServiceInterface $serviceRepository)
     {
         $this->serviceRepository = $serviceRepository;
+        $this->middleware(['can:Manage Service Template']); 
+        $this->middleware(['can:Delete Service Template'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Service Template'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Service Template'], ['only' => ['edit', 'update']]); 
     }
 
     /**
@@ -76,9 +80,12 @@ class ServiceTemplateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($service_id, $id)
     {
-        //
+        $service = Service::find($service_id);
+        $data = ServiceTemplate::get($id);
+        return view('pages.service.template.show', compact('service', 'data'));
+
     }
 
     /**

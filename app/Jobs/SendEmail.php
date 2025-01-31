@@ -12,6 +12,8 @@ use App\Mail\ResetPassword;
 use App\Mail\ApplicationRegister;
 use App\Mail\AssignLawyer;
 use App\Mail\ApproveRti;
+use App\Mail\DraftRTIMail;
+
 use Mail;
 class SendEmail implements ShouldQueue
 {
@@ -46,6 +48,9 @@ class SendEmail implements ShouldQueue
         }
         elseif($this->type == 'approve-rti') {
             $email = new ApproveRti($this->details);
+        }
+        elseif($this->type == 'draft-rti') {
+            $email = new DraftRTIMail($this->details);
         }
         else {
             $email = new ApplicationRegister($this->details);

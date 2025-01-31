@@ -66,7 +66,7 @@
             @csrf
             <div class="form_item">
                         <label for="name">Name</label>
-                        <input class="form_field" type="email" name="name" id="" placeholder="Enter Your Name">
+                        <input class="form_field" type="text" name="name" id="" placeholder="Enter Your Name">
                     </div>
                     <div class="form_item">
                         <label for="email_address">Email Address</label>

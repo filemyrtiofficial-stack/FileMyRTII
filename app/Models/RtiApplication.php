@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class RtiApplication extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents'];
+
+    protected $casts = [
+        'documents' => 'array'
+    ];
+
 
     public static function list($pagination, $filters = null)
     {
@@ -98,6 +103,33 @@ class RtiApplication extends Model
     {
         return $this->hasOne(RtiApplicationRevision::class, 'application_id', 'id')->orderBy('id', 'desc');
     }
+
+
+    public static function draftedApplication( $data) {
+        $revision = $data->lastRevision;
+        $field_data = json_decode($revision->details, true);
+        $html = $revision->serviceTemplate->template;
+        foreach($field_data as $key => $value) {
+            $html = str_replace("[".$key."]", $value, $html);
+        }
+        $signature = "";
+
+        if(!empty($data->signature_image)) {
+
+            
+                    $signature = public_path($data->signature_image);
+                    $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
+        }
+
+        $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
+        return $html;
+    }
+
+    public function courierTracking()
+    {
+        return $this->hasOne(RtiApplicationTracking::class, 'application_id', 'id');
+    }
+
 
 
 }

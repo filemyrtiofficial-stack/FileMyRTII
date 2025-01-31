@@ -15,6 +15,8 @@ class MenuController extends Controller
     public function __construct(MenuInterface $menuRepository)
     {
         $this->menuRepository = $menuRepository;
+        $this->middleware(['can:Manage Menu']); 
+
     }
 
     /**

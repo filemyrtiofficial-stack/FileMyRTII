@@ -5,22 +5,6 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\AuthRepository;
 use App\Interfaces\AuthInterface;
-
-// use App\Repositories\HospitalRepository;
-// use App\Interfaces\HospitalInterface;
-// use App\Repositories\SpecialityRepository;
-// use App\Interfaces\SpecialityInterface;
-// use App\Repositories\DoctorRepository;
-// use App\Interfaces\DoctorInterface;
-// use App\Repositories\DiseaseRepository;
-// use App\Interfaces\DiseaseInterface;
-// use App\Repositories\DiseaseTypeRepository;
-// use App\Interfaces\DiseaseTypeInterface;
-// use App\Repositories\LabTestRepository;
-// use App\Interfaces\LabTestInterface;
-// use App\Repositories\LabRepository;
-// use App\Interfaces\LabInterface;
-
 use App\Repositories\CategoryRepository;
 use App\Interfaces\CategoryInterface;
 use App\Repositories\BlogRepository;
@@ -47,6 +31,8 @@ use App\Repositories\RoleRepository;
 use App\Interfaces\RoleInterface;
 use App\Repositories\LawyerRepository;
 use App\Interfaces\LawyerInterface;
+use App\Repositories\PioRepository;
+use App\Interfaces\PioInterface;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -77,7 +63,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TestimonialInterface::Class, TestimonialRepository::class);
         $this->app->bind(RoleInterface::Class, RoleRepository::class);
         $this->app->bind(LawyerInterface::Class, LawyerRepository::class);
-
+        $this->app->bind(PioInterface::Class, PioRepository::class);
 
     }
 

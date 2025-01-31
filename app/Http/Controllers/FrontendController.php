@@ -274,8 +274,8 @@ class FrontendController extends Controller
         } else {
             $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
             $service_fields = json_decode($rti->service_fields, true);
-            $service_fields['user_document'] =  $request->document; //uploadFile($request, 'file', 'user_files');
-            $rti->update(['charges' => $request->charges, 'service_fields' => json_encode($service_fields)]);
+            $service_fields['user_document'] =  $request->documents; //uploadFile($request, 'file', 'user_files');
+            $rti->update(['charges' => $request->charges, 'service_fields' => json_encode($service_fields), 'documents' => $request->documents]);
             return response(['step' => 4, 'rti' => $rti, 'service_fields' => $service_fields]);
         }
     }

@@ -195,33 +195,37 @@
             </div>
         </div>
     <div class="col-6">
-        <div class="card mb-4">
-            <div class="card-header list-header">
-                <h4>Assign Lawyer</h4>
-            </div>
-            <div class="card-body">
-                <form action="{{route('rti.applications.assign.lawyer', $data->id)}}" class="form-submit" method="post">
-                    @csrf
-                    <div class="form-group">
-                        <h4 class="form-label">Select lawyer</h4>
-                        <div class="input-group">
-                            <select id="lawyer" name="lawyer" class="form-control">
-                                <option value="">Select Lawyer</option>
-                                @foreach(App\Models\Lawyer::list(false, ['status' => true]) as $key => $item)
-                                    <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}} ({{$item->email}})</option>
-                                @endforeach
-                            </select>
+        @if(empty($data->lawyer_id))
+            @if(auth()->user()->can('Assign Lawyer'))
+            <div class="card mb-4">
+                <div class="card-header list-header">
+                    <h4>Assign Lawyer</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{route('rti.applications.assign.lawyer', $data->id)}}" class="form-submit" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <h4 class="form-label">Select lawyer</h4>
+                            <div class="input-group">
+                                <select id="lawyer" name="lawyer" class="form-control">
+                                    <option value="">Select Lawyer</option>
+                                    @foreach(App\Models\Lawyer::list(false, ['status' => true]) as $key => $item)
+                                        <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}} ({{$item->email}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <button class="btn btn-sm btn-primary">Assign</button>
-                    </div>
+                        <div class="text-right">
+                            <button class="btn btn-sm btn-primary">Assign</button>
+                        </div>
 
-                </form>
+                    </form>
+                </div>
+            
             </div>
-           
-        </div>
-
+            @endif
+        @endif
+        @if(!empty($data->lawyer_id))
         <div class="card mb-4">
             <div class="card-header list-header">
                 <h4>Assigned Lawyer</h4>
@@ -237,15 +241,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($data->lawyers as $key => $item)
                             <tr>
-                                <td>{{$item->first_name}} {{$item->last_name}}</td>
-                                <td>{{$item->email}}</td>
-                                <td>{{$item->phone}}</td>
+                                <td>{{$data->lawyer->first_name}} {{$data->lawyer->last_name}}</td>
+                                <td>{{$data->lawyer->email}}</td>
+                                <td>{{$data->lawyer->phone}}</td>
                             </tr>
-                        @endforeach
                     </tbody>
                 </table>
+            </div>
+           
+        </div>
+        @endif
+        <div class="card mb-4">
+            <div class="card-header list-header">
+                <h4>Documents</h4>
+            </div>
+            <div class="card-body table-responsive">
+                <div class="row">
+                    @foreach($data->documents ?? [] as $key => $value)
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="{{route('preview-document', encryptString($value))}}" target="blank">
+                                    <embed src="{{asset($value)}}" width="100" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
            
         </div>

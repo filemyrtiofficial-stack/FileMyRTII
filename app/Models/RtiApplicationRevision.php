@@ -13,4 +13,8 @@ class RtiApplicationRevision extends Model
     public function serviceTemplate() {
         return $this->belongsTo(ServiceTemplate::class, 'template_id', 'id');
     }
+
+    public function rtiApplication() {
+        return $this->belongsTo(RtiApplication::class, 'application_id', 'id');
+    }
 }

@@ -16,6 +16,10 @@ class ServiceCategoryController extends Controller
     public function __construct(ServiceCategoryInterface $serviceCategoryRepository)
     {
         $this->serviceCategoryRepository = $serviceCategoryRepository;
+        $this->middleware(['can:Manage Service category']); 
+        $this->middleware(['can:Delete Service category'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Service category'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Service category'], ['only' => ['edit', 'update']]); 
     }
 
     /**

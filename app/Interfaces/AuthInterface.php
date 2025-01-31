@@ -2,8 +2,8 @@
 namespace App\Interfaces;
 
 interface AuthInterface {
-    public function sendOtp($data);
-    public function verifyOtp($data);
-    public function register($data);
+    public function store($data);
+    public function update($data, $id);
+    public function delete($id);
 
 }

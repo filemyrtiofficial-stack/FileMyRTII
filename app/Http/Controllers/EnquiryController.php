@@ -14,6 +14,8 @@ class EnquiryController extends Controller
     public function __construct(EnquiryInterface $enquiryRepository)
     {
         $this->enquiryRepository = $enquiryRepository;
+        $this->middleware(['can:Manage Enquiry']); 
+
     }
 
 

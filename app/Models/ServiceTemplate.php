@@ -24,8 +24,8 @@ class ServiceTemplate extends Model
         if(!empty($filters)) {
             foreach($filters as $key => $filter) {
                 if($filter != null) {
-                    if($key == 'name') {
-                        $list->where('name', 'like', '%'.$filter.'%');
+                    if($key == 'template_name') {
+                        $list->where('template_name', 'like', '%'.$filter.'%');
                     }
                     else {
                         $list->where($key, $filter);

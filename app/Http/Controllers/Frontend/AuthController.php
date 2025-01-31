@@ -182,7 +182,7 @@ class AuthController extends Controller
 
         $customer->password = $request->password;
         $customer->save();
-        return response(['status' => "success"]);
+        return response(['status' => "success", 'message' => "Your password has been updated."]);
 
 
     }

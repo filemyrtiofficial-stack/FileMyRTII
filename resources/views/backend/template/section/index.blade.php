@@ -8,8 +8,10 @@
         <div class="card mb-4">
             <div class="card-header list-header">
                 <h4>Section</h4>
+                @if(auth()->user()->can('Create Section Data'))
                 <a href="{{route('template-section.create')}}" class="btn btn-primary float-end">Add
-                Section</a>
+                Section1</a>
+                @endif
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -27,9 +29,11 @@
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
+                                @if(auth()->user()->can('Edit Section Data') || auth()->user()->can('Delete Section Data'))
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -49,17 +53,26 @@
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
+                                @if(auth()->user()->can('Edit Section Data') || auth()->user()->can('Delete Section Data'))
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
                                    
+                                    
                                         <a class="text-sm font-weight-bold mb-0 ps-2"
                                         href="{{route('template-section-fields.index', $item->id)}}">Manage Fields</a>
+                                @if(auth()->user()->can('Edit Section Data'))
+
                                         <a class="text-sm font-weight-bold mb-0 ps-2"
                                             href="{{route('template-section.edit', $item->id)}}">Edit</a>
+                                            @endif
+                                @if(auth()->user()->can('Delete Section Data'))
+
                                         <a href="{{route('template-section.destroy', $item->id)}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn">Delete</a>
+                                            @endif
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
 

@@ -140,7 +140,8 @@ function multipleFiles($request, $key, $path) {
             $file->move($destinationPath,$fileNameToStore);
 
             // $path = $file->storeAs('public/'.$path,$fileNameToStore);
-            array_push($file_list, $path."/".$fileNameToStore);
+            $file_name = $path."/".$fileNameToStore;
+            array_push($file_list, ['file' => $file_name, 'path' => route('preview-document',Crypt::encryptString($file_name))]);
         }
     }
     return $file_list;

@@ -13,24 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('pio_masters', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->nullable();
             $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->string('country')->nullable();
             $table->string('pincode')->nullable();
-            $table->string('email_id')->nullable();
-            $table->string('contact_no')->nullable();
-            $table->boolean('status')->nullable();
-            $table->string('experience')->nullable();
-            $table->date('dob')->nullable();
-            $table->float('fee')->nullable();
-            $table->string('profile')->nullable();
-            $table->text('about')->nullable();
-            $table->text('qualification')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -42,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('pio_masters');
     }
 };

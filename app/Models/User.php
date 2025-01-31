@@ -27,7 +27,8 @@ class User extends Authenticatable
         'city',
         'country',
         'postal',
-        'about'
+        'about',
+        'status'
     ];
 
     /**
@@ -59,5 +60,28 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public static function list($pagination, $filters = null) {
+        $filter_data = $filters;
+        unset($filters['ids']);
+        $list = User::orderBy('id', 'desc');
+        if(!empty($filters)) {
+            $list->where($filters);
+        }
+        if(isset($filter_data['ids'])) {
+            $list->wherein('id', $filter_data['ids']);
+        }
+        if($pagination) {
+            return $list->paginate(10);
+        }
+        else {
+            return $list->get();
+
+        }
+    }
+    public static function get($id) {
+        return User::find($id);
+    }
+
 
 }

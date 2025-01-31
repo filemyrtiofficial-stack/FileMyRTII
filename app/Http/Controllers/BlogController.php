@@ -16,6 +16,10 @@ class BlogController extends Controller
     public function __construct(BlogInterface $blogRepository)
     {
        $this->blogRepository = $blogRepository;
+       $this->middleware(['can:Manage Blog']); 
+       $this->middleware(['can:Delete Blog'], ['only' => ['destroy']]); 
+       $this->middleware(['can:Create Blog'], ['only' => ['create', 'store']]); 
+       $this->middleware(['can:Edit Blog'], ['only' => ['edit', 'update']]); 
     }
 
     /**

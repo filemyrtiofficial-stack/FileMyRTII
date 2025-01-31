@@ -9,7 +9,7 @@
                   <form action="">
                             <div class="row">
                                     <div class="col-md-3">
-                                            <input type="text" name="name" class="form-control" placeholder="Search By Name" value="{{$_GET['name'] ?? ''}}">
+                                            <input type="text" name="template_name" class="form-control" placeholder="Search By template name" value="{{$_GET['template_name'] ?? ''}}">
                                     </div>
                                    
                                     
@@ -22,8 +22,10 @@
         </div>
         <div class="card mb-4">
             <div class="card-header  list-header">
-                <h4>Service</h4>
+                <h4>Service Template</h4>
+                @if(auth()->user()->can('Create Service Template'))
                 <a href="{{route('service-template.create', $service->id)}}" class="btn btn-primary float-end">Add Template</a>
+                @endif
             </div>
             <div class="card-body mt-3">
                 <div class="table-responsive p-0">
@@ -37,9 +39,11 @@
                                 Create Date</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Preview
                                 </th>
+                                @if(auth()->user()->can('Edit Service Template') || auth()->user()->can('Delete Service Template') )
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -58,16 +62,20 @@
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
                                 <td class="text-center">
-                                    <a href="">View</a>
+                                    <a href="{{route('service-template.show',[$item->service_id, $item->id])}}">View</a>
                                 </td>
+                                @if(auth()->user()->can('Edit Service Template') || auth()->user()->can('Delete Service Template') )
                                 <td class="align-middle text-center">
-                                   
+                                    @if(auth()->user()->can('Edit Service Template'))
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('service-template.edit', [$service->id, $item->id])}}">Edit</a>
+                                    @endif
+                                    @if(auth()->user()->can('Delete Service Template'))
                                         <a href="{{route('service-template.destroy', [$service->id, $item->id])}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
-                                    </div>
+                                    @endif
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
 

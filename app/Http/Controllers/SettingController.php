@@ -16,6 +16,8 @@ class SettingController extends Controller
     public function __construct(SettingInterface $settingRepository)
     {
         $this->settingRepository = $settingRepository;
+        $this->middleware(['can:Header Footer', 'can:Payment']); 
+
     }
 
 

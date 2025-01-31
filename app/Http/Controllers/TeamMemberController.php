@@ -15,6 +15,11 @@ class TeamMemberController extends Controller
     public function __construct(TeamMemberInterface $teamMemberRepository)
     {
         $this->teamMemberRepository = $teamMemberRepository;
+        $this->middleware(['can:Manage Team Member']); 
+        $this->middleware(['can:Delete Team Member'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Team Member'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Team Member'], ['only' => ['edit', 'update']]); 
+
     }
 
     /**

@@ -17,6 +17,10 @@ class RoleController extends Controller
     public function __construct(RoleInterface $roleRepository)
     {
         $this->roleRepository = $roleRepository;
+        $this->middleware(['can:Manage Role']); 
+        $this->middleware(['can:Delete Role'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Role'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Role'], ['only' => ['edit', 'update']]); 
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +29,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $list = Role::with('permissions')->get();
+        $list = Role::with('permissions')->where('name', '!=', 'admin')->get();
         return view('pages.role.index', compact('list'));
 
     }

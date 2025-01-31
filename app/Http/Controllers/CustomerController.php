@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 class CustomerController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['can:Manage Customer']); 
+    }
     /**
      * Display a listing of the resource.
      *

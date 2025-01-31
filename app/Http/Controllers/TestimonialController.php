@@ -14,6 +14,10 @@ class TestimonialController extends Controller
     public function __construct(TestimonialInterface $testimonialRepository)
     {
         $this->testimonialRepository = $testimonialRepository;
+        $this->middleware(['can:Manage Testimonial']); 
+        $this->middleware(['can:Delete Testimonial'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Testimonial'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Testimonial'], ['only' => ['edit', 'update']]); 
     }
 
     /**

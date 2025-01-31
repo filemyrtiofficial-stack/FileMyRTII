@@ -110,7 +110,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{route('lawyers.edit',( $item->lawyer->id ?? ''))}}" target="blank">{{$item->lawyer->fullName ?? ""}}</a>
+                                    <a href="{{route('lawyers.edit',( $item->lawyer->id ?? ''))}}" target="blank">{{$item->lawyer->first_name ?? ""}} {{$item->lawyer->last_name ?? ""}}</a>
                                 </td>
                                 <td>
                                 <span class="{{paymentStatus()[$item->payment_status]['class'] ??''}}"><b>{{paymentStatus()[$item->payment_status]['name'] ??''}}</b></span>

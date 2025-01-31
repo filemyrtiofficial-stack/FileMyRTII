@@ -11,11 +11,16 @@ use Carbon\Carbon;
 class LawyerController extends Controller
 {
 
-    private LawyerRepository $LawyerRepository;
+    private LawyerRepository $lawyerRepository;
 
     public function __construct(LawyerInterface $lawyerRepository)
     {
         $this->lawyerRepository = $lawyerRepository;
+        $this->middleware(['can:Manage Lawyer']); 
+        $this->middleware(['can:Delete Lawyer'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Lawyer'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Lawyer'], ['only' => ['edit', 'update']]); 
+
     }
 
     /**

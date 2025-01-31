@@ -16,6 +16,10 @@ class SectionController extends Controller
     public function __construct(SectionInterface $sectionRepository)
     {
         $this->sectionRepository = $sectionRepository;
+        $this->middleware(['can:Manage Section Data']); 
+        $this->middleware(['can:Delete Section Data'], ['only' => ['destroy']]); 
+        $this->middleware(['can:Create Section Data'], ['only' => ['create', 'store']]); 
+        $this->middleware(['can:Edit Section Data'], ['only' => ['edit', 'update']]); 
     }
     /**
      * Display a listing of the resource.

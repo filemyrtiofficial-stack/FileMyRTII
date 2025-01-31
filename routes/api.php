@@ -21,17 +21,41 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('create-permission', function(){
     $permissions = [
-            'Team Manager' => [
+            'Customer' => [
+                'Manage Customer',
+            ],
+            'User' => [
+                'Manage User',
+                'Create User',
+                'Edit User',
+                'Delete User'
+
+            ],
+            'Role' => [
+                'Manage Role',
+                'Create Role',
+                'Edit Role',
+                'Delete Role'
+
+            ],
+           
+            'Team Members' => [
                 'Manage Team Member',
                 'Create Team Member',
                 'Edit Team Member',
                 'Delete Team Member'
             ],
-            'Testimonial' => [
-                'Manage Testimonial',
-                'Create Testimonial',
-                'Edit Testimonial',
-                'Delete Testimonial'
+            'Lawyer' => [
+                'Manage Lawyer',
+                'Create Lawyer',
+                'Edit Lawyer',
+                'Delete Lawyer'
+            ],
+            'PIO Management' => [
+                'Manage PIO',
+                'Create PIO',
+                'Edit PIO',
+                'Delete PIO'
             ],
             'Blog Category' => [
                 'Manage Blog Category',
@@ -45,6 +69,7 @@ Route::get('create-permission', function(){
                 'Edit Blog',
                 'Delete Blog'
             ],
+
             'Service category' => [
                 'Manage Service category',
                 'Create Service category',
@@ -57,6 +82,22 @@ Route::get('create-permission', function(){
                 'Edit Service',
                 'Delete Service'
             ],
+            'Testimonial' => [
+                'Manage Testimonial',
+                'Create Testimonial',
+                'Edit Testimonial',
+                'Delete Testimonial'
+            ],
+
+            'Service Template' => [
+                'Manage Service Template',
+                'Create Service Template',
+                'Edit Service Template',
+                'Delete Service Template'
+            ],
+           
+           
+           
             'Menu' => [
                 'Manage Menu'
             ],
@@ -81,8 +122,16 @@ Route::get('create-permission', function(){
                 'Manage Newsletter Data',
 
             ],
+            'Enquiry' => [
+                'Manage Enquiry',
+            ],
+            'RTI Application' => [
+                'Manage RTI Application',
+                'Assign Lawyer',
 
+            ],
         ];
+        print_r($permissions);
 
         foreach($permissions as $key => $items) {
             $parent_permission = Permission::where(['name' => $key])->first();

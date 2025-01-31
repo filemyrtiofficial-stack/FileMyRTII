@@ -1,0 +1,37 @@
+.db_lawyer_section {
+    position: relative;
+    overflow: hidden;
+    padding: 1.125vw 0 5.125vw;
+}
+.db_lawyer_wrap {
+    max-width: 31.25vw;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.db_lawyer_wrap .modal_header .close {
+    display: none;
+}
+
+.db_lawyer_wrap .login .modal_action_bottom .login-btn {
+    width: 50%;
+}
+
+
+@media (max-width: 1199px) {
+    .db_lawyer_wrap {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 767px) {
+    .db_lawyer_section {
+        padding: 40px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .db_lawyer_wrap .login .modal_action_bottom .login-btn {
+        width: 100%;
+    }
+}

@@ -10,6 +10,11 @@ use Validator;
 
 class NewsletterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:Manage Newsletter Data']); 
+
+    }
     /**
      * Display a listing of the resource.
      *

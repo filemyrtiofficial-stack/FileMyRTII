@@ -56,6 +56,7 @@ use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerControll
 use App\Http\Controllers\Lawyer\AuthController as LawyerAuthController;
 use App\Http\Controllers\Lawyer\RtiController as LawyerRtiController;
 use App\Http\Controllers\ServiceTemplateController;
+use App\Http\Controllers\PioController;
 
 
 
@@ -122,6 +123,10 @@ Route::get("subscribe-now", function(){
 	// Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 	Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 	Route::post('/upload-images', [TemplateController::class, 'uploadImages'])->name('upload-images');
+	Route::post('/upload-multiple-files', [TemplateController::class, 'uploadMultipleImages'])->name('upload-multiple-files');
+
+
+	
 	Route::get('/preview-document/{document?}', [TemplateController::class, 'previewDocument'])->name('preview-document');
 
 	Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
@@ -163,6 +168,7 @@ Route::get("subscribe-now", function(){
 		Route::resource('lawyers', LawyerController::class);  
 		Route::resource('customers', CustomerController::class);  
 
+		Route::resource('pio', PioController::class);  
 		
 
 		Route::get('/update-page-section/{page_id}/{section_type}/{id?}', [TemplateController::class, 'getSectionPage'])->name('get-page-section');
@@ -205,8 +211,9 @@ Route::get("subscribe-now", function(){
 		Route::get('myrti/{application_no?}', [LawyerRtiController::class, 'myRti'])->name('lawyer.my-rti');
 		Route::get('draft-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.draft-rti');
 		Route::post('draft-rti/{application_no?}', [LawyerRtiController::class, 'processRTIApplication'])->name('lawyer.send-for-approval');
-		
+		Route::post('assign-courier/{revision_id?}', [LawyerRtiController::class, 'assignCourierTracking'])->name('lawyer.assign-courier');
 
+		
 		
 
 	});
@@ -224,9 +231,15 @@ Route::get("subscribe-now", function(){
 
 	Route::group(['middleware' => 'customer-auth'], function () {
 
+		Route::get('my-rtis/{application_no}', [FrontendCustomerController::class, 'myRti'])->name('my-rtis');
 		Route::post('change-password', [FrontendAuthController::class, 'changePassword'])->name('customer.change-password');
 		Route::get('my-rti/{application_no?}', [FrontendCustomerController::class, 'myRti'])->name('my-rti');
 		Route::post('approve-rti/{application_no?}', [FrontendCustomerController::class, 'approvedARTI'])->name('approve-rti');
+		Route::post('send-change-request/{request_id?}', [FrontendCustomerController::class, 'sendChangeRequest'])->name('send-change-request');
+
+		Route::get('download-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('customer.download-rti');
+
+		
 	});
 
 

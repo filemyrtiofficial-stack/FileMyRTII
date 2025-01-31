@@ -1,23 +1,18 @@
-<div>
- <style>
-    /* body {
-        height: 842px;
-        width: 595px;
-        margin-left: auto;
-        margin-right: auto;
+<style>
+  
+    .pdf-section {
         position: relative;
-    } */
-    .signature {
-        position: absolute;
-    right: 0px;
     }
-    .title {
+    .pdf-section .signature {
+       position: absolute;
+        right: 0px;
+    }
+    .pdf-section .title {
         text-align:center;
     }
-    /* .text-span {
-        display:none;
-    } */
+
 </style>
+<div class="pdf-section">
 
 
 <div class="title">
