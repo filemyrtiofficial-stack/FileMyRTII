@@ -107,22 +107,25 @@ class RtiApplication extends Model
 
     public static function draftedApplication( $data) {
         $revision = $data->lastRevision;
-        $field_data = json_decode($revision->details, true);
-        $html = $revision->serviceTemplate->template;
-        foreach($field_data as $key => $value) {
-            $html = str_replace("[".$key."]", $value, $html);
+        if($revision) {
+            $field_data = json_decode($revision->details, true);
+            $html = $revision->serviceTemplate->template;
+            foreach($field_data as $key => $value) {
+                $html = str_replace("[".$key."]", $value, $html);
+            }
+            $signature = "";
+
+            if(!empty($data->signature_image)) {
+
+                
+                        $signature = public_path($data->signature_image);
+                        $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
+            }
+
+            $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
+            return $html;
         }
-        $signature = "";
-
-        if(!empty($data->signature_image)) {
-
-            
-                    $signature = public_path($data->signature_image);
-                    $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
-        }
-
-        $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
-        return $html;
+        return "";
     }
 
     public function courierTracking()

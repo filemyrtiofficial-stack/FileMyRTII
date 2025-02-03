@@ -18,7 +18,7 @@ class TemplateController extends Controller
     public function __construct(TemplateInterface $templateRepository)
     {
         $this->templateRepository = $templateRepository;
-        $this->middleware(['can:Manage Pages']); 
+        $this->middleware(['can:Manage Pages'],['only' => ['destroy', 'index', 'update', 'edit', 'create', 'store']]); 
         $this->middleware(['can:Delete Pages'], ['only' => ['destroy']]); 
         $this->middleware(['can:Create Pages'], ['only' => ['create', 'store']]); 
         $this->middleware(['can:Edit Pages'], ['only' => ['edit', 'update']]); 

@@ -18,7 +18,7 @@
                     <div class="my_info">
                         <div class="profile">
                             <div class="profile_img">
-                                <img class="img-fluid" src="images/service-listing/profile-1.webp" alt="">
+                                <img class="img-fluid" src="{{asset('assets/rti/images/service-listing/profile-1.webp')}}" alt="">
                             </div>
                             <div class="profile_name">
                                 <div class="p_name">{{auth()->guard('customers')->user()->fullName}}</div>
@@ -38,7 +38,98 @@
                     </div>
                     <div class="my_application">
                         @foreach($list as $key => $item)
-                        <div class="application_card">
+                        <div class="application_card_wrap">
+                            <div class="application_card">
+                                <div class="card_header">RTI Application No: <span class="app_no">{{$item->application_no}}</span></div>
+                                <div class="card_body">
+                                    <div class="application_detail">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-9">
+                                                <div class="app_status">
+                                                    <ul class="app_date">
+                                                        <li class="heading">Application Date <span>:</span></li>
+                                                        <li>1{{Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</li>
+                                                    </ul>
+                                                    <ul class="app_date">
+                                                        <li class="heading">Status <span>:</span></li>
+                                                        <li>{{$item->payment_status == 'pending' ?  "Payment Pending" : "paid"}}</li> @if($item->payment_status == 'pending')<a class="theme-btn-link" href="javascript:void(0);">Delete</a>@endif
+                                                    </ul>
+                                                    <!-- to show and hide modal remove class active -->
+                                                    <div class="delete_modal active1">
+                                                        <div class="delete_modal_wrap">
+                                                            <div class="modal_body">
+                                                                <div class="confirm_icon">
+                                                                    <img class="img-fluid" src="images/dashboard/problem.webp" alt="">
+                                                                </div>
+                                                                <h5 class="heading">Are You Sure!</h5>
+                                                                <p>You won't be able to revert this RTI Application! Instead EDIT and SUBMIT</p>
+                                                               
+                                                            </div>
+                                                            <div class="modal_action">
+                                                                <a href="javascript:void(0);" class="theme-btn">Edit RTI</a>
+                                                                <a href="javascript:void(0);" class="theme-btn">Yes, Delete</a>
+                                                                <a href="javascript:void(0);" class="theme-btn">No, Cancel</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal_bg"></div>
+                                                    </div>
+                                                    <ul class="status_bar">
+                                                        <li @if($item->status >= 1)class="active" @endif>
+                                                            <div class="bar_item">
+                                                                <div class="number">
+                                                                    <div class="bar_icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="19" viewBox="0 0 26 19" fill="none">
+                                                                    <path d="M1.8 9.8001L9.2672 17.0001L24.2 2.6001" stroke="white" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <div class="bar_number">1</div>
+                                                                </div>
+                                                                <span>Started</span>
+                                                            </div>
+                                                        </li>
+                                                        <li @if($item->status >= 2)class="active" @endif>
+                                                            <div class="bar_item">
+                                                                <div class="number">
+                                                                    <div class="bar_icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="19" viewBox="0 0 26 19" fill="none">
+                                                                    <path d="M1.8 9.8001L9.2672 17.0001L24.2 2.6001" stroke="white" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <div class="bar_number">2</div>
+                                                                </div>
+                                                                <span>Approval</span>
+                                                            </div>
+                                                        </li>
+                                                        <li @if($item->status >= 3)class="active" @endif>
+                                                            <div class="bar_item">
+                                                                <div class="number">
+                                                                    <div class="bar_icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="19" viewBox="0 0 26 19" fill="none">
+                                                                    <path d="M1.8 9.8001L9.2672 17.0001L24.2 2.6001" stroke="white" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                    </div>
+                                                                    <div class="bar_number">3</div>
+                                                                </div>
+                                                                <span>Filed</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <div class="app_action">
+                                                    @if($item->payment_status == 'pending')
+                                                        <a class="theme-btn" href="javascript:void(0);">Pay Now</a>
+                                                    @endif
+                                                    <a class="theme-btn" href="{{route('my-rti', $item->application_no)}}">Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="application_card">
                             <div class="card_header">RTI Application No: <span class="app_no">{{$item->application_no}}</span></div>
                             <div class="card_body">
                                 <div class="application_detail">
@@ -71,7 +162,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         @endforeach
                     </div>
                 </div>

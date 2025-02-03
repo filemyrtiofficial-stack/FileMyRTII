@@ -282,6 +282,9 @@ class FrontendController extends Controller
 
     private function updateUser($request)
     {
+        if(auth()->guard('customers')->check()) {
+            return auth()->guard('customers')->id();
+        }
         $user = Customer::where(['email' => $request->email])->first();
         if (!$user) {
             $data = $request->only(['first_name', 'last_name', 'email', 'address', 'postal_code']);
