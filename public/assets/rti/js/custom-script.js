@@ -360,6 +360,18 @@
             $('#' + rti_id).addClass("active");
     
         });
+
+        $(document).on('click', ".close-rti-popup", function() {
+        
+            $(this).closest(".modal").removeClass("active");
+        });
+
+        $(document).on('click', '.tabings', function(e){
+            e.preventDefault();
+            let id = $(this).attr('href');
+            $(id).addClass('active').siblings().removeClass('active');
+    
+        })
 })(jQuery);
 
 

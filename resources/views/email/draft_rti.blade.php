@@ -1,4 +1,4 @@
-<p>Dear {{$data['first_name']}} {{$data['last_name']}} {{$data['application_no']}}</p>
+<p>Dear {{$data['first_name']}} {{$data['last_name']}} </p>
 <p>
 We are pleased to inform you that your RTI applictaion has been successfully drafted by our expert team. To proceed further, we kindly request you to review, approve, and sign the drafted application.
 </p>

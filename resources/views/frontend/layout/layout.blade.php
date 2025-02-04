@@ -46,7 +46,7 @@
 
 
     </main>
-    <div class="success_toast_msg">  
+    <div class="success_toast_msg @if(session()->has('success')) active @endif">  
             <div class="toast_content">
               <div class="toast_img_wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -55,7 +55,7 @@
               </div>
               <div class="message">
                 <span class="text text-1">Success</span>
-                <span class="text text-2 success-message">Your changes has been saved</span>
+                <span class="text text-2 success-message">@if(session()->has('success')) {{session()->get('success')}} @else Your changes has been saved @endif</span>
               </div>
             </div>
           </div>
@@ -129,6 +129,8 @@
                 $.each(error.responseJSON.errors, function(index, value) {
                     console.log(value)
                     _this.find('input[name='+index+']').parents().eq(0).append(
+                        `<span class="text-danger form-error-list">${value}</span>`);
+                    _this.find('textarea[name='+index+']').parents().eq(0).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
                 })
             }

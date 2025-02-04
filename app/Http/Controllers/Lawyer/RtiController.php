@@ -12,6 +12,8 @@ use Validator;
 use App\Models\RtiApplicationTracking;
 use Carbon\Carbon;
 use App\Models\ApplicationStatus;
+use App\Models\LawyerRtiQuery;
+use App\Models\Notification;
 
 class RtiController extends Controller
 {
@@ -93,9 +95,9 @@ class RtiController extends Controller
         return $pdf->stream();
     }
 
-    public function processRTIApplication(Request $request, $application_no) {
-        $application = RtiApplication::where(['application_no' => $application_no])->first();
-
+    public function processRTIApplication(Request $request, $application_id) {
+        $application = RtiApplication::where(['id' => $application_id])->first();
+        $application_no = $application->application_no;
         $input = $request->except(['_token', 'template_id']);
         RtiApplicationRevision::create([
             'application_id' =>  $application->id, 
@@ -135,6 +137,34 @@ class RtiController extends Controller
 
             }
             return response(['status' => 'success', 'message' => "Tracking details are successfully added"]);
+                
+                
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
+    }
+
+    public function sendQuery(Request $request, $application_id) {
+        $validator = Validator::make($request->all(), [
+            'message' => "required",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            
+            $data['application_id'] = $application_id;
+            $data['message'] = $request->message;
+            $data['from_user'] = "lawyer";
+            $data['to_user'] = "customer";
+
+            LawyerRtiQuery::create($data);
+            Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info"]);
+            $application = RtiApplication::where(['id' => $application_id])->first();
+            SendEmail::dispatch('filed-rti', $application);
+
+            return response(['status' => 'success', 'message' => "Requested Info is sended to user."]);
                 
                 
         } catch (\Throwable $th) {

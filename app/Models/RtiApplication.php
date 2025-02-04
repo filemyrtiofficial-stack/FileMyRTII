@@ -141,5 +141,16 @@ class RtiApplication extends Model
     }
 
 
+    public function lastRtiQuery()
+    {
+        return $this->hasOne(LawyerRtiQuery::class, 'application_id', 'id')->orderBy('id', 'desc');
+    }
+
+
+    public function rtiQueries()
+    {
+        return $this->hasMany(LawyerRtiQuery::class, 'application_id', 'id')->orderBy('id', 'desc');
+    }
+
 
 }

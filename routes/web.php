@@ -213,6 +213,7 @@ Route::get("subscribe-now", function(){
 		Route::post('draft-rti/{application_no?}', [LawyerRtiController::class, 'processRTIApplication'])->name('lawyer.send-for-approval');
 		Route::post('assign-courier/{revision_id?}', [LawyerRtiController::class, 'assignCourierTracking'])->name('lawyer.assign-courier');
 
+		Route::post('send-query/{application_id?}', [LawyerRtiController::class, 'sendQuery'])->name('lawyer.send-query');
 		
 		
 
@@ -246,6 +247,11 @@ Route::get("subscribe-now", function(){
 		
 		Route::post('customer-rti-delete', [FrontendCustomerController::class, 'customerRtiDelete'])->name('customer.rti.delete');
 		Route::post('/customer-pay', [FrontendCustomerController::class, 'customerpayAction'])->name('customer.pay.form');
+
+		
+		Route::post('send-reply-request/{request_id}', [FrontendCustomerController::class, 'sendReply'])->name('customer.send-reply-request');
+
+
 	});
 
 

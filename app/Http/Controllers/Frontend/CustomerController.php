@@ -15,7 +15,8 @@ use App\Models\RtiAppeal;
 use Carbon\Carbon;
 use App\Models\ApplicationStatus;
 use Razorpay\Api\Api;
-
+use App\Models\LawyerRtiQuery;
+use App\Models\Notification;
 class CustomerController extends Controller
 {
     public function myRti(Request $request, $application_no = null)
@@ -101,11 +102,11 @@ class CustomerController extends Controller
                         $validation_string .= "|after_or_equal:" . $fields['minimum_date'][$key];
                     }
                     if (isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
-                        $field_key = Str::slug($fields['dependency_date_field'][$key]);
+                        $field_key = getFieldName($fields['dependency_date_field'][$key]);
                         $validation_string .= "|after_or_equal:" . $request[$field_key];
                     }
                 }
-                $slug_key = str_replace('-', "_", Str::slug($fields['field_lable'][$key]));
+                $slug_key = getFieldName($fields['field_lable'][$key]);
                 if ($validation_string != '') {
                     $validation[$slug_key] =  $validation_string;
                 }
@@ -122,6 +123,7 @@ class CustomerController extends Controller
         if ($revision) {
             $data = $request->except(['_token']);
             $revision->update(['customer_change_request' => json_encode($data)]);
+            session()->flash("success", "Change request sended to lawyer");
             return response(['status' => 'success']);
         }
     }
@@ -166,37 +168,31 @@ class CustomerController extends Controller
             $data = $request->only(['appeal_no', 'reason', 'document', 'received_appeal']);
             $data['application_id'] = $application_id;
             $appeal = RtiAppeal::create($data);
-            if(!$application->lastRevision) {
-                $remove = ['id', 'created_at', 'updated_at', 'status'];
-                $application = $application->toArray();
-                $application = array_diff_key($application, array_flip($remove));
-                // unset($application['id']);
-                // unset($application['created_at']);
-                // unset($application['updated_at']);
-                // unset($application['status']);
-                $application['appeal_no'] = $request->appeal_no;
-                $application['application_id'] = $application_id;
-                RtiApplication::create($application);
-            }
-            else {
+          
+            if($application->lastRevision) {
                 $revision_data = [];
-                if( $data->lastRevision) {
+                if( $application->lastRevision) {
 
                     $service_field_data = [];
                     if(!empty($application->service_fields)) {
-                        $service_field_data = json_decode($data->service_fields, true);
-                        $service_field_data = [];
-                        if(!empty($data->service_fields)) {
-                            $service_field_data = json_decode($data->service_fields, true);
+                        $service_field_data = json_decode($application->service_fields, true);
+                        
+                    }
+                    $revision_data = json_decode($application->lastRevision->details, true);
+                    foreach($service_field_data['field_data'] ?? [] as  $key =>  $value) {
+                        $service_field_data['field_data'][$key] = $revision_data[$key];
+                        $service_field_data[$key] =$revision_data[$key];
+                    }
+                    foreach($service_field_data?? [] as  $key =>  $value) {
+                        if(isset($revision_data[$key])) {
+                        $service_field_data[$key] =$revision_data[$key];
+
                         }
                     }
-
-
-                    $columns = ['first_name', 'last_name', 'email', 'phone_number', 'address', 'pincode'];
-                    $additonal_fields = array_diff_key($revision_data, array_flip($remove));
-                    $revision_data = json_decode($data->lastRevision->details, true);
-                    $remove = ['id', 'created_at', 'updated_at', 'status'];
-                    $application = array_diff_key($post, array_flip($remove));
+                    
+                    $application = $application->toArray();
+                    $remove = ['id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
+                    $application = array_diff_key($application, array_flip($remove));
                     $application['first_name'] = $revision_data['first_name'];
                     $application['last_name'] = $revision_data['last_name'];
                     $application['email'] = $revision_data['email'];
@@ -204,19 +200,43 @@ class CustomerController extends Controller
                     $application['address'] = $revision_data['address'];
                     $application['postal_code'] = $revision_data['pincode'];
 
-                  
-
-
+                    $application['service_fields'] = json_encode($service_field_data);
                 }
                 
 
             }
-
+            else {
+                $application = $application->toArray();
+                $remove = ['id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
+                $application = array_diff_key($application, array_flip($remove));
+            }
+            $application['payment_status'] = 'pending';
+            $application['appeal_no'] = $request->appeal_no;
+            $application['application_id'] = $application_id;
+            RtiApplication::create($application);
             session()->flash('success', "Success");
             return response(['status' => 'success', 'message' =>  "Success"]);
         }
         return response(['status' => 'error', 'message' => "First appeal already applied"]);
 
         // 'application_id', 'appeal_no', 'reason', 'document', 'status'
+    }
+
+    public function sendReply(Request $request, $request_id) {
+        $validation = [
+            'reply' => "required",
+            
+        ];
+        $validator = Validator::make($request->all(),  $validation);
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $query = LawyerRtiQuery::where(['id' => $request_id])->first();
+        $query->update(['reply' => $request->reply, 'documents' => $request->documents, 'marked_read' => true]);
+        $documents = $query->rtiApplication->documents ?? [];
+        $documents = array_merge($documents, $request->documents);
+        $query->rtiApplication()->update(['documents'=> $documents]);
+        return response(['status' => 'success', 'message' => "Reply is successfully sended."]);
+
     }
 }

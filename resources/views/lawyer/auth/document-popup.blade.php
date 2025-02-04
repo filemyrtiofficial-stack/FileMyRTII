@@ -1,4 +1,4 @@
-@if(!empty($data->documents))
+
 <div class="upload_doc_modal modal" id="attachment-popup">
 
     <div class="upload_doc_modal_wrap">
@@ -14,7 +14,7 @@
             <div class="modal_area">
                 <div class="modal_left">
                     <ul>
-                        @foreach($data->documents as $key => $value)
+                        @foreach($data->documents ?? [] as $key => $value)
                         <li>
                             <a href="{{filePreview($value)}}" target="blank">
                                 <span class="list_icon">
@@ -32,8 +32,7 @@
                 </div>
             </div>
         </div>
-     
+      
     </div>
     <div class="modal_bg"></div>
 </div>
-@endif

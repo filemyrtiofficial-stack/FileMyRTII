@@ -13,9 +13,25 @@ class PioMaster extends Model
         $filter_data = $filters;
         unset($filters['ids']);
         $list = PioMaster::orderBy('id', 'desc');
+
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'address') {
+                        $list->where('address', 'like', '%'.$filter.'%');
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+
+
+        // if(!empty($filters)) {
+        //     $list->where($filters);
+        // }
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);
         }

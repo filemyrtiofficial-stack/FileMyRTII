@@ -1,5 +1,5 @@
 
-<form action="{{route('send-change-request', $data->lastRevision->id ?? '')}}" class="authentication" method="post">
+<form action="{{route('customer.send-reply-request',[$data->lastRtiQuery->id])}}" class="authentication query-request-form" method="post">
     @csrf
     
 
@@ -43,40 +43,35 @@
                 <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->pincode  ?? '')}}">
             </div>
     
-        @foreach($service_fields['field_type'] ?? [] as $key => $value)
-            @php
-                $field_key =  getFieldName($service_fields['field_lable'][$key]);
-            @endphp
-            @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer')
             <div class="form_item">
-                <label for="last_name">{{$service_fields['field_lable'][$key] ?? ''}} </label>
-                @if($value == 'textarea') 
-                    <textarea class="form_field" type="text" name="{{$field_key }}" id="{{$field_key }}" placeholder="" >{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}</textarea>
-                @elseif($value == 'date') 
-                <input class="form_field" type="date" name="{{$field_key }}" id="{{$field_key }}" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" placeholder="" @if(isset($service_fields['minimum_date'][$key]) && !empty($service_fields['minimum_date'][$key]))  min="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" @endif  @if(isset($service_fields['maximum_date'][$key]) && !empty($service_fields['maximum_date'][$key]))  max="{{$service_fields['maximum_date'][$key]}}" @endif>
-
-                @else
-
-                <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
-                @endif
-
-
-    
+                <label for="">Lawyer Query</label>
+                <textarea type="text"  class="form_field">{{($data->lastRtiQuery->message ?? '')}}</textarea>
             </div>
-            @endif
-        @endforeach
+            <div class="form_item">
+                <label for="">Enter Your Reply</label>
+                <textarea type="text" name="reply" class="form_field"></textarea>
+            </div>
         </div>
     
-    
+
+        <div class="upload_area">
+            <div class="upload_wrap">
+                <div class="icon_wrap">
+                    <img class="img-fluid" src="images/dashboard/upload-icon.webp" alt="">
+                </div>
+                <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile multiple-document-upload" type="file" name="file[]"  data-form="query-request-form" data-preview="query-request-form-preview" multiple></p>
+                <div class="upload_img_wrap"></div>
+                <input type="hidden" name="document" class="image-input" />
+
+            </div>
+        </div>
         
-        <div class="db_item_wrap">
-            <div class="note">
-                <p>Note: Please do only minor modification. We will generate your application and send it for approval.</p>
-            </div>
-        </div>
+        <div class="preview" id="query-request-form-preview"></div>
+
+        
         <div class="form_action_wrap">
             <div class="form_action">
-                <button type="submit" class="theme-btn"><span>Submit Edited Application</span></button>
+                <button type="submit" class="theme-btn"><span>Submit</span></button>
             </div>
         </div>
     </div>

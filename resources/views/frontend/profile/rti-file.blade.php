@@ -18,7 +18,7 @@
 }
 </style>
 
-<form action="{{route('lawyer.send-for-approval', $data->application_no)}}" class="draft-form authentication">
+<form action="{{route('lawyer.send-for-approval', $data->id)}}" class="draft-form authentication">
     @csrf
 <input type="hidden" name="template_id" value="{{$data->service->templates[0]['id'] ?? ''}}">
 
@@ -104,7 +104,7 @@
             </div>
         @endforeach
     </div>
-    <button class="send-for-approval">Send For Approval</button>
+    <button class="send-for-approval theme-btn">Send For Approval</button>
 </form>
 
 <div class="draft-rti-html">

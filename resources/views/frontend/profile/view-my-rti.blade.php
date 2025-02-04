@@ -30,7 +30,7 @@
     
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-3">
                 <div class="contact_faq_wrapper">
                     <ul class="contact_faq_list">
                         <li class="contact_faq_item">
@@ -53,12 +53,12 @@
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab5">Payment Info & Invoice</a>
                         </li>   
-                        @if(addDays(30, $data->created_at) <= Carbon\Carbon::now() && addDays(60, $data->created_at) > Carbon\Carbon::now())
-                    
+                        
                         <li class="contact_faq_item">
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab6">First Appeal</a>
                         </li>
+                        @if(addDays(30, $data->created_at) <= Carbon\Carbon::now() && addDays(60, $data->created_at) > Carbon\Carbon::now())
                         @endif
                         
                         <li class="contact_faq_item">
@@ -67,11 +67,17 @@
                         </li>
                         @if(addDays(60, $data->created_at) <= Carbon\Carbon::now())
                         @endif
+                        @if($data->lastRtiQuery && $data->lastRtiQuery->marked_read == 0)
+                        <li class="contact_faq_item">
+                            <span class="shape"></span>
+                            <a class="faq_list_item" href="#tab8">More Info Request</a>
+                        </li>
+                        @endif
                        
                     </ul>
                 </div>
             </div>
-            <div class="col-12 col-sm-8">
+            <div class="col-12 col-sm-9">
                 <div class="section_heading">
                     <h2>Application No: {{$data->application_no ?? ''}}</h2>
                 </div>
@@ -262,7 +268,7 @@
                                                 <div class="doc_content">Document(s) Attached to Application </div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn disabled1 rti-popup" href="javascript:void(0);" data-id="attachment-popup"><span>No Document</span></a>
+                                                <a class="theme-btn @if(empty($data->documents) || count($data->documents) == 0) disabled @else rti-popup @endif" href="javascript:void(0);" data-id="attachment-popup"><span>@if(empty($data->documents) || count($data->documents) == 0) No @endif Document</span></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -432,7 +438,17 @@
                                  
                                 </div>
                             </div>
-                    
+                            <div id="tab8" class="contact_faq_tab">
+                                <div class="contact_form">
+                                    <div class="contact_form_heading">
+                                        Lawyer Requested Info
+                                    </div>
+                                    <div>
+                                        @include('frontend.profile.tab-section.query-request')
+                                    </div>
+                                   
+                                </div>
+                            </div>
 
                             <div id="edit-request" class="contact_faq_tab">
                                 <div class="contact_form">
@@ -574,5 +590,43 @@
       $(document).on('click', '.delete-icon', function(){
         $(this).parents().eq(0).remove();
       });
+
+
+$(document).on('change', '.multiple-document-upload', function () {
+    let _this = $(this);
+    let form = $(this).attr('data-form');
+       let preview = $(this).attr('data-preview');
+        var data = new FormData($('.'+form)[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+        url: "{{route('upload-multiple-files')}}",
+        method: "POST",
+        data: data,
+        cache : false,
+        processData: false,
+        contentType: false,
+        dataType : 'json',
+        success : function(response){
+            $.each(response.data, function(index, value){
+
+               
+                $('#'+preview).append(`<div class="preview-item">
+                                                
+                                                    <a href="${value.path}" target="blank">
+                                                        <embed src="{{url('/')}}${value.file}" width="50" height="50" />
+                                                        <input hidden value="${value.file}" name="documents[]">
+                                                    </a>
+                                                    <button type="button" class="delete-icon"></button>
+                                                </div>`);
+            })
+
+        },
+        error : function(error) {}
+        });
+    });
 </script>
 @endpush
