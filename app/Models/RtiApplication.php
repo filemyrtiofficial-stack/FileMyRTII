@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\File;
+use PDF;
 
 class RtiApplication extends Model
 {
@@ -35,31 +37,27 @@ class RtiApplication extends Model
                 if ($filter != null) {
                     if ($key == 'email') {
                         $list->where('email', 'like', '%' . $filter . '%');
-                    }
-                    elseif ($key == 'search') {
-                        $list->where(function($query) use($filter){
-                            $query->where('application_no', 'like', "%".$filter."%")
-                            ->orwhere('first_name', 'like', "%".$filter."%")
-                            ->orwhere('last_name', 'like', "%".$filter."%")
-                            ->orwhere('email', 'like', "%".$filter."%")
-                            ->orwhere('phone_number', 'like', "%".$filter."%");
-
+                    } elseif ($key == 'search') {
+                        $list->where(function ($query) use ($filter) {
+                            $query->where('application_no', 'like', "%" . $filter . "%")
+                                ->orwhere('first_name', 'like', "%" . $filter . "%")
+                                ->orwhere('last_name', 'like', "%" . $filter . "%")
+                                ->orwhere('email', 'like', "%" . $filter . "%")
+                                ->orwhere('phone_number', 'like', "%" . $filter . "%");
                         });
-                    }
-                    elseif ($key == 'date') {
+                    } elseif ($key == 'date') {
                         $list->wheredate('created_at', $filter);
-                    }
-                    else {
+                    } else {
 
                         $list->where($key, $filter);
                     }
                 }
             }
         }
-       
+
         if (isset($filter_data['service_id']) && !empty($filter_data['service_id'])) {
-            $list->wherehas('service', function($query) use($filter_data){
-                $query->where('id',$filter_data['service_id']);
+            $list->wherehas('service', function ($query) use ($filter_data) {
+                $query->where('id', $filter_data['service_id']);
             });
         }
         if ($pagination) {
@@ -69,15 +67,16 @@ class RtiApplication extends Model
         }
     }
 
-    public static function get($id) {
-        
+    public static function get($id)
+    {
+
         return RtiApplication::find($id);
     }
 
-    public static function rtiNumberDetails($filter) {
-        
-        return RtiApplication::where($filter)->orderBy('appeal_no')->get();
+    public static function rtiNumberDetails($filter)
+    {
 
+        return RtiApplication::where($filter)->orderBy('appeal_no')->get();
     }
 
     public function service()
@@ -102,7 +101,7 @@ class RtiApplication extends Model
 
     public function getFullNameAttribute()
     {
-    	return $this->first_name." ".$this->last_name;
+        return $this->first_name . " " . $this->last_name;
     }
 
 
@@ -112,21 +111,22 @@ class RtiApplication extends Model
     }
 
 
-    public static function draftedApplication( $data) {
+    public static function draftedApplication($data)
+    {
         $revision = $data->lastRevision;
-        if($revision) {
+        if ($revision) {
             $field_data = json_decode($revision->details, true);
             $html = $revision->serviceTemplate->template;
-            foreach($field_data as $key => $value) {
-                $html = str_replace("[".$key."]", $value, $html);
+            foreach ($field_data as $key => $value) {
+                $html = str_replace("[" . $key . "]", $value, $html);
             }
             $signature = "";
 
-            if($data->signature_type != "manual" && !empty($data->signature_image)) {
+            if ($data->signature_type != "manual" && !empty($data->signature_image)) {
 
-                
-                        $signature = public_path($data->signature_image);
-                        $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
+
+                $signature = public_path($data->signature_image);
+                $signature = "data:image/png;base64," . base64_encode(file_get_contents($signature));
             }
 
             $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
@@ -140,7 +140,6 @@ class RtiApplication extends Model
         return $this->hasOne(RtiApplicationTracking::class, 'application_id', 'id');
     }
 
-
     public function lastRtiQuery()
     {
         return $this->hasOne(LawyerRtiQuery::class, 'application_id', 'id')->orderBy('id', 'desc');
@@ -151,6 +150,27 @@ class RtiApplication extends Model
     {
         return $this->hasMany(LawyerRtiQuery::class, 'application_id', 'id')->orderBy('id', 'desc');
     }
+    
+    public static function ApplicationPaymentInvoice($application,$fileName,$payment)
+    {
+       
 
+        if ($application) {
 
+           
+            $pdf = PDF::loadView('frontend.profile.application-payment-Invoice', compact('payment', 'application'));
+
+            
+
+            // Define the path to the public folder directly
+            $path = public_path('upload/pdf/' . $fileName);
+
+            // Save the PDF to the public folder using File class
+            File::put($path, $pdf->output());
+
+            // Return the URL to the saved file
+                $fileUrl = asset('pdfs/' . $fileName);
+            return   $fileUrl;
+        }
+    }
 }

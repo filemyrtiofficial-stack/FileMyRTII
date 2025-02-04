@@ -251,6 +251,8 @@ Route::get("subscribe-now", function(){
 		
 		Route::post('send-reply-request/{request_id}', [FrontendCustomerController::class, 'sendReply'])->name('customer.send-reply-request');
 
+		Route::get('payment-rti/{application_no?}', [FrontendCustomerController::class, 'paymentRti'])->name('customer.payment-rti');
+	
 
 	});
 

@@ -14,6 +14,7 @@
             <div class="modal_area">
                 <div class="modal_left">
                     <ul>
+                        @if($data->documents)
                         @foreach($data->documents as $key => $value)
                         <li>
                             <a href="{{filePreview($value)}}" target="blank">
@@ -23,6 +24,7 @@
                             </a>
                         </li>
                         @endforeach
+                        @endif
                       
                     </ul>
                 </div>
