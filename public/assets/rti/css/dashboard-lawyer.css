@@ -12,9 +12,9 @@
 .db_lawyer_wrap .modal_header .close {
     display: none;
 }
-.db_lawyer_wrap .modal_action_bottom .theme-btn:first-child {
+/* .db_lawyer_wrap .modal_action_bottom .theme-btn:first-child {
     display: none;
-}
+} */
 .db_lawyer_wrap .login .modal_action_bottom .login-btn {
     width: 50%;
 }
