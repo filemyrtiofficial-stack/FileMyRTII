@@ -227,6 +227,7 @@ Route::get("subscribe-now", function(){
 	Route::post('forgot-password', [FrontendAuthController::class, 'forgotPassword'])->name('customer.forgot-password');
 	Route::get('reset-password/{email}/{date}', [FrontendAuthController::class, 'resetPassword'])->name('customer.reset-password');
 	Route::post('update-password', [FrontendAuthController::class, 'updatePassword'])->name('customer.update-password');
+	
 
 
 	Route::group(['middleware' => 'customer-auth'], function () {
@@ -243,6 +244,8 @@ Route::get("subscribe-now", function(){
 
 
 		
+		Route::post('customer-rti-delete', [FrontendCustomerController::class, 'customerRtiDelete'])->name('customer.rti.delete');
+		Route::post('/customer-pay', [FrontendCustomerController::class, 'customerpayAction'])->name('customer.pay.form');
 	});
 
 

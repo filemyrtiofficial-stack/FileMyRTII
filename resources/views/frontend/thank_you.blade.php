@@ -47,7 +47,7 @@
                                         <p>We appreciate your initiative and encourage you to continue making 
                                             a positive impact through informed citizenship.</p>
                                     </div>
-                                    <a class="theme-btn" href="/"><span>Go to the Dashboard</span></a>
+                                    <a class="theme-btn" href="{{route('my-rti')}}"><span>Go to the Dashboard</span></a>
                             </div>
                         </div>
                     </div>
