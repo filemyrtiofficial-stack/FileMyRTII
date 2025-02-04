@@ -246,6 +246,9 @@ Route::get("subscribe-now", function(){
 		
 		Route::post('customer-rti-delete', [FrontendCustomerController::class, 'customerRtiDelete'])->name('customer.rti.delete');
 		Route::post('/customer-pay', [FrontendCustomerController::class, 'customerpayAction'])->name('customer.pay.form');
+		Route::get('payment-rti/{application_no?}', [FrontendCustomerController::class, 'paymentRti'])->name('customer.payment-rti');
+	
+
 	});
 
 

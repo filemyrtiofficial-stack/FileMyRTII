@@ -15,6 +15,9 @@ use App\Models\RtiAppeal;
 use Carbon\Carbon;
 use App\Models\ApplicationStatus;
 use Razorpay\Api\Api;
+use App\Models\Section;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class CustomerController extends Controller
 {
@@ -138,7 +141,7 @@ class CustomerController extends Controller
 
     public function customerpayAction(Request $request)
     {
-        $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
+        $rti = RtiApplication::where(['application_no' => $request->application_no, 'appeal_no' => $request->appeal_no])->first();
         $service_fields = json_decode($rti->service_fields, true);
         $service_fields['user_document'] =  $request->documents; //uploadFile($request, 'file', 'user_files');
         // print_r( $request->documents); die();
@@ -219,4 +222,20 @@ class CustomerController extends Controller
 
         // 'application_id', 'appeal_no', 'reason', 'document', 'status'
     }
+
+    public function paymentRti(Request $request, $application_id = null)
+    {
+        $application_id = decryptString($application_id);
+        $application = RtiApplication::get($application_id);
+        if($application) {
+
+            $payment = Setting::getSettingData('payment');
+         
+           $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
+           return view('frontend.profile.payment-rti', compact( 'payment','why_choose', 'application'));
+        }
+
+    }
+
+    
 }

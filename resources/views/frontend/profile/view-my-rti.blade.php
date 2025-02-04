@@ -285,7 +285,7 @@
                                                 <div class="doc_content">RTI Application Invoice</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn" href="javascript:void(0);"><span>Download Invoice</span></a>
+                                                <a class="theme-btn" href="{{route('customer.rti.application.payment.invoice', encryptString($item->id))}};" target="_blank" ><span>Download Invoice</span></a>
                                             </div>
                                         </li>
                                         <li class="rti_document_list">

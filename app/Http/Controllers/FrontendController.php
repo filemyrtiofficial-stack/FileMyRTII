@@ -341,7 +341,12 @@ class FrontendController extends Controller
                 }
             }
             ApplicationStatus::create(['status' => "confirmed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
+            
+            $payment = Setting::getSettingData('payment');
+            $fileName = 'invoice_' .$rti->application_no . '.pdf';
+            RtiApplication::ApplicationPaymentInvoice($rti,$fileName,$payment);
 
+            
             return view('frontend.thank_you', compact('rti', 'why_choose', 'footer_banner'));
             //return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
         } catch (\Throwable $th) {

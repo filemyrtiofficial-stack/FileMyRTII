@@ -123,7 +123,8 @@
                                     <div class="col-12 col-sm-3">
                                         <div class="app_action">
                                             @if($item->payment_status == 'pending')
-                                            <a class="theme-btn pay-now-form" href="javascript:void(0);" data-id="{{$item->application_no}}"  >Pay Now</a>
+                                            <!-- <a class="theme-btn pay-now-form" href="javascript:void(0);" data-id="{{$item->application_no}}"  >Pay Now</a> -->
+                                            <a class="theme-btn" href="{{route('customer.payment-rti', encryptString($item->id))}}"  >Pay Now </a>
                                             @endif
                                             <a class="theme-btn" href="{{route('my-rti', $item->application_no)}}">Details</a>
                                         </div>
