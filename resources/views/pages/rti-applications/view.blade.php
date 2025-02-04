@@ -180,7 +180,7 @@
                                         <div class="col-md-4">
                                             <div class="card-text pt-4"><h5 class="card-title"> {{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</h5></div>
                                         </div>
-                                        <div class="col-md-8 pt-4"> <div class="card-text"><h5 class="card-title">{{$field_data['field_data'][Illuminate\Support\Str::slug($fields['field_lable'][$key])]['value'] ?? ''}}</h5></div></div>
+                                        <div class="col-md-8 pt-4"> <div class="card-text"><h5 class="card-title">{{$field_data['field_data'][getFieldName($fields['field_lable'][$key])]['value'] ?? ''}}</h5></div></div>
                                     </div>
                                     <hr>
                                 @endforeach

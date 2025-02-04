@@ -982,3 +982,24 @@ function encryptString($string) {
 function decryptString($string) {
     return Illuminate\Support\Facades\Crypt::decryptString($string);
 }
+
+function addDays($day, $date) {
+    return Carbon\Carbon::parse($date)->addDays($day);
+}
+
+function getRtiDate($filter) {
+    $data = App\Models\ApplicationStatus::where($filter)->first();
+    if($data) {
+        return Carbon\Carbon::parse($data->date)->format('d/m/Y');
+    }
+    return "";
+}
+function getFieldName($field) {
+   $field = Illuminate\Support\Str::slug($field);
+   return str_replace("-", "_", $field);
+
+}
+
+function filePreview($file_name) {
+    return route('preview-document',Crypt::encryptString($file_name));
+}

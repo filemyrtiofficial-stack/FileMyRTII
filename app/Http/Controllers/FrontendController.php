@@ -26,6 +26,8 @@ use Session;
 use App\Models\Section;
 use App\Models\ServiceCategory;
 use App\Jobs\SendEmail;
+use App\Models\ApplicationStatus;
+use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
@@ -236,15 +238,15 @@ class FrontendController extends Controller
                             $validation_string .= "|after_or_equal:".$fields['minimum_date'][$key];
                         }
                         if(isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
-                            $field_key = Str::slug($fields['dependency_date_field'][$key]);
+                            $field_key = getFieldName($fields['dependency_date_field'][$key]);
                             $validation_string .= "|after_or_equal:".$request[$field_key];
                         }
                     }
                     if($validation_string != '') {
-                        $validation[Str::slug($fields['field_lable'][$key])] =  $validation_string;
+                        $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
 
                     }
-                    $slug_key = Str::slug($fields['field_lable'][$key]);
+                    $slug_key = getFieldName($fields['field_lable'][$key]);
                     $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
                 }
             }
@@ -276,6 +278,7 @@ class FrontendController extends Controller
             $service_fields = json_decode($rti->service_fields, true);
             $service_fields['user_document'] =  $request->documents; //uploadFile($request, 'file', 'user_files');
             $rti->update(['charges' => $request->charges, 'service_fields' => json_encode($service_fields), 'documents' => $request->documents]);
+            ApplicationStatus::create(['status' => "pending", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
             return response(['step' => 4, 'rti' => $rti, 'service_fields' => $service_fields]);
         }
     }
@@ -337,6 +340,8 @@ class FrontendController extends Controller
                     $footer_banner = json_decode($footer_banner->data, true);
                 }
             }
+            ApplicationStatus::create(['status' => "confirmed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
+
             return view('frontend.thank_you', compact('rti', 'why_choose', 'footer_banner'));
             //return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
         } catch (\Throwable $th) {

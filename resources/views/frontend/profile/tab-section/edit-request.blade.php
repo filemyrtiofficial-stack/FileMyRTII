@@ -45,20 +45,19 @@
     
         @foreach($service_fields['field_type'] ?? [] as $key => $value)
             @php
-                $field_key =  Illuminate\Support\Str::slug($service_fields['field_lable'][$key]);
-                $label_key = str_replace('-', '_',$field_key);
+                $field_key =  getFieldName($service_fields['field_lable'][$key]);
             @endphp
             @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer')
             <div class="form_item">
                 <label for="last_name">{{$service_fields['field_lable'][$key] ?? ''}} {{$service_fields['form_field_type'][$key]}}</label>
                 @if($value == 'textarea') 
-                    <textarea class="form_field" type="text" name="{{$label_key }}" id="{{$label_key }}" placeholder="" >{{$revision_data[$label_key ] ?? ( $fields[$field_key]['value'] ?? '')}}</textarea>
+                    <textarea class="form_field" type="text" name="{{$field_key }}" id="{{$field_key }}" placeholder="" >{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}</textarea>
                 @elseif($value == 'date') 
-                <input class="form_field" type="date" name="{{$label_key }}" id="{{$label_key }}" placeholder="" @if(isset($service_fields['minimum_date'][$key]) && !empty($service_fields['minimum_date'][$key]))  min="{{$revision_data[$label_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" @endif  @if(isset($service_fields['maximum_date'][$key]) && !empty($service_fields['maximum_date'][$key]))  max="{{$service_fields['maximum_date'][$key]}}" @endif>
+                <input class="form_field" type="date" name="{{$field_key }}" id="{{$field_key }}" placeholder="" @if(isset($service_fields['minimum_date'][$key]) && !empty($service_fields['minimum_date'][$key]))  min="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" @endif  @if(isset($service_fields['maximum_date'][$key]) && !empty($service_fields['maximum_date'][$key]))  max="{{$service_fields['maximum_date'][$key]}}" @endif>
 
                 @else
 
-                <input type="text" name="{{$label_key }}" class="form_field" value="{{$revision_data[$label_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
+                <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
                 @endif
 
 

@@ -10,6 +10,9 @@ use App\Models\RtiApplicationRevision;
 use PDF;
 use Validator;
 use App\Models\RtiApplicationTracking;
+use Carbon\Carbon;
+use App\Models\ApplicationStatus;
+
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
@@ -21,9 +24,15 @@ class RtiController extends Controller
         }
         else {
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);
-            $data = RtiApplication::list(false, $request->all());
+            // $data = RtiApplication::list(false, $request->all());
+            $data = RtiApplication::rtiNumberDetails($request->all());
+
             if(count($data) > 0) {
-                $data = $data[0] ?? [];
+                $data = $data[count($data)-1] ?? [];
+                $service_field_data = [];
+                if(!empty($data->service_fields)) {
+                    $service_field_data = json_decode($data->service_fields, true);
+                }
                 $service_fields = [];
                 if($data->service && !empty($data->service->fields)) {
                     $service_fields = json_decode($data->service->fields, true);
@@ -32,6 +41,13 @@ class RtiController extends Controller
                 if( $data->lastRevision) {
                     $revision_data = json_decode($data->lastRevision->details, true);
                 }
+                // print_r(($data->service_fields));
+                // foreach($service_field_data['field_data'] ?? [] as $key => $value) {
+                //     print_r($key);
+                // }
+                // print_r(json_encode($revision_data));
+                // echo '<br><br>';
+                // print_r(($service_field_data['field_data'] ?? []));die;
             }
             else {
                 abort(404);
@@ -56,7 +72,7 @@ class RtiController extends Controller
         }
         $signature = "";
 
-        if(!empty($data->signature_image)) {
+        if($data->signature_type != "manual" && !empty($data->signature_image)) {
 
             
                     $signature = public_path($data->signature_image);
@@ -75,7 +91,6 @@ class RtiController extends Controller
 
         $pdf = PDF::loadView('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
         return $pdf->stream();
-        return "tets";
     }
 
     public function processRTIApplication(Request $request, $application_no) {
@@ -90,7 +105,7 @@ class RtiController extends Controller
         $application->url = route('my-rti', $application_no);
         SendEmail::dispatch('draft-rti', $application);
 
-        return response(['status' => 'success', 'message' => "Application  Number : ".$application_no." is sent to user for approval."]);
+        return response(['status' => 'success', 'message' => "Application  Number : ".$application_no." is sent to user for approval.", 'clean' => false]);
 
     }
 
@@ -115,6 +130,9 @@ class RtiController extends Controller
                 $data['application_id'] = $revision->application_id;
                 $data['revision_id'] = $revision->id;
                 RtiApplicationTracking::create($data);
+                $revision->rtiApplication()->update(['status' => 3]);
+                ApplicationStatus::create(['status' => "filed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $revision->application_id]);
+
             }
             return response(['status' => 'success', 'message' => "Tracking details are successfully added"]);
                 

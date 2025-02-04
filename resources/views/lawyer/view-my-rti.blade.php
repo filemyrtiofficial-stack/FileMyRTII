@@ -1,6 +1,8 @@
 @extends('frontend.layout.layout')
 @push('style')
-<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
+<!-- <link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}"> -->
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-lawyer.css')}}">
+
 
 @endpush
 @section('content')
@@ -231,7 +233,12 @@
                                     <h2>Top queries</h2>
                                 </div>
                                 <div class="faq_item_wrap ">
+
+                                    @if(($data->lastRevision && empty($data->lastRevision->customer_change_request)) || $data->status < 2)
+                                    waiting or approval
+                                    @else
                                     @include('frontend.profile.rti-file')
+                                    @endif
                                 </div>
                             </div>
                             <div id="tab5" class="contact_faq_tab">

@@ -46,7 +46,7 @@
 
 
     </main>
-    <div class="success_toast_msg ">  
+    <div class="success_toast_msg">  
             <div class="toast_content">
               <div class="toast_img_wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -59,6 +59,21 @@
               </div>
             </div>
           </div>
+
+          <div class="error_toast_msg ">  
+            <div class="toast_content">
+              <div class="toast_img_wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M18.2396 23.2926L22.5431 27.8399L30.7196 19.1999M39.3596 23.9999C39.3596 32.483 32.4828 39.3599 23.9996 39.3599C15.5166 39.3599 8.63965 32.483 8.63965 23.9999C8.63965 15.5168 15.5166 8.63989 23.9996 8.63989C32.4828 8.63989 39.3596 15.5168 39.3596 23.9999Z" stroke="#0e9e32" stroke-width="2.88"/>
+                </svg>
+              </div>
+              <div class="message">
+                <span class="text text-1">Error</span>
+                <span class="text text-2 error-message">Your changes has been saved</span>
+              </div>
+            </div>
+          </div>
+
 
     @include('frontend.footer')
     <!-- <script src="js/jquery.min.js"></script> -->
@@ -92,7 +107,10 @@
                     }
                     else if(response.message) {
                         $('.success_toast_msg').addClass('active').find('.success-message').html(response.message);
-                        _this.find('input').val("");
+                        if(response.clean== undfined || response.clean != "false") {
+
+                            _this.find('input').val("");
+                        }
                         setTimeout(() => {
                             $('.success_toast_msg').removeClass('active');
 
@@ -102,6 +120,9 @@
 
                         window.location.reload();
                     }
+                  }
+                  else {
+                    $('.error_toast_msg').addClass('active').find('.error-message').html(response.message);
                   }
             },
             error: function(error) {

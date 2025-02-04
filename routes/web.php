@@ -239,6 +239,9 @@ Route::get("subscribe-now", function(){
 
 		Route::get('download-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('customer.download-rti');
 
+		Route::post('rti-appeal/{application_id?}', [FrontendCustomerController::class, 'rtiAppeal'])->name('rti-appeal');
+
+
 		
 	});
 

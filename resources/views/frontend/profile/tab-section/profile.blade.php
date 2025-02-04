@@ -4,37 +4,37 @@
         
         <div class="form_item">
             <label for="first_name">First Name</label>
-            <input type="text" name="first_name" class="form_field" value="{{$revision_data['first_name'] ?? ($data->first_name ?? '')}}">
+            <input type="text" name="first_name" class="form_field" value="{{$revision_data['first_name'] ?? ($data->first_name ?? '')}}" disabled>
 
         </div>
         <div class="form_item">
             <label for="last_name">Last Name</label>
-            <input type="text" name="last_name" class="form_field" value="{{$revision_data['last_name'] ?? ($data->last_name ?? '')}}">
+            <input type="text" name="last_name" class="form_field" value="{{$revision_data['last_name'] ?? ($data->last_name ?? '')}}" disabled>
         </div>
 
         <div class="form_item">
             <label for="">Email</label>
-            <input type="email" name="email" class="form_field" value="{{$revision_data['email'] ?? ($data->email ?? '')}}">
+            <input type="email" name="email" class="form_field" value="{{$revision_data['email'] ?? ($data->email ?? '')}}" disabled>
         </div>
         <div class="form_item">
             <label for="">Phone Number</label>
-            <input type="text" name="phone_number" class="form_field" value="{{$revision_data['phone_number'] ?? ($data->phone_number ?? '')}}">
+            <input type="text" name="phone_number" class="form_field" value="{{$revision_data['phone_number'] ?? ($data->phone_number ?? '')}}" disabled>
         </div>
         <div class="form_item">
             <label for="">Address</label>
-            <input type="text" name="address" class="form_field" value="{{$revision_data['address'] ?? ($data->address ?? '')}}">
+            <input type="text" name="address" class="form_field" value="{{$revision_data['address'] ?? ($data->address ?? '')}}" disabled>
         </div>
         <div class="form_item">
             <label for="">City</label>
-            <input type="text" name="city" class="form_field" value="{{$revision_data['city'] ?? ($data->city ?? '')}}">
+            <input type="text" name="city" class="form_field" value="{{$revision_data['city'] ?? ($data->city ?? '')}}" disabled>
         </div>
         <div class="form_item">
             <label for="">State</label>
-            <input type="text" name="state" class="form_field" value="{{$revision_data['state'] ?? ($data->state ?? '')}}">
+            <input type="text" name="state" class="form_field" value="{{$revision_data['state'] ?? ($data->state ?? '')}}" disabled>
         </div>
         <div class="form_item">
             <label for="">Pincode</label>
-            <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->pincode  ?? '')}}">
+            <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->pincode  ?? '')}}" disabled>
         </div>
     </div>
     <div class="db_item_wrap">

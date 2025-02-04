@@ -91,15 +91,14 @@
     
         @foreach($service_fields['field_type'] ?? [] as $key => $value)
             @php
-                $field_key =  Illuminate\Support\Str::slug($service_fields['field_lable'][$key]);
-                $label_key = str_replace('-', '_',$field_key);
+                $field_key =  getFieldName($service_fields['field_lable'][$key]);
             @endphp
     
             <div class="col-md-6">
                 <div class="form_item">
                     <label for="">{{$service_fields['field_lable'][$key] ?? ''}}</label>
                     <div>
-                        <input type="text" name="{{$label_key }}" class="form_field" value="{{$revision_data[$label_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
+                        <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
                     </div>
                 </div>
             </div>

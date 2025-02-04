@@ -352,4 +352,14 @@
         });
   
 
+
+
+
+        $(document).on('click', '.rti-popup', function(e) {
+            var rti_id = $(this).data('id');
+            $('#' + rti_id).addClass("active");
+    
+        });
 })(jQuery);
+
+

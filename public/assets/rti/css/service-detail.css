@@ -358,6 +358,369 @@
     flex: 0 0 auto;
     width: 1.14583vw;
 }
+.form_info .upload_file.preview-btn {
+
+    overflow: visible;
+
+}
+
+.form_info .upload_file.preview-btn .remove-file {
+
+    position: absolute;
+
+    color: #F00;
+
+    top: -10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    right: -6px;
+
+    width: 22px;
+
+    height: 22px;
+
+    text-align: center;
+
+    background: #fff;
+
+    border-radius: 50%;
+
+    -webkit-border-radius: 50%;
+
+    -moz-border-radius: 50%;
+
+    -ms-border-radius: 50%;
+
+    -o-border-radius: 50%;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.17);
+
+}
+
+.form_info .upload_file.preview-btn .upload-file-btn {
+
+    position: relative;
+
+    padding-left: 1.82292vw;
+
+}
+
+.form_info .upload_file.preview-btn .upload-file-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 5px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    -webkit-transform: translateY(-50%);
+
+    -moz-transform: translateY(-50%);
+
+    -ms-transform: translateY(-50%);
+
+    -o-transform: translateY(-50%);
+
+    background-image: url('data:image/svg+xml,<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="12" cy="12" r="2"></circle><path d="m21.9400024 11.6499634c-1.611206-4.0654907-5.5673217-6.7121582-9.9400024-6.6499634-4.3726807-.0621948-8.3287964 2.5844727-9.9400024 6.6499634-.0800171.2265015-.0800171.4735718 0 .7000122 1.611206 4.0654907 5.5673217 6.7121582 9.9400024 6.6500244 4.3726807.0621338 8.3287964-2.5845337 9.9400024-6.6500244.0800171-.2265015.0801392-.4735108 0-.7000122zm-9.9378051 4.3500366c-.0007325 0-.0014649 0-.0021973 0-2.2091675 0-4-1.7908936-4-4 0-2.2091675 1.7908325-4 4-4s4 1.7908325 4 4c.0006104 2.2084961-1.7892456 3.9993896-3.9978027 4z" fill="%23026cb6"></path></g></svg>');
+
+    background-position: center center;
+
+    background-size: contain;
+
+    width: 1.25vw;
+
+    height: 1.25vw;
+
+}
+
+.form_info .upload_file.upload_docs .theme-btn-link {
+
+    color: var(--theme-btn-color);
+
+    text-decoration: underline;
+
+}
+
+.upload_doc_modal {
+
+    /* position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%,-50%);
+
+    -webkit-transform: translate(-50%,-50%);
+
+    -moz-transform: translate(-50%,-50%);
+
+    -ms-transform: translate(-50%,-50%);
+
+    -o-transform: translate(-50%,-50%); */
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    left: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 11;
+
+    transition: all .4s;
+
+}
+
+.upload_doc_modal.active {
+
+    visibility: visible;
+
+    opacity: 1;
+
+}
+
+.upload_doc_modal .modal_header .close {
+
+    right: -15px;
+
+}
+
+.upload_doc_modal_wrap {
+
+    position: relative;
+
+    top: 0;
+
+    z-index: 11;
+
+    overflow-y: auto;
+
+    max-width: 52.08333vw;
+
+    width: 100%;
+
+    max-height: 600px;
+
+    background-color: var(--theme-white-color);
+
+    padding: 2.08333vw 3.125vw;
+
+}
+
+.upload_doc_modal .modal_area {
+
+    display: -webkit-box;
+
+    display: -moz-box;
+
+    display: -ms-flexbox;
+
+    display: -webkit-flex;
+
+    display: flex;
+
+    position: relative;
+
+    margin-bottom: 5.20833vw;
+
+    column-gap: 5.20833vw;
+
+}
+
+.upload_doc_modal .modal_area::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    -webkit-transform: translateX(-50%);
+
+    -moz-transform: translateX(-50%);
+
+    -ms-transform: translateX(-50%);
+
+    -o-transform: translateX(-50%);
+
+    top: 0;
+
+    width: 1px;
+
+    height: 100%;
+
+    background-color: var(--theme-text-color);
+
+    opacity: 0.5;
+
+}
+
+.upload_doc_modal .modal_area .modal_left,
+
+.upload_doc_modal .modal_area .modal_right {
+
+    flex: 0 0 auto;
+
+    width: calc(50% - (5.20833vw / 2));
+
+}
+
+.upload_doc_modal ul {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+.upload_doc_modal ul li + li {
+
+    margin-top: 20px;
+
+}
+
+.upload_doc_modal ul li a {
+
+    display: block;
+
+    font-size: 1.04167vw;
+
+    padding: 0.83333vw 1.66667vw;
+
+    background-color: #cde6f6;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    overflow: hidden;
+
+}
+
+.upload_doc_modal ul li a .list_icon {
+
+    width: 1.66667vw;
+
+    height: 1.66667vw;
+
+    display: inline-block;
+
+    margin-right: 0.83333vw;
+
+}
+
+.upload_doc_modal ul li a .list_icon svg {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+.upload_doc_modal .modal_action {
+
+    display: -webkit-box;
+
+    display: -moz-box;
+
+    display: -ms-flexbox;
+
+    display: -webkit-flex;
+
+    display: flex;
+
+    justify-content: center;
+
+    column-gap: 2.34375vw;
+
+}
+
+.upload_doc_modal .modal_action .theme-btn {
+
+    font-size: 1.25vw;
+
+}
+
+.upload_doc_modal .modal_action .theme-btn::before {
+
+    display: none;
+
+}
+
+.upload_doc_modal .modal_action .theme-btn:hover::before {
+
+    display: none;
+
+}
+
+.upload_doc_modal .modal_action .theme-btn:first-child {
+
+    border: 1px solid var(--theme-btn-color);
+
+    color: var(--theme-btn-color);
+
+    background-color: var(--theme-white-color);
+
+}
+
+.upload_doc_modal .modal_action .theme-btn:first-child:hover {
+
+    border: 1px solid var(--theme-btn-color);
+
+    background-color: var(--theme-white-color);
+
+}
+
+.upload_doc_modal .modal_action .theme-btn:last-child {
+
+    color: var(--theme-white-color);
+
+}
+
+.upload_doc_modal .modal_action .theme-btn:last-child:hover {
+
+    border: 1px solid var(--theme-btn-color);
+
+    background-color: var(--theme-btn-color);
+
+}
+
+.upload_doc_modal .modal_header .heading {
+
+    font-size: 1.45833vw;
+
+    font-weight: 700;
+
+    color: var(--theme-text-color);
+
+    text-transform: none;
+
+}
 .upload_file input[type=file],.upload_file input {
     position: absolute;
     left: 0;
@@ -607,7 +970,7 @@
 }
 /* service detail sidebar end */
 /* success message for form */
-.success_toast_msg {
+.success_toast_msg, .error_toast_msg {
     position: fixed;
     z-index: 999;
     top: 30%;
@@ -621,11 +984,11 @@
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
   }
   
-  .success_toast_msg .toast_content {
+  .success_toast_msg .toast_content,  .error_toast_msg .toast_content  {
     display: flex;
     align-items: center;
   }
-  .success_toast_msg.active {
+  .success_toast_msg.active ,   .error_toast_msg.active {
     transform: translateX(0%);
 }
   .toast_content .check {
@@ -652,6 +1015,10 @@
     font-size: 20px;
     font-weight: 600;
     color: #0e9e32;
+  }
+  .error_toast_msg .message .text.text-1  {
+
+    color: red;
   }
 /* success message for form end */
 
@@ -722,6 +1089,15 @@
     .form_info .upload-file-btn {
         font-size: 14px;
     }
+    .form_info .upload_file.preview-btn .remove-file {
+
+        width: 15px;
+
+        font-size: 10px;
+
+        height: 15px;
+
+    }
     .charge_list li {
         font-size: 14px;
     }
@@ -754,6 +1130,49 @@
     .thankyou_msg_detail p {
         font-size: 16px;
     }
+    .upload_doc_modal_wrap {
+
+        max-width: 600px;
+
+        width: 90%;
+
+    }
+
+    .upload_doc_modal .modal_header .heading {
+
+        font-size: 20px;
+
+    }
+
+    .upload_doc_modal ul li a .list_icon {
+
+        width: 20px;
+
+        height: 20px;
+
+        margin-right: 10px;
+
+    }
+
+    .upload_doc_modal ul li a {
+
+        font-size: 14px;
+
+        padding: 8px 14px;
+
+    }
+
+    .upload_doc_modal .modal_action .theme-btn {
+
+        font-size: 14px;
+
+    }
+
+    .upload_doc_modal ul li + li {
+
+        margin-top: 16px;
+
+    }
 }
 @media (max-width: 991px) {
     .form_tab_list li a .step {
@@ -762,6 +1181,20 @@
     }
     .form_item label {
         font-size: 14px;
+    }
+
+    .form_info .upload_file.preview-btn .upload-file-btn {
+
+        padding-left: 20px;
+
+    }
+
+    .form_info .upload_file.preview-btn .upload-file-btn::before {
+
+        width: 12px;
+
+        height: 12px;
+
     }
     .form_tab_list li a .title {
         font-size: 13px;
@@ -831,6 +1264,31 @@
     .form_info .upload-file-btn .plus_upload {
         width: 15px;
         height: 15px;
+    }
+    .form_info .upload_file.preview-btn .upload-file-btn {
+
+        padding-left: 25px;
+
+    }
+
+    .form_info .upload_file.preview-btn .upload-file-btn::before {
+
+        width: 16px;
+
+        height: 16px;
+
+    }
+
+    .form_info .upload_file.preview-btn .remove-file {
+
+        top: 0;
+
+        width: 20px;
+
+        height: 20px;
+
+        font-size: 13px;
+
     }
     .form_table_detail {
         overflow-y: hidden;
@@ -980,5 +1438,35 @@
     .thankyou_msg_detail,
     .thankyou_msg_detail p {
         margin-bottom: 20px;
+    }
+    .upload_doc_modal .modal_body {
+        padding-top: 0;
+    }
+    .upload_doc_modal_wrap {
+        padding: 20px;
+    }
+    .upload_doc_modal .modal_header .close {
+        width: 24px;
+        height: 24px;
+        right: 0;
+        top: 0;
+    }
+    .upload_doc_modal .modal_header .close svg {
+        width: 100%;
+        height: 100%;
+    }
+    .upload_doc_modal .modal_area {
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+    .upload_doc_modal .modal_area .modal_left,
+    .upload_doc_modal .modal_area .modal_right {
+        width: 100%;
+    }
+    .upload_doc_modal .modal_area .modal_right ul li:first-child {
+        margin-top: 16px;
+    }
+    .upload_doc_modal .modal_area::after {
+        display: none;
     }
 }
