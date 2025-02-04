@@ -342,8 +342,8 @@ class FrontendController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('PAYMENT_STORE_ERROR' . $th->getMessage());
-            // print_r(json_encode($th->getMessage()));
-            return response()->json(['success' => false, 'error' => 'Internal Server Error'], 500);
+            print_r(json_encode($th->getMessage()));
+            // return response()->json(['success' => false, 'error' => 'Internal Server Error', 'msg' => ], 500);
         }
     }
 
