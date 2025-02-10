@@ -11,6 +11,8 @@ use Validator;
 use Illuminate\Support\Str;
 use App\Models\ServiceData;
 use App\Models\RtiApplication;
+use App\Models\ApplicationCloseRequest;
+
 class ServiceController extends Controller
 {
     private ServiceRepository $serviceRepository;
@@ -330,6 +332,45 @@ class ServiceController extends Controller
 
     public function rtiApplicationTemplate() {
         return view('pages.service.template.index');
+    }
+
+    public function rticloserequestList(Request $request) {
+        // echo "hello";die('kkk');
+        $list = ApplicationCloseRequest::list(true, $request->all());
+        return view('pages.rti-applications.rticloserequest-list', compact('list'));
+        
+    }
+
+    public function approveLayerRequest($id,Request $request) {
+       
+        
+        $validator = Validator::make($request->all(), [
+            'message' => "required",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            
+       ;
+            $data['message'] = $request->message;
+            $data['status'] = 1;
+            ApplicationCloseRequest::where('id', $id)->update($data);
+            $close_data = ApplicationCloseRequest::where('id', $id)->get();
+            // print_r($close_data); die;
+            $rti_id = $request->application_id;
+            $data_rti['lawyer_id'] = 0;
+            RtiApplication::where('id', $rti_id)->update($data_rti);
+            session()->flash('success', 'Requested Info is sended to admin.');
+            return response(['status' => 'success', 'message' => ""]);
+                
+                
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
+        // return view('pages.rti-applications.rticloserequest-list', compact('list'));
+        
     }
 
 }

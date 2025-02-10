@@ -225,7 +225,7 @@
             </div>
             @endif
         @endif
-        @if(!empty($data->lawyer_id))
+        @if(!empty($data->lawyers))
         <div class="card mb-4">
             <div class="card-header list-header">
                 <h4>Assigned Lawyer</h4>
@@ -237,15 +237,29 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact No.</th>
+                           
 
                         </tr>
                     </thead>
                     <tbody>
+                     @php $count = 0;
+                     @endphp
+                        @foreach($data->lawyers as $lawyer)
                             <tr>
-                                <td>{{$data->lawyer->first_name}} {{$data->lawyer->last_name}}</td>
-                                <td>{{$data->lawyer->email}}</td>
-                                <td>{{$data->lawyer->phone}}</td>
+                          
+                                <td>
+                                    @if($count != 0)
+                                    <span style="color: red;"><b> X</b></span>
+                                    @endif
+                                    
+                                    {{$lawyer->first_name}} {{$lawyer->last_name}}</td>
+                                <td>{{$lawyer->email}}</td>
+                                <td>{{$lawyer->phone}}</td>
+                             
                             </tr>
+                            @php $count++;
+                            @endphp
+                            @endforeach
                     </tbody>
                 </table>
             </div>

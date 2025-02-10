@@ -1,3 +1,4 @@
+
 <div class="lawyer_req_info_modal modal" id="admin-request">
     <div class="lawyer_req_info_modal_wrap">
         <form action="{{route('lawyer.send-back-to-admin', $data->id)}}" class="authentication" method="post">
@@ -10,17 +11,22 @@
                         </svg>
                 </button>
             </div>
+         
             <div class="modal_body">
                 <div class="db_tab_form">
                     <div class="db_item_wrap single">
                         <div class="form_item">
-                            <textarea class="form_field" name="message" id="" required></textarea>
+                            <textarea class="form_field" name="message" id="" required  @if($data->closeRequest)           readonly  @endif >{{$data->closeRequest->message ?? ''}}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal_action">
-                <button class="theme-btn"><span>Send</span></button>
+            @if($data->closeRequest)   
+            <span style="color:red"> Requested has already been sent to admin. Please wait for approval.</span>
+            @else
+            <button class="theme-btn"><span>Send</span></button>
+            @endif
             </div>
         </form>
     </div>

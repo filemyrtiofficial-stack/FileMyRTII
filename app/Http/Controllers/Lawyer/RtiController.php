@@ -28,7 +28,7 @@ class RtiController extends Controller
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);
             // $data = RtiApplication::list(false, $request->all());
             $data = RtiApplication::rtiNumberDetails($request->all());
-
+ 
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];
                 $service_field_data = [];
@@ -43,13 +43,16 @@ class RtiController extends Controller
                 if( $data->lastRevision) {
                     $revision_data = json_decode($data->lastRevision->details, true);
                 }
-                // print_r(($data->service_fields));
+        //  echo "<pre>";    print_r(($data->id)); die;
+              $rti_id =  $data->id;
                 // foreach($service_field_data['field_data'] ?? [] as $key => $value) {
                 //     print_r($key);
                 // }
                 // print_r(json_encode($revision_data));
                 // echo '<br><br>';
                 // print_r(($service_field_data['field_data'] ?? []));die;
+                
+               
             }
             else {
                 abort(404);
@@ -188,7 +191,8 @@ class RtiController extends Controller
             $data['message'] = $request->message;
             $data['lawyer_id'] = auth()->guard('lawyers')->id();
             ApplicationCloseRequest::create($data);
-            return response(['status' => 'success', 'message' => "Requested Info is sended to admin."]);
+            session()->flash('success', 'Requested Info is sended to admin.');
+            return response(['status' => 'success', 'message' => ""]);
                 
                 
         } catch (\Throwable $th) {
