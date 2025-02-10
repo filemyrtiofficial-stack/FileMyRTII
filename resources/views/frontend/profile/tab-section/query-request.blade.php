@@ -1,5 +1,5 @@
 
-<form action="{{route('customer.send-reply-request',[$data->lastRtiQuery->id])}}" class="authentication query-request-form" method="post">
+<form action="{{route('customer.send-reply-request',[$data->lastRtiQuery->id ?? ''])}}" class="authentication query-request-form" method="post">
     @csrf
     
 

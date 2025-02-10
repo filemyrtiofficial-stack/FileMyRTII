@@ -311,7 +311,7 @@ class FrontendController extends Controller
 
     public function udpatePaymentSuccess(Request $request)
     {
-        $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
+        $rti = RtiApplication::where(['application_no' => $request->application_no,'appeal_no'=>$request->appeal_no])->first();
 
         DB::beginTransaction();
         try {
@@ -343,7 +343,7 @@ class FrontendController extends Controller
             ApplicationStatus::create(['status' => "confirmed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
             
             $payment = Setting::getSettingData('payment');
-            $fileName = 'invoice_' .$rti->application_no . '.pdf';
+            $fileName = 'invoice_' .$rti->application_no .'_appeal_no_'.$rti->appeal_no.'.pdf';
             RtiApplication::ApplicationPaymentInvoice($rti,$fileName,$payment);
 
             

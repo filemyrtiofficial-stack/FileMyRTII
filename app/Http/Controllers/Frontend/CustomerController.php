@@ -32,9 +32,10 @@ class CustomerController extends Controller
             $list = RtiApplication::list(true, $request->all());
             return view('frontend.profile.my-rti', compact('list', 'payment'));
         } else {
-            $request->merge(['user_id' => auth()->guard('customers')->id(), 'application_no' => $application_no]);
+            $request->merge(['user_id' => auth()->guard('customers')->id(), 'application_no' => $application_no,'appeal_no' => '0']);
             // $data = RtiApplication::list(false, $request->   all());
             $list = RtiApplication::rtiNumberDetails($request->all());
+             echo "<pre>"; print_r( $list ); die('hello');
             $data = $list;
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];
@@ -154,8 +155,11 @@ class CustomerController extends Controller
 
     public function rtiAppeal(Request $request, $application_id) {
         
+        
         $application = RtiApplication::find($application_id);
         $appeal = RtiAppeal::where(['appeal_no' => $request->appeal_no, 'application_id' => $application_id])->first();
+        
+        // dd( $appeal );
         if(!$appeal) {
             $validation = [
                 'appeal_no' => "required",
@@ -217,12 +221,15 @@ class CustomerController extends Controller
             $application['payment_status'] = 'pending';
             $application['appeal_no'] = $request->appeal_no;
             $application['application_id'] = $application_id;
-            RtiApplication::create($application);
+          $list_id =  RtiApplication::create($application);
+       
             session()->flash('success', "Success");
-            return response(['status' => 'success', 'message' =>  "Success"]);
+            $url= route('customer.payment-rti', encryptString($list_id->id));
+            // echo $list_id->id; die('hello');
+            return response(['status' => 'success', 'message' =>  "Success" ,'redirect'=> $url]);
         }
         return response(['status' => 'error', 'message' => "First appeal already applied"]);
-
+        // return redirect()->route('payment-rti',$list_id)->with('success', 'The record has been created successfully!');
         // 'application_id', 'appeal_no', 'reason', 'document', 'status'
     }
 

@@ -1,3 +1,4 @@
+@if($template)
 <div>
  <style>
     /* body {
@@ -25,7 +26,7 @@
     <p><strong>Application for Obtaining Information</strong></p>
 </div>
 
-{!! $template->template !!}
+{!! $template->template  !!}
 
 
 <div class="signature">
@@ -39,5 +40,5 @@
 
 
 </div>
-   
+   @endif
 

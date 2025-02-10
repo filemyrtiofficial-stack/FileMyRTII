@@ -202,6 +202,8 @@ $setting = App\Models\Setting::getSettingData('header-footer-setting');
 <form method="post" id="razorsubmission" action="{{route('update.payment.success')}}">
 @csrf
 <input type="hidden" class="" id="razor_order_number" name="application_no" value="{{$application->application_no}}">
+<!-- <input type="hidden" class="" id="appliction_id" name="appliction_id" value="{{$application->id}}"> -->
+<input type="hidden" class="" id="appeal_no" name="appeal_no" value="{{$application->appeal_no}}">
 </form>
 @endsection
 @push('js')
@@ -301,6 +303,8 @@ $(document).on('click', '.delete-icon', function(){
     function finalrayzorpayment(rti){
         
             $('#razor_order_number').val(rti.application_no);
+            // $('#appliction_id').val(rti.id);
+            $('#appeal_no').val(rti.appeal_no);
             var options = {
                 "key": "{{ env('RAZORPAY_KEY') }}", // rzp_live_ILgsfZCZoFIKMb
                 "amount": (rti.charges*100), // 2000 paise = INR 20

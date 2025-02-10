@@ -291,7 +291,7 @@
                                                 <div class="doc_content">RTI Application Invoice</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn" href="{{route('customer.rti.application.payment.invoice', encryptString($item->id))}};" target="_blank" ><span>Download Invoice</span></a>
+                                                <a class="theme-btn" href="{{asset('upload/pdf/'.'invoice_' .$data->application_no .'_appeal_no_0.pdf')}}" target="_blank" ><span>Download Invoice</span></a>
                                             </div>
                                         </li>
                                         <li class="rti_document_list">
@@ -300,7 +300,7 @@
                                                 <div class="doc_content">RTI First Appeal Invoice</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn" href="javascript:void(0);"><span>Download Invoice</span></a>
+                                                <a class="theme-btn" href="{{asset('upload/pdf/'.'invoice_' .$data->application_no .'_appeal_no_1.pdf')}}" target="_blank"><span>Download Invoice</span></a>
                                             </div>
                                         </li>
                                         <li class="rti_document_list">
@@ -309,7 +309,7 @@
                                                 <div class="doc_content">RTI Second Appeal Invoice</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn" href="javascript:void(0);"><span>Download Invoice</span></a>
+                                                <a class="theme-btn" href="{{asset('upload/pdf/'.'invoice_' .$data->application_no .'_appeal_no_2.pdf')}}" target="_blank"><span>Download Invoice</span></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -320,7 +320,7 @@
                                     <div class="db_tab_heading">
                                         <h2>First Appeal</h2>
                                     </div>
-                                    <form action="{{route('rti-appeal', $data->id)}}" class="authentication first-appeal-form " method="post">
+                                    <form action="{{route('rti-appeal', $data->id)}}" class="appeal-submit-form first-appeal-form" method="post">
                                         @csrf
                                         <input type="hidden" name="appeal_no" value="1">
                                         <div class="appeal_wrap">
@@ -381,8 +381,9 @@
                                     <div class="db_tab_heading">
                                         <h2>What is Second Appeal?</h2>
                                     </div>
-                                    <form action="{{route('rti-appeal', $data->id)}}" class="authentication second-appeal-form " method="post">
+                                    <form action="{{route('rti-appeal', $data->id)}}" class="appeal-submit-form second-appeal-form " method="post">
                                         @csrf
+                                        <input type="hidden" name="appeal_no" value="2">
                                         <div class="appeal_wrap">
                                             <div class="appeal_info">
                                                 <div class="appeal_heading">
@@ -549,6 +550,62 @@
 
 @push('js')
 <script>
+
+
+$(document).on('submit', '.appeal-submit-form', function(e){
+    e.preventDefault();
+let _this = $(this);
+$('.form-error-list').remove();
+var data = $(this).serialize();
+var action = $(this).attr('action');
+var method = $(this).attr('method');
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax({
+    url: action,
+    data: data,
+    type: 'post', // For jQuery < 1.9
+    dataType : 'json',
+    success: function(response) {
+          if(response.status == 'success') {
+            if(response.redirect) {
+                window.location.href = response.redirect;
+            }
+            else if(response.message) {
+                $('.success_toast_msg').addClass('active').find('.success-message').html(response.message);
+                if(response.clean== undfined || response.clean != "false") {
+
+                    _this.find('input').val("");
+                }
+                setTimeout(() => {
+                    $('.success_toast_msg').removeClass('active');
+
+                }, 2000);
+            }
+            else {
+
+                window.location.reload();
+            }
+          }
+          else {
+            $('.error_toast_msg').addClass('active').find('.error-message').html(response.message);
+          }
+    },
+    error: function(error) {
+        $.each(error.responseJSON.errors, function(index, value) {
+            console.log(value)
+            _this.find('input[name='+index+']').parents().eq(0).append(
+                `<span class="text-danger form-error-list">${value}</span>`);
+            _this.find('textarea[name='+index+']').parents().eq(0).append(
+                `<span class="text-danger form-error-list">${value}</span>`)
+        })
+    }
+});
+});
+
     $(document).on('click', '.tabings', function(e){
         e.preventDefault();
         let id = $(this).attr('href');
