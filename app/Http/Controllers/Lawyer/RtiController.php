@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use App\Models\ApplicationStatus;
 use App\Models\LawyerRtiQuery;
 use App\Models\Notification;
-
+use App\Models\ApplicationCloseRequest;
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
@@ -76,9 +76,9 @@ class RtiController extends Controller
 
         if($data->signature_type != "manual" && !empty($data->signature_image)) {
 
-            
-                    $signature = public_path($data->signature_image);
-                    $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
+    
+            $signature = public_path($data->signature_image);
+            $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
         }
 
 //         $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
@@ -171,6 +171,31 @@ class RtiController extends Controller
             return response(['errors' => $th->getMessage()], 500);
 
         }
+    }
+
+    public function sendBackToAdmin(Request $request, $application_id) {
+
+
+        $validator = Validator::make($request->all(), [
+            'message' => "required",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            
+            $data['application_id'] = $application_id;
+            $data['message'] = $request->message;
+            $data['lawyer_id'] = auth()->guard('lawyers')->id();
+            ApplicationCloseRequest::create($data);
+            return response(['status' => 'success', 'message' => "Requested Info is sended to admin."]);
+                
+                
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
+        
     }
 
 }

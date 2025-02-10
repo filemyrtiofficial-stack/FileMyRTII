@@ -1003,3 +1003,8 @@ function getFieldName($field) {
 function filePreview($file_name) {
     return route('preview-document',Crypt::encryptString($file_name));
 }
+
+
+function invoicePreviewPath($application_no, $appeal_no) {
+    return filePreview(asset('upload/pdf/'.'invoice_' .$application_no .'_appeal_no_'.$appeal_no.'.pdf'));
+}

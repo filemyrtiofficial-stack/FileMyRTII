@@ -311,7 +311,8 @@ class FrontendController extends Controller
 
     public function udpatePaymentSuccess(Request $request)
     {
-        $rti = RtiApplication::where(['application_no' => $request->application_no,'appeal_no'=>$request->appeal_no])->first();
+        $fillter_array = $request->only(['application_no', 'appeal_no']);
+        $rti = RtiApplication::where($fillter_array)->first();
 
         DB::beginTransaction();
         try {
@@ -352,8 +353,8 @@ class FrontendController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('PAYMENT_STORE_ERROR' . $th->getMessage());
-            print_r(json_encode($th->getMessage()));
-            // return response()->json(['success' => false, 'error' => 'Internal Server Error', 'msg' => ], 500);
+            // print_r(json_encode($th->getMessage()));
+            return response(['success' => false, 'error' => 'Internal Server Error', 'msg' => "error"], 500);
         }
     }
 

@@ -214,6 +214,8 @@ Route::get("subscribe-now", function(){
 		Route::post('assign-courier/{revision_id?}', [LawyerRtiController::class, 'assignCourierTracking'])->name('lawyer.assign-courier');
 
 		Route::post('send-query/{application_id?}', [LawyerRtiController::class, 'sendQuery'])->name('lawyer.send-query');
+		Route::post('send-back-to-admin/{application_id?}', [LawyerRtiController::class, 'sendBackToAdmin'])->name('lawyer.send-back-to-admin');
+		
 		
 		
 

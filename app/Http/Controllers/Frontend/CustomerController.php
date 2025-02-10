@@ -32,10 +32,10 @@ class CustomerController extends Controller
             $list = RtiApplication::list(true, $request->all());
             return view('frontend.profile.my-rti', compact('list', 'payment'));
         } else {
-            $request->merge(['user_id' => auth()->guard('customers')->id(), 'application_no' => $application_no,'appeal_no' => '0']);
+            $request->merge(['user_id' => auth()->guard('customers')->id(), 'application_no' => $application_no]);
             // $data = RtiApplication::list(false, $request->   all());
             $list = RtiApplication::rtiNumberDetails($request->all());
-             echo "<pre>"; print_r( $list ); die('hello');
+            //  echo "<pre>"; print_r( $list ); die('hello');
             $data = $list;
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];

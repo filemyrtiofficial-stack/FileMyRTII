@@ -340,7 +340,6 @@ class TemplateController extends Controller
     }
 
     public function previewDocument($string) {
-        // print_r(Crypt::decryptString($string));
         $string = Crypt::decryptString($string);
         return view('preview-document', compact('string'));
     }

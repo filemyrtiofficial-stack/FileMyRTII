@@ -128,7 +128,7 @@
                                                     <div class="tab_action_bottom">
                                                         <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="lawyer-request"><span>More Information Required</span></a>
                                                         <a class="theme-btn tabings" href="#tab4"><span>Draft This Application</span></a>
-                                                        <a href="javascript:void(0);" class="theme-btn"><span>Send Back To Admin</span></a>
+                                                        <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="admin-request"><span>Send Back To Admin</span></a>
                                                     </div>
                                                     <!-- for disabled modal remove class active -->
                                                     <div class="lawyer_req_info_modal active1">
@@ -332,6 +332,8 @@
     </div>
 </section>
 @include('lawyer.auth.lawyer-request')
+@include('lawyer.auth.admin-request')
+
 @include('lawyer.auth.document-popup')
 
 @endsection
