@@ -329,7 +329,7 @@ class FrontendController extends Controller
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
             $payment = $api->payment->fetch($paymentResponse['razorpay_payment_id']);
             $response = $payment->capture(['amount' => $payment['amount']]);
-            $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => json_encode($response), 'status' => 2, 'payment_status' => 'paid']);
+            $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => json_encode($response), 'status' => 1, 'payment_status' => 'paid']);
 
             Session::flash('success', 'Payment Successful');
             DB::commit();

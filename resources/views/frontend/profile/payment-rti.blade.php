@@ -1,187 +1,193 @@
 @extends('frontend.layout.layout')
+@push('style')
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
 
+@endpush
 @section('content')
 <style>
     .hide {
-        display: none;
+        display:none;
     }
 </style>
 <?php
-$setting = App\Models\Setting::getSettingData('header-footer-setting');
+    $setting = App\Models\Setting::getSettingData('header-footer-setting');
 
 ?>
 <header class="breadcrumb_banner bg_none">
-    <img class="img-fluid bg_img" src="images/about-us/about-banner.webp" alt="about us banner">
-    <div class="container">
-        <div class="row banner_row">
-            <div class="col-12 col-sm-12">
-                <div class="breadcrumb">
-                    <ol>
-                        <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                        <li class="fs-24"><a href="javascript:void(0);">{{$application->serviceCategory->name ?? ''}}</a></li>
-                        <li class="fs-24 active">{{$application->service->name ?? 'Custom Request'}}</li>
-                    </ol>
+            <img class="img-fluid bg_img" src="images/about-us/about-banner.webp" alt="about us banner">
+                <div class="container">
+                    <div class="row banner_row">
+                        <div class="col-12 col-sm-12">
+                            <div class="breadcrumb">
+                               <ol>
+                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
+                                <li class="fs-24"><a href="javascript:void(0);">{{$application->serviceCategory->name ?? ''}}</a></li>
+                                <li class="fs-24 active">{{$application->service->name ?? 'Custom Request'}}</li>
+                               </ol>
+                            </div>
+                            <div class="breadcrumb_heading">
+                                <h1 class="title fs-72">Service Detail</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="breadcrumb_heading">
-                    <h1 class="title fs-72">Service Detail</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+        </header>
 
-<section class="serviceform_section">
-    <div class="container">
-        <div class="row service-form-row">
-            <div class="col-12 col-sm-9">
-                <div class="thankyou_msg_wrap">
-                    <div class="thankyou_msg">
-                        <form action="{{route('customer.pay.form')}}" class="service-form" method="post">
-                            <div class="form_table">
-                                <div class="form_info">
-                                        @if($application->appeal_no == 1)
-                                        <div>First Appeal</div>
-                                        @elseif($application->appeal_no == 2)
-                                        <div>Second Appeal</div>
-
-                                        @endif
-                                        
-
-                                    @csrf
-                                    <input type="hidden" id="step_no" name="step_no" value="3">
-
+        <section class="serviceform_section">
+            <div class="container">
+                <div class="row service-form-row">
+                    <div class="col-12 col-sm-9">
+                        <div class="service_form">
+                            <form action="{{route('customer.pay.form')}}" class="service-form" method="post">
+                                @csrf
+                           
                                     <input type="hidden" id="application_no" name="application_no" value="{{$application->application_no}}">
                                     <input type="hidden" id="appeal_no" name="appeal_no" value="{{$application->appeal_no}}">
 
-                                    <div class="form_number">RTI Application No: <span id="application_number">{{$application->application_no}}</span></div>
-                                    <div class="upload_file" id="upload_file-section">
-                                        <button class="upload-file-btn">Upload File <span>+</span></button>
-                                        <input type="file" name="file[]" id="document-upload" multiple />
+                                <div>
 
-                                    </div>
-                                    <div class="upload_file hide" id="preview-section">
-                                        <a class="upload-file-btn" target="blank">Preview </a>
-                                        <span class="remove-file">X</span>
+                                    
+                                    <div class="form_row form_step_3 ">
+                                        
+                                        <div class="form_table">
+                                            <div class="form_info">
+                                                <div class="form_number"> @if($application->appeal_no == 1)
+                                           First Appeal Payment To 
+                                            @elseif($application->appeal_no == 2)
+                                           Second Appeal Payment To 
+    
+                                            @endif RTI Application No: <span id="application_number">{{$application->application_no}}</span></div>
+                                                <div class="upload_file" id="upload_file-section">
+                                                    <button class="upload-file-btn">Upload File <span>+</span></button>
+                                                    <input type="file" name="file[]" id="document-upload" multiple/>
+                                                    
+                                                </div>
+                                                <div class="upload_file hide" id="preview-section">
+                                                    <a class="upload-file-btn" target="blank">Preview </a>
+                                                    <span class="remove-file">X</span>
+                                                    
+                                                </div>
 
-                                    </div>
-
-
-                                    <input type="hidden" name="document" class="image-input" />
-                                </div>
-                                <div class="preview" id="preview">
-
-                                </div>
-                                <div class="form_table_detail">
-                                    @if(isset($payment) && isset($payment['amount_type']))
-                                    @foreach($payment['amount_type'] as $key => $value)
-                                    <ul class="charge_list">
-                                        <li>{{$payment['amount_type'][$key] ?? ''}}</li>
-                                        <li>₹ {{$payment['amount'][$key] ?? ''}}</li>
-                                        <li>
-                                            <span class="check_icon_wrapper">
-                                                @if($payment['basic'][$key] == 'yes')
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
-                                                @else
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
-                                                @endif
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="check_icon_wrapper">
-                                                @if($payment['advance'][$key] == 'yes')
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
-                                                @else
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
-                                                @endif
-                                            </span>
-                                        </li>
-                                    </ul>
-                                    @endforeach
-                                    @endif
-
-                                    <ul class="charge_list option_list">
-                                        <li>Choose An Option</li>
-                                        <li>
-                                            <div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div>
-                                        </li>
-                                        <li>
-                                            <div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="form_action_wrap">
-                                    <div class="form_action">
-                                        <div class="payment_icon">
-                                            <div class="razorpay">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/razorpay.webp')}}" alt="razorpay icon">
+                                               
+                                                <input type="hidden" name="document" class="image-input" />
                                             </div>
-                                            <div class="visa">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/visa.webp')}}" alt="visa icon">
+                                            <div class="preview" id="preview">
+
                                             </div>
-                                            <div class="paytm">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/paytm.webp')}}" alt="paytm icon">
+                                            <!-- <a href="" class="hide" id="preview-dodument" target="blank">Preview</a> -->
+                                            <div class="form_table_detail">
+                                            @if(isset($payment) && isset($payment['amount_type']))
+                                                @foreach($payment['amount_type'] as $key =>  $value)
+                                                    <ul class="charge_list">
+                                                        <li>{{$payment['amount_type'][$key] ?? ''}}</li>
+                                                        <li>₹ {{$payment['amount'][$key] ?? ''}}</li>
+                                                        <li>
+                                                            <span class="check_icon_wrapper">
+                                                                @if($payment['basic'][$key] == 'yes')
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
+                                                                @else
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
+                                                                @endif
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="check_icon_wrapper">
+                                                                @if($payment['advance'][$key] == 'yes')
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
+                                                                @else
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
+                                                                @endif
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                @endforeach
+                                            @endif
+                                               
+                                                <ul class="charge_list option_list">
+                                                    <li>Choose An Option</li>
+                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
+                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
+                                                </ul>
                                             </div>
-                                            <div class="mastercard">
-                                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/master-card.webp')}}" alt="mastercard icon">
+                                            <div class="form_action_wrap">
+                                                <div class="form_action">
+                                                    <div class="payment_icon">
+                                                        <div class="razorpay">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/razorpay.webp')}}" alt="razorpay icon">
+                                                        </div>
+                                                        <div class="visa">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/visa.webp')}}" alt="visa icon">
+                                                        </div>
+                                                        <div class="paytm">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/paytm.webp')}}" alt="paytm icon">
+                                                        </div>
+                                                        <div class="mastercard">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/master-card.webp')}}" alt="mastercard icon">
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="theme-btn"><span>Pay Now</span></button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="theme-btn"><span>Pay Now</span></button>
-                                    </div>
+
                                 </div>
+                                    
+                                </div>
+                             
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="service_sidebar">
+                            <div class="title">
+                                <h3>Why Choose File My RTI?</h3>
                             </div>
-
-
-                        </form>
+                            <ul class="sidebar_list">
+                                @foreach($why_choose as $item)
+                                <?php
+                                    
+                                    $item_data = json_decode($item->data, true);
+                                    ?>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset($item_data['image'] ?? '')}}" alt="profile icon">
+                                    </span>
+                                    <span class="list_content"><strong>{{$item_data['title'] ?? ''}}</strong> - {{$item_data['description'] ?? ''}}</span>
+                                </li>
+                                @endforeach
+                                
+                            </ul>
+                            <ul class="support_list">
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/call-support.png')}}" alt="call support icon">
+                                    </span>
+                                    <span class="list_content">Support Team:</span>
+                                </li>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/phone-icon.webp')}}" alt="phone icon">
+                                    </span>
+                                    <span class="list_content">Phone No: {{$setting['contact_no'] ?? ''}}</span>
+                                </li>
+                                <li>
+                                    <span class="list_icon">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/mail-icon.webp')}}" alt="mail icon">
+                                    </span>
+                                    <span class="list_content">Email: {{$setting['email'] ?? ''}}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-3">
-                <div class="service_sidebar">
-                    <div class="title">
-                        <h3>Why Choose File My RTI?</h3>
-                    </div>
-                    <ul class="sidebar_list">
-                        @foreach($why_choose as $item)
-                        <?php
-
-                        $item_data = json_decode($item->data, true);
-                        ?>
-                        <li>
-                            <span class="list_icon">
-                                <img class="img-fluid" src="{{asset($item_data['image'] ?? '')}}" alt="profile icon">
-                            </span>
-                            <span class="list_content"><strong>{{$item_data['title'] ?? ''}}</strong> - {{$item_data['description'] ?? ''}}</span>
-                        </li>
-                        @endforeach
-
-                    </ul>
-                    <ul class="support_list">
-                        <li>
-                            <span class="list_icon">
-                                <img class="img-fluid" src="{{asset('assets/rti/images/call-support.png')}}" alt="call support icon">
-                            </span>
-                            <span class="list_content">Support Team:</span>
-                        </li>
-                        <li>
-                            <span class="list_icon">
-                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/phone-icon.webp')}}" alt="phone icon">
-                            </span>
-                            <span class="list_content">Phone No: {{$setting['contact_no'] ?? ''}}</span>
-                        </li>
-                        <li>
-                            <span class="list_icon">
-                                <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/mail-icon.webp')}}" alt="mail icon">
-                            </span>
-                            <span class="list_content">Email: {{$setting['email'] ?? ''}}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
 
+     
+
+
+       
 
 @if(!empty($footer_banner))
 <section class="cta_section">

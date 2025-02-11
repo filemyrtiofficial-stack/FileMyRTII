@@ -163,9 +163,10 @@ class CustomerController extends Controller
         
         $application = RtiApplication::find($application_id);
         $appeal = RtiAppeal::where(['appeal_no' => $request->appeal_no, 'application_id' => $application_id])->first();
+        $applications = RtiApplication::list(false, ['application_no' => $application->application_no, 'appeal_no' => $request->appeal_no]);
         
         // dd( $appeal );
-        if(!$appeal) {
+        // if(count($applications) > 0) {
             $validation = [
                 'appeal_no' => "required",
                 'reason' => "required",
@@ -185,6 +186,7 @@ class CustomerController extends Controller
             if(!$appeal) {
                 $appeal = RtiAppeal::create($data);
             }
+           
           
             if($application->lastRevision) {
                 $revision_data = [];
@@ -208,7 +210,7 @@ class CustomerController extends Controller
                     }
                     
                     $application = $application->toArray();
-                    $remove = ['id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
+                    $remove = ['charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
                     $application = array_diff_key($application, array_flip($remove));
                     $application['first_name'] = $revision_data['first_name'];
                     $application['last_name'] = $revision_data['last_name'];
@@ -224,20 +226,22 @@ class CustomerController extends Controller
             }
             else {
                 $application = $application->toArray();
-                $remove = ['id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
+                $remove = ['charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
                 $application = array_diff_key($application, array_flip($remove));
             }
             $application['payment_status'] = 'pending';
             $application['appeal_no'] = $request->appeal_no;
             $application['application_id'] = $application_id;
+            $application['status'] = 1 ;
+
           $list_id =  RtiApplication::create($application);
        
             session()->flash('success', "Success");
             $url= route('customer.payment-rti', encryptString($list_id->id));
             // echo $list_id->id; die('hello');
             return response(['status' => 'success', 'message' =>  "Success" ,'redirect'=> $url]);
-        }
-        return response(['status' => 'error', 'message' => "First appeal already applied"]);
+        // }
+        // return response(['status' => 'error', 'message' => "First appeal already applied"]);
         // return redirect()->route('payment-rti',$list_id)->with('success', 'The record has been created successfully!');
         // 'application_id', 'appeal_no', 'reason', 'document', 'status'
     }

@@ -232,7 +232,7 @@
                                                         <h4>Lawyer Requested Info</h4>
                                                     </div>
                                                     <div class="info_body info_scroll">
-                                                        @foreach(notifictaionList() as $item => $value)
+                                                        @foreach(notifictaionList(['linkable_id' => $data->id]) as $item => $value)
                                                         <div class="info_msg_wrap">
                                                             <div class="info_requested">{{$value->message}}</div>
                                                             <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->

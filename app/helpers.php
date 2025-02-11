@@ -13,6 +13,8 @@ function commonStatus() {
         ];
 }
 
+
+
 function formAdditionalFields() {
     return [
         'customer' => [
@@ -1038,8 +1040,8 @@ function rtiPersonalDetailFields() {
     ];
 }
 
-function notifictaionList() {
-    return App\Models\Notification::orderBy('id', 'desc')->get();
+function notifictaionList($filter) {
+    return App\Models\Notification::where($filter)->orderBy('id', 'desc')->get();
 }
 function applicationCloseRequestsStatus() {
     return [

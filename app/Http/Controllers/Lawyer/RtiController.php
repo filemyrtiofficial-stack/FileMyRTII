@@ -46,7 +46,6 @@ class RtiController extends Controller
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);
             // $data = RtiApplication::list(false, $request->all());
             $data = RtiApplication::rtiNumberDetails($request->all());
- 
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];
                 $service_field_data = [];
@@ -65,6 +64,8 @@ class RtiController extends Controller
                     $change_request =  json_decode($data->lastRevision->customer_change_request, true);
                 }
                 $html = RtiApplication::draftedApplication($data);
+            // print_r(json_encode($data ));die;
+
                 // print_r(($service_field_data));
         //  echo "<pre>";    print_r(($data->id)); die;
               $rti_id =  $data->id;
