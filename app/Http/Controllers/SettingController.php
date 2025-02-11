@@ -29,7 +29,9 @@ class SettingController extends Controller
     public function index($type = null)
     {
         $data = Setting::getSettingData($type);
-        return view('pages.setting.'.$type, compact('data', 'type'));
+        $first_appeal_payment = Setting::getSettingData('first_appeal_payment');
+        $second_appeal_payment = Setting::getSettingData('second_appeal_payment');
+        return view('pages.setting.'.$type, compact('data', 'type','first_appeal_payment','second_appeal_payment'));
     }
 
     /**
@@ -121,5 +123,44 @@ class SettingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeFirstAppealPayment(Request $request)
+    {
+
+        if($request->type == 'first_appeal_payment') {
+            $validator = Validator::make($request->all(), [
+                'amount_type.*' => "required",
+                'amount.*' => "required|numeric",
+                'basic.*' => "required",
+                'advance.*' => "required",
+
+            ]);
+        }
+       else if($request->type == 'second_appeal_payment') {
+            $validator = Validator::make($request->all(), [
+                'amount_type.*' => "required",
+                'amount.*' => "required|numeric",
+                'basic.*' => "required",
+                'advance.*' => "required",
+
+            ]);
+        }
+        else {
+
+            $validator = Validator::make($request->all(), [
+                'primary_logo' => "required",
+                'secondary_logo' => "required",
+                'footer_logo_tagline' => "required",
+                'address' => "required",
+                'email' => "required",
+                'contact_no' => "required"
+            ]);
+        }
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $this->settingRepository->store($request);
+        return $data;
     }
 }
