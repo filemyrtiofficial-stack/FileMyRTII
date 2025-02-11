@@ -263,10 +263,21 @@ class CustomerController extends Controller
     {
         $application_id = decryptString($application_id);
         $application = RtiApplication::get($application_id);
+        // echo $application->appeal_no;
+        // $payment = Setting::getSettingData('first_appeal_payment');
+        // print_r($payment);
+        //  die;
         if($application) {
 
+            if($application->appeal_no == 1){
+            $payment = Setting::getSettingData('first_appeal_payment');
+            }
+            else if($application->appeal_no == 2){
+            $payment = Setting::getSettingData('second_appeal_payment');
+            }
+            else{
             $payment = Setting::getSettingData('payment');
-            // print_r(json_encode($payment));die;
+            }
          
            $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
            return view('frontend.profile.payment-rti', compact( 'payment','why_choose', 'application'));

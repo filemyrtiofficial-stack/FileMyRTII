@@ -198,6 +198,7 @@ Route::get("subscribe-now", function(){
 
 		Route::get('/settings/{type?}', [SettingController::class, 'index'])->name('settings.index');
 		Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
+		Route::post('/settings/firstappealpayment', [SettingController::class, 'storeFirstAppealPayment'])->name('settings.store.firstappealpayment');
 
 		
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');

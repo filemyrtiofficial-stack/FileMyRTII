@@ -313,11 +313,11 @@
                                         </li>
                                         <li class="rti_document_list">
                                             <div class="doc_name">
-                                                <img class="img-fluid" href="{{invoicePreviewPath($data->application_no, 1)}}"  alt="">
+                                                <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/invoice-icon.webp')}}"  alt="">
                                                 <div class="doc_content">RTI First Appeal Invoice</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn @if(count($list) < 2) disabled @endif" href="{{invoicePreviewPath($data->application_no, 2)}}"  target="_blank"><span>Download Invoice</span></a>
+                                                <a class="theme-btn @if(count($list) < 2) disabled @endif" href="{{invoicePreviewPath($data->application_no, 1)}}"  target="_blank"><span>Download Invoice</span></a>
                                             </div>
                                         </li>
                                         <li class="rti_document_list">
@@ -326,7 +326,7 @@
                                                 <div class="doc_content ">RTI Second Appeal Invoice</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn @if(count($list) < 3) disabled @endif" href="{{asset('upload/pdf/'.'invoice_' .$data->application_no .'_appeal_no_2.pdf')}}" target="_blank"><span>Download Invoice</span></a>
+                                                <a class="theme-btn @if(count($list) < 3) disabled @endif" href="{{invoicePreviewPath($data->application_no, 2)}}" target="_blank"><span>Download Invoice</span></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -400,6 +400,7 @@
                                     </div>
                                     <form action="{{route('rti-appeal', $data->id)}}" class="authentication second-appeal-form " method="post">
                                         @csrf
+                                        <input type="hidden" name="appeal_no" value="2">
                                         <div class="appeal_wrap">
                                             <div class="appeal_info">
                                                 <div class="appeal_heading">
