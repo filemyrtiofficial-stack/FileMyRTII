@@ -101,20 +101,13 @@
                                                         </li>
                                                         <li>
                                                             <div class="list_item">Pio Details<span>:</span></div>
-                                                            <div class="list_value">Customer PIO Address</div>
+                                                            <div class="list_value">{{$data['customer_pio_address'] ?? $data['pio_address']}}</div>
                                                         </li>
                                                         <li>
                                                             <div class="list_item">RTI Info<span>:</span></div>
                                                             <div class="list_value">Details Provided by Customer</div>
                                                         </li>
-                                                        <li>
-                                                            <div class="list_item">Pio Details<span>:</span></div>
-                                                            <div class="list_value">Customer PIO Address</div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="list_item">RTI Info<span>:</span></div>
-                                                            <div class="list_value">Details Provided by Customer</div>
-                                                        </li>
+                                                       
                                                     </ul>
                                                     <div class="more_info">
                                                         <div class="more_info_header">More Info Provided by Client</div>

@@ -28,7 +28,7 @@ use App\Models\ServiceCategory;
 use App\Jobs\SendEmail;
 use App\Models\ApplicationStatus;
 use Carbon\Carbon;
-
+use PDF;
 class FrontendController extends Controller
 {
     public function index($slug = null)
@@ -77,23 +77,19 @@ class FrontendController extends Controller
 
     public function serviceDetails($service_category = null, $service_slug = null)
     {
-        if($service_slug != null) {
 
+        if($service_slug != null) {
             $service = Service::wherehas('slug', function ($query) use ($service_slug) {
                 $query->where('slug', $service_slug);
             })->where('status', 1)->select('services.*')->first();
+           
             if (!$service) {
                 abort(404);
             }
             $page_section = $service->serviceData;
             $seo = $service->seo;
             $page_type = "service";
-            // $breadcrums = [
-            //     [
-            //         'label' => "Service"
-            //     ]
-                
-            // ]
+           
             return view('frontend.service_details', compact('service', 'page_section', 'seo', 'page_type'));
         }
         else if($service_category != null) {
@@ -172,15 +168,20 @@ class FrontendController extends Controller
             $query->where('slug', $service_category);
         })->first();
         if($service_slug == 'custom-request') {
-            $service = ['id' => 0, 'name' => "Custom Request"];
-            $service = (object) $service;
-            $fields = [];
-        return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose', 'service_category'));
+        $service_slug = ($service_category->slug->slug ?? '')."-".$service_slug;
+            // print_r($service_slug);die;
+        //     $service = ['id' => 0, 'name' => "Custom Request"];
+        //     $service = (object) $service;
+        //     $fields = [];
+
+        // return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose', 'service_category'));
 
         }
+
         $service = Service::wherehas('slug', function ($query) use ($service_slug) {
             $query->where('slug', $service_slug);
         })->first();
+        // print_r(json_encode( $service));die;
         if (!$service) {
             abort(404);
         }
@@ -266,6 +267,7 @@ class FrontendController extends Controller
 
             $data['application_no'] =  $this->generateApplicationNumber();
             $data['user_id'] = $this->updateUser($request);
+            $data ['customer_pio_address'] = $request->pio_address ?? '';
             if (!empty($request->application_no)) {
                 $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
                 $rti->update($data);
@@ -432,6 +434,8 @@ class FrontendController extends Controller
     public function sampleRtiTemplate($service_id) {
         $service = Service::find($service_id);
         // print_r(json_encode($service));
-        return view('frontend.profile.sample-rti-template', compact('service'));
+        $pdf = PDF::loadView('frontend.profile.sample-rti-template', compact('service'));
+        return $pdf->stream();
+
     }
 }

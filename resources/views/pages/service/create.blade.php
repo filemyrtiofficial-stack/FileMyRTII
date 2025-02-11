@@ -138,6 +138,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Create New Page</label>
+                                    <div class="input-group">
+                                        <select name="create_new_page" id="create_new_page" class="form-control">
+                                            @foreach(yesNoOption() as $key => $item)
+                                            <option value="{{$item['id']}}" @if(isset($fields['create_new_page']) && $fields['create_new_page']==$item['id'])
+                                                selected @endif>
+                                                {{$item['name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <hr class="mt-3">
                             <h5 class="ml-2">Meta Details</h5>
                             <hr>
@@ -174,169 +188,18 @@
                             <button class="btn btn-secondary" data-toggle="modal" data-target="#cutomer_field_popup" type="button">Add Form Fields</button>
                             <button class="btn btn-primary">Submit</button>
                         </div>
-                        <!-- <div class="mt-5 float-right">
-                            <button class="btn btn-primary">Submit</button>
-                        </div> -->
+                     
                   </div>
               </div>
               
-                <!-- <div class="card mt-4">
-                    <div class="card-header">
-                        <h4>Form Fields</h4>
-                    </div>
-                    <div class="card-body pt-0">
-                    <div class="row field-list">
-                            @if(isset($fields) && isset($fields['field_type']))
-                                @foreach($fields['field_type'] as $key => $field)
-                                <div class="col-md-12">
-                                    <div class="card mt-3">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="">Field Type</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="field_type[]" class="form-control field_type" required>
-                                                        {!! fieldListOptions($fields['field_type'][$key]) !!}
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="">Field Lable</label> <br>
-                                                <div class="input-group">
-                                                    <input type="text" name="field_lable[]" class="form-control" required value="{{$fields['field_lable'][$key]}}">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for="">Is Required</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="is_required[]" class="form-control" required>
-                                                            {!! booleanListOptions($fields['is_required'][$key] ?? '') !!}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="date-other-validation" @if($fields['field_type'][$key] != "date")style="display:none;" @endif>
-                                                <div class="form-group">
-                                                    <label for="">Minimum Date</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="date" name="minimum_date[]" class="form-control" value="{{$fields['minimum_date'][$key] ?? null}}">
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Maximum Date</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="date" name="maximum_date[]" class="form-control" value="{{$fields['maximum_date'][$key] ?? null}}">
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Dependency Date Field</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="" name="dependency_date_field[]" class="form-control" value="{{$fields['dependency_date_field'][$key] ?? ''}}">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer text-right">
-                                            <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
-                                        </div>
-                                    </div>
-                        
-                                </div>
-                                @endforeach
-                            @else
-                                <div class="col-md-12">
-                                    <div class="card mt-3">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="">Field Type</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="field_type[]" class="form-control field_type" required>
-                                                        {!! fieldListOptions() !!}
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="">Field Lable</label> <br>
-                                                <div class="input-group">
-                                                    <input type="text" name="field_lable[]" class="form-control" required>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for="">Is Required</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="is_required[]" class="form-control" required>
-                                                            {!! booleanListOptions() !!}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="date-other-validation" style="display:none;">
-                                                <div class="form-group">
-                                                    <label for="">Minimum Date</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="date" name="minimum_date[]" class="form-control" >
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Maximum Date</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="date" name="maximum_date[]" class="form-control" >
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Dependency Date Field</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="" name="dependency_date_field[]" class="form-control" >
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer text-right">
-                                            <button class="btn btn-sm btn-danger remove-card">Remove</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                    </div>
-                    <div class="text-right mt-3">
-                            <button type="button" class="btn btn-sm btn-secondary add-more">Add More</button>
-                    </div>
-                    </div>
-                </div> -->
+              
           </div>
         </div>
         
     </div>  
     <input type="text" id="update_array" name="update_array" hidden>
 
-    <!-- <div class="modal fade" id="lawyer_field_popup" tabindex="-1" role="dialog" aria-labelledby="lawyer_field_popup" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Lawyer Filed</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <div class="row lawyer-field-list">
-                    @include('pages.service.lawyer-field')      
-                </div>                 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary add-more-lawyer-field"  >Add More Fields</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-      </div>
-    </div> -->
+   
 
 
     <div class="modal fade" id="cutomer_field_popup" tabindex="-1" role="dialog" aria-labelledby="lawyer_field_popup" aria-hidden="true">
@@ -382,6 +245,7 @@
                                                     <input type="text" name="field_lable[]" class="form-control" required value="{{$fields['field_lable'][$key]}}">
                                                 </div>
                                             </div>
+                                            
                                             
                                             <div class="form-group">
                                                 <label for="">Is Required</label> <br>

@@ -1,84 +1,164 @@
 @extends('frontend.layout.layout')
+@push('style')
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-lawyer-overview.css')}}">
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
 
+
+@endpush
 @section('content')
 
-        
-
-
-        <section class="contact_section dashboard_section">
+<section class="dashboard_section overview_table_section">
             <div class="container">
+
                 <div class="section_heading">
-                    <h2>Empower yourself with RTI solutions.</h2>
-                </div>
-                <div class="section_sub_heading">
-                    <h4>All your RTI Applications are here</h4>
+                    <h2>Welcome Lawyer Name</h2>
                 </div>
 
-                <div class="my_profile">
-                    <div class="my_info">
-                        <div class="profile">
-                            <div class="profile_img">
-                                <img class="img-fluid" src="images/service-listing/profile-1.webp" alt="">
-                            </div>
-                            <div class="profile_name">
-                                <div class="p_name">{{auth()->guard('lawyers')->user()->fullName}}</div>
-                                <div class="p_email">{{auth()->guard('lawyers')->user()->email}}</div>
-                            </div>
+
+                <div class="col_box_main">
+                    <div class="col_box_left">
+
+                        <div class="col_box">
+                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon1.png')}}" alt=""> </div>
+                            <h2 class="title_part">  {{$total_rti['active']}} </h2>
+                            <p> Active RTIs </p>
                         </div>
-                        <div class="profile_action">
-                            <a class="profile_btn change-password-modal" href="javascript:void(0);">Change Password</a>
-                                <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                        class="profile_btn">
-                                        Logout
-                                    </a>
+
+                        <div class="col_box">
+                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon2.png')}}" alt=""> </div>
+                            <h2 class="title_part"> {{$total_rti['pending']}} </h2>
+                            <p> Pending RTIs </p>
+                        </div>
+
+                        <div class="col_box">
+                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon3.png')}}" alt=""> </div>
+                            <h2 class="title_part"> {{$total_rti['filed']}} </h2>
+                            <p> Filed RTIs </p>
+                        </div>
+
+                        <div class="col_box">
+                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon4.png')}}" alt=""> </div>
+                            <h2 class="title_part"> {{$total_rti['total']}} </h2>
+                            <p> Total RTIs </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col_box_right">
+                        <div class="col_logo"> R </div>
+                        <div class="arrow_col"> 
+                            <a href="#!" class="click_col"> 
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </a> 
+
+                            <div class="col_dropdown">
+                                <ul>
+                                    <li> <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="personal_detail_modal" > <span> <img src="{{asset('assets/rti/images/dashboard-overview/user-new.png')}}" alt=""> </span> Profile Edit </a> </li>
+                                    <li> <a href="javascript:void(0);"  class="change-password-modal"> <span> <img src="{{asset('assets/rti/iimages/dashboard-overview/password.png')}}" alt=""> </span> Change Password</a> </li>
+                                    <li> <a href="javascript:void(0);"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span> <img src="{{asset('assets/rti/iimages/dashboard-overview/log-out.png')}}" alt=""> </span> Log Out </a> </li>
+
+
+
+                                
                                 <form role="form" method="post" action="{{ route('lawyer.logout') }}" id="logout-form">
                                     @csrf
                                     
                                 </form>
-
-                            <!-- <a class="profile_btn" href="#">Logout</a> -->
-                        </div>
-                    </div>
-                    <div class="my_application">
-                        @foreach($list as $key => $item)
-                        <div class="application_card">
-                            <div class="card_header">RTI Application No: <span class="app_no">{{$item->application_no}}</span></div>
-                            <div class="card_body">
-                                <div class="application_detail">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-9">
-                                            <div class="app_status">
-                                                <ul class="app_date">
-                                                    <li class="heading">Application Date <span>:</span></li>
-                                                    <li>{{Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</li>
-                                                </ul>
-                                                <ul class="app_date">
-                                                    <li class="heading">Status <span>:</span></li>
-                                                    <li> {{$item->payment_status == 'pending' ?  "Payment Pending" : "paid"}}</li> @if($item->payment_status == 'pending')<a class="theme-btn-link" href="javascript:void(0);">Delete</a>@endif
-                                                </ul>
-                                                <ul class="status_bar">
-                                                    <li @if($item->status >= 1) class="active" @endif><a href="javascript:void(0);">1</a><span>Started</span></li>
-                                                    <li @if($item->status >= 2) class="active" @endif><a href="javascript:void(0);">2</a><span>Approval</span></li>
-                                                    <li @if($item->status == 3) class="active" @endif><a href="javascript:void(0);">3</a><span>Filed</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-3">
-                                            <div class="app_action">
-                                                <a class="theme-btn" href="{{route('lawyer.my-rti', $item->application_no)}}">Details</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </ul>
                             </div>
                         </div>
-                        @endforeach
                     </div>
+                         
                 </div>
+
+
+                <div class="tab_overview">
+              
+                     <div class="tab_overview_up">
+                        <ul>
+                            <li><a href="#!" class="overview_click active" data-id="active_rti"> Active RTIs </a></li>
+                            <li><a href="#!" class="overview_click" data-id="pending_rti"> Pending RTIs </a></li>
+                            <li><a href="#!" class="overview_click" data-id="filed_rti"> Filed RTIs </a></li>
+                            <li><a href="#!" class="overview_click" data-id="total_rti"> Total RTIs </a></li>
+                        </ul>
+                     </div>
+
+
+                     <div class="tab_overview_bottom">
+
+                        <div class="overview_data tab-active" data-id="active_rti"> 
+                             <div class="tab_overview_data">
+                                <table>
+                                     <thead> 
+                                        <th> Date</th>    
+                                        <th> Application No </th>    
+                                        <th> Name</th>    
+                                        <th> Status </th>    
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach($list as $item)
+                                        <tr>
+                                                <td><a href="#!"> <div class="date_month_table"> <span class="date_table"> 10 </span> <span class="month_table"> DEC 24 </span> </div> </a> </td>
+                                                <td><a href="#!"> {{$item->application_no}} </a></td>
+                                                <td><a href="#!"> <div class="strong_data">{{$item->fullName}}</div></a> </td>
+                                                <td><a href="{{route('lawyer.my-rti', $item->application_no)}}"><div class="status_btn"> Active <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.83928 23.6492C6.32516 24.1169 7.11186 24.1169 7.5965 23.6492L17.8721 13.7329C18.8426 12.7964 18.8426 11.277 17.8721 10.3404L7.52209 0.350952C7.04119 -0.111943 6.26429 -0.117941 5.77717 0.338959C5.27886 0.805452 5.27409 1.57414 5.76369 2.04783L15.2365 11.1882C15.7224 11.6571 15.7224 12.4162 15.2365 12.8851L5.83928 21.9535C5.3534 22.4212 5.3534 23.1815 5.83928 23.6492Z" fill="#0384D4"/>
+                                                    </svg> </span></a> </div>
+                                                </td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+
+                                </table>
+
+                                <div class="btn_view_more">
+                                    <a href="#!" class="theme-btn"> <span> View More </span> </a>
+                                </div>
+
+                             </div>
+                        </div>
+
+
+                        <div class="overview_data" data-id="pending_rti"> 
+                            <div class="tab_overview_data">
+                               2
+                            </div>
+                        </div>
+
+
+                         <div class="overview_data" data-id="filed_rti"> 
+                            <div class="tab_overview_data">
+                              3
+                            </div>
+                         </div>
+
+                        <div class="overview_data" data-id="total_rti"> 
+                            <div class="tab_overview_data">
+                              4
+                            </div>
+                        </div>
+
+
+                     </div>
+
+
+                </div>
+
+
+                
+                
+               
             </div>
-         
         </section>
+
+
         
+    @include('lawyer.auth.my-profile')
 @endsection
 
 

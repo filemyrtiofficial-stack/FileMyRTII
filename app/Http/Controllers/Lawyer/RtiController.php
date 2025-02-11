@@ -15,14 +15,32 @@ use App\Models\ApplicationStatus;
 use App\Models\LawyerRtiQuery;
 use App\Models\Notification;
 use App\Models\ApplicationCloseRequest;
+use DB;
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
         if($application_no == null) {
 
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
+            $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'appeal_no' => 0])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get();
+         
+            $total_rti = ["total" => 0, 'pending' => 0, 'filed' => 0, 'active' => 0];
+
+            foreach($rti_count as $count) {
+                $total_rti['total'] += $count['total'];
+                if($count['status'] == 3) {
+                    $total_rti['filed'] = $count['total'];
+                }
+                else if($count['status'] == 1) {
+                    $total_rti['active'] = $count['total'];
+                }
+                else if($count['status'] == 2) {
+                    $total_rti['pending'] = $count['total'];
+                }
+            }
+            // print_r(json_encode($rti_count));die;
             $list = RtiApplication::list(true, $request->all());
-            return view('lawyer.dashboard', compact('list'));
+            return view('lawyer.dashboard', compact('list', 'total_rti'));
         }
         else {
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);

@@ -187,9 +187,6 @@
                             @endif
                                    
                             
-                                 
-                               
-                    </div>
                     
                 </div>
             </div>
@@ -242,13 +239,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                     @php $count = 0;
-                     @endphp
-                        @foreach($data->lawyers as $lawyer)
+                   
+                        @foreach($data->lawyers as $index =>  $lawyer)
                             <tr>
                           
                                 <td>
-                                    @if($count != 0)
+                                    @if($index != 0)
                                     <span style="color: red;"><b> X</b></span>
                                     @endif
                                     
@@ -257,8 +253,7 @@
                                 <td>{{$lawyer->phone}}</td>
                              
                             </tr>
-                            @php $count++;
-                            @endphp
+                        
                             @endforeach
                     </tbody>
                 </table>

@@ -84,7 +84,8 @@
                                 <span class="icon"><img class="img-fluid" src="images/dashboard/download-template.svg" alt=""></span>
                                 Download Template
                             </a>
-                            <img class="img-fluid view_form_img" src="images/dashboard/view_draft.webp" alt="">
+                            <div><embed src="{{route('sample-rti-template',$data->service_id)}}" type="" width="100%" height="500"></div>
+                            <!-- <img class="img-fluid view_form_img" src="images/dashboard/view_draft.webp" alt=""> -->
                         </div>
                         <div class="view_draft_heading">Marksheet Verification</div>
                     </div>

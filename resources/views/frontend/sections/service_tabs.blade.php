@@ -45,8 +45,10 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                         ?>
 
                                         @foreach($item[0]['services'] ?? [] as $key =>  $item)
-                                            <div class="rti_block">
-                                            @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
+                                            <?php $field_data =  json_decode($item->fields, true)?>
+                                            @if(!isset($field_data['create_new_page']) || !isset($field_data['create_new_page']) == 'yes' )
+                                                <div class="rti_block">
+                                                @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
                                                     <div class="rti_item">
                                                         <div class="rti_scroll">
                                                             <div class="rti_img">
@@ -55,7 +57,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                             </div>
                                                             <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
                                                             @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
-                                                              
+                                                                
                                                                 <div class="rti_content">
                                                                     {!! $item['description'] ?? '' !!}
                                                                 </div>
@@ -65,8 +67,8 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                             <a href="{{route('frontend.service.form',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" class="theme-btn-link">Apply Now</a>
                                                         </div>
                                                     </div>
-                                            @else
-                                                <a href="{{route('frontend.service.form',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}">
+                                                @else
+                                                    <a href="{{route('frontend.service.form',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}">
                                                         <div class="rti_item">
                                                             <div class="rti_scroll">
                                                                 <div class="rti_img">
@@ -74,15 +76,16 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
                                                                         src="{{asset($item['icon'] ?? '')}}" alt="">
                                                                 </div>
                                                                 <div class="rti_content fs-28">{{$item['name'] ?? ''}}</div>
-                                                              
+                                                                
                                                                 <span class="theme-btn-link">Apply Now</span>
                                                             </div>
                                                         </div>
                                                     </a>
+                                                @endif
+                                                
+                                                
+                                                </div>
                                             @endif
-                                               
-                                               
-                                            </div>
                                         @endforeach
                                        
                                         <div class="rti_block rti_block_ad">
