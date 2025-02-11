@@ -1041,3 +1041,16 @@ function rtiPersonalDetailFields() {
 function notifictaionList() {
     return App\Models\Notification::orderBy('id', 'desc')->get();
 }
+function applicationCloseRequestsStatus() {
+    return [
+            0 => [
+                'name' => 'Pending',
+                'class' => 'text-warning'
+            ],
+            1 => [
+                'name' => 'Approved',
+                'class' => 'text-info'
+            ]
+           
+        ];
+}

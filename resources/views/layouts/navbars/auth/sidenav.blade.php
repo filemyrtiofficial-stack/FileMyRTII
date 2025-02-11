@@ -217,6 +217,13 @@
               <span class="menu-title">RTI Applications</span>
             </a>
           </li>
+
+          <li class="nav-item pl-3">
+            <a class="nav-link"  href="{{ route('rticloserequest.list') }}">
+              <i class="icon-query menu-icon"></i>
+              <span class="menu-title">RTI close Request</span>
+            </a>
+          </li>
           @endif
           @endif
 

@@ -176,5 +176,9 @@ class RtiApplication extends Model
         }
     }
 
+    public function closeRequest() {
+        return $this->hasone(ApplicationCloseRequest::class, 'application_id','id')->where('lawyer_id', auth()->guard('lawyers')->id());
+    }
+
   
 }
