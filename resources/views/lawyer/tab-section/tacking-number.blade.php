@@ -37,7 +37,7 @@
                 <div class="upload_wrap">
                     <input type="file" name="file" id="document-upload" />
                     <input type="hidden" name="documents" class="image-input">
-                    <img class="img-fluid" src="images/dashboard/upload-icon.webp" alt="">
+                    <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                     <p>Drag and drop your courier acknowledgment or <a href="javascript:void(0);">Choose File</a></p>
                 </div>
             </div>

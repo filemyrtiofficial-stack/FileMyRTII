@@ -428,4 +428,10 @@ class FrontendController extends Controller
         // Mail::to('developmentd299@gmail.com')->send(new NewsletterMail($newsletter));
         return response(['message' =>  'Thank you for connecting with us']);
     }
+
+    public function sampleRtiTemplate($service_id) {
+        $service = Service::find($service_id);
+        // print_r(json_encode($service));
+        return view('frontend.profile.sample-rti-template', compact('service'));
+    }
 }

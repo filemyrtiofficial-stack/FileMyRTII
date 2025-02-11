@@ -1,6 +1,8 @@
 @extends('frontend.layout.layout')
 @push('style')
 <link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
+<link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-lawyer.css')}}">
+
 
 
 
@@ -206,12 +208,12 @@
 
                         
                             <div id="tab2" class="contact_faq_tab">
-                                        
+                                    
+                            @if($data->lastRevision)
                                 <div class="review_application">
                                     <div class="db_tab_heading">
                                         <h2>Review Your Application: Check Your Drafted RTI</h2>
                                     </div>
-                                    @if($data->lastRevision)
                                     <div class="db_tab_review">
                                         <div class="review_wrap">
                                             <div class="review">
@@ -219,9 +221,9 @@
                                             </div>
                                         </div>
                                         <div class="review_action">
-                                            <a href="{{route('customer.download-rti', $data->application_no)}}" class="theme-btn @if($data->lastRevision <= 0 ) disabled @endif" target="blank"><span>Download PDF</span></a>
+                                            <a href="{{route('customer.download-rti', $data->application_no)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download PDF</span></a>
                                         </div>
-                                        @if(empty($data->signature_image))
+                                        @if(empty($data->signature_image) && $data->lastRevision && empty($data->lastRevision->customer_change_request))
                                         <ol class="review_option">
                                             <li class="option_no"><span>Edit if Needed - Click "<a class="tabings" href="#edit-request">Edit</a>" to Make Changes</span></li>
                                             <li class="option_no"><span>Proceed to Sign - If Satisfied, Click</span><a href="#signing-process" class="theme-btn tabings"><span>Proceed for Signing</span></a></li>
@@ -229,13 +231,28 @@
                                       
                                         @endif
                                     </div>
-                                    @else
-                                     <div class="text-center">
-                                        <h3>Your RTI is not drafted yet.</h3>
-                                     </div>
-                                    @endif
+                                  
                                   
                                 </div>
+                            
+                            @else
+                            <div class="approve_rti">
+                                <div class="db_tab_heading">
+                                    <h2>Approved RTI</h2>
+                                </div>
+                                <div class="approval_view">
+                                
+                                    <div class="waiting_msg">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/waiting.webp')}}" alt="">
+                                        <h4 class="heading">Your RTI is not drafted. Please wait...</h4>
+                                        <a class="theme-btn tabings" href="#tab1"><span>Back</span></a>
+                                    </div>          
+                                </div>
+                            </div>
+            
+
+                            @endif
+                                
                              
                             </div>
                           
@@ -326,7 +343,7 @@
                                         <div class="appeal_wrap">
                                             <div class="appeal_info">
                                                 <div class="appeal_heading">
-                                                    <h4>What is First Appeal?1</h4>
+                                                    <h4>What is First Appeal?</h4>
                                                 </div>
                                                 <div class="appeal_content">
                                                     <p>According to the RTI Act, if a response is unsatisfactory or delayed beyond 30 days, you have the right to file a First Appeal. This ensures your application is reviewed by a higher authority within the same department.</p>
@@ -353,14 +370,14 @@
                                             <div class="upload_area">
                                                 <div class="upload_wrap">
                                                     <div class="icon_wrap">
-                                                        <img class="img-fluid" src="images/dashboard/upload-icon.webp" alt="">
+                                                        <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                                                     </div>
                                                     <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="first-appeal-form" data-preview="first-appeal-preview"></p>
                                                     <div class="upload_img_wrap"></div>
-                                                    <input type="hidden" name="document" class="image-input" />
-
+                                                    
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="document" class="image-input" />
                                             <div class="preview" id="first-appeal-preview"></div>
                                         </div>
                                         <div class="db_tab_form">
@@ -413,7 +430,7 @@
                                             <div class="upload_area">
                                                 <div class="upload_wrap">
                                                     <div class="icon_wrap">
-                                                        <img class="img-fluid" src="images/dashboard/upload-icon.webp" alt="">
+                                                        <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                                                     </div>
                                                     <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="second-appeal-form" data-preview="second-appeal-preview"></p>
                                                     <div class="upload_img_wrap"></div>
@@ -498,21 +515,21 @@
                                                     <div class="contact_option custom_radio">
 
 
-                                                    <form action="{{route('approve-rti', $data->application_no)}}" class="form-submit signature-form" method="post">
+                                                    <form action="{{route('approve-rti', $data->application_no)}}" class="authentication signature-form-upload" method="post">
                                                             @csrf
 
                                                             <input type="hidden" name="signature_type" value="upload">
 
-                                                        <input type="radio" id="rti_no" name="rti_option" checked="">
+                                                        <input type="radio" id="rti_no" name="rti_option" >
                                                         <label for="rti_no">Upload Scanned Signature</label>
                                                         <div class="sign_area_wrap">
                                                             <div class="upload_area drop-area" id="drop-area">
                                                                 <div class="upload_wrap">
-                                                                    <img class="img-fluid" src="images/dashboard/upload-icon.webp" alt="">
+                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                                                                     <p>Drag and drop response received from PIO or <label>Choose File</label></p>
                                                                     <div class="upload_img_wrap"></div>
                                                                 </div>
-                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form">
+                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form-upload">
                                                                 <input type="hidden" name="signature" class="image-input" />
 
                                                             </div>

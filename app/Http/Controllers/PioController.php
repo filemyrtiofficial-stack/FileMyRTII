@@ -51,15 +51,13 @@ class PioController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required",
-            'phone_number' => "required|numeric|digits:10",
-            'email' => "required|email|unique:lawyers,email",
-            'status' => "required",
-            'city' => "required",
-            'image' => "required|image",
             'state' => "required",
             'pincode' => "required|numeric|digits:6",
-            'address' => "required"
+            // 'address' => "required",
+            'department' => "required",
+            'mandal' => "required"
+
+
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
@@ -102,15 +100,11 @@ class PioController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required",
-            'phone_number' => "required|numeric|digits:10",
-            'email' => "required|email|unique:lawyers,email",
-            'status' => "required",
-            'city' => "required",
-            'image' => "nullable|image",
             'state' => "required",
             'pincode' => "required|numeric|digits:6",
-            'address' => "required"
+            // 'address' => "required",
+            'department' => "required",
+            'mandal' => "required"
 
         ]);
         
@@ -135,5 +129,11 @@ class PioController extends Controller
         } catch (Exception $ex) {
             return response(['error' => $ex->getMessage()], 500);
         }
+    }
+
+    public function searchPIO(Request $request) {
+        $list = PioMaster::list(false, ['address' => $request->address]);
+
+        return response(['data' => $list]);
     }
 }

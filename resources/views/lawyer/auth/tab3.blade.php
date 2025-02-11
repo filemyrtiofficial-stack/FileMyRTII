@@ -1,0 +1,96 @@
+<div id="tab3" class="contact_faq_tab">
+    <div class="rti_application draft_rti">
+        <div class="db_tab_heading">
+            <h2>Draft RTI</h2>
+        </div>
+        <div class="draft_rti_wrap">
+            <div class="draft_rti_left">
+                <div class="draft_rti_details v_scroll">
+                    <div class="draft_rti_view">
+                        <div class="heading">Personal Details</div>
+                        <div class="content">
+                            <p class="name">{{$data->fullName}}</p>
+                            <p class="address">{{$data->address}} {{$data->postal_code}}</p>
+                            <p class="emial">{{$data->email}}</p>
+                            <p class="phone_number">{{$data->phone_number}}</p>
+                        </div>
+                    </div>
+                    <div class="draft_rti_view">
+                        <div class="heading">RTI Details</div>
+                        <div class="content">
+                            <div class="table">
+                                <div class="seperator"></div>
+                                <table>
+                                    <tbody>
+                                    @foreach($service_fields['field_type'] ?? [] as $key => $value)
+                                        @php
+                                            $field_key =  getFieldName($service_fields['field_lable'][$key]);
+                                        @endphp
+                                
+                                        <tr>
+                                            <td>{{$service_fields['field_lable'][$key] ?? ''}} </td>
+                                            <td>{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}</td>
+                                        </tr>
+
+                                    @endforeach
+
+
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="draft_rti_view">
+                        <div class="heading">PIO address give by customer:</div>
+                        <div class="content">
+                            <p>Public Information Officer</p>
+                            <p>SRM University</p>
+                            <p>Chennai : 400503</p>
+                        </div>
+                        <div class="pio_action">
+                            <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="attachment-popup"><span>View Attachment</span></a>
+                        </div>
+                    </div>
+                    <!-- <div class="pio_seperator"></div>
+                    <div class="draft_rti_view">
+                        <div class="heading">Search for PIO Address</div>
+                        <div class="content">
+                            <p>Lorem ipsum dolor sit amet consectetur.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur.</p>
+                        </div>
+                        <div class="pio_action pio_address_action">
+                            <a href="javascript:void(0);" class="theme-btn"><span>Select the above address</span></a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="draft_rti_right">
+                <div class="select_draft_wrap">
+                    <div class="select_draft">
+                        <select class="form_field" name="" id="">
+                            <option selected value="">Select Draft</option>
+                            <option value="">Property Papers</option>
+                            <option value="">FIR Status</option>
+                            <option value="">Answer Copy</option>
+                            <option value="">Complaint Tracking</option>
+                            <option value="">Income Tax Refund</option>
+                        </select>
+                    </div>
+                    <div class="view_draft">
+                        <div class="view_draft_area">
+                            <a href="javascript:void(0);" class="download-btn">
+                                <span class="icon"><img class="img-fluid" src="images/dashboard/download-template.svg" alt=""></span>
+                                Download Template
+                            </a>
+                            <img class="img-fluid view_form_img" src="images/dashboard/view_draft.webp" alt="">
+                        </div>
+                        <div class="view_draft_heading">Marksheet Verification</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

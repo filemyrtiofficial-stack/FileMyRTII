@@ -26,6 +26,37 @@
         .hide {
             display: none;
         }
+        .pio-list {
+            position: absolute;
+            bottom: -80px;
+            background: white;
+            border: 1px solid #9ac4e2;
+            width: 100%;
+            z-index: 1;
+            list-style: none;
+            padding: 0px
+        }
+        .pio-list li {
+            padding: 10px;
+            border: 1px solid #9ac4e2;
+
+        }
+        .pio-list li:hover {
+            background : #9ac4e2;
+        }
+        .pio-list li a {}
+
+        .relative {
+            position: relative;
+        }
+        .form_item.single {
+            width: 100%;
+        }
+        .form-error-list {
+            color: #f00;
+            margin-top: 5px;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -102,6 +133,11 @@
             dataType : 'json',
             success: function(response) {
                   if(response.status == 'success') {
+                    // if(response.disabled == true) {
+                    //     _this.find('.form_field').attr('disbaled', true);
+                    //     // _this.find('button').attr('disbaled', true);
+                    //     window.location.reload
+                    // }
                     if(response.redirect) {
                         window.location.href = response.redirect;
                     }

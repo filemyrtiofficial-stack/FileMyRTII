@@ -18,7 +18,7 @@
                     @endif
                  
                     <div class="row mt-5">
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Name</label>
                                 <div class="input-group">
@@ -45,11 +45,11 @@
                                         type="email" placeholder="Email ID">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                       
                       
                                 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Status</label>
                                 <div class="input-group">
@@ -62,20 +62,44 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-4">
+                        </div> -->
+                        <!-- <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">Address</label>
                                 <div class="input-group">
                                     <input name="address" class="form-control" id="address" rows="12" value="{{$data['address'] ?? ''}}">
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">District</label>
+                                <div class="input-group">
+                                    <input name="city" class="form-control" id="city" rows="12" value="{{$data['city'] ?? ''}}">
+                                </div>
+                            </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">City</label>
+                                <label class="form-label">Mandal</label>
                                 <div class="input-group">
-                                    <input name="city" class="form-control" id="city" rows="12" value="{{$data['city'] ?? ''}}">
+                                    <input name="mandal" class="form-control" id="mandal" rows="12" value="{{$data['mandal'] ?? ''}}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Tahsildar</label>
+                                <div class="input-group">
+                                    <input name="tahsildar" class="form-control" id="tahsildar" rows="12" value="{{$data['tahsildar'] ?? ''}}">
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <div class="input-group">
+                                    <input name="department" class="form-control" id="department" rows="12" value="{{$data['department'] ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -96,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         
                         
                         <div class="col-4">
@@ -107,7 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mt-5 text-right">
                         <button class="btn btn-primary">Submit</button>
                     </div>

@@ -28,10 +28,12 @@
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab3">Draft RTI</a>
                         </li>
+                        @if($data->status < 2 )
                         <li class="contact_faq_item">
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab4">Drafted RTI</a>
                         </li>
+                        @endif
                         <li class="contact_faq_item">
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab5">Approved RTI</a>
@@ -237,10 +239,14 @@
                                                         <h4>Lawyer Requested Info</h4>
                                                     </div>
                                                     <div class="info_body info_scroll">
+                                                        @foreach(notifictaionList() as $item => $value)
                                                         <div class="info_msg_wrap">
-                                                            <div class="info_requested">Please furnish more details and any related attachment.</div>
+                                                            <div class="info_requested">{{$value->message}}</div>
+                                                            <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
+
                                                         </div>
-                                                        <div class="info_msg_wrap">
+                                                        @endforeach
+                                                        <!-- <div class="info_msg_wrap">
                                                             <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
                                                             <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
                                                         </div>
@@ -251,7 +257,7 @@
                                                         <div class="info_msg_wrap">
                                                             <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
                                                             <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="info_footer">
                                                         <a href="javascript:void(0);" class="theme-btn"><span>Send Reminder</span></a>
@@ -262,61 +268,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="tab2" class="contact_faq_tab">
-                                <div class="pio_address">
-                                    <div class="db_tab_heading">
-                                        <h2>PIO Address</h2>
-                                    </div>
-                                    <div class="faq_item_wrap db_tab_form_wrap">
-                                        <div class="db_item_wrap single">
-                                            <div class="form_item">
-                                                <label for="first_name">Customer Entered PIO Address</label>
-                                                <input class="form_field" type="text" name="first_name" id="" placeholder="First Name" required="">
-                                            </div>
-                                        </div>
-                                        <div class="db_item_wrap single">
-                                            <div class="form_item">
-                                                <label for="last_name">Search PIO Data Base</label>
-                                                <input class="form_field" type="text" name="last_name" id="" placeholder="Last Name" required="">
-                                            </div>
-                                        </div>
-                                        <div class="db_item_wrap single">
-                                            <div class="form_item">
-                                                <label for="first_name">Enter PIO Address Manually</label>
-                                                <input class="form_field" type="email" name="" id="" placeholder="Enter Your Email" required="">
-                                            </div>
-                                        </div>
-                                        <div class="form_action_wrap">
-                                            <div class="form_action">
-                                                <a href="javascript:void(0);" class="theme-btn"><span>Save PIO Address</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            @include('lawyer.auth.tab2')
+                          
+                            @include('lawyer.auth.tab3')
+                            @include('lawyer.auth.tab4')
+
+
+                            <div id="tab100" class="contact_faq_tab">
+                                @if($data->lastRevision )
+                                    @include('lawyer.auth.change-request-details')
+                                @else
+                                @include('frontend.profile.rti-file')
+                                @endif
                             </div>
-                            <div id="tab3" class="contact_faq_tab">
+                          
+                            @include('lawyer.auth.tab5')
                                 
-                            </div>
-                            <div id="tab4" class="contact_faq_tab">
-                                
-                            @if(($data->lastRevision && empty($data->lastRevision->customer_change_request)) || $data->status < 2)
-                                    waiting or approval
-                                    @else
-                                    @include('frontend.profile.rti-file')
-                                    @endif
-                            </div>
-                            <div id="tab5" class="contact_faq_tab">
-                                
-                            </div>
-                            <div id="tab6" class="contact_faq_tab">
-                                
-                            </div>
+                            
+                            @include('lawyer.auth.tab6')
+
                             <div id="tab7" class="contact_faq_tab">
                                 
                             </div>
-                            <div id="tab7" class="contact_faq_tab">
-                                
-                            </div>
+                            @include('lawyer.auth.tab8')
+
                             <div id="tab9" class="contact_faq_tab">
                                 
                             </div>
@@ -340,6 +315,46 @@
 
 @push('js')
 <script>
+
+$(document).on('change', '.multiple-document-upload', function () {
+    let _this = $(this);
+    let form = $(this).attr('data-form');
+       let preview = $(this).attr('data-preview');
+        var data = new FormData($('.'+form)[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+        url: "{{route('upload-multiple-files')}}",
+        method: "POST",
+        data: data,
+        cache : false,
+        processData: false,
+        contentType: false,
+        dataType : 'json',
+        success : function(response){
+            $.each(response.data, function(index, value){
+                console.log(value)
+
+       
+                $('#'+preview).append(`<div class="preview-item">
+                                                
+                                                    <a href="${value.path}" target="blank">
+                                                        <embed src="{{url('/')}}${value.file}" width="50" height="50" />
+                                                        <input hidden value="${value.file}" name="documents[]">
+                                                    </a>
+                                                    <button type="button" class="delete-icon"></button>
+                                                </div>`);
+            })
+
+        },
+        error : function(error) {}
+        });
+    });
+
+
     $(document).on('change', '#document-upload', function () {
         let _this = $(this);
         var form_data = new FormData($(this).closest('form')[0]);
@@ -382,6 +397,53 @@
    
     $(document).on('keyup', '.change-value', function(){
         renderHtml()
-    })
+    });
+    $(document).on('keyup', '.search-pio-address', function(e){
+        let _this = $(this);
+        $('.pio-list').html(null).addClass('hide');
+            
+
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+         $.ajax({
+            url: "{{route('search-pio-adress')}}",
+            method: "POST",
+            data: {address : _this.val()},
+            dataType : 'json',
+            success : function(response){
+              console.log(response)
+              $.each(response.data, function(index, value){
+                $('.pio-list').removeClass('hide');
+                  $('.pio-list').append(`<li><a class="pio-address" data-id="${value.id}">${value.address}</a></li>`);
+              });
+
+            },
+            error : function(error) {}
+         });
+    });
+    $(document).on('click', '.pio-address', function(e){
+        e.preventDefault();
+        $('.search-pio-address').val($(this).text());
+        $('#pio_address').val($(this).text());
+        $('.pio-list').html(null).addClass('hide');
+
+    });
+    $(document).on('change', '#manual-pio', function(e){
+        $('#pio_address').val(null);
+        $('.search-pio-address').val(null);
+        if($(this).is(":checked")) {
+            $('.search-pio-details').addClass('hide');
+            $('.manual-pio-details').removeClass('hide');
+           
+        }
+        else {
+            $('.search-pio-details').removeClass('hide');
+            $('.manual-pio-details').addClass('hide');
+
+        }
+    });
 </script>
 @endpush

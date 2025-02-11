@@ -40,10 +40,14 @@ class RtiController extends Controller
                     $service_fields = json_decode($data->service->fields, true);
                 }
                 $revision_data = [];
+                $change_request = [];
+
                 if( $data->lastRevision) {
                     $revision_data = json_decode($data->lastRevision->details, true);
+                    $change_request =  json_decode($data->lastRevision->customer_change_request, true);
                 }
-                // print_r(($data->service_fields));
+                $html = RtiApplication::draftedApplication($data);
+                // print_r(($service_field_data));
                 // foreach($service_field_data['field_data'] ?? [] as $key => $value) {
                 //     print_r($key);
                 // }
@@ -54,7 +58,7 @@ class RtiController extends Controller
             else {
                 abort(404);
             }
-            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data'));
+            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data', 'service_field_data', 'change_request', 'html'));
         }
     }
 
@@ -72,6 +76,8 @@ class RtiController extends Controller
         foreach($field_data as $key => $value) {
             $html = str_replace("[".$key."]", $value, $html);
         }
+        $html = str_replace("[pio_address]", $data->pio_address, $html);
+
         $signature = "";
 
         if($data->signature_type != "manual" && !empty($data->signature_image)) {
@@ -106,8 +112,8 @@ class RtiController extends Controller
         ]);
         $application->url = route('my-rti', $application_no);
         SendEmail::dispatch('draft-rti', $application);
-
-        return response(['status' => 'success', 'message' => "Application  Number : ".$application_no." is sent to user for approval.", 'clean' => false]);
+        session()->flash('success', "Application  Number : ".$application_no." is sent to user for approval.");
+        return response(['status' => 'success', 'message1' => "Application  Number : ".$application_no." is sent to user for approval.", 'clean' => false, 'disabled' => true]);
 
     }
 
@@ -128,7 +134,7 @@ class RtiController extends Controller
             $revision = RtiApplicationRevision::find($revision_id);
             if($revision) {
                 $data = $request->only(['courier_name', 'courier_date', 'courier_tracking_number', 'charges', 'address']);
-                $data['documents'] = [$request->documents];
+                $data['documents'] = $request->documents;
                 $data['application_id'] = $revision->application_id;
                 $data['revision_id'] = $revision->id;
                 RtiApplicationTracking::create($data);
@@ -160,7 +166,7 @@ class RtiController extends Controller
             $data['to_user'] = "customer";
 
             LawyerRtiQuery::create($data);
-            Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info"]);
+            Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
             $application = RtiApplication::where(['id' => $application_id])->first();
             SendEmail::dispatch('filed-rti', $application);
 
@@ -196,6 +202,52 @@ class RtiController extends Controller
 
         }
         
+    }
+
+    public function assignPIO(Request $request, $application_id) {
+        $validator = Validator::make($request->all(), [
+            'pio_address' => "required",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            $application = RtiApplication::find($application_id);
+            if($application) {
+                $application->update(['pio_address' => $request->pio_address, 'manual_pio' => isset($request['manual_pio']) && $request['manual_pio'] == 'on'  ? 1 : 0]);
+            }
+            return response(['status' => 'success', 'message' => "PIO is successfully assigned"]);    
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
+    }
+
+    public function approveChangeRequest(Request $request, $application_id) {
+       
+        try {
+            $application = RtiApplication::find($application_id);
+            if($application && $application->lastRevision) {
+                $details = json_decode($application->lastRevision->details, true);
+                $customer_change_request = json_decode($application->lastRevision->customer_change_request, true);
+                foreach($customer_change_request as $key => $value) {
+                    $details[$key] = $value;
+                }
+                RtiApplicationRevision::create([
+                    'application_id' =>  $application->id, 
+                    'template_id' => $application->lastRevision->template_id,
+                    'details' => json_encode($details), 
+                ]);
+
+                session()->flash('success', "RTI is successfully drafted.");
+                return response(['status' => 'success']);    
+            }
+            return response(['status' => 'error', 'message' => "invalid applicatio  no."]);    
+
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
     }
 
 }

@@ -216,6 +216,10 @@ Route::get("subscribe-now", function(){
 		Route::post('send-query/{application_id?}', [LawyerRtiController::class, 'sendQuery'])->name('lawyer.send-query');
 		Route::post('send-back-to-admin/{application_id?}', [LawyerRtiController::class, 'sendBackToAdmin'])->name('lawyer.send-back-to-admin');
 		
+		Route::post('assign-pio/{application_id?}', [LawyerRtiController::class, 'assignPIO'])->name('lawyer.assign-pio');
+		
+		Route::post('approve-change-request/{application_id?}', [LawyerRtiController::class, 'approveChangeRequest'])->name('lawyer.approve-change-request');
+		
 		
 		
 
@@ -276,6 +280,12 @@ Route::post('/blog-listing', [FrontendController::class, 'blogListingAPI'])->nam
 Route::get('/{slug?}', [FrontendController::class, 'index'])->name('home-page');
 Route::post('/contact-us', [FrontendController::class, 'contactusForm'])->name('contact-form');
 Route::post('/blog-Comment', [FrontendController::class, 'blogComment'])->name('blog-Comment');
+
+
+Route::get('/sample-rti-template/{service_id}', [FrontendController::class, 'sampleRtiTemplate'])->name('sample-rti-template');
+
+Route::post('/search-pio-adress', [PioController::class, 'searchPIO'])->name('search-pio-adress');
+
 
 
 

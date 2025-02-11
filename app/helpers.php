@@ -1008,3 +1008,36 @@ function filePreview($file_name) {
 function invoicePreviewPath($application_no, $appeal_no) {
     return filePreview(asset('upload/pdf/'.'invoice_' .$application_no .'_appeal_no_'.$appeal_no.'.pdf'));
 }
+
+function rtiPersonalDetailFields() {
+    return [
+        'first_name' => [
+            'label' => "First Name"
+        ],
+        'last_name' => [
+            'label' => "Last Name"
+        ],
+        'email' => [
+            'label' => "Email"
+        ],
+        'phone_number' => [
+            'label' => "Phone Number"
+        ],
+        'address' => [
+            'label' => "Address"
+        ],
+        'city' => [
+            'label' => "City"
+        ],
+        'state' => [
+            'label' => "State"
+        ],
+        'pincode' => [
+            'label' => "Pincode"
+        ],
+    ];
+}
+
+function notifictaionList() {
+    return App\Models\Notification::orderBy('id', 'desc')->get();
+}

@@ -13,7 +13,7 @@ class RtiApplication extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio'];
     protected $casts = [
         'documents' => 'array'
     ];
@@ -120,6 +120,8 @@ class RtiApplication extends Model
             foreach ($field_data as $key => $value) {
                 $html = str_replace("[" . $key . "]", $value, $html);
             }
+            $html = str_replace("[pio_address]", $data->pio_address, $html);
+
             $signature = "";
 
             if ($data->signature_type != "manual" && !empty($data->signature_image)) {

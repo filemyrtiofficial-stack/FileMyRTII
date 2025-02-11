@@ -57,7 +57,7 @@
         <div class="upload_area">
             <div class="upload_wrap">
                 <div class="icon_wrap">
-                    <img class="img-fluid" src="images/dashboard/upload-icon.webp" alt="">
+                    <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                 </div>
                 <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile multiple-document-upload" type="file" name="file[]"  data-form="query-request-form" data-preview="query-request-form-preview" multiple></p>
                 <div class="upload_img_wrap"></div>

@@ -106,6 +106,10 @@
                                     <td>Phone Number</td>
                                     <td>[phone_number]</td>
                                 </tr>
+                                <tr>
+                                    <td>PIO Address</td>
+                                    <td>[pio_address]</td>
+                                </tr>
                                 @if(isset($fields) && isset($fields['field_type']))
                                     @foreach($fields['field_type'] as $key => $field)
                                         <tr>

@@ -10,19 +10,23 @@ use Exception;
 class PioRepository implements PioInterface {
 
     public function store($request) {
-        $data = $request->only(['name', 'email', 'phone_number', 'address', 'state', 'city', 'pincode', 'status']);
-        $data['image'] = uploadFile($request, 'image', 'pio');
+        $data = $request->only([ 'state', 'pincode', 'mandal', 'tahsildar', 'department', 'city']);
+        $data['address'] = $this->setAddressAttribute($data);
         $lawyer = PioMaster::create($data);
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added"]);
     }
+
+
+    public function setAddressAttribute($data)
+    {
+    	return "Mandal Revenue Office , ".$data['mandal'].", ".$data['city'].", ".$data['state']." - ".$data['pincode'].", India";
+    }
     
     public function update($request, $id) {
-        $data = $request->only(['name', 'email', 'phone_number', 'address', 'state', 'city', 'pincode', 'status']);
-        $image = uploadFile($request, 'image', 'lawyer');
-        if(!empty($image)) {
-            $data['image'] = $image;
-        }
+        $data = $request->only(['state', 'pincode', 'mandal', 'tahsildar', 'department', 'city']);
+        $data['address'] = $this->setAddressAttribute($data);
+
         PioMaster::where('id', $id)->update($data);
 
         Session::flash("success", "Data successfully updated");

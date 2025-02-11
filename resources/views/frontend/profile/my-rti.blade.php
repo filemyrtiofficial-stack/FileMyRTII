@@ -48,7 +48,7 @@
                                         <div class="app_status">
                                             <ul class="app_date">
                                                 <li class="heading">Application Date <span>:</span></li>
-                                                <li>1{{Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</li>
+                                                <li>{{Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</li>
                                             </ul>
                                             <ul class="app_date">
                                                 <li class="heading">Status <span>:</span></li>
