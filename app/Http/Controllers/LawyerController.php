@@ -97,8 +97,6 @@ class LawyerController extends Controller
     public function edit($id)
     {
         $data = Lawyer::get($id);
-        //    echo "<pre>";  print_r($data->lawyerProfile->father_spouse_name); die();
-        // dd($data);
         return view('pages.lawyers.create', compact('data'));
     }
 

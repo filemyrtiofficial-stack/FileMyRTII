@@ -54,6 +54,11 @@ class ApplicationRegister extends Mailable
      */
     public function attachments()
     {
-        return [];
+      $application_no =  $this->data["application_no"];
+     $appeal_no =  $this->data["appeal_no"];
+       $fileName = 'invoice_' .$application_no .'_appeal_no_'.$appeal_no.'.pdf';
+        return [
+           asset('upload/pdf/' . $fileName)  
+        ];
     }
 }

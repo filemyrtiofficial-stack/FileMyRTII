@@ -15,11 +15,14 @@ use App\Models\ApplicationStatus;
 use App\Models\LawyerRtiQuery;
 use App\Models\Notification;
 use App\Models\ApplicationCloseRequest;
+use App\Models\Lawyer;
 use DB;
 
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
+        $lawyerdata = Lawyer::get(auth()->guard('lawyers')->id());
+        // dd($lawyerdata);
         if($application_no == null) {
             if(isset($request->status)) {
                 if($request['status'] == 'all') {
@@ -51,7 +54,7 @@ class RtiController extends Controller
                     $total_rti['pending'] += $count['total'];
                 }
             }
-            return view('lawyer.dashboard', compact('list', 'total_rti'));
+            return view('lawyer.dashboard', compact('list', 'total_rti','lawyerdata'));
         }
         else {
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);
@@ -82,7 +85,7 @@ class RtiController extends Controller
             else {
                 abort(404);
             }
-            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data', 'service_field_data', 'change_request', 'html'));
+            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data', 'service_field_data', 'change_request', 'html','lawyerdata'));
         }
     }
 
