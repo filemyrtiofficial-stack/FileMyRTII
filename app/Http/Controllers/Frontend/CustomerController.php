@@ -162,6 +162,7 @@ class CustomerController extends Controller
         
         
         $application = RtiApplication::find($application_id);
+        $application->update(['process_status' => false]);
         $appeal = RtiAppeal::where(['appeal_no' => $request->appeal_no, 'application_id' => $application_id])->first();
         $applications = RtiApplication::list(false, ['application_no' => $application->application_no, 'appeal_no' => $request->appeal_no]);
         
@@ -210,7 +211,7 @@ class CustomerController extends Controller
                     }
                     
                     $application = $application->toArray();
-                    $remove = ['charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
+                    $remove = ['process_status', 'charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
                     $application = array_diff_key($application, array_flip($remove));
                     $application['first_name'] = $revision_data['first_name'];
                     $application['last_name'] = $revision_data['last_name'];
@@ -220,6 +221,7 @@ class CustomerController extends Controller
                     $application['postal_code'] = $revision_data['pincode'];
 
                     $application['service_fields'] = json_encode($service_field_data);
+                    
                 }
                 
 

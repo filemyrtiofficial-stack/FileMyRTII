@@ -356,7 +356,7 @@
                                             </div>
                                             <div class="appeal_info with_input">
                                                 <div class="appeal_heading">
-                                                    <h4>Did you receive response for your First Appeal?</h4>
+                                                    <h4>Did you receive response for your Initial Appeal?</h4>
                                                 </div>
                                                 <div class="custom_radio">
                                                     <input type="radio" id="fappeal_yes" name="received_appeal" checked="" value="1">

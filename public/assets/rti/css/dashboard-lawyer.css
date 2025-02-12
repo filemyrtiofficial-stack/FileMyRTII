@@ -13,7 +13,7 @@
     display: none;
 }
 .db_lawyer_wrap .modal_action_bottom .theme-btn:first-child {
-    display: none;
+    /* display: none; */
 }
 .db_lawyer_wrap .login .modal_action_bottom .login-btn {
     width: 50%;

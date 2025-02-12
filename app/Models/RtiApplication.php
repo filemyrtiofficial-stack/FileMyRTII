@@ -13,7 +13,7 @@ class RtiApplication extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio', 'customer_pio_address'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio', 'customer_pio_address', 'process_status'];
     protected $casts = [
         'documents' => 'array'
     ];
@@ -31,7 +31,7 @@ class RtiApplication extends Model
         $order_by_key = $filter_data['order_by'] ?? 'id';
         $order_by_type = $filter_data['order_by_type'] ?? 'desc';
 
-        $list = RtiApplication::with('service')->orderBy($order_by_key, $order_by_type)->where('appeal_no', 0);
+        $list = RtiApplication::with('service')->orderBy($order_by_key, $order_by_type)->where('process_status', true);
         if (!empty($filters)) {
             foreach ($filters as $key => $filter) {
                 if ($filter != null) {

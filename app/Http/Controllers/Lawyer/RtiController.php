@@ -20,26 +20,41 @@ class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
         if($application_no == null) {
+            if(isset($request->status)) {
+                if($request['status'] == 'all') {
+                    unset($request['status']);
+                }
+                else {
 
+                    $request['status'] =  applicationStatusString()[$request->status];
+                }
+                
+            }
+            else {
+                $request['status'] = 1;
+
+            }
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
-            $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'appeal_no' => 0])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get();
-         
+            $list = RtiApplication::list(true, $request->all());
+            // $second_rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'appeal_no' => 2])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
+            // $first_rti_count = RtiApplication::doesntHave('secondAppeal')->where(['lawyer_id' => auth()->guard('lawyers')->id(), 'appeal_no' => 1])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
+            $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
             $total_rti = ["total" => 0, 'pending' => 0, 'filed' => 0, 'active' => 0];
-
+            // $rti_count = array_merge($rti_count, $second_rti_count);
+            // $rti_count = array_merge($rti_count, $first_rti_count);
+            // print_r(json_encode(  $rti_count ));die;
             foreach($rti_count as $count) {
                 $total_rti['total'] += $count['total'];
                 if($count['status'] == 3) {
-                    $total_rti['filed'] = $count['total'];
+                    $total_rti['filed'] += $count['total'];
                 }
                 else if($count['status'] == 1) {
-                    $total_rti['active'] = $count['total'];
+                    $total_rti['active'] += $count['total'];
                 }
                 else if($count['status'] == 2) {
-                    $total_rti['pending'] = $count['total'];
+                    $total_rti['pending'] += $count['total'];
                 }
             }
-            // print_r(json_encode($rti_count));die;
-            $list = RtiApplication::list(true, $request->all());
             return view('lawyer.dashboard', compact('list', 'total_rti'));
         }
         else {
@@ -64,19 +79,9 @@ class RtiController extends Controller
                     $change_request =  json_decode($data->lastRevision->customer_change_request, true);
                 }
                 $html = RtiApplication::draftedApplication($data);
-            // print_r(json_encode($data ));die;
-
-                // print_r(($service_field_data));
-        //  echo "<pre>";    print_r(($data->id)); die;
+           
               $rti_id =  $data->id;
-                // foreach($service_field_data['field_data'] ?? [] as $key => $value) {
-                //     print_r($key);
-                // }
-                // print_r(json_encode($revision_data));
-                // echo '<br><br>';
-                // print_r(($service_field_data['field_data'] ?? []));die;
-                
-               
+              
             }
             else {
                 abort(404);

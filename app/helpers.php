@@ -56,6 +56,33 @@ function applicationStatus() {
         ];
 }
 
+function lawyerApplicationStatus() {
+    return [
+            1 => [
+                'name' => 'Active',
+                'class' => 'text-warning'
+            ],
+            2 => [
+                'name' => 'Pending',
+                'class' => 'text-info'
+            ],
+            3 => [
+                'name' => 'Filed',
+                'class' => 'text-success'
+            ]
+        ];
+}
+
+
+
+function applicationStatusString() {
+    return [
+            'active' => 1,
+            'pending' => 2,
+            'filed' => 3
+        ];
+}
+
 function paymentStatus() {
     return [
             'pending' => [
