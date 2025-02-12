@@ -103,13 +103,21 @@
                                                             <div class="list_item">Pio Details<span>:</span></div>
                                                             <div class="list_value">{{$data['customer_pio_address'] ?? $data['pio_address']}}</div>
                                                         </li>
-                                                        <li>
+                                                        <!-- <li>
                                                             <div class="list_item">RTI Info<span>:</span></div>
                                                             <div class="list_value">Details Provided by Customer</div>
                                                         </li>
-                                                       
+                                                        -->
                                                     </ul>
-                                                    <div class="more_info">
+                                                    <div class="case_status hide more_info_status">
+                                                        <ul class="case_list">
+                                                            <li>
+                                                                <div class="list_item">Status<span>:</span></div>
+                                                                <div class="list_value"></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="more_info hide">
                                                         <div class="more_info_header">More Info Provided by Client</div>
                                                         <div class="more_info_body">
                                                             <p>Lorem ipsum dolor sit amet consectetur. Imperdiet iaculis pellentesque dictum dui. Tempus viverra lorem nunc convallis aliquam at. Amet cursus sed urna sem.</p>
@@ -153,77 +161,7 @@
                                                     </div>
 
                                                     <!-- for disabled modal remove class active -->
-                                                    <div class="upload_doc_modal active1">
-                                                        <div class="upload_doc_modal_wrap">
-                                                            <div class="modal_header">
-                                                                <h4 class="heading">Attachments</h4>
-                                                                <button class="close">
-                                                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#0F1729"></path>
-                                                                        </svg>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal_body">
-                                                                <div class="modal_area">
-                                                                    <div class="modal_left">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <a href="javascript:void(0);">
-                                                                                    <span class="list_icon">
-                                                                                        <img class="img-fluid" src="images/dashboard/attachment-file.webp" alt="">
-                                                                                    </span>Document Name
-                                                                                </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="javascript:void(0);">
-                                                                                    <span class="list_icon">
-                                                                                        <img class="img-fluid" src="images/dashboard/attachment-file.webp" alt="">
-                                                                                    </span>Document Name
-                                                                                </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="javascript:void(0);">
-                                                                                    <span class="list_icon">
-                                                                                        <img class="img-fluid" src="images/dashboard/attachment-file.webp" alt="">
-                                                                                    </span>Document Name
-                                                                                </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="modal_right">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <a href="javascript:void(0);">
-                                                                                    <span class="list_icon">
-                                                                                        <img class="img-fluid" src="images/dashboard/attachment-file.webp" alt="">
-                                                                                    </span>Document Name
-                                                                                </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="javascript:void(0);">
-                                                                                    <span class="list_icon">
-                                                                                        <img class="img-fluid" src="images/dashboard/attachment-file.webp" alt="">
-                                                                                    </span>Document Name
-                                                                                </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a href="javascript:void(0);">
-                                                                                    <span class="list_icon">
-                                                                                        <img class="img-fluid" src="images/dashboard/attachment-file.webp" alt="">
-                                                                                    </span>Document Name
-                                                                                </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal_action">
-                                                                <a href="javascript:void(0);" class="theme-btn">Preview</a>
-                                                                <a href="javascript:void(0);" class="theme-btn"><span>Download</span></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal_bg"></div>
-                                                    </div>
+                                                  
                                                 </div>
                                             </div>
                                             <div class="lawyer_req_info">
@@ -232,9 +170,9 @@
                                                         <h4>Lawyer Requested Info</h4>
                                                     </div>
                                                     <div class="info_body info_scroll">
-                                                        @foreach(notifictaionList(['linkable_id' => $data->id, 'from_type' => 'customer']) as $item => $value)
+                                                        @foreach($data->rtiQueries as $item => $value)
                                                         <div class="info_msg_wrap">
-                                                            <div class="info_requested">{{$value->message}}</div>
+                                                            <div class="info_requested" > <a href="{{route('lawyer.get-query',[$value->id])}}" data-reply="{{$value->reply}}" data-documents="{{json_encode($value->documents)}}">{{$value->message}}</a></div>
                                                             <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
 
                                                         </div>
@@ -308,6 +246,31 @@
 
 @push('js')
 <script>
+
+    $(document).on('click', '.info_requested a', function(e){
+        e.preventDefault();
+        let href = $(this).attr('href');
+        $.ajax({
+            url : href,
+            dataType : 'json',
+            type : "get",
+            success : function(response) {
+                let reply = response.data.reply;
+                $('.more_info_body p').html(reply);
+                if(response.data.marked_read == 1) {
+
+                    $('.more_info').removeClass('hide');
+                }
+                else {
+                    $('.more_info').addClass('hide');
+
+                }
+                $('.more_info_status').removeClass('hide').find('.list_value').html((response.data.marked_read == 0 ? "Not Replied" : "Customer Replied"))
+
+            }
+        });
+      
+    })
 
 $(document).on('change', '.multiple-document-upload', function () {
     let _this = $(this);

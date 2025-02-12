@@ -16,6 +16,7 @@ use App\Models\LawyerRtiQuery;
 use App\Models\Notification;
 use App\Models\ApplicationCloseRequest;
 use DB;
+
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null) {
@@ -36,13 +37,8 @@ class RtiController extends Controller
             }
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
             $list = RtiApplication::list(true, $request->all());
-            // $second_rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'appeal_no' => 2])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
-            // $first_rti_count = RtiApplication::doesntHave('secondAppeal')->where(['lawyer_id' => auth()->guard('lawyers')->id(), 'appeal_no' => 1])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
             $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
             $total_rti = ["total" => 0, 'pending' => 0, 'filed' => 0, 'active' => 0];
-            // $rti_count = array_merge($rti_count, $second_rti_count);
-            // $rti_count = array_merge($rti_count, $first_rti_count);
-            // print_r(json_encode(  $rti_count ));die;
             foreach($rti_count as $count) {
                 $total_rti['total'] += $count['total'];
                 if($count['status'] == 3) {
@@ -59,7 +55,6 @@ class RtiController extends Controller
         }
         else {
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);
-            // $data = RtiApplication::list(false, $request->all());
             $data = RtiApplication::rtiNumberDetails($request->all());
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];
@@ -81,6 +76,7 @@ class RtiController extends Controller
                 $html = RtiApplication::draftedApplication($data);
            
               $rti_id =  $data->id;
+            
               
             }
             else {
@@ -193,8 +189,8 @@ class RtiController extends Controller
             $data['from_user'] = "lawyer";
             $data['to_user'] = "customer";
 
-            LawyerRtiQuery::create($data);
-            Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
+            $query = LawyerRtiQuery::create($data);
+            Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
             $application = RtiApplication::where(['id' => $application_id])->first();
             SendEmail::dispatch('filed-rti', $application);
 
@@ -277,6 +273,11 @@ class RtiController extends Controller
             return response(['errors' => $th->getMessage()], 500);
 
         }
+    }
+
+    public function getLawyerQuery($query_id) {
+        $data = LawyerRtiQuery::find($query_id);
+        return response(['data' => $data]);
     }
 
 }

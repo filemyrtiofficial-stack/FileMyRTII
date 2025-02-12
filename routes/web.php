@@ -224,6 +224,8 @@ Route::get("subscribe-now", function(){
 		
 		Route::post('approve-change-request/{application_id?}', [LawyerRtiController::class, 'approveChangeRequest'])->name('lawyer.approve-change-request');
 		
+		Route::get('get-query/{query_id?}', [LawyerRtiController::class, 'getLawyerQuery'])->name('lawyer.get-query');
+		
 		
 		
 
