@@ -43,5 +43,10 @@ class Lawyer extends Authenticatable
     public function rtiApplications() {
         return $this->hasMany(RtiApplication::class, 'lawyer_id', 'id');
     }
+    public function lawyerProfile()
+    {
+        return $this->hasOne(LawyerProfile::class, 'lawyer_id', 'id');
+    }
+
     
 }

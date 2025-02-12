@@ -1056,3 +1056,82 @@ function applicationCloseRequestsStatus() {
            
         ];
 }
+
+function commonGenders() {
+    return [
+        'Male' => [
+            'name' => 'Male',
+            'class' => 'text-danger'
+        ],
+        'Female' => [
+            'name' => 'Female',
+            'class' => 'text-success'
+        ],
+        'Other' => [
+            'name' => 'Other',
+            'class' => 'text-success'
+        ]
+        ];
+}
+function maritalStatus() {
+    return [
+        'Single' => [
+            'name' => 'Single',
+            'class' => 'text-danger'
+        ],
+        'Married' => [
+            'name' => 'Married',
+            'class' => 'text-success'
+        ],
+        'Divorced' => [
+            'name' => 'Divorced',
+            'class' => 'text-success'
+        ],
+        'Widowed' => [
+            'name' => 'Widowed',
+            'class' => 'text-success'
+        ],
+        'Separated' => [
+            'name' => 'Separated',
+            'class' => 'text-success'
+        ]
+        ];
+}
+function bloodGroup() {
+    return [
+        'A+' => [
+            'name' => 'A+',
+            'class' => 'text-danger'
+        ],
+        'A-' => [
+            'name' => 'A-',
+            'class' => 'text-success'
+        ],
+        'B+' => [
+            'name' => 'B+',
+            'class' => 'text-success'
+        ],
+        'B-' => [
+            'name' => 'B-',
+            'class' => 'text-success'
+        ],
+        'AB+' => [
+            'name' => 'AB+',
+            'class' => 'text-success'
+        ],
+        'AB-' => [
+            'name' => 'AB-',
+            'class' => 'text-success'
+        ],
+        
+        'O+' => [
+            'name' => 'O+',
+            'class' => 'text-success'
+        ],
+        
+        'O-' => [
+            'name' => 'O-',
+            'class' => 'text-success'
+        ]
+        ];
+}

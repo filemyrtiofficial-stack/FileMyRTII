@@ -52,6 +52,7 @@ class LawyerController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'first_name' => "required",
             'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
@@ -61,8 +62,14 @@ class LawyerController extends Controller
             'qualification' => "required",
             'image' => "required|image",
             'experience' => "required|numeric",
-            'address' => "required"
+            'address' => "required",
+            'alternative_phone_no' => 'numeric|digits:10',
+            'personal_email_id' => 'email',
+            'bank_account_number' => 'numeric'
+
         ]);
+      
+     
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
@@ -90,7 +97,8 @@ class LawyerController extends Controller
     public function edit($id)
     {
         $data = Lawyer::get($id);
-
+        //    echo "<pre>";  print_r($data->lawyerProfile->father_spouse_name); die();
+        // dd($data);
         return view('pages.lawyers.create', compact('data'));
     }
 
@@ -107,12 +115,15 @@ class LawyerController extends Controller
             'first_name' => "required",
             'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
             'phone' => "required|numeric|digits:10",
-            'email' => "required|email|unique:lawyers,email,".$id,
+            'email' => "required|email|unique:lawyers,email,".$id."|regex:/@filemyrti\.com$/",
             'status' => "required",
             'qualification' => "required",
             'image' => "nullable|image",
             'experience' => "required|numeric",
-            'address' => "required"
+            'address' => "required",
+            'alternative_phone_no' => 'nullable|numeric|digits:10',
+            'personal_email_id' => 'email',
+            'bank_account_number' => 'numeric'
 
         ]);
         
