@@ -483,9 +483,25 @@
                                 </div>
                             </div>
 
+                            <div id="thankyou-process" class="contact_faq_tab">
+                                  
+                                <div class="thankyou_msgs text-center">
+                                    <div class="thankyou_img">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/thankyou-img.webp')}}" alt="">
+                                    </div>
+                                    <div class="thankyou_heading">
+                                        <h2>Thank you...!</h2>
+                                    </div>
+                                    <div class="thankyou_msg_detail">
+                                        <p>for approving your RTI Application No. {{$data->application_no}}</p>
+                                        <p>We will file your RTI and inform you shortly</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="signing-process" class="contact_faq_tab">
                                 <div class="contact_form">
-                                    
+                                  
+
                                     <div>
                                         <div class="signing_procedure">
                                             <div class="db_tab_heading">

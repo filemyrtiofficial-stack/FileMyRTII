@@ -226,6 +226,7 @@ Route::get("subscribe-now", function(){
 		
 		Route::get('get-query/{query_id?}', [LawyerRtiController::class, 'getLawyerQuery'])->name('lawyer.get-query');
 		
+		Route::post('upload-final-rti/{application_id?}', [LawyerRtiController::class, 'uploadFinalRTI'])->name('lawyer.upload-final-rti');
 		
 		
 
@@ -270,6 +271,8 @@ Route::get("subscribe-now", function(){
 
 
 	
+	
+	Route::get('/invoice-pdf/{application_no}', [FrontendController::class, 'invoicePdf'])->name('invoice-pdf');
 
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
 

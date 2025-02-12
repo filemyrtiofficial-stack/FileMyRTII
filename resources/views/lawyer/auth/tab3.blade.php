@@ -45,49 +45,33 @@
                         <div class="heading">PIO address give by customer:</div>
                         <div class="content">
                             <p>Public Information Officer</p>
-                            <p>SRM University</p>
-                            <p>Chennai : 400503</p>
+                            <p>
+                                {{!empty($data->customer_pio_address) ? $data->customer_pio_address : "PIO address is not provided by customer"}}
+                            </p>
+                       
                         </div>
                         <div class="pio_action">
                             <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="attachment-popup"><span>View Attachment</span></a>
                         </div>
                     </div>
-                    <!-- <div class="pio_seperator"></div>
-                    <div class="draft_rti_view">
-                        <div class="heading">Search for PIO Address</div>
-                        <div class="content">
-                            <p>Lorem ipsum dolor sit amet consectetur.</p>
-                            <p>Lorem ipsum dolor sit amet consectetur.</p>
-                            <p>Lorem ipsum dolor sit amet consectetur.</p>
-                        </div>
-                        <div class="pio_action pio_address_action">
-                            <a href="javascript:void(0);" class="theme-btn"><span>Select the above address</span></a>
-                        </div>
-                    </div> -->
+                   
                 </div>
             </div>
             <div class="draft_rti_right">
                 <div class="select_draft_wrap">
                     <div class="select_draft">
-                        <select class="form_field" name="" id="">
-                            <option selected value="">Select Draft</option>
-                            <option value="">Property Papers</option>
-                            <option value="">FIR Status</option>
-                            <option value="">Answer Copy</option>
-                            <option value="">Complaint Tracking</option>
-                            <option value="">Income Tax Refund</option>
-                        </select>
+                        <input class="form_field" name="" id="" value="{{$data->service->name ?? ''}}" disabled>
                     </div>
                     <div class="view_draft">
                         <div class="view_draft_area">
-                            <a href="javascript:void(0);" class="download-btn">
+                            <!-- <a href="javascript:void(0);" class="download-btn">
                                 <span class="icon"><img class="img-fluid" src="images/dashboard/download-template.svg" alt=""></span>
                                 Download Template
-                            </a>
+                            </a> -->
                             <div><embed src="{{route('sample-rti-template',$data->service_id)}}" type="" width="100%" height="500"></div>
                             <!-- <img class="img-fluid view_form_img" src="images/dashboard/view_draft.webp" alt=""> -->
                         </div>
-                        <div class="view_draft_heading">Marksheet Verification</div>
+                        <div class="view_draft_heading">{{$data->service->name ?? ''}}</div>
                     </div>
 
                 </div>

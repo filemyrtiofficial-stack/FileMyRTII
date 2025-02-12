@@ -277,11 +277,18 @@ class FrontendController extends Controller
             return response(['step' => 3, 'rti' => $rti]);
         } else {
             $rti = RtiApplication::where(['application_no' => $request->application_no])->first();
-            $service_fields = json_decode($rti->service_fields, true);
-            $service_fields['user_document'] =  $request->documents; //uploadFile($request, 'file', 'user_files');
-            $rti->update(['charges' => $request->charges, 'service_fields' => json_encode($service_fields), 'documents' => $request->documents]);
-            ApplicationStatus::create(['status' => "pending", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
-            return response(['step' => 4, 'rti' => $rti, 'service_fields' => $service_fields]);
+            if($rti && $rti->payment_status != "paid") {
+
+                $service_fields = json_decode($rti->service_fields, true);
+                $service_fields['user_document'] =  $request->documents; //uploadFile($request, 'file', 'user_files');
+                $rti->update(['charges' => $request->charges, 'service_fields' => json_encode($service_fields), 'documents' => $request->documents]);
+                ApplicationStatus::create(['status' => "pending", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
+                return response(['step' => 4, 'rti' => $rti, 'service_fields' => $service_fields]);
+            }
+            else {
+                return response(['errors' => ['error' => "Payment is already done of this application. Please check."]], 422);
+
+            }
         }
     }
 
@@ -448,5 +455,18 @@ class FrontendController extends Controller
         $pdf = PDF::loadView('frontend.profile.sample-rti-template', compact('service'));
         return $pdf->stream();
 
+    }
+
+    public function invoicePdf($application_no = null) {
+   
+        // echo "test";
+
+        $pdf = PDF::loadView('frontend.profile.invoice');
+      
+        return $pdf->stream();
+
+
+        // $pdf = PDF::loadView('frontend.profile.invoice');
+        // $pdf->stream();
     }
 }

@@ -13,7 +13,7 @@ use App\Mail\ApplicationRegister;
 use App\Mail\AssignLawyer;
 use App\Mail\ApproveRti;
 use App\Mail\DraftRTIMail;
-
+use App\Mail\FiledRti;
 use Mail;
 class SendEmail implements ShouldQueue
 {
@@ -51,6 +51,9 @@ class SendEmail implements ShouldQueue
         }
         elseif($this->type == 'draft-rti') {
             $email = new DraftRTIMail($this->details);
+        }
+        elseif($this->type == 'filed-mail') {
+            $email = new FiledRti($this->details);
         }
         else {
             $email = new ApplicationRegister($this->details);

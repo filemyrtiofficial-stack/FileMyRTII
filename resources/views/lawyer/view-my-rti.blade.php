@@ -46,18 +46,26 @@
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab7">Notification</a>
                         </li>
+                        @if($data->status >=2 )
+
                         <li class="contact_faq_item">
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab8">Enter Tracking No</a>
                         </li>
+                        @endif
+                        @if($data->parentFirstAppeal)
                         <li class="contact_faq_item">
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab9">First Appeal</a>
                         </li>
+                        @endif
+                        @if($data->parentSecondAppeal)
+
                         <li class="contact_faq_item">
                             <span class="shape"></span>
                             <a class="faq_list_item" href="#tab10">Second Appeal</a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -120,7 +128,7 @@
                                                     <div class="more_info hide">
                                                         <div class="more_info_header">More Info Provided by Client</div>
                                                         <div class="more_info_body">
-                                                            <p>Lorem ipsum dolor sit amet consectetur. Imperdiet iaculis pellentesque dictum dui. Tempus viverra lorem nunc convallis aliquam at. Amet cursus sed urna sem.</p>
+                                                            <p></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,16 +227,78 @@
                             @include('lawyer.auth.tab6')
 
                             <div id="tab7" class="contact_faq_tab">
-                                
-                            </div>
-                            @include('lawyer.auth.tab8')
+                              
+                                <div class="lawyer_req_info" style="width:100%">
+                                    <div class="req_info_wrap">
+                                        <div class="info_header">
+                                            <h4>Lawyer Requested Info</h4>
+                                        </div>
+                                        <div class="info_body info_scroll">
+                                            @foreach($data->lawyerNotifications as $item => $value)
+                                            <div class="info_msg_wrap">
+                                                <div class="info_requested" > {{$value->message}}</div>
+                                                <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
 
+                                            </div>
+                                            @endforeach
+                                           
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                            @if($data->status >=2 )
+                                @include('lawyer.auth.tab8')
+                            @endif
+
+                            @if($data->parentFirstAppeal)
                             <div id="tab9" class="contact_faq_tab">
-                                
+                                <div class="rti_appeal">
+                                    <div class="db_tab_heading">
+                                        <h2>First Appeal</h2>
+                                    </div>
+                                           
+                                            
+                                        <div class="db_tab_form">
+                                            <div class="db_item_wrap single">
+                                                <div class="form_item">
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->parentFirstAppeal->reason ?? ''}}</textarea>
+                                                </div>
+                                            </div>
+                                            @if($data->parentFirstAppeal->received_appeal == 1)
+                                            <a href="{{filePreview($data->parentFirstAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
+                                            @endif
+                                          
+                                        </div>
+
+                                 
+                                </div>
                             </div>
+                            @endif
+                            @if($data->parentSecondAppeal)
                             <div id="tab10" class="contact_faq_tab">
-                                
+                                <div class="rti_appeal">
+                                    <div class="db_tab_heading">
+                                        <h2>Second Appeal</h2>
+                                    </div>
+                                           
+                                            
+                                        <div class="db_tab_form">
+                                            <div class="db_item_wrap single">
+                                                <div class="form_item">
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->parentSecondAppeal->reason ?? ''}}</textarea>
+                                                </div>
+                                            </div>
+                                            @if($data->parentSecondAppeal->received_appeal == 1)
+                                            <a href="{{filePreview($data->parentSecondAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
+                                            @endif
+                                          
+                                        </div>
+
+                                 
+                                </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                     
@@ -339,6 +409,17 @@ $(document).on('change', '.multiple-document-upload', function () {
       });
 </script>
 <script>
+
+    $(document).on('change', '.upload-final-pdf', function(e) {
+        const file = e.target.files[0];
+        // if (file.type === "application/pdf") {
+            const fileURL = URL.createObjectURL(file);
+            console.log(fileURL)
+            $('#pdfPreview').attr('src', fileURL)
+        // } else {
+        //     alert("Please upload a valid PDF file.");
+        // }
+    })
     renderHtml()
     function renderHtml() {
         let data = $('.draft-form').serializeArray();

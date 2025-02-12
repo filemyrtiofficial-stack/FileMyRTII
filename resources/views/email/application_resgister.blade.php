@@ -10,8 +10,8 @@ Thank you for choosing FileMyRTI! We are please to inform you that your RTI Appl
     <li><strong>Final Submission : </strong> Once approved, we'll notify you before filling your RTI application with th concerned authority.</li>
 </ol>
 <p><strong>Track Your RTI Anytime</strong></p>
-<p>Your can track thr progress of your application at any time user link: <a href="">Track My RTI</a>.</p>
-<p>if you have any questions or need further assistance, please don't hesitate to reach out to us via our <a href="">Contact Us </a> page. We are here to help every step of the way!</p>
+<p>Your can track thr progress of your application at any time user link: <a href="{{route('my-rtis',[$data['application_no'])}}">Track My RTI</a>.</p>
+<p>if you have any questions or need further assistance, please don't hesitate to reach out to us via our <a href="{{url('contact-us')}}">Contact Us </a> page. We are here to help every step of the way!</p>
 <p>Warm regards,</p>
 <p><strong>FileMyRTI Team</strong></p>
 <p>India's Simplest Way to File My RTI</p>

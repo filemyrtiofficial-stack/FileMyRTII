@@ -46,7 +46,7 @@ $service_categories = App\Models\ServiceCategory::list(false, ['ids' => json_dec
 
                                         @foreach($item[0]['services'] ?? [] as $key =>  $item)
                                             <?php $field_data =  json_decode($item->fields, true)?>
-                                            @if(!isset($field_data['create_new_page']) || !isset($field_data['create_new_page']) == 'yes' )
+                                            @if(!isset($field_data['create_new_page']) || (isset($field_data['create_new_page']) && $field_data['create_new_page']== 'yes') )
                                                 <div class="rti_block">
                                                 @if(isset($data['description_enable']) && $data['description_enable'] == 'yes')
                                                     <div class="rti_item">

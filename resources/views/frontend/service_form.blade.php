@@ -201,13 +201,14 @@
                                                     </ul>
                                                 @endforeach
                                             @endif
-                                               
-                                                <ul class="charge_list option_list">
-                                                    <li>Choose An Option</li>
-                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
-                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
-                                                </ul>
-                                            </div>
+                                            
+                                            <ul class="charge_list option_list">
+                                                <li>Choose An Option</li>
+                                                <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
+                                                <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
+                                            </ul>
+                                        </div>
+                                        <p id="error"></p>
                                             <div class="form_action_wrap">
                                                 <div class="form_action">
                                                     <div class="payment_icon">

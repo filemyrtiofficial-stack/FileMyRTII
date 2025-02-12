@@ -75,8 +75,8 @@ class CustomerController extends Controller
             ApplicationStatus::create(['status' => "approved", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
 
             SendEmail::dispatch('approve-rti', $rti);
-            session()->flash('success', "Your rti is successfully sended to lawyer for further process.");
-            return response(['status' => 'success']);
+            // session()->flash('success', "Your rti is successfully sended to lawyer for further process.");
+            return response(['status' => 'success', 'tab' => "thankyou-process"]);
         }
     }
     public function sendChangeRequest(Request $request, $request_id)
@@ -130,6 +130,11 @@ class CustomerController extends Controller
 
         if ($revision) {
             $data = $request->except(['_token']);
+            foreach(json_decode($revision->details, true) ?? [] as $key => $value) {
+                if(!isset($data[$key])) {
+                    $data[$key] = $value;
+                }
+            }
             $revision->update(['customer_change_request' => json_encode($data)]);
             Notification::create(['message' => "You have received change request", 'linkable_type' => "rti-application", 'linkable_id' => $revision->application_id, 'type' => "change-request", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id()]);
 

@@ -91,7 +91,7 @@
             </div>
           </div>
 
-          <div class="error_toast_msg ">  
+          <div class="error_toast_msg @if(session()->has('error')) active @endif">  
             <div class="toast_content">
               <div class="toast_img_wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -100,7 +100,7 @@
               </div>
               <div class="message">
                 <span class="text text-1">Error</span>
-                <span class="text text-2 error-message">Your changes has been saved</span>
+                <span class="text text-2 error-message">@if(session()->has('error')) {{session()->get('error')}} @endif</span>
               </div>
             </div>
           </div>
@@ -113,12 +113,22 @@
     <script src="{{asset('assets/rti/js/custom-script.js')}}"></script>
     @stack('js')
     <script>
+        closeMessagePopup();
+        function closeMessagePopup() {
+            setTimeout(() => {
+            $('.error_toast_msg').removeClass('active');
+            $('.success_toast_msg').removeClass('active');
+
+        }, 2000);
+        }
 
         $(document).on('submit', '.authentication', function(e){
             e.preventDefault();
         let _this = $(this);
         $('.form-error-list').remove();
-        var data = $(this).serialize();
+        // var data = $(this).serialize();
+        var data = new FormData($(this)[0]);
+
         var action = $(this).attr('action');
         var method = $(this).attr('method');
         $.ajaxSetup({
@@ -131,6 +141,9 @@
             data: data,
             type: 'post', // For jQuery < 1.9
             dataType : 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
             success: function(response) {
                   if(response.status == 'success') {
                     // if(response.disabled == true) {
@@ -138,19 +151,22 @@
                     //     // _this.find('button').attr('disbaled', true);
                     //     window.location.reload
                     // }
-                    if(response.redirect) {
+                    if(response.tab != undefined) {
+                        $('.contact_faq_tab').removeClass('active');
+                        $('#'+response.tab).addClass('active');
+
+                    }
+                    else if(response.redirect) {
                         window.location.href = response.redirect;
                     }
                     else if(response.message) {
                         $('.success_toast_msg').addClass('active').find('.success-message').html(response.message);
-                        if(response.clean== undfined || response.clean != "false") {
+                        if(response.clean== undefined || response.clean != "false") {
 
                             _this.find('input').val("");
                         }
-                        setTimeout(() => {
-                            $('.success_toast_msg').removeClass('active');
-
-                        }, 2000);
+                       
+                        closeMessagePopup();
                     }
                     else {
 
@@ -193,14 +209,20 @@
             processData: false,
             type: method, // For jQuery < 1.9
             success: function(response) {
-                $('.success-message').html(response.message);
-                $('.success_toast_msg').addClass('active');
+                if(response.tab != undefined) {
+                    $('.contact_faq_tab').removeClass('active');
+                    $('#'+response.tab).addClass('active');
 
-                setTimeout(() => {
-                    $('.success_toast_msg').removeClass('active');
-                }, 2000);
+                }
+                else {
 
-                    _this.find('input').val(null);
+                    $('.success-message').html(response.message);
+                    $('.success_toast_msg').addClass('active');
+    
+                    closeMessagePopup();
+    
+                        _this.find('input').val(null);
+                }
                   
             },
             error: function(error) {

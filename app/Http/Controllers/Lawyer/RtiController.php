@@ -76,7 +76,7 @@ class RtiController extends Controller
                 $html = RtiApplication::draftedApplication($data);
            
               $rti_id =  $data->id;
-            
+                
               
             }
             else {
@@ -164,9 +164,12 @@ class RtiController extends Controller
                 RtiApplicationTracking::create($data);
                 $revision->rtiApplication()->update(['status' => 3]);
                 ApplicationStatus::create(['status' => "filed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $revision->application_id]);
+                SendEmail::dispatch('filed-mail', $revision->rtiApplication);
 
+           
             }
-            return response(['status' => 'success', 'message' => "Tracking details are successfully added"]);
+            session()->flash('success', "RTI Application ".$revision->rtiApplication->application_no." is successully filed.");
+            return response(['status' => 'success', 'message1' => "Tracking details are successfully added"]);
                 
                 
         } catch (\Throwable $th) {
@@ -193,8 +196,8 @@ class RtiController extends Controller
             Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
             $application = RtiApplication::where(['id' => $application_id])->first();
             SendEmail::dispatch('filed-rti', $application);
-
-            return response(['status' => 'success', 'message' => "Requested Info is sended to user."]);
+            session()->flash('success', 'Requested Info is sended to user.');
+            return response(['status' => 'success']);
                 
                 
         } catch (\Throwable $th) {
@@ -278,6 +281,29 @@ class RtiController extends Controller
     public function getLawyerQuery($query_id) {
         $data = LawyerRtiQuery::find($query_id);
         return response(['data' => $data]);
+    }
+
+    public function uploadFinalRTI(Request $request, $application_id) {
+
+        $validator = Validator::make($request->all(), [
+            'document' => "required",
+        ]);
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        try {
+            $data = uploadFile($request, 'document', 'final-rti');
+            $application = RtiApplication::find($application_id);
+            $application->update(['final_rti_document' => $data]);
+            session()->flash('success', "Document successfully uploaded.");
+            return response(['status' => 'success']);    
+        } catch (\Throwable $th) {
+            return response(['errors' => $th->getMessage()], 500);
+
+        }
+
+      
+
     }
 
 }
