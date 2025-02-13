@@ -1,6 +1,6 @@
-<a class="accord_item" href="#tab6" data-id="tab6">Upload RTI</a>
+<a class="accord_item" href1="#tab6" data-id="tab6" href="{{route('lawyer.my-rti', [$data->application_no, 'upload-rti'])}}">Upload RTI</a>
 
-<div id="tab6" class="contact_faq_tab">
+<div id="tab6" class="contact_faq_tab @if($tab == 'upload-rti')active @endif">
     <div class="upload_rti_lawyer">
         <div class="db_tab_heading">
             <h2>Upload RTI</h2>

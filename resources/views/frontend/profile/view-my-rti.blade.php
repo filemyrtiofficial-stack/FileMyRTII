@@ -36,44 +36,44 @@
             <div class="col-12 col-sm-3">
                 <div class="contact_faq_wrapper">
                     <ul class="contact_faq_list">
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'application-status')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab1">Application Status</a>
+                            <a class="faq_list_item" href1="#tab1" href="{{route('my-rtis', [$data->application_no, 'application-status'])}}">Application Status</a>
                         </li>
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'rti-application')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab2">RTI Application</a>
+                            <a class="faq_list_item" href1="#tab2" href="{{route('my-rtis', [$data->application_no, 'rti-application'])}}">RTI Application</a>
                         </li>
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'your-profile')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab3">Your Profile</a>
+                            <a class="faq_list_item" href1="#tab3" href="{{route('my-rtis', [$data->application_no, 'your-profile'])}}">Your Profile</a>
                         </li>
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'download')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab4">Download</a>
+                            <a class="faq_list_item" href1="#tab4" href="{{route('my-rtis', [$data->application_no, 'download'])}}">Download</a>
                         </li>
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'invoice')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab5">Payment Info & Invoice</a>
+                            <a class="faq_list_item" href1="#tab5" href="{{route('my-rtis', [$data->application_no, 'invoice'])}}">Payment Info & Invoice</a>
                         </li>   
                         
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'first-appeal')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab6">First Appeal</a>
+                            <a class="faq_list_item" href1="#tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
                         </li>
                         @if(addDays(30, $data->created_at) <= Carbon\Carbon::now() && addDays(60, $data->created_at) > Carbon\Carbon::now())
                         @endif
                         
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'second-appeal')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab7">Second Appeal</a>
+                            <a class="faq_list_item" href1="#tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
                         </li>
                         @if(addDays(60, $data->created_at) <= Carbon\Carbon::now())
                         @endif
                         @if($data->lastRtiQuery && $data->lastRtiQuery->marked_read == 0)
-                        <li class="contact_faq_item">
+                        <li class="contact_faq_item @if($tab == 'requested-info')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href="#tab8">More Info Request</a>
+                            <a class="faq_list_item" href1="#tab8" href="{{route('my-rtis', [$data->application_no, 'requested-info'])}}">More Info Request</a>
                         </li>
                         @endif
                        
@@ -90,9 +90,9 @@
                             <h2>Top queries</h2>
                         </div> -->
                         <div class="contact_faq_tab_content lawyer_accordion">
-                            <a class="accord_item" href="#tab1" data-id="tab1">Application Status</a>
+                            <a class="accord_item" href1="#tab1" data-id="tab1" href="{{route('my-rtis', [$data->application_no, 'application-status'])}}">Application Status</a>
 
-                            <div id="tab1" class="contact_faq_tab active">
+                            <div id="tab1" class="contact_faq_tab @if($tab == 'application-status')active @endif">
                                 <div class="application_status">
                                     <div class="db_tab_heading">
                                         <h2>Application Status</h2>
@@ -197,7 +197,7 @@
                                                     <p>*Please approve your drafted RTI Application</p>
                                                 </div>
                                                 <div class="db_tab_status_action">
-                                                    <a class="theme-btn tabings" href="#tab2"><span>Approve RTI</span></a>
+                                                    <a class="theme-btn" href1="#tab2" href="{{route('my-rtis', [$data->application_no, 'rti-application'])}}"><span>Approve RTI</span></a>
                                                 </div>
                                             </div>
                                             @endif
@@ -209,9 +209,9 @@
                                 </div>
                             </div>
 
-                            <a class="accord_item" href="#tab2" data-id="tab2">RTI Application</a>
+                            <a class="accord_item" href1="#tab2" data-id="tab2" href="{{route('my-rtis', [$data->application_no, 'rti-application'])}}">RTI Application</a>
 
-                            <div id="tab2" class="contact_faq_tab">
+                            <div id="tab2" class="contact_faq_tab @if($tab == 'rti-application')active @endif">
                                 @if($data->lastRevision)
                                     <div class="review_application">
                                         <div class="db_tab_heading">
@@ -247,15 +247,15 @@
                                             <div class="waiting_msg">
                                                 <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/waiting.webp')}}" alt="">
                                                 <h4 class="heading">Your RTI is not drafted. Please wait...</h4>
-                                                <a class="theme-btn tabings" href="#tab1"><span>Back</span></a>
+                                                <a class="theme-btn" href1="#tab1" href="{{route('my-rtis', [$data->application_no, 'application-status'])}}"><span>Back</span></a>
                                             </div>          
                                         </div>
                                     </div>
                                 @endif
                             </div>
                           
-                            <a class="accord_item" href="#tab3" data-id="tab3">Your Profile</a>
-                            <div id="tab3" class="contact_faq_tab">
+                            <a class="accord_item" href1="#tab3" data-id="tab3" href="{{route('my-rtis', [$data->application_no, 'your-profile'])}}">Your Profile</a>
+                            <div id="tab3" class="contact_faq_tab @if($tab == 'your-profile')active @endif">
                                 <div class="contact_faq_heading text-center">
                                     <h2>Your Profile</h2>
                                 </div>
@@ -263,9 +263,9 @@
                                     @include('frontend.profile.tab-section.profile')
                                 </div>
                             </div>
-                            <a class="accord_item" href="#tab4" data-id="tab4">Download</a>
+                            <a class="accord_item" href1="#tab4" data-id="tab4" href="{{route('my-rtis', [$data->application_no, 'download'])}}">Download</a>
 
-                            <div id="tab4" class="contact_faq_tab">
+                            <div id="tab4" class="contact_faq_tab @if($tab == 'download')active @endif">
                                 <div class="rti_download">
                                     <div class="db_tab_heading">
                                         <h2>Download RTI Application</h2>
@@ -297,9 +297,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="accord_item" href="#tab5" data-id="tab5">Payment Info & Invoice</a>
+                            <a class="accord_item" href1="#tab5" data-id="tab5" href="{{route('my-rtis', [$data->application_no, 'invoice'])}}">Payment Info & Invoice</a>
 
-                            <div id="tab5" class="contact_faq_tab">
+                            <div id="tab5" class="contact_faq_tab @if($tab == 'invoice')active @endif">
                                 <div class="rti_invoice">
                                     <div class="db_tab_heading">
                                         <h2>Payment Info & Invoice</h2>
@@ -335,9 +335,9 @@
                                     </ul>
                                 </div>
                             </div>
-                            <a class="accord_item" href="#tab6" data-id="tab6">First Appeal</a>
+                            <a class="accord_item" href1="#tab6" data-id="tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
 
-                            <div id="tab6" class="contact_faq_tab">
+                            <div id="tab6" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
                                 <div class="rti_appeal">
                                     <div class="db_tab_heading">
                                         <h2>First Appeal</h2>
@@ -398,9 +398,9 @@
                                     </form>
                                 </div>
                             </div>
-                            <a class="accord_item" href="#tab7" data-id="tab7">Second Appeal</a>
+                            <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
 
-                            <div id="tab7" class="contact_faq_tab">
+                            <div id="tab7" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">
                                 <div class="rti_appeal">
                                     <div class="db_tab_heading">
                                         <h2>What is Second Appeal?</h2>
@@ -463,9 +463,9 @@
                                  
                                 </div>
                             </div>
-                            <a class="accord_item" href="#tab8" data-id="tab8">More Info Request</a>
+                            <a class="accord_item" href1="#tab8" data-id="tab8" href="{{route('my-rtis', [$data->application_no, 'requested-info'])}}">More Info Request</a>
 
-                            <div id="tab8" class="contact_faq_tab">
+                            <div id="tab8" class="contact_faq_tab @if($tab == 'requested-info')active @endif">
                                 <div class="contact_form">
                                     <div class="contact_form_heading">
                                         Lawyer Requested Info
@@ -477,7 +477,7 @@
                                 </div>
                             </div>
 
-                            <div id="edit-request" class="contact_faq_tab">
+                            <div id="edit-request" class="contact_faq_tab @if($tab == 'edit-request')active @endif">
                                 <div class="contact_form">
                                     <div class="contact_form_heading">
                                         RTI Application Details
@@ -507,7 +507,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="signing-process" class="contact_faq_tab">
+                            <div id="signing-process" class="contact_faq_tab @if($tab == 'approve-rti')active @endif">
                                 <div class="contact_form">
                                   
 

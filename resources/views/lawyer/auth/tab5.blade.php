@@ -1,6 +1,6 @@
-<a class="accord_item" href="#tab5" data-id="tab5">Approved RTI</a>
+<a class="accord_item" href1="#tab5" data-id="tab5" href="{{route('lawyer.my-rti', [$data->application_no, 'approved-rti'])}}">Approved RTI</a>
 
-<div id="tab5" class="contact_faq_tab">
+<div id="tab5" class="contact_faq_tab @if($tab == 'approved-rti')active @endif">
     <div class="approve_rti">
         <div class="db_tab_heading">
             <h2>Approved RTI</h2>

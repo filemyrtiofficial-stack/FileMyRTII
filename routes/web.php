@@ -212,23 +212,25 @@ Route::get("subscribe-now", function(){
 		Route::post('logout', [LawyerAuthController::class, 'logout'])->name('lawyer.logout');
 
 
-		Route::get('myrti/{application_no?}', [LawyerRtiController::class, 'myRti'])->name('lawyer.my-rti');
-		Route::get('draft-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.draft-rti');
-		Route::post('draft-rti/{application_no?}', [LawyerRtiController::class, 'processRTIApplication'])->name('lawyer.send-for-approval');
-		Route::post('assign-courier/{revision_id?}', [LawyerRtiController::class, 'assignCourierTracking'])->name('lawyer.assign-courier');
+		Route::group(['middleware' => 'lawyer-auth'], function () {
 
-		Route::post('send-query/{application_id?}', [LawyerRtiController::class, 'sendQuery'])->name('lawyer.send-query');
-		Route::post('send-back-to-admin/{application_id?}', [LawyerRtiController::class, 'sendBackToAdmin'])->name('lawyer.send-back-to-admin');
-		
-		Route::post('assign-pio/{application_id?}', [LawyerRtiController::class, 'assignPIO'])->name('lawyer.assign-pio');
-		
-		Route::post('approve-change-request/{application_id?}', [LawyerRtiController::class, 'approveChangeRequest'])->name('lawyer.approve-change-request');
-		
-		Route::get('get-query/{query_id?}', [LawyerRtiController::class, 'getLawyerQuery'])->name('lawyer.get-query');
-		
-		Route::post('upload-final-rti/{application_id?}', [LawyerRtiController::class, 'uploadFinalRTI'])->name('lawyer.upload-final-rti');
-		
-		
+			Route::get('myrti/{application_no?}/{tab?}', [LawyerRtiController::class, 'myRti'])->name('lawyer.my-rti');
+			Route::get('draft-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.draft-rti');
+			Route::post('draft-rti/{application_no?}', [LawyerRtiController::class, 'processRTIApplication'])->name('lawyer.send-for-approval');
+			Route::post('assign-courier/{revision_id?}', [LawyerRtiController::class, 'assignCourierTracking'])->name('lawyer.assign-courier');
+
+			Route::post('send-query/{application_id?}', [LawyerRtiController::class, 'sendQuery'])->name('lawyer.send-query');
+			Route::post('send-back-to-admin/{application_id?}', [LawyerRtiController::class, 'sendBackToAdmin'])->name('lawyer.send-back-to-admin');
+			
+			Route::post('assign-pio/{application_id?}', [LawyerRtiController::class, 'assignPIO'])->name('lawyer.assign-pio');
+			
+			Route::post('approve-change-request/{application_id?}', [LawyerRtiController::class, 'approveChangeRequest'])->name('lawyer.approve-change-request');
+			
+			Route::get('get-query/{query_id?}', [LawyerRtiController::class, 'getLawyerQuery'])->name('lawyer.get-query');
+			
+			Route::post('upload-final-rti/{application_id?}', [LawyerRtiController::class, 'uploadFinalRTI'])->name('lawyer.upload-final-rti');
+			
+		});
 
 	});
 	
@@ -246,7 +248,7 @@ Route::get("subscribe-now", function(){
 
 	Route::group(['middleware' => 'customer-auth'], function () {
 
-		Route::get('my-rtis/{application_no}', [FrontendCustomerController::class, 'myRti'])->name('my-rtis');
+		Route::get('my-rtis/{application_no}/{tab?}', [FrontendCustomerController::class, 'myRti'])->name('my-rtis');
 		Route::post('change-password', [FrontendAuthController::class, 'changePassword'])->name('customer.change-password');
 		Route::get('my-rti/{application_no?}', [FrontendCustomerController::class, 'myRti'])->name('my-rti');
 		Route::post('approve-rti/{application_no?}', [FrontendCustomerController::class, 'approvedARTI'])->name('approve-rti');

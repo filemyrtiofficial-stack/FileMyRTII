@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\File;
 
 class CustomerController extends Controller
 {
-    public function myRti(Request $request, $application_no = null)
+    public function myRti(Request $request, $application_no = null, $tab = "application-status")
     {
         $payment = Setting::getSettingData('payment');
         if ($application_no == null) {
@@ -56,7 +56,7 @@ class CustomerController extends Controller
             } else {
                 abort(404);
             }
-            return view('frontend.profile.view-my-rti', compact('data', 'revision_data', 'service_fields', 'html', 'list'));
+            return view('frontend.profile.view-my-rti', compact('data', 'revision_data', 'service_fields', 'html', 'list', 'tab'));
         }
     }
 
@@ -263,13 +263,14 @@ class CustomerController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
         $query = LawyerRtiQuery::where(['id' => $request_id])->first();
-        Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
+        Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $query->application_id, 'type' => "more-info", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
 
         $query->update(['reply' => $request->reply, 'documents' => $request->documents, 'marked_read' => true]);
         $documents = $query->rtiApplication->documents ?? [];
-        $documents = array_merge($documents, $request->documents);
+        $documents = array_merge($documents, $request->documents ?? []);
         $query->rtiApplication()->update(['documents'=> $documents]);
-        return response(['status' => 'success', 'message' => "Reply is successfully sended."]);
+        session()->flash('success', "Reply is successfully sended.");
+        return response(['status' => 'success', 'message1' => "Reply is successfully sended."]);
 
     }
     public function paymentRti(Request $request, $application_id = null)

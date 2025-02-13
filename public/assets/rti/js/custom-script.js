@@ -207,29 +207,32 @@
             });
         }
 
-        // contact tabs
-        if ($('.contact_faq_tab_content .contact_faq_tab').length) {
-            const $listItem = $('.contact_faq_list li');
-            $('.contact_faq_tab').first().addClass('active');
-            $listItem.first().addClass('active');
-            $('.contact_faq_list li a').click(function(e) {
-                e.preventDefault();
-                $('.contact_faq_tab').removeClass('active');
-                $listItem.removeClass('active');
-                const targetTab = $(this).attr('href');
-                $(targetTab).addClass('active');
-                $(this).parent().addClass('active');
-                const $activeListItem = $('.contact_faq_list li.active');
-                const $prevItem = $activeListItem.prev();
-                $('.contact_faq_list li:last-child').css('border', 'none');
-                // console.log($activeListItem);
-                if ($prevItem.length) {
-                    $listItem.css('border-bottom','1px solid rgba(212, 212, 212, 0.5)');
-                    $activeListItem.css('border', 'none')
-                    $prevItem.css('border', 'none');
+        if($('.my-rtis').lenght == 0) {
+
+            // contact tabs
+            if ($('.contact_faq_tab_content .contact_faq_tab').length) {
+                const $listItem = $('.contact_faq_list li');
+                $('.contact_faq_tab').first().addClass('active');
+                $listItem.first().addClass('active');
+                $('.contact_faq_list li a').click(function(e) {
+                    e.preventDefault();
+                    $('.contact_faq_tab').removeClass('active');
+                    $listItem.removeClass('active');
+                    const targetTab = $(this).attr('href');
+                    $(targetTab).addClass('active');
+                    $(this).parent().addClass('active');
+                    const $activeListItem = $('.contact_faq_list li.active');
+                    const $prevItem = $activeListItem.prev();
                     $('.contact_faq_list li:last-child').css('border', 'none');
-                }
-            });
+                    // console.log($activeListItem);
+                    if ($prevItem.length) {
+                        $listItem.css('border-bottom','1px solid rgba(212, 212, 212, 0.5)');
+                        $activeListItem.css('border', 'none')
+                        $prevItem.css('border', 'none');
+                        $('.contact_faq_list li:last-child').css('border', 'none');
+                    }
+                });
+            }
         }
 
         // $('.form_yes').hide();
@@ -391,6 +394,20 @@
                 }, 1000)
               });
         }
+        if ($('.overview_click').length) {
+            $('.overview_click').on("click",function(){  
+                $(".overview_data").removeClass('tab-active');
+                $(".overview_data[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
+                $(".overview_click").removeClass('active');
+                $(this).parent().find(".overview_click").addClass('active');
+            });
+        }
+        if ($('.arrow_col').length) {
+            $('.arrow_col').on('click',function () {
+                $('.col_dropdown').toggleClass('active');
+            });
+        }
+  
 })(jQuery);
 
 

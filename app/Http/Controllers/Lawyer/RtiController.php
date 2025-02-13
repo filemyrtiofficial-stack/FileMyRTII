@@ -20,7 +20,7 @@ use DB;
 
 class RtiController extends Controller
 {
-    public function myRti(Request $request, $application_no = null) {
+    public function myRti(Request $request, $application_no = null, $tab="case-details") {
         $lawyerdata = Lawyer::get(auth()->guard('lawyers')->id());
         // dd($lawyerdata);
         if($application_no == null) {
@@ -85,7 +85,7 @@ class RtiController extends Controller
             else {
                 abort(404);
             }
-            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data', 'service_field_data', 'change_request', 'html','lawyerdata'));
+            return view('lawyer.view-my-rti', compact('data', 'service_fields', 'revision_data', 'service_field_data', 'change_request', 'html','lawyerdata', 'tab'));
         }
     }
 

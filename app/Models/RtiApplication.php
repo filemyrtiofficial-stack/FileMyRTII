@@ -203,12 +203,22 @@ class RtiApplication extends Model
 
     public static function razorPayResponse($payment_id) {
 
+            $username = env('RAZORPAY_KEY');
+            $password = env('RAZORPAY_SECRET');
 
-        
-        $result = Http::withBasicAuth(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'))
-        ->get('https://api.razorpay.com/v1/payments/' . $payment_id);
-        // print_r($result);
-        return $result;
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/payments/'.$payment_id);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+
+            $response = curl_exec($ch);
+
+            curl_close($ch);
+            return $response;
+
+
 
     }
     
