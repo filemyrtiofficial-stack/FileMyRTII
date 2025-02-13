@@ -237,8 +237,12 @@
                                     
                                     
                                     </div>
+                                @elseif($data->lastRtiQuery && $data->lastRtiQuery->marked_read == 0)
+                                @include('frontend.profile.tab-section.query-request')
+
                                 @else
                                 
+
                                     <div class="approve_rti">
                                         <div class="db_tab_heading">
                                             <h2>Approved RTI</h2>
@@ -508,6 +512,22 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="thankyou-query-process" class="contact_faq_tab">
+                                  
+                                <div class="thankyou_msgs text-center">
+                                    <div class="thankyou_img">
+                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/thankyou-img.webp')}}" alt="">
+                                    </div>
+                                   
+                                    <div class="thankyou_msg_detail">
+                                    <p>Thank your for submitting more information.</p>
+                                    <p>We will process and get back to you shortly.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div id="signing-process" class="contact_faq_tab @if($tab == 'approve-rti')active @endif">
                                 <div class="contact_form">
                                   

@@ -269,8 +269,8 @@ class CustomerController extends Controller
         $documents = $query->rtiApplication->documents ?? [];
         $documents = array_merge($documents, $request->documents ?? []);
         $query->rtiApplication()->update(['documents'=> $documents]);
-        session()->flash('success', "Reply is successfully sended.");
-        return response(['status' => 'success', 'message1' => "Reply is successfully sended."]);
+        // session()->flash('success', "Reply is successfully sended.");
+        return response(['status' => 'success', 'tab' => "thankyou-query-process"]);
 
     }
     public function paymentRti(Request $request, $application_id = null)
