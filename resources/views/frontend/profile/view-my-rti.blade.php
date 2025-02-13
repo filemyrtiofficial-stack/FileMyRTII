@@ -238,6 +238,7 @@
                                     
                                     </div>
                                 @else
+                                
                                     <div class="approve_rti">
                                         <div class="db_tab_heading">
                                             <h2>Approved RTI</h2>

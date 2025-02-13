@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use PDF;
 use Illuminate\Support\Facades\Http;
-
+use Carbon\Carbon;
+use App\Jobs\SendEmail;
 class RtiApplication extends Model
 {
     use HasFactory;
@@ -226,5 +227,7 @@ class RtiApplication extends Model
 
 
     }
+
+   
     
 }

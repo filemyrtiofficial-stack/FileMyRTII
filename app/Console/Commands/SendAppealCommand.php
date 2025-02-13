@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\RtiApplication;
 use carbon\Carbon;
+use App\Jobs\SendEmail;
 class SendAppealCommand extends Command
 {
     /**
@@ -30,15 +31,28 @@ class SendAppealCommand extends Command
     {
 
         $date = Carbon::now()->subDays('30');
-        $applications = RtiApplication::doesnothave('firstAppeal')->join('application_statuses', 'application_statuses.application_id', '=', 'rti_applications.id')
+        $applications = RtiApplication::WhereDoesntHave('firstAppeal')->join('application_statuses', 'application_statuses.application_id', '=', 'rti_applications.id')
         ->where('rti_applications.appeal_no', 0)
         ->where('application_statuses.status', 'filed')
-        ->wheredate('created_at', $date)->select('application_statuses')
+        ->wheredate('application_statuses.date', $date)
+        ->select('rti_applications.*')
         ->get();
         foreach($applications as $application) {
+            SendEmail::dispatch('first-appeal-follow-up', $application);
 
         }
 
-        // return Command::SUCCESS;
+        $date = Carbon::now()->subDays('45');
+        $applications = RtiApplication::WhereDoesntHave('firstAppeal')->join('application_statuses', 'application_statuses.application_id', '=', 'rti_applications.id')
+        ->where('rti_applications.appeal_no', 0)
+        ->where('application_statuses.status', 'filed')
+        ->wheredate('application_statuses.date', $date)
+        ->select('rti_applications.*')
+        ->get();
+        foreach($applications as $application) {
+            SendEmail::dispatch('first-appeal-follow-up', $application);
+
+        }
+
     }
 }

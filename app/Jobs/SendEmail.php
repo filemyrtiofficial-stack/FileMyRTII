@@ -14,6 +14,9 @@ use App\Mail\AssignLawyer;
 use App\Mail\ApproveRti;
 use App\Mail\DraftRTIMail;
 use App\Mail\FiledRti;
+use App\Mail\FirstAppealFollowUpMail;
+use App\Mail\SecondAppealFollowUpMail;
+
 use Mail;
 class SendEmail implements ShouldQueue
 {
@@ -54,6 +57,12 @@ class SendEmail implements ShouldQueue
         }
         elseif($this->type == 'filed-mail') {
             $email = new FiledRti($this->details);
+        }
+        elseif($this->type == 'first-appeal-follow-up') {
+            $email = new FirstAppealFollowUpMail($this->details);
+        }
+        elseif($this->type == 'second-appeal-follow-up') {
+            $email = new SecondAppealFollowUpMail($this->details);
         }
         else {
             $email = new ApplicationRegister($this->details);
