@@ -1,3 +1,5 @@
+<a class="accord_item" href="#tab5" data-id="tab5">Approved RTI</a>
+
 <div id="tab5" class="contact_faq_tab">
     <div class="approve_rti">
         <div class="db_tab_heading">

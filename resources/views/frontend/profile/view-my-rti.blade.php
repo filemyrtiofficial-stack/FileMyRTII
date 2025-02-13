@@ -28,7 +28,7 @@
         </header>
 
 
-<section class="contact_section dbtab_section">
+<section class="contact_section dbtab_section lawyer_db_section">
     
     <div class="container">
         <div class="row">
@@ -88,7 +88,9 @@
                         <!-- <div class="contact_faq_heading">
                             <h2>Top queries</h2>
                         </div> -->
-                        <div class="contact_faq_tab_content">
+                        <div class="contact_faq_tab_content lawyer_accordion">
+                            <a class="accord_item" href="#tab1" data-id="tab1">Application Status</a>
+
                             <div id="tab1" class="contact_faq_tab active">
                                 <div class="application_status">
                                     <div class="db_tab_heading">
@@ -206,56 +208,52 @@
                                 </div>
                             </div>
 
-                        
-                            <div id="tab2" class="contact_faq_tab">
-                                    
-                            @if($data->lastRevision)
-                                <div class="review_application">
-                                    <div class="db_tab_heading">
-                                        <h2>Review Your Application: Check Your Drafted RTI</h2>
-                                    </div>
-                                    <div class="db_tab_review">
-                                        <div class="review_wrap">
-                                            <div class="review">
-                                                {!! $html !!}
-                                            </div>
-                                        </div>
-                                        <div class="review_action">
-                                            <a href="{{route('customer.download-rti', $data->application_no)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download PDF</span></a>
-                                        </div>
-                                        @if(empty($data->signature_image) && $data->lastRevision && empty($data->lastRevision->customer_change_request))
-                                        <ol class="review_option">
-                                            <li class="option_no"><span>Edit if Needed - Click "<a class="tabings" href="#edit-request">Edit</a>" to Make Changes</span></li>
-                                            <li class="option_no"><span>Proceed to Sign - If Satisfied, Click</span><a href="#signing-process" class="theme-btn tabings"><span>Proceed for Signing</span></a></li>
-                                        </ol>
-                                      
-                                        @endif
-                                    </div>
-                                  
-                                  
-                                </div>
-                            
-                            @else
-                            <div class="approve_rti">
-                                <div class="db_tab_heading">
-                                    <h2>Approved RTI</h2>
-                                </div>
-                                <div class="approval_view">
-                                
-                                    <div class="waiting_msg">
-                                        <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/waiting.webp')}}" alt="">
-                                        <h4 class="heading">Your RTI is not drafted. Please wait...</h4>
-                                        <a class="theme-btn tabings" href="#tab1"><span>Back</span></a>
-                                    </div>          
-                                </div>
-                            </div>
-            
+                            <a class="accord_item" href="#tab2" data-id="tab2">RTI Application</a>
 
-                            @endif
-                                
-                             
+                            <div id="tab2" class="contact_faq_tab">
+                                @if($data->lastRevision)
+                                    <div class="review_application">
+                                        <div class="db_tab_heading">
+                                            <h2>Review Your Application: Check Your Drafted RTI</h2>
+                                        </div>
+                                        <div class="db_tab_review">
+                                            <div class="review_wrap">
+                                                <div class="review">
+                                                    {!! $html !!}
+                                                </div>
+                                            </div>
+                                            <div class="review_action">
+                                                <a href="{{route('customer.download-rti', $data->application_no)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download PDF</span></a>
+                                            </div>
+                                            @if(empty($data->signature_image) && $data->lastRevision && empty($data->lastRevision->customer_change_request))
+                                            <ol class="review_option">
+                                                <li class="option_no"><span>Edit if Needed - Click "<a class="tabings" href="#edit-request">Edit</a>" to Make Changes</span></li>
+                                                <li class="option_no"><span>Proceed to Sign - If Satisfied, Click</span><a href="#signing-process" class="theme-btn tabings"><span>Proceed for Signing</span></a></li>
+                                            </ol>
+                                        
+                                            @endif
+                                        </div>
+                                    
+                                    
+                                    </div>
+                                @else
+                                    <div class="approve_rti">
+                                        <div class="db_tab_heading">
+                                            <h2>Approved RTI</h2>
+                                        </div>
+                                        <div class="approval_view">
+                                        
+                                            <div class="waiting_msg">
+                                                <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/waiting.webp')}}" alt="">
+                                                <h4 class="heading">Your RTI is not drafted. Please wait...</h4>
+                                                <a class="theme-btn tabings" href="#tab1"><span>Back</span></a>
+                                            </div>          
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                           
+                            <a class="accord_item" href="#tab3" data-id="tab3">Your Profile</a>
                             <div id="tab3" class="contact_faq_tab">
                                 <div class="contact_faq_heading text-center">
                                     <h2>Your Profile</h2>
@@ -264,6 +262,8 @@
                                     @include('frontend.profile.tab-section.profile')
                                 </div>
                             </div>
+                            <a class="accord_item" href="#tab4" data-id="tab4">Download</a>
+
                             <div id="tab4" class="contact_faq_tab">
                                 <div class="rti_download">
                                     <div class="db_tab_heading">
@@ -296,6 +296,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <a class="accord_item" href="#tab5" data-id="tab5">Payment Info & Invoice</a>
+
                             <div id="tab5" class="contact_faq_tab">
                                 <div class="rti_invoice">
                                     <div class="db_tab_heading">
@@ -332,6 +334,8 @@
                                     </ul>
                                 </div>
                             </div>
+                            <a class="accord_item" href="#tab6" data-id="tab6">First Appeal</a>
+
                             <div id="tab6" class="contact_faq_tab">
                                 <div class="rti_appeal">
                                     <div class="db_tab_heading">
@@ -393,6 +397,8 @@
                                     </form>
                                 </div>
                             </div>
+                            <a class="accord_item" href="#tab7" data-id="tab7">Second Appeal</a>
+
                             <div id="tab7" class="contact_faq_tab">
                                 <div class="rti_appeal">
                                     <div class="db_tab_heading">
@@ -456,6 +462,8 @@
                                  
                                 </div>
                             </div>
+                            <a class="accord_item" href="#tab8" data-id="tab8">More Info Request</a>
+
                             <div id="tab8" class="contact_faq_tab">
                                 <div class="contact_form">
                                     <div class="contact_form_heading">

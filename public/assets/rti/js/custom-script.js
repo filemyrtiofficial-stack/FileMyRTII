@@ -371,7 +371,26 @@
             let id = $(this).attr('href');
             $(id).addClass('active').siblings().removeClass('active');
     
-        })
+        });
+        if ($('.lawyer_db_section .lawyer_accordion').length) {
+            $('.accord_item').on('click', function() {
+                $('.contact_faq_tab').slideUp();
+                $('.accord_item').removeClass('active');
+                $(this).addClass('active');
+                $(this).next('.contact_faq_tab').slideDown();
+                const target = $(this).attr('data-id');
+                setTimeout(function() {
+                    const $targetElement = $('#' + target);
+                    if ($targetElement.length) {
+                  $('html, body').animate({
+                    scrollTop: $($('#'+target)).offset().top - 200
+                  }, 0);
+                } else {
+                    console.error("Element with ID '" + target + "' not found.");
+                    }
+                }, 1000)
+              });
+        }
 })(jQuery);
 
 

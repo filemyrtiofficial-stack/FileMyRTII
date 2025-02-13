@@ -1,3 +1,5 @@
+<a class="accord_item" href="#tab6" data-id="tab6">Upload RTI</a>
+
 <div id="tab6" class="contact_faq_tab">
     <div class="upload_rti_lawyer">
         <div class="db_tab_heading">

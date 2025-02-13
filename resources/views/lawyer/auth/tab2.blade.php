@@ -1,3 +1,5 @@
+<a class="accord_item" href="#tab2" data-id="tab2">PIO Address</a>
+
 <div id="tab2" class="contact_faq_tab">
     <div class="pio_address">
         <div class="db_tab_heading">

@@ -72,7 +72,9 @@
             <div class="col-12 col-sm-9">
                 <div class="contact_wrapper db_tab_wrapper">
                     <div class="contact_faq">
-                        <div class="contact_faq_tab_content">
+                        <div class="contact_faq_tab_content lawyer_accordion">
+                        <a class="accord_item" href="#tab1" data-id="tab1">Case Details</a>
+
                             <div id="tab1" class="contact_faq_tab active">
                                 <div class="case_details">
                                     <div class="db_tab_heading">
@@ -226,6 +228,8 @@
                             
                             @include('lawyer.auth.tab6')
 
+                            <a class="accord_item" href="#tab7" data-id="tab7">Notification</a>
+
                             <div id="tab7" class="contact_faq_tab">
                               
                                 <div class="lawyer_req_info" style="width:100%">
@@ -252,6 +256,8 @@
                             @endif
 
                             @if($data->parentFirstAppeal)
+                            <a class="accord_item" href="#tab9" data-id="tab9">First Appeal</a>
+
                             <div id="tab9" class="contact_faq_tab">
                                 <div class="rti_appeal">
                                     <div class="db_tab_heading">
@@ -276,6 +282,8 @@
                             </div>
                             @endif
                             @if($data->parentSecondAppeal)
+                            <a class="accord_item" href="#tab10" data-id="tab10">Second Appeal</a>
+
                             <div id="tab10" class="contact_faq_tab">
                                 <div class="rti_appeal">
                                     <div class="db_tab_heading">
@@ -286,7 +294,7 @@
                                         <div class="db_tab_form">
                                             <div class="db_item_wrap single">
                                                 <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->parentSecondAppeal->reason ?? ''}}</textarea>
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->parentSecondAppeal->reason ?? ''}}</textarea>
                                                 </div>
                                             </div>
                                             @if($data->parentSecondAppeal->received_appeal == 1)

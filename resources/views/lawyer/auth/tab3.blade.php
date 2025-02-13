@@ -1,3 +1,5 @@
+<a class="accord_item" href="#tab3" data-id="tab3">Draft RTI</a>
+
 <div id="tab3" class="contact_faq_tab">
     <div class="rti_application draft_rti">
         <div class="db_tab_heading">
