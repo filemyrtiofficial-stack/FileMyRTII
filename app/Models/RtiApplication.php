@@ -207,7 +207,7 @@ class RtiApplication extends Model
         
         $result = Http::withBasicAuth(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'))
         ->get('https://api.razorpay.com/v1/payments/' . $payment_id);
-        print_r($result);
+        // print_r($result);
         return $result;
 
     }
