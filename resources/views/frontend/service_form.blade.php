@@ -20,8 +20,8 @@
                         <div class="col-12 col-sm-12">
                             <div class="breadcrumb">
                                <ol>
-                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <li class="fs-24"><a href="javascript:void(0);">{{$service_category->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="{{ url('/') }}">Home</a></li>
+                                <li class="fs-24"><a href="{{ url('/'.$service_category->slug->slug ?? '') }}">{{$service_category->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$service->name ?? ''}}</li>
                                </ol>
                             </div>
