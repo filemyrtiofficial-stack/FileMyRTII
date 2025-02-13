@@ -212,7 +212,10 @@
                             @include('lawyer.auth.tab2')
                           
                             @include('lawyer.auth.tab3')
-                            @include('lawyer.auth.tab4')
+                            @if($data->status < 2 )
+
+                                @include('lawyer.auth.tab4')
+                            @endif
 
 
                             <div id="tab100" class="contact_faq_tab">
