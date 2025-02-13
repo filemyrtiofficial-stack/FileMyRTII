@@ -164,6 +164,7 @@ class RtiController extends Controller
                 $data['documents'] = $request->documents;
                 $data['application_id'] = $revision->application_id;
                 $data['revision_id'] = $revision->id;
+                $data['lawyer_id'] = auth()->guard('lawyers')->id();
                 RtiApplicationTracking::create($data);
                 $revision->rtiApplication()->update(['status' => 3]);
                 ApplicationStatus::create(['status' => "filed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $revision->application_id]);

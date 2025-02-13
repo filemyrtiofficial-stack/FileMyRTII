@@ -182,7 +182,7 @@
 
                                         @if($item->courierTracking)
                                                 <div class="track_wrap">
-                                                    <div class="track_no">Postal Tracking No: <a href="javascript:void(0);">{{$data->courierTracking->courier_tracking_number ?? ''}}</a></div>
+                                                    <div class="track_no">Postal Tracking No: <a href="javascript:void(0);">{{$item->courierTracking->courier_tracking_number ?? ''}}</a></div>
                                                     <div class="track_note">
                                                         <p><strong>NOTE:</strong> As per the RTI Act, 2005, the information should reach you within 30 days of filing. In majority of the cases information reaches only after 40-50 days.</p>
                                                     </div>

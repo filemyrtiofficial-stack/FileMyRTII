@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use PDF;
+use Illuminate\Support\Facades\Http;
 
 class RtiApplication extends Model
 {
@@ -197,6 +198,18 @@ class RtiApplication extends Model
   
     public function lawyerNotifications() {
         return $this->hasMany(Notification::class, 'linkable_id','id')->where(['linkable_type' => 'rti-application', 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
+    }
+
+
+    public static function razorPayResponse($payment_id) {
+
+
+        
+        $result = Http::withBasicAuth(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'))
+        ->get('https://api.razorpay.com/v1/payments/' . $payment_id);
+        print_r($result);
+        return $result;
+
     }
     
 }

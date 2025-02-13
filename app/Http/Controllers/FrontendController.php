@@ -29,6 +29,8 @@ use App\Jobs\SendEmail;
 use App\Models\ApplicationStatus;
 use Carbon\Carbon;
 use PDF;
+use App\Mail\ApplicationRegister;
+
 class FrontendController extends Controller
 {
     public function index($slug = null)
@@ -336,10 +338,14 @@ class FrontendController extends Controller
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
             $payment = $api->payment->fetch($paymentResponse['razorpay_payment_id']);
             $response = $payment->capture(['amount' => $payment['amount']]);
+            $response = RtiApplication::razorPayResponse($paymentResponse['razorpay_payment_id']);
+
             $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => json_encode($response), 'status' => 1, 'payment_status' => 'paid']);
 
             Session::flash('success', 'Payment Successful');
             DB::commit();
+         
+
             SendEmail::dispatch('application-register', $rti);
 
             $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
@@ -459,11 +465,16 @@ class FrontendController extends Controller
 
     public function invoicePdf($application_no = null) {
    
+        $application = RtiApplication::where(['application_no' => $application_no])->first();
+        $email = new ApplicationRegister($application);
+        Mail::to($application['email'])->send($email);
+
+
         // echo "test";
 
-        $pdf = PDF::loadView('frontend.profile.invoice');
+        // $pdf = PDF::loadView('frontend.profile.invoice');
       
-        return $pdf->stream();
+        // return $pdf->stream();
 
 
         // $pdf = PDF::loadView('frontend.profile.invoice');
