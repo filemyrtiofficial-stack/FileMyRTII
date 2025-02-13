@@ -200,6 +200,11 @@ class RtiApplication extends Model
         return $this->hasMany(Notification::class, 'linkable_id','id')->where(['linkable_type' => 'rti-application', 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
     }
 
+    public function filedTime() {
+        return $this->hasOne(ApplicationStatus::class, 'application_id','id')->where(['status' => 'filed']);
+    }
+
+
 
     public static function razorPayResponse($payment_id) {
 

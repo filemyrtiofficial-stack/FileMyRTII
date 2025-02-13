@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\RtiApplication;
+use carbon\Carbon;
 class SendAppealCommand extends Command
 {
     /**
@@ -11,7 +12,7 @@ class SendAppealCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:send-appeal-notification';
 
     /**
      * The console command description.
@@ -27,6 +28,17 @@ class SendAppealCommand extends Command
      */
     public function handle()
     {
-        return Command::SUCCESS;
+
+        $date = Carbon::now()->subDays('30');
+        $applications = RtiApplication::doesnothave('firstAppeal')->join('application_statuses', 'application_statuses.application_id', '=', 'rti_applications.id')
+        ->where('rti_applications.appeal_no', 0)
+        ->where('application_statuses.status', 'filed')
+        ->wheredate('created_at', $date)->select('application_statuses')
+        ->get();
+        foreach($applications as $application) {
+
+        }
+
+        // return Command::SUCCESS;
     }
 }

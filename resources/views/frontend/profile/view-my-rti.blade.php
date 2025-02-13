@@ -61,14 +61,14 @@
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
                         </li>
-                        @if(addDays(30, $data->created_at) <= Carbon\Carbon::now() && addDays(60, $data->created_at) > Carbon\Carbon::now())
+                        @if($data->filedTime && addDays(30, $data->filedTime->created_at) <= Carbon\Carbon::now() && addDays(60, $data->filedTime->created_at) > Carbon\Carbon::now())
                         @endif
                         
                         <li class="contact_faq_item @if($tab == 'second-appeal')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
                         </li>
-                        @if(addDays(60, $data->created_at) <= Carbon\Carbon::now())
+                        @if($data->filedTime && addDays(60, $data->filedTime->created_at) <= Carbon\Carbon::now())
                         @endif
                         @if($data->lastRtiQuery && $data->lastRtiQuery->marked_read == 0)
                         <li class="contact_faq_item @if($tab == 'requested-info')active @endif">
@@ -139,7 +139,7 @@
                 
 
                                         <ul class="status_bar">
-                                            <li @if($item->status >= 1) class="active" @endif>
+                                            <li @if($item->status >= 1) class="active done" @endif>
                                                 <div class="bar_item">
                                                     <div class="number">
                                                         <div class="bar_icon">
@@ -152,7 +152,7 @@
                                                     <span>Started</span>
                                                 </div>
                                             </li>
-                                            <li @if($item->status >= 2) class="active" @endif  >
+                                            <li @if($item->status >= 2) class="active done" @endif  >
                                                 <div class="bar_item">
                                                     <div class="number">
                                                         <div class="bar_icon">
@@ -165,7 +165,7 @@
                                                     <span>Approval</span>
                                                 </div>
                                             </li>
-                                            <li @if($item->status == 3) class="active" @endif >
+                                            <li @if($item->status == 3) class="active done" @endif >
                                                 <div class="bar_item">
                                                     <div class="number">
                                                         <div class="bar_icon">

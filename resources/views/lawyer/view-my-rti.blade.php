@@ -140,7 +140,9 @@
                                                     </div>
                                                     <div class="tab_action_bottom">
                                                         <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="lawyer-request"><span>More Information Required</span></a>
-                                                        <a class="theme-btn tabings" href="#tab4"><span>Draft This Application</span></a>
+                                                        @if($data->status < 2 )
+                                                        <a class="theme-btn " href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no, 'drafted-rti'])}}"><span>Draft This Application</span></a>
+                                                        @endif
                                                         <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="admin-request"><span>Send Back To Admin</span></a>
                                                     </div>
                                                     <!-- for disabled modal remove class active -->
