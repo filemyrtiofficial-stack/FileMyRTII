@@ -4,7 +4,7 @@
 <form action="{{route('settings.store')}}" method="post" class="form-submit">
 @csrf
 
-<input type="hidden" name="type" value="header-footer-setting">
+<input type="hidden" name="type" value="invoice-setting">
 
     <div class="d-flex justify-content-center mb-5">
         <div class="col-lg-9 mt-lg-0 mt-4">

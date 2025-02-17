@@ -10,12 +10,13 @@ use PDF;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use App\Jobs\SendEmail;
+
 class RtiApplication extends Model
 {
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio', 'customer_pio_address', 'process_status', 'final_rti_document'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio', 'customer_pio_address', 'process_status', 'final_rti_document','invoice_number','invoice_path'];
     protected $casts = [
         'documents' => 'array'
     ];
@@ -63,7 +64,7 @@ class RtiApplication extends Model
             });
         }
         if ($pagination) {
-            return $list->paginate(10);
+            return $list->paginate(20);
         } else {
             return $list->get();
         }
@@ -154,23 +155,32 @@ class RtiApplication extends Model
     {
         return $this->hasMany(LawyerRtiQuery::class, 'application_id', 'id')->orderBy('id', 'desc');
     }
-    
-    public static function ApplicationPaymentInvoice($company,$application,$paymentdata,$fileName,$logo)
+
+    public static function ApplicationPaymentInvoice($application,$fileName)
     {
-       
+
 
         if ($application) {
 
-           
-            // $pdf = PDF::loadView('frontend.profile.application-payment-Invoice', compact('payment', 'application'));
-            $pdf = PDF::loadView('frontend.profile.invoice',compact('company','application','paymentdata','logo') );
-     
-   // Set paper size to A4 (customize orientation if needed)
-   $pdf->setPaper('A4', 'portrait');  // Or 'landscape' for landscape mode
 
-   // Render PDF (first pass)
-//    $pdf->render();
-   $pdf->stream();
+
+            $company = Setting::getSettingData('invoice-setting');
+
+            $paymentdata = json_decode($application->success_response, true);
+
+            $logo = asset($company['invoice_logo'] ?? '');
+
+            $signature = public_path($company['invoice_logo'] ?? '');
+            $logo = "data:image/png;base64," . base64_encode(file_get_contents($signature));
+         
+
+            $pdf = PDF::loadView('frontend.profile.invoice', compact('company', 'application', 'paymentdata', 'logo'));
+
+            // Set paper size to A4 (customize orientation if needed)
+            $pdf->setPaper('A4', 'portrait');  // Or 'landscape' for landscape mode
+
+
+            $pdf->stream();
             // Define the path to the public folder directly
             $path = public_path('upload/pdf/' . $fileName);
 
@@ -178,61 +188,63 @@ class RtiApplication extends Model
             File::put($path, $pdf->output());
 
             // Return the URL to the saved file
-                $fileUrl = asset('pdfs/' . $fileName);
+            $fileUrl = 'upload/pdf/' . $fileName;
             return   $fileUrl;
         }
     }
 
-    public function closeRequest() {
-        return $this->hasone(ApplicationCloseRequest::class, 'application_id','id')->where('lawyer_id', auth()->guard('lawyers')->id());
+    public function closeRequest()
+    {
+        return $this->hasone(ApplicationCloseRequest::class, 'application_id', 'id')->where('lawyer_id', auth()->guard('lawyers')->id());
     }
 
-    public function firstAppeal() {
-        return $this->hasone(RtiApplication::class, 'application_no','application_no')->where('appeal_no', 1);
+    public function firstAppeal()
+    {
+        return $this->hasone(RtiApplication::class, 'application_no', 'application_no')->where('appeal_no', 1);
     }
 
-    public function secondAppeal() {
-        return $this->hasone(RtiApplication::class, 'application_no','application_no')->where('appeal_no', 2);
-    }
-  
-    public function parentFirstAppeal() {
-        return $this->hasone(RtiAppeal::class, 'application_id','application_id')->where('appeal_no', 1);
-    }
-    public function parentSecondAppeal() {
-        return $this->hasone(RtiAppeal::class, 'application_id','application_id')->where('appeal_no', 2);
-    }
-  
-    public function lawyerNotifications() {
-        return $this->hasMany(Notification::class, 'linkable_id','id')->where(['linkable_type' => 'rti-application', 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
+    public function secondAppeal()
+    {
+        return $this->hasone(RtiApplication::class, 'application_no', 'application_no')->where('appeal_no', 2);
     }
 
-    public function filedTime() {
-        return $this->hasOne(ApplicationStatus::class, 'application_id','id')->where(['status' => 'filed']);
+    public function parentFirstAppeal()
+    {
+        return $this->hasone(RtiAppeal::class, 'application_id', 'application_id')->where('appeal_no', 1);
+    }
+    public function parentSecondAppeal()
+    {
+        return $this->hasone(RtiAppeal::class, 'application_id', 'application_id')->where('appeal_no', 2);
+    }
+
+    public function lawyerNotifications()
+    {
+        return $this->hasMany(Notification::class, 'linkable_id', 'id')->where(['linkable_type' => 'rti-application', 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
+    }
+
+    public function filedTime()
+    {
+        return $this->hasOne(ApplicationStatus::class, 'application_id', 'id')->where(['status' => 'filed']);
     }
 
 
 
-    public static function razorPayResponse($payment_id) {
+    public static function razorPayResponse($payment_id)
+    {
 
-            $username = env('RAZORPAY_KEY');
-            $password = env('RAZORPAY_SECRET');
+        $username = env('RAZORPAY_KEY');
+        $password = env('RAZORPAY_SECRET');
 
-            $ch = curl_init();
+        $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/payments/'.$payment_id);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+        curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/payments/' . $payment_id);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
 
-            $response = curl_exec($ch);
+        $response = curl_exec($ch);
 
-            curl_close($ch);
-            return $response;
-
-
-
+        curl_close($ch);
+        return $response;
     }
-
-   
-    
 }

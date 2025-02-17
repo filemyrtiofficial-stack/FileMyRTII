@@ -188,7 +188,7 @@
                   text-align: left;
                 }
                 .billing {
-                  width: 80%;
+                  width: 90%;
                   margin-left: auto;
                 }
                 .billing .address {
@@ -287,7 +287,7 @@
                       </div>
                       <div class="col_right">
                         <div class="address_wrap">
-                          <h2 class="address_heading">Company Name</h2>
+                          <h2 class="address_heading">{{$company['company_name'] ?? ''}}</h2>
                           <div class="address">
                            
                             {{$company['address'] ?? ''}}
@@ -315,21 +315,10 @@
                       <div class="col_right">
                         <div class="billing">
                           <div class="address">
-                            Invoice Number: RTI-{{$application->application_no ?? ''}} <br>
+                            Invoice Number: {{$application->invoice_number ?? ''}} <br>
                             <div class="s_space"></div>
-                            @php
-                            $date = Carbon\Carbon::parse($application->created_at); // Parse the created_at date
-                            $day = $date->day; // Get the day part of the date
-
-                            // Determine the suffix (st, nd, rd, th)
-                            $suffix = match (true) {
-                            $day % 10 == 1 && $day != 11 => 'st',
-                            $day % 10 == 2 && $day != 12 => 'nd',
-                            $day % 10 == 3 && $day != 13 => 'rd',
-                            default => 'th',
-                            };
-                            @endphp
-                            Date:{{ $date->format('F') }} {{ $day }}{{ $suffix }} {{ $date->format('Y') }}
+                          
+                            Date: {{ InvoiceDate($application->created_at) }}
                          <br>
                             <div class="s_space"></div>
                             Paid: {{ $paymentdata['method']}} <br>
