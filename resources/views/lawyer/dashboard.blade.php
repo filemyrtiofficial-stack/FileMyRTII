@@ -56,9 +56,9 @@
 
                             <div class="col_dropdown">
                                 <ul>
-                                    <li> <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="personal_detail_modal" > <span> <img src="{{asset('assets/rti/images/dashboard-overview/user-new.png')}}" alt=""> </span> Profile Edit </a> </li>
-                                    <li> <a href="javascript:void(0);"  class="change-password-modal"> <span> <img src="{{asset('assets/rti/iimages/dashboard-overview/password.png')}}" alt=""> </span> Change Password</a> </li>
-                                    <li> <a href="javascript:void(0);"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span> <img src="{{asset('assets/rti/iimages/dashboard-overview/log-out.png')}}" alt=""> </span> Log Out </a> </li>
+                                    <li> <a href="javascript:void(0);" class="rti-popup" data-id="personal_detail_modal" > <span class="icon"> <img class="img-fluid" src="{{asset('assets/rti/images/dashboard-overview/user-new.png')}}" alt=""> </span> Profile Edit </a> </li>
+                                    <li> <a href="javascript:void(0);"  class="change-password-modal"> <span class="icon"> <img src="{{asset('assets/rti/iimages/dashboard-overview/password.png')}}" alt=""> </span> Change Password</a> </li>
+                                    <li> <a href="javascript:void(0);"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span class="icon"> <img src="{{asset('assets/rti/iimages/dashboard-overview/log-out.png')}}" alt=""> </span> Log Out </a> </li>
 
 
 

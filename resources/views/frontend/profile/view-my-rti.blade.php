@@ -84,7 +84,7 @@
                 <div class="section_heading">
                     <h2>Application No: {{$data->application_no ?? ''}}</h2>
                 </div>
-                <div class="contact_wrapper">
+                <div class="contact_wrapper db_tab_wrapper">
                     <div class="contact_faq">
                         <!-- <div class="contact_faq_heading">
                             <h2>Top queries</h2>

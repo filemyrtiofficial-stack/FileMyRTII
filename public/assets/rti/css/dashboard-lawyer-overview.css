@@ -65,6 +65,8 @@
     align-items: center;
     justify-content: center;
     /* padding: 53px; */
+    font-size: 2.08333vw;
+    color: var(--theme-btn-color);
 }
 
 .col_logo img{
@@ -159,6 +161,7 @@
     -moz-border-radius: 0px;
     -ms-border-radius: 0px;
     -o-border-radius: 0px;
+    flex: 0 0 auto;
 }
 
 
@@ -381,6 +384,9 @@
 .personal_detail_modal_wrap .modal_body .form_item textarea.form_field {
     height: 2.60417vw;
 }
+.personal_detail_modal_wrap .db_tab_form_wrap {
+    height: 23.8125vw;
+}
 .personal_detail_modal_wrap .modal_action {
     text-align: center;
     margin-top: 1.5625vw;
@@ -479,7 +485,9 @@
     .col_dropdown.active {
         display: block !important;
     }
-
+    .col_dropdown ul li a span {
+        width: 10px;
+    }
     .personal_detail_modal_wrap {
         max-width: 600px;
         width: 90%;
@@ -573,7 +581,8 @@
     }
 
     .col_dropdown {
-        left: -14.99vw;
+        left: auto;
+        right: 0;
         width: 24.063vw;
     }
 
@@ -587,10 +596,15 @@
     .col_dropdown {
         top: 5.488vw;
     }
-
+    .col_dropdown ul li a span {
+        width: 12px;
+    }
     
     .personal_detail_modal_wrap .modal_body .form_item textarea.form_field {
         height: 4.50417vw;
+    }
+    .personal_detail_modal_wrap .db_tab_form_wrap {
+        height: 35.8125vw;
     }
 
 }
@@ -631,6 +645,7 @@
     .col_logo {
         width: 15.229vw;
         height: 15.229vw;
+        font-size: 10.08333vw;
     }
 
     .arrow_col a span {
@@ -690,7 +705,9 @@
     .tab_overview_data table th, .tab_overview_data table td {
         padding: 4.242vw 0px;
     }
-
+    .status_btn span {
+        width: 12px;
+    }
 
     .date_month_table .date_table {
         font-size: 7vw;
@@ -752,7 +769,9 @@
         font-size: 3.942vw;
         line-height: 6.354vw;
     }
-
+    .col_dropdown ul li a span {
+        width: 16px;
+    }
     .personal_detail_modal_wrap {
         height: 100%;
         padding: 20px;

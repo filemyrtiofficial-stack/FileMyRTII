@@ -727,9 +727,7 @@ a.theme-btn:hover::before {
        font-size: 14px;
    }
 
-   .dbtab_section .contact_faq_wrapper {
-       display: none;
-   }
+   
    .c_accord_item {
        display: block;
        padding: 10px;
@@ -747,6 +745,9 @@ a.theme-btn:hover::before {
     .contact_section.dbtab_section .section_heading h3,
     .contact_section.dbtab_section .section_heading h4 {
         margin-top: 0;
+    }
+    .dbtab_section .contact_faq_wrapper {
+        display: none;
     }
    .review_option .option_no .theme-btn {
        margin-top: 10px;
@@ -800,6 +801,9 @@ a.theme-btn:hover::before {
    .db_tab_wrapper {
        margin-top: 0;
        padding: 16px;
+       border: none;
+        box-shadow: none;
+        padding: 0;
    }
    .db_tab_status .form_table_detail .charge_list {
        padding: 16px;
@@ -902,6 +906,9 @@ a.theme-btn:hover::before {
        flex-wrap: nowrap;
        width: 100%;
        column-gap: 10px;
+   }
+   .rti_document_list + .rti_document_list::before {
+        width: 100%;
    }
 
    .appeal_content p {

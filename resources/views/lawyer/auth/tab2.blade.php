@@ -16,10 +16,9 @@
                 </div>
 
                 <div class="db_item_wrap single">
-                    <div class="form_item">
+                    <div class="form_item custom_checkbox">
                         <input type="checkbox" id="manual-pio" name="manual_pio">
                         <label for="manual-pio">Manual PIO Address</label>
-
                     </div>
                 </div>
 

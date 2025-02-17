@@ -9,7 +9,7 @@
             </button>
         </div>
         <div class="modal_body">
-            <div class="faq_item_wrap" style="float:left;width:100%;overflow-x: auto;height: 500px;">
+            <div class="faq_item_wrap db_tab_form_wrap">
                 <div class="db_item_wrap">
                     <div class="form_item">
                         <label for="first_name">First Name</label>
