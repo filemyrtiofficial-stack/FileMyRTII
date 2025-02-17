@@ -137,6 +137,7 @@ class CustomerController extends Controller
             }
             $revision->update(['customer_change_request' => json_encode($data)]);
             Notification::create(['message' => "You have received change request", 'linkable_type' => "rti-application", 'linkable_id' => $revision->application_id, 'type' => "change-request", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id()]);
+            SendEmail::dispatch('edit-request', $revision->rtiApplication);
 
             session()->flash("success", "Change request sended to lawyer");
             return response(['status' => 'success']);
@@ -269,6 +270,8 @@ class CustomerController extends Controller
         $documents = $query->rtiApplication->documents ?? [];
         $documents = array_merge($documents, $request->documents ?? []);
         $query->rtiApplication()->update(['documents'=> $documents]);
+        SendEmail::dispatch('send-reply', $query->rtiApplication);
+
         // session()->flash('success', "Reply is successfully sended.");
         return response(['status' => 'success', 'tab' => "thankyou-query-process"]);
 

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MoreInfoReplyMail extends Mailable
+class EditRequestMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -21,6 +21,7 @@ class MoreInfoReplyMail extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+  
     }
     /**
      * Get the message envelope.
@@ -30,7 +31,7 @@ class MoreInfoReplyMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'More Information Received for RTI Application No.: '.$this->data['application_no'],
+            subject: 'Confirmation: RTI Draft Modifications Received - Application No : '.$this->data['application_no'],
         );
     }
 
@@ -42,7 +43,7 @@ class MoreInfoReplyMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.more-info-required',
+            view: 'email.edit-request',
         );
     }
 

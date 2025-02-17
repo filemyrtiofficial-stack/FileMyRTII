@@ -12,15 +12,16 @@ use Illuminate\Queue\SerializesModels;
 class MoreInfoMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
+  
     }
 
     /**
@@ -31,7 +32,7 @@ class MoreInfoMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'More Info Mail',
+            subject: '[Action Required] More Information Needed - RTI Application No. : '.$this->data['application_no'],
         );
     }
 
@@ -43,7 +44,7 @@ class MoreInfoMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.more-info',
         );
     }
 

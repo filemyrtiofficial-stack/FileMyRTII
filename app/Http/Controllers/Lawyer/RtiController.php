@@ -199,7 +199,9 @@ class RtiController extends Controller
             $query = LawyerRtiQuery::create($data);
             Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
             $application = RtiApplication::where(['id' => $application_id])->first();
-            SendEmail::dispatch('filed-rti', $application);
+            // SendEmail::dispatch('filed-rti', $application);
+            SendEmail::dispatch('more-info', $application);
+
             session()->flash('success', 'Requested Info is sended to user.');
             return response(['status' => 'success']);
                 

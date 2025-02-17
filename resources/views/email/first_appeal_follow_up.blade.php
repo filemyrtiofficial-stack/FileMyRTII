@@ -7,9 +7,20 @@ As per our records, your RTI application (Application Number {{$data['applicatio
 </p>
 <p>
     <strong>What If You Haven't Received a Response?</strong> <br>
-    While the RTI Act,
+    While the RTI Act, 2005 mandates that all applications must be answered within 30 days, some Public Information Officers (PIOs) may fail to respond within the timeframe or provide insufficient information. In such cases, you have the right to file a First Appeal.
+</p>
+<p>
+    <strong>What Is a First Appeal?</strong> <br>
+    A first Appeal is a formal complaint submitted to the Appel;ate Authority, a senior officer to the PIO, outlining the details of your original RTI application and the reasons for your dissatisfaction for lack of response.
 </p>
 
+<p>
+    <strong>Need Help Filing a First Appeal?</strong> <br>
+    At FileMyRTI, our team of experts s here to assist you. We can draft your First Appeal application and file it on your behalf of ensure your case moves forward smoothly.
+</p>
+<a href="{{route('my-rtis', [$data['application_no'], 'first-appeal'])}}">Click Here to File Your First Appeal</a>
+<p>Once You complete the payment, we'll take care of the entire process for you.</p>
+<p>Thank your for choosing FileMyRTI. We're committed to supporting you throughout your RTI journey. For any questions, feel free to <a href="{{url('contact-us')}}">Contact Us</a> via our COntact Us page.</p>
 
 
 <p>Warm regards,</p>

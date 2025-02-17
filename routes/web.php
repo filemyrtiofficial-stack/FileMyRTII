@@ -57,13 +57,6 @@ use App\Http\Controllers\Lawyer\AuthController as LawyerAuthController;
 use App\Http\Controllers\Lawyer\RtiController as LawyerRtiController;
 use App\Http\Controllers\ServiceTemplateController;
 use App\Http\Controllers\PioController;
-
-
-
-
-
-
-
 use App\Mail\MyTestEmail;
 use App\Mail\NewsletterMail;
 use Illuminate\Support\Facades\Mail;

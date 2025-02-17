@@ -9,7 +9,7 @@ We are pleased to inform you that your RTI applictaion has been successfully dra
     <li><strong>Dispatch :</strong> Once approved, we will dispatch your application to the appropriate authority within 24 hours. </li>
 
 </ol>
-<a href="{{route('my-rti', $data['application_no'])}}">Click Here to View & Approved</a>
+<a href="{{route('my-rtis', [$data['application_no'], 'rti-application'])}}">Click Here to View & Approved</a>
 
 <p>If you have any questions or require assistance during this process, our support team is here to help.</p>
 <p>Thank you for choosing FileMyRTI.</p>

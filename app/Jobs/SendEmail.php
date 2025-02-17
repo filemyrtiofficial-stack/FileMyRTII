@@ -16,6 +16,10 @@ use App\Mail\DraftRTIMail;
 use App\Mail\FiledRti;
 use App\Mail\FirstAppealFollowUpMail;
 use App\Mail\SecondAppealFollowUpMail;
+use App\Mail\MoreInfoReplyMail;
+use App\Mail\EditRequestMail;
+use App\Mail\MoreInfoMail;
+
 
 use Mail;
 class SendEmail implements ShouldQueue
@@ -64,10 +68,20 @@ class SendEmail implements ShouldQueue
         elseif($this->type == 'second-appeal-follow-up') {
             $email = new SecondAppealFollowUpMail($this->details);
         }
+        elseif($this->type == 'send-reply') {
+            $email = new MoreInfoReplyMail($this->details);
+        }
+        elseif($this->type == 'edit-request') {
+            $email = new EditRequestMail($this->details);
+        }
+        elseif($this->type == 'more-info') {
+            $email = new MoreInfoMail($this->details);
+        }
         else {
             $email = new ApplicationRegister($this->details);
 
         }
+        
         Mail::to($this->details['email'])->send($email);
     }
 
