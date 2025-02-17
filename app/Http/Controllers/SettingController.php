@@ -16,8 +16,7 @@ class SettingController extends Controller
     public function __construct(SettingInterface $settingRepository)
     {
         $this->settingRepository = $settingRepository;
-        $this->middleware(['can:Header Footer', 'can:Payment']); 
-
+        $this->middleware(['can:Header Footer', 'can:Payment']);
     }
 
 
@@ -31,7 +30,7 @@ class SettingController extends Controller
         $data = Setting::getSettingData($type);
         $first_appeal_payment = Setting::getSettingData('first_appeal_payment');
         $second_appeal_payment = Setting::getSettingData('second_appeal_payment');
-        return view('pages.setting.'.$type, compact('data', 'type','first_appeal_payment','second_appeal_payment'));
+        return view('pages.setting.' . $type, compact('data', 'type', 'first_appeal_payment', 'second_appeal_payment'));
     }
 
     /**
@@ -53,7 +52,7 @@ class SettingController extends Controller
     public function store(Request $request)
     {
 
-        if($request->type == 'payment') {
+        if ($request->type == 'payment') {
             $validator = Validator::make($request->all(), [
                 'amount_type.*' => "required",
                 'amount.*' => "required|numeric",
@@ -61,8 +60,14 @@ class SettingController extends Controller
                 'advance.*' => "required",
 
             ]);
-        }
-        else {
+        } else if ($request->type == 'invoice-setting') {
+            $validator = Validator::make($request->all(), [
+                'invoice_logo' => "required",
+                'company_name' => "required",
+                'address' => "required"
+               
+            ]);
+        } else {
 
             $validator = Validator::make($request->all(), [
                 'primary_logo' => "required",
@@ -73,7 +78,7 @@ class SettingController extends Controller
                 'contact_no' => "required"
             ]);
         }
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
         $data = $this->settingRepository->store($request);
@@ -128,7 +133,7 @@ class SettingController extends Controller
     public function storeFirstAppealPayment(Request $request)
     {
 
-        if($request->type == 'first_appeal_payment') {
+        if ($request->type == 'first_appeal_payment') {
             $validator = Validator::make($request->all(), [
                 'amount_type.*' => "required",
                 'amount.*' => "required|numeric",
@@ -136,8 +141,7 @@ class SettingController extends Controller
                 'advance.*' => "required",
 
             ]);
-        }
-       else if($request->type == 'second_appeal_payment') {
+        } else if ($request->type == 'second_appeal_payment') {
             $validator = Validator::make($request->all(), [
                 'amount_type.*' => "required",
                 'amount.*' => "required|numeric",
@@ -145,8 +149,7 @@ class SettingController extends Controller
                 'advance.*' => "required",
 
             ]);
-        }
-        else {
+        } else {
 
             $validator = Validator::make($request->all(), [
                 'primary_logo' => "required",
@@ -157,7 +160,7 @@ class SettingController extends Controller
                 'contact_no' => "required"
             ]);
         }
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
         $data = $this->settingRepository->store($request);

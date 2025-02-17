@@ -1162,3 +1162,17 @@ function bloodGroup() {
         ]
         ];
 }
+
+function InvoiceDate($date = Null){
+$date = Carbon\Carbon::parse($date); // Parse the created_at date
+$day = $date->day; // Get the day part of the date
+
+// Determine the suffix (st, nd, rd, th)
+$suffix = match (true) {
+$day % 10 == 1 && $day != 11 => 'st',
+$day % 10 == 2 && $day != 12 => 'nd',
+$day % 10 == 3 && $day != 13 => 'rd',
+default => 'th',
+};
+return  $date->format('F').' '.$day.$suffix.' '.$date->format('Y') ;
+}
