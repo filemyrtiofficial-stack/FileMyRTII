@@ -339,6 +339,7 @@ class FrontendController extends Controller
             $payment = $api->payment->fetch($paymentResponse['razorpay_payment_id']);
             $response = $payment->capture(['amount' => $payment['amount']]);
             $response = RtiApplication::razorPayResponse($paymentResponse['razorpay_payment_id']);
+
             $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => json_encode($response), 'status' => 1, 'payment_status' => 'paid']);
 
             Session::flash('success', 'Payment Successful');
@@ -370,7 +371,17 @@ class FrontendController extends Controller
                 $payment = Setting::getSettingData('payment');
                 }
             $fileName = 'invoice_' .$rti->application_no .'_appeal_no_'.$rti->appeal_no.'.pdf';
-            RtiApplication::ApplicationPaymentInvoice($rti,$fileName,$payment);
+            $company = Setting::getSettingData('header-footer-setting');
+            // Decode the JSON string into an associative array
+            $data = json_decode($rti->success_response, false);
+            $paymentdata = json_decode( $data, true);
+            $logo = asset($company['primary_logo'] ?? '');
+            
+            $signature = public_path($company['primary_logo'] ?? '');
+            $signature = "data:image/png;base64,".base64_encode(file_get_contents($logo));
+
+            // RtiApplication::ApplicationPaymentInvoice($rti,$fileName,$payment);
+            RtiApplication::ApplicationPaymentInvoice($company,$rti,$paymentdata,$fileName,$signature);
 
             
             return view('frontend.thank_you', compact('rti', 'why_choose', 'footer_banner'));
@@ -466,17 +477,27 @@ class FrontendController extends Controller
    
         $application = RtiApplication::where(['application_no' => $application_no])->first();
         $email = new ApplicationRegister($application);
-        Mail::to($application['email'])->send($email);
+        // Mail::to($application['email'])->send($email);
 
+        $payment_details = json_decode($application->success_response , true);
 
-        // echo "test";
-
-        // $pdf = PDF::loadView('frontend.profile.invoice');
+        $company = Setting::getSettingData('header-footer-setting');
+        // Decode the JSON string into an associative array
+        $data = json_decode($application->success_response, false);
+        $paymentdata = json_decode( $data, true);
+        $logo = asset($company['primary_logo'] ?? '');
+        
+        $signature = public_path($company['primary_logo'] ?? '');
+        $signature = "data:image/png;base64,".base64_encode(file_get_contents($logo));
       
+        $fileName = 'invoice_' .$application->application_no .'_appeal_no_'.$application->appeal_no.'.pdf';
+        RtiApplication::ApplicationPaymentInvoice($company,$application,$paymentdata,$fileName,$signature);
+
+        // echo $logo;
+        // $pdf = PDF::loadView('frontend.profile.invoice',compact('company','application','paymentdata','logo') );
+        // return view('frontend.profile.invoice',compact('company','application','paymentdata','logo') );
+
+        // $pdf = PDF::loadView('frontend.profile.invoice',compact('company','application','paymentdata') );
         // return $pdf->stream();
-
-
-        // $pdf = PDF::loadView('frontend.profile.invoice');
-        // $pdf->stream();
-    }
+     }
 }

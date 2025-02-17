@@ -178,6 +178,12 @@
               <span class="menu-title">Payment</span>
             </a>
           </li>
+          <li class="nav-item pl-3">
+            <a class="nav-link" href="{{ route('settings.index',['invoice-setting']) }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Invoice</span>
+            </a>
+          </li>
           @endif
           @endif
           @if(auth()->user()->can('Manage Newsletter Data'))

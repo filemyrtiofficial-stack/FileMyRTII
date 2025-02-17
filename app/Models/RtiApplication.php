@@ -155,17 +155,22 @@ class RtiApplication extends Model
         return $this->hasMany(LawyerRtiQuery::class, 'application_id', 'id')->orderBy('id', 'desc');
     }
     
-    public static function ApplicationPaymentInvoice($application,$fileName,$payment)
+    public static function ApplicationPaymentInvoice($company,$application,$paymentdata,$fileName,$logo)
     {
        
 
         if ($application) {
 
            
-            $pdf = PDF::loadView('frontend.profile.application-payment-Invoice', compact('payment', 'application'));
+            // $pdf = PDF::loadView('frontend.profile.application-payment-Invoice', compact('payment', 'application'));
+            $pdf = PDF::loadView('frontend.profile.invoice',compact('company','application','paymentdata','logo') );
+     
+   // Set paper size to A4 (customize orientation if needed)
+   $pdf->setPaper('A4', 'portrait');  // Or 'landscape' for landscape mode
 
-            
-
+   // Render PDF (first pass)
+//    $pdf->render();
+   $pdf->stream();
             // Define the path to the public folder directly
             $path = public_path('upload/pdf/' . $fileName);
 
