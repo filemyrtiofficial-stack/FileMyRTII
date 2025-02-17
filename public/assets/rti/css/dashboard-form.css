@@ -109,6 +109,10 @@ a.theme-btn:hover::before {
 }
 
 
+.application_status .db_tab_status + .db_tab_status {
+    padding-top: 2.60417vw;
+}
+
 /* review application */
 
 .review_wrap {
@@ -658,4 +662,269 @@ a.theme-btn:hover::before {
 }
 .upload-status {
     margin-top: 20px;
+}
+
+
+@media (max-width: 1199px) {
+    /* application status */
+   .db_tab_heading *,
+   .db_tab_heading h2,
+   .db_tab_heading h3,
+   .db_tab_heading h4 {
+       font-size: 16px;
+   }
+   .db_tab_status .charge_list li {
+       font-size: 14px;
+   }
+   .db_tab_status .note p {
+       font-size: 14px;
+   }
+   .track_wrap .track_no {
+       font-size: 14px;
+   }
+   .track_wrap .track_note {
+       font-size: 14px;
+   }
+   .db_tab_form_wrap .form_action .theme-btn {
+       font-size: 14px;
+   }
+   .review_action .theme-btn {
+       font-size: 14px;
+   }
+   .review_option .option_no .theme-btn {
+       font-size: 14px;
+   }
+   .review_option .option_no {
+       font-size: 16px;
+   }
+   .query_form .db_tab_form_wrap .form_action {
+       padding-right: 0;
+   }
+   .signing_wrap .contact_option {
+       font-size: 14px;
+   }
+   .upload_wrap p {
+       font-size: 14px;
+   }
+   .upload_wrap p {
+       flex: 0 0 auto;
+       width: 80%;
+   }
+   .review_option {
+       padding-left: 20px;
+   }
+
+   /* rti application */
+   .db_item_wrap .note p {
+       font-size: 14px;
+   }
+
+   /* rti download */
+   .rti_document_list .doc_content {
+       font-size: 14px;
+   }
+   .rti_documents_ul .theme-btn {
+       font-size: 14px;
+   }
+
+   .dbtab_section .contact_faq_wrapper {
+       display: none;
+   }
+   .c_accord_item {
+       display: block;
+       padding: 10px;
+       background-color: var(--theme-light-grey-color);
+       border: 1px solid var(--theme-grey-color);
+   }
+   .c_accord_item {
+       margin-bottom: 10px;
+   }
+}
+
+@media (max-width: 991px) {
+    .contact_section.dbtab_section .section_heading *,
+    .contact_section.dbtab_section .section_heading h2,
+    .contact_section.dbtab_section .section_heading h3,
+    .contact_section.dbtab_section .section_heading h4 {
+        margin-top: 0;
+    }
+   .review_option .option_no .theme-btn {
+       margin-top: 10px;
+   }
+   .rti_document_list .doc_content {
+       flex: 0 0 auto;
+       width: 70%;
+   }
+   .rti_document_list {
+       flex-wrap: nowrap;
+   }
+   .rti_document_list .doc_name {
+       width: 60%;
+   }
+   .dbtab_section .contact_faq_tab {
+       margin-top: 30px;
+       margin-bottom: 40px;
+   }
+   .appeal_info.with_input .custom_radio input[type="radio"] + label {
+       font-size: 14px;
+   }
+   .appeal_info {
+       margin-bottom: 16px;
+   }
+}
+
+@media (max-width: 767px) {
+   /* application status */
+   .contact_section.dbtab_section .section_heading *,
+    .contact_section.dbtab_section .section_heading h2,
+    .contact_section.dbtab_section .section_heading h3,
+    .contact_section.dbtab_section .section_heading h4 {
+        margin-top: 20px;
+    }
+    .contact_section.dbtab_section .contact_wrapper {
+        margin-top: 20px;
+    }
+   .db_tab_heading *,
+   .db_tab_heading h2,
+   .db_tab_heading h3,
+   .db_tab_heading h4 {
+       font-size: 18px;
+   }
+   .contact_section .section_heading *,
+   .contact_section .section_heading h2,
+   .contact_section .section_heading h3,
+   .contact_section .section_heading h4 {
+       font-size: 24px;
+       margin-top: 50px;
+   }
+   .db_tab_wrapper {
+       margin-top: 0;
+       padding: 16px;
+   }
+   .db_tab_status .form_table_detail .charge_list {
+       padding: 16px;
+       width: 200%;
+       display: table;
+   }
+   .db_tab_status .form_table_detail .charge_list li:not(:first-child)::after {
+    display: none;
+   }
+   .db_tab_status .charge_list li {
+       font-size: 16px;
+       width: 50%;
+       text-align: left;
+       display: table-cell;
+   }
+   .db_tab_status .charge_list li:not(:first-child) {
+       width: 25%;
+   }
+   .db_tab_status .status_bar {
+       max-width: 95%;
+       margin-top: 40px;
+       margin-bottom: 50px;
+   }
+   .db_tab_status_action {
+       margin-top: 20px;
+       margin-bottom: 40px;
+   }
+   .track_wrap .track_no {
+       font-size: 18px;
+       margin-bottom: 20px;
+   }
+   .track_wrap .track_note {
+       font-size: 16px;
+   }
+
+   .db_tab_form_wrap {
+       height: 90.25vw;
+       padding-bottom: 10px;
+       padding-right: 8px;
+   }
+   .db_item_wrap .form_item {
+       width: 100%;
+       margin-bottom: 20px;
+   }
+   .sign_area_wrap .sign_area {
+       margin-bottom: 10px;
+       max-width: 100%;
+       height: 100px;
+   }
+   .upload_wrap img {
+       width: 50px;
+       height: 50px;
+   }
+   .upload_wrap p {
+       margin-left: 10px;
+   }
+   .upload_area {
+       padding: 12px;
+       margin-bottom: 10px;
+   }
+   .signing_wrap .contact_option {
+       margin-bottom: 40px;
+   }
+   .query_form .db_tab_form_wrap .form_action {
+       column-gap: 8px;
+   }
+   .review_option .option_no + .option_no {
+       margin-top: 10px;
+   }
+   .review_action {
+       margin-top: 10px;
+       margin-bottom: 20px;
+   }
+
+   .rti_profile .db_tab_form_wrap {
+       height: 100.25vw;
+       padding-bottom: 20px;
+       margin-bottom: 30px;
+   }
+
+   .rti_invoice .rti_document_list .doc_content {
+       font-size: 14px;
+   }
+
+   /* rti download */
+   .rti_documents_ul {
+       margin-bottom: 20px;
+   }
+   .rti_document_list {
+       flex-wrap: wrap;
+       row-gap: 12px;
+       padding-top: 20px;
+       padding-bottom: 20px;
+   }
+   .rti_document_list .doc_name img {
+       width: 50px;
+       height: 50px;
+   }
+   .rti_document_list .doc_name {
+       flex-wrap: nowrap;
+       width: 100%;
+       column-gap: 10px;
+   }
+
+   .appeal_content p {
+       font-size: 14px;
+   }
+   .appeal_info .appeal_heading * {
+       font-size: 14px;
+   }
+   .appeal_info.with_input .appeal_heading {
+       margin-bottom: 10px;
+   }
+   .upload_wrap {
+       justify-content: center;
+   }
+   .appeal_info.with_input .appeal_heading {
+       display: block;
+       width: 100%;
+   }
+   
+}
+
+@media (max-width: 390px) {
+   .upload_wrap p {
+       text-align: center;
+   }
 }
