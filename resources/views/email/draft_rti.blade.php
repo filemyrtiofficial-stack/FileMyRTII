@@ -1,7 +1,18 @@
 <p>Dear {{$data['first_name']}} {{$data['last_name']}} </p>
+@if($data['appeal_no'] == 0)
 <p>
-We are pleased to inform you that your RTI applictaion has been successfully drafted by our expert team. To proceed further, we kindly request you to review, approve, and sign the drafted application.
+We are pleased to inform you that your RTI application has been successfully drafted by our expert team. To proceed further, we kindly request you to review, approve, and sign the drafted application.
 </p>
+@elseif($data['appeal_no'] == 1)
+<p>
+We are pleased to inform you that your First Appeal (RTI) application has been successfully drafted by our expert team. To proceed further, we kindly request you to review, approve, and sign the drafted application.
+</p>
+@else
+<p>
+We are pleased to inform you that your Second Appeal (RTI) application has been successfully drafted by our expert team. To proceed further, we kindly request you to review, approve, and sign the drafted application.
+</p>
+@endif
+
 <h4>Next Steps :</h4>
 <ol>
     <li><strong>Review the Draft : </strong>  Ensure all details are accurate and neet your expectations. </li>

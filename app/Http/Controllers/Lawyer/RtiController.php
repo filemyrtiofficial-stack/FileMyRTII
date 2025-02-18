@@ -98,21 +98,39 @@ class RtiController extends Controller
         // print_r(json_encode($revision));
         $field_data = json_decode($revision->details, true);
         $html = $revision->serviceTemplate->template;
+            $signature_html = $revision->serviceTemplate->signature;
 
-        // print_r( $data->signature_image);die;
-        foreach($field_data as $key => $value) {
-            $html = str_replace("[".$key."]", $value, $html);
-        }
-        $html = str_replace("[pio_address]", $data->pio_address, $html);
+            foreach ($field_data as $key => $value) {
+                $html = str_replace("[" . $key . "]", $value, $html);
+                $signature_html = str_replace("[" . $key . "]", $value, $signature_html);
 
-        $signature = "";
+            }
+            $html = str_replace("[pio_address]", $data->pio_address, $html);
 
-        if($data->signature_type != "manual" && !empty($data->signature_image)) {
+            $signature_html = str_replace("[pio_address]", $data->pio_address, $signature_html);
 
-    
-            $signature = public_path($data->signature_image);
-            $signature = "data:image/png;base64,".base64_encode(file_get_contents($signature));
-        }
+
+
+            $signature = "";
+
+            if ($data->signature_type != "manual" && !empty($data->signature_image)) {
+
+
+                $signature = public_path($data->signature_image);
+                $signature = "data:image/png;base64," . base64_encode(file_get_contents($signature));
+            }
+            if(!empty($data->signature_image)) {
+
+                if($data->signature_type == 'manual') {
+                    $signature_html = str_replace("[signature]", "<span>".$data->signature_image."</span>", $signature_html);
+                }
+                else {
+                    $signature_html = str_replace("[signature]", " <img src=".$signature." alt='' width='100'>", $signature_html);
+                }
+               
+            }
+            // $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature', 'signature_html'))->render();
+
 
 //         $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
 //         	header("Content-type: application/vnd.ms-word");
@@ -124,7 +142,7 @@ class RtiController extends Controller
         // 
 	    // return view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
 
-        $pdf = PDF::loadView('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
+        $pdf = PDF::loadView('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature', 'signature_html'));
         return $pdf->stream();
     }
 

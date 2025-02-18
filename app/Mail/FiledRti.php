@@ -31,9 +31,23 @@ class FiledRti extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: 'Your RTI Application Has Been Filed - Application No. : '.$this->data['application_no'],
-        );
+        
+        if($this->data['appeal_no'] == 0) {
+            return new Envelope(
+                subject: 'Your RTI Application Has Been Filed - Application No. : '.$this->data['application_no'],
+            );
+        }
+        else if($this->data['appeal_no'] == 1) {
+            return new Envelope(
+                subject: 'Your First Appeal (RTI) Application Has Been Filed - Application No. : '.$this->data['application_no'],
+            );
+        }
+        else {
+            return new Envelope(
+                subject: 'Your Second Appeal (RTI) Application Has Been Filed - Application No. : '.$this->data['application_no'],
+            );
+        }
+        
     }
 
    

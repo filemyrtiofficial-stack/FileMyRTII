@@ -233,7 +233,16 @@ class CustomerController extends Controller
 
                         }
                     }
+                    foreach($revision_data  as $key => $value) {
+                        if(!isset($service_field_data['field_data'][$key])) {
+                            $service_field_data['field_data'][$key] = $value;
+                        }
+                        if(!isset($service_field_data[$key])) {
+                            $service_field_data[$key] = $value;
+                        }
+                    }
                     
+                    // return response(['data' => $service_field_data], 500);
                     $application = $application->toArray();
                     $remove = ['process_status', 'charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
                     $application = array_diff_key($application, array_flip($remove));

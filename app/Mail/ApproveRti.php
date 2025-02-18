@@ -30,9 +30,23 @@ class ApproveRti extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: 'Thank you for Approving Your RTI - Application No : '.$this->data['application_no'],
-        );
+        if($this->data['appeal_no'] == 0) {
+            return new Envelope(
+                subject: 'Thank you for Approving Your RTI - Application No : '.$this->data['application_no'],
+            );
+        }
+        else if($this->data['appeal_no'] == 1) {
+            return new Envelope(
+                subject: 'Thank you for Approving Your First Appeal (RTI) - Application No : '.$this->data['application_no'],
+            );
+        }
+        else {
+            return new Envelope(
+                subject: 'Thank you for Approving Your Second Appeal (RTI) - Application No : '.$this->data['application_no'],
+            );
+        }
+
+        
     }
 
     /**

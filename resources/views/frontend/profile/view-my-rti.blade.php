@@ -56,18 +56,20 @@
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab5" href="{{route('my-rtis', [$data->application_no, 'invoice'])}}">Payment Info & Invoice</a>
                         </li>   
-                        
+                        @if(count($list)== 1)
                         <li class="contact_faq_item @if($tab == 'first-appeal')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
                         </li>
+                        @endif
                         @if($data->filedTime && addDays(30, $data->filedTime->created_at) <= Carbon\Carbon::now() && addDays(60, $data->filedTime->created_at) > Carbon\Carbon::now())
                         @endif
-                        
+                        @if(count($list)== 2)
                         <li class="contact_faq_item @if($tab == 'second-appeal')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
                         </li>
+                        @endif
                         @if($data->filedTime && addDays(60, $data->filedTime->created_at) <= Carbon\Carbon::now())
                         @endif
                         @if($data->lastRtiQuery && $data->lastRtiQuery->marked_read == 0)
@@ -585,7 +587,7 @@
                                                                     <p>Drag and drop response received from PIO or <label>Choose File</label></p>
                                                                     <div class="upload_img_wrap"></div>
                                                                 </div>
-                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form">
+                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form    ">
                                                                 <input type="hidden" name="signature_file" class="image-input"  id="signature_file"/>
 
                                                             </div>

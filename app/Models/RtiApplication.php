@@ -147,7 +147,7 @@ class RtiApplication extends Model
                     $signature_html = str_replace("[signature]", "<span>".$data->signature_image."</span>", $signature_html);
                 }
                 else {
-                    $signature_html = str_replace("[signature]", " <img src=".$data->signature_image." alt='' width='100'>", $signature_html);
+                    $signature_html = str_replace("[signature]", " <img src=".$signature." alt='' width='100'>", $signature_html);
                 }
                
             }

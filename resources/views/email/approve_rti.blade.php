@@ -1,7 +1,13 @@
 <p>Dear {{$data['first_name']}} {{$data['last_name']}}</p>
 <p>
-Thank you for reviewing and approving the draft of your RTI application ({{$data['application_no']}}). We're glad to have your confirmation and will proceed with filing your application.
+@if($data['appeal_no'] == 0)
 
+Thank you for reviewing and approving the draft of your RTI application ({{$data['application_no']}}). We're glad to have your confirmation and will proceed with filing your application.
+@elseif($data['appeal_no'] == 1)
+Thank you for reviewing and approving the draft of your First Appeal (RTI) application ({{$data['application_no']}}). We're glad to have your confirmation and will proceed with filing your application.
+@else
+Thank you for reviewing and approving the draft of your Second Appeal (RTI) application ({{$data['application_no']}}). We're glad to have your confirmation and will proceed with filing your application.
+@endif
 </p>
 <h4>What Happend Next?</h4>
 <ol>

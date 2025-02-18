@@ -1,6 +1,13 @@
 <p>Dear {{$data['first_name']}} {{$data['last_name']}} </p>
 <p>
-We're pleased to inform you that your RTI applictaion (Application Number : {{$data['application_no']}}) has been successfully filed. A copy of your RTI application is attached to this email for your reference.
+@if($data['appeal_no'] == 0)
+ 
+We're pleased to inform you that your RTI application (Application Number : {{$data['application_no']}}) has been successfully filed. A copy of your RTI application is attached to this email for your reference.
+@if($data['appeal_no'] == 0)
+We're pleased to inform you that your First Appeal (RTI) application (Application Number : {{$data['application_no']}}) has been successfully filed. A copy of your First Appeal (RTI) application is attached to this email for your reference.
+@else
+We're pleased to inform you that your Second Appeal (RTI) application (Application Number : {{$data['application_no']}}) has been successfully filed. A copy of your Second Appeal (RTI) application is attached to this email for your reference.
+@endif
 </p>
 
 <p>Your Registered Post Tracking Number : {{$data->courierTracking->courier_tracking_number ?? ''}}</p>

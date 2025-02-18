@@ -32,9 +32,17 @@ class FirstAppealPaymentMail extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: 'Confirmation: First Appeal Application Received - Application No: '.$this->data['application_no'] ?? '',
-        );
+        if($this->data['appeal_no'] == 1) {
+
+            return new Envelope(
+                subject: 'Confirmation: First Appeal Application Received - Application No: '.$this->data['application_no'] ?? '',
+            );
+        }
+        else {
+            return new Envelope(
+                subject: 'Confirmation: Second Appeal Application Received - Application No: '.$this->data['application_no'] ?? '',
+            );
+        }
     }
 
     /**
