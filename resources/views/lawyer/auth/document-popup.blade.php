@@ -12,24 +12,17 @@
         </div>
         <div class="modal_body">
             <div class="modal_area">
-                <div class="modal_left">
-                    <ul>
+                    <!-- <ul> -->
                         @foreach($data->documents ?? [] as $key => $value)
-                        <li>
+                        <!-- <li> -->
                             <a href="{{filePreview($value)}}" target="blank">
-                                <span class="list_icon">
-                                    <embed src="{{$value}}" width="100%" height="100%" />
-                                </span>Document Name
+                            <embed src="{{$value}}" width="200" height="200" />
                             </a>
-                        </li>
+                        <!-- </li> -->
                         @endforeach
                       
-                    </ul>
-                </div>
-                <div class="modal_right">
-                   
-                    </ul>
-                </div>
+                    <!-- </ul> -->
+              
             </div>
         </div>
       

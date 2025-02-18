@@ -5,7 +5,15 @@
         <div class="db_tab_heading">
             <h2>Drafted RTI</h2>
         </div>
-        @if($data->lastRevision && !empty($data->lastRevision->customer_change_request) )
+        @if($data->lastRevision && empty($data->lastRevision->customer_change_request) )
+        <div class="approval_view">
+            <div class="waiting_msg">
+                <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/waiting.webp')}}" alt="">
+                <h4 class="heading">Waiting for approval on the drafted RTI</h4>
+                <a href="javascript:void(0);" class="theme-btn"><span>Back</span></a>
+            </div>
+        </div>
+        @elseif($data->lastRevision && !empty($data->lastRevision->customer_change_request) )
             @include('lawyer.auth.change-request-details')
         @elseif($data->status < 2)
         @include('frontend.profile.rti-file')

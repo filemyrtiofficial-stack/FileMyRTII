@@ -169,7 +169,7 @@ class RtiController extends Controller
                 $revision->rtiApplication()->update(['status' => 3]);
                 ApplicationStatus::create(['status' => "filed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $revision->application_id]);
                 SendEmail::dispatch('filed-mail', $revision->rtiApplication);
-
+                $revision->rtiApplication()->update(['pio_expected_date' => Carbon::now()->addDays(40)]);
            
             }
             session()->flash('success', "RTI Application ".$revision->rtiApplication->application_no." is successully filed.");
@@ -272,6 +272,8 @@ class RtiController extends Controller
                     'template_id' => $application->lastRevision->template_id,
                     'details' => json_encode($details), 
                 ]);
+
+                SendEmail::dispatch('draft-rti', $application);
 
                 session()->flash('success', "RTI is successfully drafted.");
                 return response(['status' => 'success']);    

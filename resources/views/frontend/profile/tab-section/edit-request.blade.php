@@ -49,12 +49,19 @@
             @endphp
             @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer')
             <div class="form_item">
-                <label for="last_name">{{$service_fields['field_lable'][$key] ?? ''}} </label>
+                <label for="last_name">{{$service_fields['field_lable'][$key] ?? ''}}</label>
                 @if($value == 'textarea') 
                     <textarea class="form_field" type="text" name="{{$field_key }}" id="{{$field_key }}" placeholder="" >{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}</textarea>
                 @elseif($value == 'date') 
                 <input class="form_field" type="date" name="{{$field_key }}" id="{{$field_key }}" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" placeholder="" @if(isset($service_fields['minimum_date'][$key]) && !empty($service_fields['minimum_date'][$key]))  min="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" @endif  @if(isset($service_fields['maximum_date'][$key]) && !empty($service_fields['maximum_date'][$key]))  max="{{$service_fields['maximum_date'][$key]}}" @endif>
-
+                @elseif($value == 'file')
+                    <input type="hidden" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
+                    <a href="{{filePreview($revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? ''))}}"  class="theme-btn" target="blank">Preview</a>
+                      
+                @elseif($value == 'select')
+                    <select type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key] ?? '')}}">
+                        {!! getOptions($service_fields['options'][$key], $revision_data[$field_key ] ?? ( $fields[$field_key] ?? '')) !!}    
+                    </select>
                 @else
 
                 <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">

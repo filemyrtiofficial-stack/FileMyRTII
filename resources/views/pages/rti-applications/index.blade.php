@@ -60,6 +60,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lawyer</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment Status</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Appeal</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Create Date</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th>
                             </tr>
@@ -115,6 +116,7 @@
                                 <td>
                                 <span class="{{paymentStatus()[$item->payment_status]['class'] ??''}}"><b>{{paymentStatus()[$item->payment_status]['name'] ??''}}</b></span>
                                 </td>
+                                <td>{{appealDetails()[$item->appeal_no] ?? ''}}</td>
                                   <td>
                                     <span class="{{applicationStatus()[$item->status]['class'] ??''}}"><b>{{applicationStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>

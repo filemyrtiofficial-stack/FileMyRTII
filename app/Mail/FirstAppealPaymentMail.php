@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicationRegister extends Mailable
+class FirstAppealPaymentMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -21,7 +21,9 @@ class ApplicationRegister extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+  
     }
+
 
     /**
      * Get the message envelope.
@@ -31,7 +33,7 @@ class ApplicationRegister extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Payment Confirm for Your RTI Application Number : '.$this->data['application_no'],
+            subject: 'Confirmation: First Appeal Application Received - Application No: '.$this->data['application_no'] ?? '',
         );
     }
 
@@ -43,7 +45,7 @@ class ApplicationRegister extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.application_resgister',
+            view: 'email.first-appeal.payment',
         );
     }
 
@@ -54,11 +56,6 @@ class ApplicationRegister extends Mailable
      */
     public function attachments()
     {
-    //   $application_no =  $this->data["application_no"];
-    //  $appeal_no =  $this->data["appeal_no"];
-    //    $fileName = 'invoice_' .$application_no .'_appeal_no_'.$appeal_no.'.pdf';
-        return [
-            asset($this->data['invoice_path'])
-        ];
+        return [];
     }
 }

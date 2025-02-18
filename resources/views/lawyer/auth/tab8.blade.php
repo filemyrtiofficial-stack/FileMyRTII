@@ -57,7 +57,7 @@
                 </div>
                 @if($data->courierTracking)
                     <div class="preview" id="courier-images">
-                        @foreach($data->courierTracking->documents as $document)
+                        @foreach($data->courierTracking->documents ?? [] as $document)
                             <div class="preview-item">
                                 <a href="{{route('preview-document',Crypt::encryptString($document))}}" target="blank">
                                     <embed src="{{asset($document)}}" width="50" height="50" />

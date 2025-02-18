@@ -38,6 +38,16 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="options-other-validations" style="display:none;">
+                                                <div class="form-group">
+                                                    <label for="">Options</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="text" name="options[]" class="form-control" value="{{$fields['options'][$key] ?? null}}">
+
+                                                    </div>
+                                                    <span class="text-danger">Note :  Options should be comma separated like options1,option2</span>
+                                                </div>
+                                            </div>
                                             <div class="date-other-validation" style="display:none;">
                                                 <div class="form-group">
                                                     <label for="">Minimum Date</label> <br>

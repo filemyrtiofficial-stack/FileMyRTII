@@ -83,11 +83,31 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="heading">
-                                        <h5 class="card-title">Full Address</h5>
+                                        <h5 class="card-title">Address</h5>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
                                     <h5 class="card-title">{{ $data->address ?? ''}}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="heading">
+                                        <h5 class="card-title">City</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h5 class="card-title">{{ $data->city ?? ''}}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="heading">
+                                        <h5 class="card-title">State</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h5 class="card-title">{{ $data->state ?? ''}}</h5>
                                 </div>
                             </div>
                             <hr>

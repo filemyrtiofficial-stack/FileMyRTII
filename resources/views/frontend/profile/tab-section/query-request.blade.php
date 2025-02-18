@@ -40,7 +40,7 @@
             </div>
             <div class="form_item">
                 <label for="">Pincode</label>
-                <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->pincode  ?? '')}}">
+                <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->postal_code  ?? '')}}">
             </div>
     
             <div class="form_item">

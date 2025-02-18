@@ -25,15 +25,16 @@
                                 <table>
                                     <tbody>
                                     @foreach($service_fields['field_type'] ?? [] as $key => $value)
-                                        
-                                        @php
-                                            $field_key =  getFieldName($service_fields['field_lable'][$key]);
-                                        @endphp
-                                
-                                        <tr>
-                                            <td>{{$service_fields['field_lable'][$key] ?? ''}} </td>
-                                            <td>{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}</td>
-                                        </tr>
+                                        @if($value == 'file')
+                                            @php
+                                                $field_key =  getFieldName($service_fields['field_lable'][$key]);
+                                            @endphp
+                                    
+                                            <tr>
+                                                <td>{{$service_fields['field_lable'][$key] ?? ''}} </td>
+                                                <td>{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}</td>
+                                            </tr>
+                                        @endif
 
                                     @endforeach
 

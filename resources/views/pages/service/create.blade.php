@@ -255,6 +255,16 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="options-other-validations"  @if($fields['field_type'][$key] != "select")style="display:none;" @endif>
+                                                <div class="form-group">
+                                                    <label for="">Options</label> <br>
+                                                    <div class="input-group">
+                                                    <input type="text" name="options[]" class="form-control" value="{{$fields['options'][$key] ?? null}}">
+
+                                                    </div>
+                                                    <span class="text-danger">Note :  Options should be comma separated like options1,option2</span>
+                                                </div>
+                                            </div>
                                             <div class="date-other-validation" @if($fields['field_type'][$key] != "date")style="display:none;" @endif>
                                                 <div class="form-group">
                                                     <label for="">Minimum Date</label> <br>
@@ -356,10 +366,16 @@
         $('.customer-field-list').append(html)
     });
     $(document).on('change', '.field_type', function(){
+        $(this).parents().eq(2).find('.options-other-validations').hide();
+        $(this).parents().eq(2).find('.date-other-validation').hide();
         if($(this).val() == 'date') {
             $(this).parents().eq(2).find('.date-other-validation').show();
         }
+        else if($(this).val() == 'select') {
+            $(this).parents().eq(2).find('.options-other-validations').show();
+        }
         else {
+
             $(this).parents().eq(2).find('.date-other-validation').hide();
         }
     });

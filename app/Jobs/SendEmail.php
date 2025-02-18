@@ -19,6 +19,8 @@ use App\Mail\SecondAppealFollowUpMail;
 use App\Mail\MoreInfoReplyMail;
 use App\Mail\EditRequestMail;
 use App\Mail\MoreInfoMail;
+use App\Mail\FirstAppealPaymentMail;
+
 
 
 use Mail;
@@ -48,7 +50,14 @@ class SendEmail implements ShouldQueue
             $email = new ResetPassword($this->details);
         }
         elseif($this->type == 'application-register') {
-            $email = new ApplicationRegister($this->details);
+            if($this->details->appeal_no == 0) {
+
+                $email = new ApplicationRegister($this->details);
+            }
+            else {
+                $email = new FirstAppealPaymentMail($this->details);
+
+            }
         }
         elseif($this->type == 'assign-lawyer') {
             $email = new AssignLawyer($this->details);

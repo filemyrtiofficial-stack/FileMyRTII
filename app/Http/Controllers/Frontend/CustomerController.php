@@ -67,11 +67,28 @@ class CustomerController extends Controller
         $filter = ['user_id' => auth()->guard('customers')->id(), 'application_no' => $application_no];
         // $data = RtiApplication::list(false, $filter);
         // $data = $request->except(['_token']);
+        $signature = "";
+        if($request->signature_type == 'manual') {
+            $validator = Validator::make($request->all(),  [
+                'signature' => 'required'
+            ]);
+            $signature = $request->signature;
+        }
+        else {
+            $validator = Validator::make($request->all(),  [
+                'signature_file' => 'required'
+            ]);
+            $signature = $request->signature_file;
 
+        }
+        
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
         $data = RtiApplication::rtiNumberDetails(['application_no' => $application_no]);
         if(count($data) > 0) {
             $data = $data[count($data)-1] ?? [];
-            $data->update(['signature_type' => $request->signature_type, 'signature_image' => $request->signature, 'status' => 2]);
+            $data->update(['signature_type' => $request->signature_type, 'signature_image' =>   $signature, 'status' => 2]);
             $rti = RtiApplication::get($data['id']);
             ApplicationStatus::create(['status' => "approved", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
 
@@ -238,10 +255,14 @@ class CustomerController extends Controller
                 $remove = ['charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
                 $application = array_diff_key($application, array_flip($remove));
             }
+            // $application['lawyer_id'] = null;
             $application['payment_status'] = 'pending';
             $application['appeal_no'] = $request->appeal_no;
             $application['application_id'] = $application_id;
             $application['status'] = 1 ;
+            $application['pio_expected_date'] = null;
+
+            // return response(['data' =>  $application], 500);
 
           $list_id =  RtiApplication::create($application);
        

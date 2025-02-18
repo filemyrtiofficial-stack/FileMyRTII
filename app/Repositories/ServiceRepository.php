@@ -124,14 +124,14 @@ class ServiceRepository implements ServiceInterface {
     }
 
     public function storeTemplate($data, $service_id) {
-        $template = ServiceTemplate::create(['template_name' => $data['name'], 'template' => $data['description'], 'service_id' => $service_id, 'title' => $data['title'], 'sub_title' => $data['sub_title']]);
+        $template = ServiceTemplate::create(['template_name' => $data['name'], 'template' => $data['description'], 'service_id' => $service_id, 'title' => $data['title'], 'sub_title' => $data['sub_title'], 'signature' => $data['signature']]);
         Session::flash("success", "Template is successfully created");
         return response(['message' => "Template is successfully created"]);
     }
 
 
     public function updateTemplate($data, $id) {
-        $template = ServiceTemplate::where('id', $id)->update(['template_name' => $data['name'], 'template' => $data['description'], 'title' => $data['title'], 'sub_title' => $data['sub_title']]);
+        $template = ServiceTemplate::where('id', $id)->update(['template_name' => $data['name'], 'template' => $data['description'], 'title' => $data['title'], 'sub_title' => $data['sub_title'], 'signature' => $data['signature']]);
         Session::flash("success", "Template is successfully updated");
         return response(['message' => "Template is successfully updated"]);
     }

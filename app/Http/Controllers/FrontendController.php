@@ -209,6 +209,8 @@ class FrontendController extends Controller
                 'email' => "required|email",
                 'phone_number' => "required|digits:10",
                 'address' => "required",
+                'city' => "required",
+                'state' => "required",
                 'postal_code' => "required|digits:6",
 
             ]);
@@ -226,10 +228,13 @@ class FrontendController extends Controller
                     $validation['pio_address'] = 'required';
                 }
             }
+            $input = $request->all();
+
             foreach ($fields['field_type'] ?? [] as $key => $value) {
                 if( isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] != "lawyer") {
+                    $slug_key = getFieldName($fields['field_lable'][$key]);
                     $validation_string = '';
-                    if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes') {
+                    if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
                         $validation_string = 'required';
                     }
                     if($value == 'date') {
@@ -247,20 +252,29 @@ class FrontendController extends Controller
                     }
                     if($validation_string != '') {
                         $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
+                        
+                    }
+                    if($value == 'file') {
+                        $new_slug_key = $slug_key."_file";
+                        $file =  uploadFile($request, $new_slug_key, 'page_images');
+                        $input[$slug_key] =  $file;
+                        $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $file];
 
                     }
-                    $slug_key = getFieldName($fields['field_lable'][$key]);
-                    $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
+                    else {
+
+                        $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
+                    }
+                    
                 }
             }
-
             $validator = Validator::make($request->all(), $validation);
+            // print_r($validation);die;
             if ($validator->fails()) {
                 return response(['errors' => $validator->errors()], 422);
             }
-            $input = $request->all();
             $input['field_data'] = $field_data;
-            $data = $request->only(['first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code']);
+            $data = $request->only(['first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'city', 'state']);
             $data['service_id'] = $request->service_key;
             $data['service_category_id'] = $request->category_id;
             $data['service_fields'] = json_encode($input);
@@ -303,7 +317,7 @@ class FrontendController extends Controller
         if (!$user) {
             $data = $request->only(['first_name', 'last_name', 'email', 'address', 'postal_code']);
             $data['phone_no'] = $request->phone_number;
-            $data['password'] = bcrypt($request->phone_number);
+            $data['password'] = $request->phone_number;
             $user = Customer::create($data);
         }
         return $user->id;
@@ -342,8 +356,13 @@ class FrontendController extends Controller
             $currentDate = Carbon::now()->format('Ymd');;  // Output: 2025-02-17
             $invoiceNumber = "INV-{$currentDate}".rand(0000, 9999);
 
+           
+            
             $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => $response, 'status' => 1, 'payment_status' => 'paid','invoice_number'=> $invoiceNumber]);
+            $fileName = 'invoice_' .$rti->application_no .'_appeal_no_'.$rti->appeal_no.'.pdf';
 
+                $invoice_path =  RtiApplication::ApplicationPaymentInvoice($rti,$fileName);
+                $rti->update(['invoice_path'=> $invoice_path]);
             Session::flash('success', 'Payment Successful');
             DB::commit();
          
@@ -369,11 +388,7 @@ class FrontendController extends Controller
                 else{
                 $payment = Setting::getSettingData('payment');
                 }
-            $fileName = 'invoice_' .$rti->application_no .'_appeal_no_'.$rti->appeal_no.'.pdf';
 
-            $invoice_path =  RtiApplication::ApplicationPaymentInvoice($rti,$fileName);
-            $rti->update(['invoice_path'=> 'upload/pdf/' . $invoice_path]);
-            
             return view('frontend.thank_you', compact('rti', 'why_choose', 'footer_banner'));
             //return response()->json(['success' => true, 'message' => 'Payment successfully recorded']);
         } catch (\Throwable $th) {

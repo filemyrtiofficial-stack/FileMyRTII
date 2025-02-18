@@ -25,7 +25,7 @@
 @csrf
 <div class="drafted_rti_form">
             <div class="faq_item_wrap v_scroll">
-                <div class="main_heading">Application No: {{$data->application_no}}</div>
+                <div class="main_heading">Application No: 1234567890</div>
                 <div class="db_item_wrap">
                     <div class="form_item">
                         <label for="first_name">From</label>
@@ -87,18 +87,9 @@
                   
                     <div class="form_item  @if($value == 'textarea') single @endif">
                         <label for="{{$field_key}}">{{$service_fields['field_lable'][$key] ?? ''}}</label>
-
                         @if($value == 'textarea')
-
                         <textarea type="text" name="{{$field_key }}" class="form_field">{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}</textarea>
-                        @elseif($value == 'file')
-                    <input type="hidden" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}">
 
-                            <a href="{{filePreview($revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? ''))}}"  class="theme-btn" target="blank">Preview</a>
-                        @elseif($value == 'select')
-                        <select type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}">
-                            {!! getOptions($service_fields['options'][$key]) !!}    
-                        </select>
                         @else
                         <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}">
                         @endif

@@ -85,8 +85,17 @@
                                         
                                         
                                             <div class="form_item">
-                                                <label for="address">Full Address</label>
+                                                <label for="address">Address</label>
                                                 <input class="form_field" type="text" name="address" id="address" placeholder="" >
+                                            </div>
+                                            <div class="form_item">
+                                                <label for="address">City</label>
+                                                <input class="form_field" type="text" name="city" id="city" placeholder="" >
+                                            </div>
+                                        
+                                            <div class="form_item">
+                                                <label for="address">State</label>
+                                                <input class="form_field" type="text" name="state" id="state" placeholder="" >
                                             </div>
                                         
                                         
@@ -124,7 +133,6 @@
                                                 @foreach($fields['field_type'] ?? [] as $key => $value)
                                                 @if( !isset($fields['form_field_type'][$key]) || (isset($fields['form_field_type'][$key])  && strtolower($fields['form_field_type'][$key]) != "lawyer"))
                                                         <div class="form_item">
-                                                            
                                                         
                                                             <label for="{{getFieldName($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
                                                             @if($value == 'textarea') 
@@ -132,7 +140,12 @@
                                                                 </textarea>
                                                             @elseif($value == 'date') 
                                                             <input class="form_field" type="date" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
-
+                                                            @elseif($value == 'file') 
+                                                            <input class="form_field" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
+                                                            @elseif($value == 'select')
+                                                            <select name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file"  class="form_field" >
+                                                                {!! getOptions($fields['options'][$key]) !!}    
+                                                            </select>
                                                             @else
                                                             <input class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" >
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceTemplate extends Model
 {
     use HasFactory;
-    protected $fillable = ['service_id', 'template_name', 'template', 'title', 'sub_title'];
+    protected $fillable = ['service_id', 'template_name', 'template', 'title', 'sub_title', 'signature'];
     public static function list($pagination, $filters = null) {
         unset($filters['page']);
         unset($filters['order_by']);

@@ -61,6 +61,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Signature</label>
+                                    <div class="input-group">
+                                        <textarea name="signature" class="form-control editor" id="signature" rows="5">{{$data['signature'] ?? ''}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,6 +103,14 @@
                                     <td>[address]</td>
                                 </tr>
                                 <tr>
+                                    <td>City</td>
+                                    <td>[city]</td>
+                                </tr>
+                                <tr>
+                                    <td>State</td>
+                                    <td>[state]</td>
+                                </tr>
+                                <tr>
                                     <td>Pincode</td>
                                     <td>[pincode]</td>
                                 </tr>
@@ -109,6 +125,10 @@
                                 <tr>
                                     <td>PIO Address</td>
                                     <td>[pio_address]</td>
+                                </tr>
+                                <tr>
+                                    <td>Signature</td>
+                                    <td>[signature]</td>
                                 </tr>
                                 @if(isset($fields) && isset($fields['field_type']))
                                     @foreach($fields['field_type'] as $key => $field)

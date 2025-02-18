@@ -57,7 +57,7 @@ class LawyerController extends Controller
             'first_name' => "required",
             'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
             'phone' => "required|numeric|digits:10",
-            'email' => "required|email|unique:lawyers,email",
+            'email' => "required|email|unique:lawyers,email|regex:/@filemyrti\.com$/",
             'status' => "required",
             'qualification' => "required",
             'image' => "required|image",

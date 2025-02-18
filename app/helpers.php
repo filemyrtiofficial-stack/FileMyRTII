@@ -918,7 +918,8 @@ function fieldList() {
         'input' => 'Input',
         'textarea' => 'Textarea',
         'date' => 'Date',
-
+        'select' => 'Options',
+        'file' => 'File',
         // 'boolean' => 'boolean',
 
 
@@ -1175,4 +1176,22 @@ $day % 10 == 3 && $day != 13 => 'rd',
 default => 'th',
 };
 return  $date->format('F').' '.$day.$suffix.' '.$date->format('Y') ;
+}
+
+
+function getOptions($options ,$selected_option = null) {
+    $options = explode(',', $options);
+    $html = "";
+    foreach($options as $option) {
+        $html .= "<option value=".$option.">".$option."</option>";
+    }
+    return $html;
+}
+
+function appealDetails() {
+    return [
+        0 => "Initial Apeeal",
+        1 => "First Appeal",
+        2 => "Second Appeal"
+    ];
 }

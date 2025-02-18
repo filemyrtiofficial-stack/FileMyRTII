@@ -122,12 +122,15 @@
         }, 2000);
         }
 
+        
+
         $(document).on('submit', '.authentication', function(e){
             e.preventDefault();
         let _this = $(this);
         $('.form-error-list').remove();
         // var data = $(this).serialize();
         var data = new FormData($(this)[0]);
+        $(this).find('button').attr('disabled', true)
 
         var action = $(this).attr('action');
         var method = $(this).attr('method');
@@ -146,14 +149,11 @@
             processData: false,
             success: function(response) {
                   if(response.status == 'success') {
-                    // if(response.disabled == true) {
-                    //     _this.find('.form_field').attr('disbaled', true);
-                    //     // _this.find('button').attr('disbaled', true);
-                    //     window.location.reload
-                    // }
+                    
                     if(response.tab != undefined) {
                         $('.contact_faq_tab').removeClass('active');
                         $('#'+response.tab).addClass('active');
+                        _this.find('button').attr('disabled', false)
 
                     }
                     else if(response.redirect) {
@@ -167,6 +167,8 @@
                         }
                        
                         closeMessagePopup();
+                        _this.find('button').attr('disabled', false)
+
                     }
                     else {
 
@@ -175,6 +177,8 @@
                   }
                   else {
                     $('.error_toast_msg').addClass('active').find('.error-message').html(response.message);
+                    _this.find('button').attr('disabled', false)
+
                   }
             },
             error: function(error) {
@@ -184,7 +188,9 @@
                         `<span class="text-danger form-error-list">${value}</span>`);
                     _this.find('textarea[name='+index+']').parents().eq(0).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
-                })
+                });
+                _this.find('button').attr('disabled', false)
+
             }
         });
         });
@@ -192,6 +198,8 @@
         $(document).on('submit', '.form-submit', function(e) {
         e.preventDefault();
         let _this = $(this);
+        _this.find('button').attr('disabled', true);
+
         $('.form-error-list').remove();
         var data = new FormData($(this)[0]);
         var action = $(this).attr('action');
@@ -223,6 +231,7 @@
     
                         _this.find('input').val(null);
                 }
+                _this.find('button').attr('disabled', false);
                   
             },
             error: function(error) {
@@ -230,7 +239,8 @@
                     console.log(value)
                     $('#' + index).parents().eq(0).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
-                })
+                });
+                _this.find('button').attr('disabled', false);
             }
         });
     });

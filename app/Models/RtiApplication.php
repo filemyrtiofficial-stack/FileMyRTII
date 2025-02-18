@@ -16,7 +16,7 @@ class RtiApplication extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio', 'customer_pio_address', 'process_status', 'final_rti_document','invoice_number','invoice_path'];
+    protected $fillable = ['user_id', 'application_no', 'service_id', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'postal_code', 'service_fields', 'charges', 'status', 'lawyer_id', 'payment_id', 'success_response', 'error_response', 'service_category_id', 'payment_status', 'payment_details', 'signature_type', 'signature_image', 'documents', 'application_id', 'appeal_no', 'pio_address', 'manual_pio', 'customer_pio_address', 'process_status', 'final_rti_document','invoice_number','invoice_path', 'city', 'state', 'pio_expected_date'];
     protected $casts = [
         'documents' => 'array'
     ];
@@ -120,10 +120,18 @@ class RtiApplication extends Model
         if ($revision) {
             $field_data = json_decode($revision->details, true);
             $html = $revision->serviceTemplate->template;
+            $signature_html = $revision->serviceTemplate->signature;
+
             foreach ($field_data as $key => $value) {
                 $html = str_replace("[" . $key . "]", $value, $html);
+                $signature_html = str_replace("[" . $key . "]", $value, $signature_html);
+
             }
             $html = str_replace("[pio_address]", $data->pio_address, $html);
+
+            $signature_html = str_replace("[pio_address]", $data->pio_address, $signature_html);
+
+
 
             $signature = "";
 
@@ -133,8 +141,17 @@ class RtiApplication extends Model
                 $signature = public_path($data->signature_image);
                 $signature = "data:image/png;base64," . base64_encode(file_get_contents($signature));
             }
+            if(!empty($data->signature_image)) {
 
-            $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
+                if($data->signature_type == 'manual') {
+                    $signature_html = str_replace("[signature]", "<span>".$data->signature_image."</span>", $signature_html);
+                }
+                else {
+                    $signature_html = str_replace("[signature]", " <img src=".$data->signature_image." alt='' width='100'>", $signature_html);
+                }
+               
+            }
+            $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature', 'signature_html'))->render();
             return $html;
         }
         return "";
@@ -180,7 +197,7 @@ class RtiApplication extends Model
             $pdf->setPaper('A4', 'portrait');  // Or 'landscape' for landscape mode
 
 
-            $pdf->stream();
+            // $pdf->stream();
             // Define the path to the public folder directly
             $path = public_path('upload/pdf/' . $fileName);
 

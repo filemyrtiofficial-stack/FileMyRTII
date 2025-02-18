@@ -241,6 +241,8 @@ $(document).ready(function() {
     $(document).on('submit', '.form-submit', function(e) {
         e.preventDefault();
         $('.form-error-list').remove();
+        var _this = $(this);
+        _this.find('button').attr('disabled', true);
         var data = new FormData($(this)[0]);
         var action = $(this).attr('action');
         var method = $(this).attr('method');
@@ -271,7 +273,8 @@ $(document).ready(function() {
                     index = index.replaceAll('.', '_')
                     $('#' + index).parents().eq(1).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
-                })
+                });
+                _this.find('button').attr('disabled', false);
             }
         });
     })

@@ -131,8 +131,17 @@
                                             </ul>
                                             <ul class="charge_list">
                                                 <li>Expected reply from PIO</li>
-                                                <li></li>
-                                                <li><span class="check_icon_wrapper"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon"></span></li>
+                                                <li>@if(!empty($item->pio_expected_date)) {{Carbon\Carbon::parse($item->pio_expected_date)->format('d/m/Y')}}@endif</li>
+                                                <li>
+                                                    <span class="check_icon_wrapper">
+                                                        @if(!empty($item->pio_expected_date)) 
+                                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
+                                                        @else
+                                                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
+
+                                                        @endif
+                                                    </span>
+                                            </li>
                                             </ul>
                                         </div>
 
@@ -537,37 +546,37 @@
                                             <div class="db_tab_heading">
                                                 <h2>Review Your Application: Check Your Drafted RTI</h2>
                                             </div>
+                                            
+
                                             <div class="db_tab_signing">
                                                 <div class="signing_wrap">
                                                     <form action="{{route('approve-rti', $data->application_no)}}" class="form-submit signature-form" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="signature_type" value="manual">
+                                                    <!-- <input type="hidden" name="signature_type" value="manual"> -->
                                                         <div class="contact_option custom_radio">
-                                                            <input type="radio" id="rti_yes" name="rti_option" checked="">
+                                                            <input type="radio" id="rti_yes" name="signature_type"  value="manual" checked>
                                                             <label for="rti_yes">Manual</label>
-                                                            <input type="text" name="signature">
                                                             <div class="sign_area_wrap">
-                                                                <div class="sign_area">
-                                                                    <div class="sign_img">
-                                                                        <!-- <img class="img-fluid" src="images/sign" alt=""> -->
-                                                                    </div>
+                                                                <div class="sign_area1">
+                                                                    <input type="text" name="signature" id="signature">
+                                                                   
                                                                 </div>
                                                                 <button class="theme-btn">Submit Signature</button>
 
                                                             </div>
                                                         </div>
-                                                    </form>
+                                                    <!-- </form> -->
 
                                                     
                                                     <div class="contact_option custom_radio">
 
-
+<!-- 
                                                     <form action="{{route('approve-rti', $data->application_no)}}" class="authentication signature-form-upload" method="post">
-                                                            @csrf
+                                                            @csrf -->
 
-                                                            <input type="hidden" name="signature_type" value="upload">
+                                                            <!-- <input type="hidden" name="signature_type" value="upload"> -->
 
-                                                        <input type="radio" id="rti_no" name="rti_option" >
+                                                        <input type="radio" id="rti_no" name="signature_type" value="upload">
                                                         <label for="rti_no">Upload Scanned Signature</label>
                                                         <div class="sign_area_wrap">
                                                             <div class="upload_area drop-area" id="drop-area">
@@ -576,8 +585,8 @@
                                                                     <p>Drag and drop response received from PIO or <label>Choose File</label></p>
                                                                     <div class="upload_img_wrap"></div>
                                                                 </div>
-                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form-upload">
-                                                                <input type="hidden" name="signature" class="image-input" />
+                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form">
+                                                                <input type="hidden" name="signature_file" class="image-input"  id="signature_file"/>
 
                                                             </div>
                                                             <div class="preview" id="signature-preview"></div>

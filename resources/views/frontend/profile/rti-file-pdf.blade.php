@@ -24,17 +24,13 @@
 
 
 <div class="signature">
-    <p>
-    @if($data->signature_type == 'manual')
-    <span>{{$data->signature_image}}</span>
-    @else    
-    <img src="{{$signature}}" alt="" width="100">
-    @endif
-</p>
+  
+{!! $signature_html !!}
+    <!-- 
 
     <p><strong>Yours faithfully,</strong></p>
     <p><span class="text-span">{{$field_data['first_name']}} {{$field_data['last_name']}}</span></p>
-    <p>Date: {{Carbon\Carbon::now()->format('d/m/Y')}}</p>
+    <p>Date: {{Carbon\Carbon::now()->format('d/m/Y')}}</p> -->
 </div>
 
 

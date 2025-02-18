@@ -27,7 +27,7 @@
 
                                 @if($data->lastRevision)
                                     @foreach($service_fields['field_type'] ?? [] as $key => $value)
-                                        @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer')
+                                        @if((!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer' ) && $value != 'file')
 
                                             @php
                                                 $field_key =  getFieldName($service_fields['field_lable'][$key]);
