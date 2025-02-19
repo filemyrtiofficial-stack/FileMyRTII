@@ -11,6 +11,8 @@
     margin-bottom: 0.833em;
     color: var(--theme-btn-color);
     margin-top: -4.01042vw;
+    position: relative;
+    z-index: 1;
 }
 .db_tab_wrapper {
     height: auto;
@@ -257,6 +259,7 @@ a.theme-btn:hover::before {
     overflow: hidden;
     position: relative;
 }
+.sign_area_wrap .sign_area input,
 .sign_area_wrap .sign_area input[type=file] {
     position: absolute;
     width: 100%;

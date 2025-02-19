@@ -5,7 +5,7 @@
             <div class="drafted_info_wrap">
                 <div class="drafted_info v_scroll">
                     <div class="table">
-                        <div class="seperator"></div>
+                        <!-- <div class="seperator"></div> -->
                         <table>
                             <thead>
                                 <tr>
@@ -58,8 +58,10 @@
         </div>
         <div class="drafted_item">
             <div class="drafted_app_view">
+                <div class="v_scroll">
                     <embed src="{{route('sample-rti-template',$data->service_id)}}" type="" width="100%" height="1000">
                 <!-- <img class="img-fluid" src="images/dashboard/drafted_rti.webp" alt=""> -->
+                </div>
             </div>
         </div>
     </div>

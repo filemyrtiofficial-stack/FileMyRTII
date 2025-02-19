@@ -1995,6 +1995,10 @@ button {
     margin-top: 0;
     margin-bottom: 30px;
 }
+/* lawyer forgot password */
+.lawyer-modal_wrapper .modal_action_bottom .theme-btn {
+    /* width: auto; */
+}
 /* forgot password modal end */
 
 /* registration modal start */
@@ -2045,6 +2049,9 @@ button {
 .register .modal_action_top {
     margin-top: 1.5625vw;
     margin-bottom: 1.875vw;
+}
+.register .modal_action_bottom .register-btn.update-pwd {
+    width: auto;
 }
 /* registration modal end */
 
