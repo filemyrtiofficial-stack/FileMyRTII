@@ -562,7 +562,7 @@
                                                             <label for="rti_yes">Manual</label>
                                                             <div class="sign_area_wrap">
                                                                 <div class="sign_area">
-                                                                    <input type="text" name="signature" id="signature">
+                                                                    <input class="form-field" type="text" name="signature" id="signature">
                                                                    
                                                                 </div>
                                                                 <button class="theme-btn"><span>Submit Signature</span></button>

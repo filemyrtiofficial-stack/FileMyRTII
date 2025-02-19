@@ -17,14 +17,18 @@
                         </div>
                         <input id="document" name="document"  class="upload_inputfile upload-final-pdf" type="file" accept="application/pdf">
                     </div>
-                    <iframe id="pdfPreview" width="100%" height="700" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
+                    <div class="pdf_preview">
+                        <iframe id="pdfPreview" width="100%" height="700" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
+                    </div>
                 </div>
                 <div class="form_action">
                     <button  class="theme-btn"><span>Submit Drafted RTI</span></button>
                 </div>
             </form>
             @else
-            <iframe id="pdfPreview" width="100%" height="700" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
+            <div class="pdf_preview">
+                <iframe class="pdf_preview" id="pdfPreview" width="100%" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
+            </div>
 
             @endif
     </div>

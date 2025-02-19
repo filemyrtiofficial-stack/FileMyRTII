@@ -880,7 +880,8 @@ margin-bottom: 1.286em;
     justify-content: center;
     margin-top: 1.5625vw;
 }
-.pdf_preview {
+.upload_rti_lawyer .pdf_preview {
+    height: 400px;
     max-height: 36.45833vw;
 }
 
@@ -1314,6 +1315,9 @@ margin-bottom: 1.286em;
     }
     .drafted_info table tbody tr td {
         padding: 6px;
+    }
+    .upload_rti_lawyer .form_action {
+        margin-top: 5.5625vw;
     }
     .approval_view .waiting_msg img {
         width: 50px;
