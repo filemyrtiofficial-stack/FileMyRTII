@@ -881,6 +881,12 @@ margin-bottom: 1.286em;
     margin-top: 2.60417vw;
     margin-bottom: 1.5625vw;
 }
+.notification .lawyer_req_info {
+    width: 100%;
+}
+.notification .lawyer_req_info .req_info_wrap {
+    margin-left: 0;
+}
 
 /* tracking application */
 .tracking_app .tracking_upload_wrap {
