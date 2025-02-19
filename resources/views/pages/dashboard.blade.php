@@ -95,6 +95,36 @@
                     </div>
                 </div>
 
+            </div>
+            <div class="col-md-6 mt-3">
+            <div class="card">
+                    <div class="card-header">
+                       <h4>RTI Type</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-danger">Initial Appeal</h4>
+                                <br>
+                                <h5>{{count($initial_application)}}</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-danger">First Appeal</h4>
+                                <br>
+                                <h5>{{count($first_application)}}</h5>
+                            </div>
+                            <div class="col-md-3">
+                            <h4 class="text-danger">Second Appeal</h4>
+                                <br>
+                                <h5>{{count($second_application)}}</h5>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mt-3">
                 <div class="card mt-3">
                   <div class="card-header">
                       <h4>Today Applications</h4>
@@ -200,6 +230,100 @@
                   </div>
                 </div>
                
+            </div>
+            <div class="col-md-6 mt-3">
+               
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h4>Lawyer Request</h4>
+                    </div>
+                    <div class="card-body">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Application No</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lawyer</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">message </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Create Date</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($close_request as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-3 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                    <a href="{{route('rtiapplication.view', $item->rtiApplication->id ?? '')}}" target="_blank">{{$item->rtiApplication->application_no ?? ''}}</a></h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('lawyers.edit',( $item->lawyer->id ?? ''))}}" target="blank">{{$item->lawyer->first_name ?? ""}} {{$item->lawyer->last_name ?? ""}}</a>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="d-flex px-3 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{$item->message}}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <span class="{{applicationCloseRequestsStatus()[$item->status]['class'] ??''}}"><b>{{applicationCloseRequestsStatus()[$item->status]['name'] ??''}}</b></span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
+                                        </td>
+                                        <td class="align-middle text-end">
+                                            <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                                <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" data-toggle="modal" data-target="#exampleModal_{{$item->id}}" data-whatever="@mdo"
+                                                    href="javascript:void(0)">View</a>
+                                            </div>
+                                            <div class="modal fade" id="exampleModal_{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <form class="form-submit" action="{{route('approve.layer.request',( $item->id ?? ''))}}" method="post">
+                                            <input type="hidden" name="application_id" value="{{$item->application_id ?? ''}}"  >
+                                            <div class="modal-body">
+                                                
+                                                <div class="form-group">
+                                                    <label for="message-text" class="col-form-label">Message</label>
+                                                    <textarea class="form-control" id="message-text" name="message">
+                                                    {{$item->message}}
+                                                    </textarea>
+                                                </div>
+                                            
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            @if($item->status == '0')  
+                                            <button type="submit" class="btn btn-primary">Approve</button>
+                                            @endif
+                                            </div>
+                                            </form>
+                                            </div>
+                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
           

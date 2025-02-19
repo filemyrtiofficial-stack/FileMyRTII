@@ -302,7 +302,7 @@ class CustomerController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
         $query = LawyerRtiQuery::where(['id' => $request_id])->first();
-        Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $query->application_id, 'type' => "more-info", 'to_type' => 'lawyer', 'to_id' => $query->rtiApplication->lawyer_id, 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
+        Notification::create(['message' => "More Information Received", 'linkable_type' => "rti-application", 'linkable_id' => $query->application_id, 'type' => "more-info", 'to_type' => 'lawyer', 'to_id' => $query->rtiApplication->lawyer_id, 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
 
         $query->update(['reply' => $request->reply, 'documents' => $request->documents, 'marked_read' => true]);
         $documents = $query->rtiApplication->documents ?? [];

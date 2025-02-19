@@ -236,7 +236,7 @@ class RtiApplication extends Model
 
     public function lawyerNotifications()
     {
-        return $this->hasMany(Notification::class, 'linkable_id', 'id')->where(['linkable_type' => 'rti-application', 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id()]);
+        return $this->hasMany(Notification::class, 'linkable_id', 'id')->where(['linkable_type' => 'rti-application', 'to_type' => 'lawyer', 'to_id' => auth()->guard('lawyers')->id()])->orderBy('created_at', 'desc');
     }
 
     public function filedTime()
