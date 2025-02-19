@@ -229,23 +229,24 @@
                             <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('lawyer.my-rti', [$data->application_no, 'notification'])}}">Notification</a>
 
                             <div id="tab7" class="contact_faq_tab @if($tab == 'notification')active @endif">
-                              
-                                <div class="lawyer_req_info" style="width:100%">
-                                    <div class="req_info_wrap">
-                                        <div class="info_header">
-                                            <h4>Lawyer Requested Info</h4>
-                                        </div>
-                                        <div class="info_body info_scroll">
-                                            @foreach($data->lawyerNotifications as $item => $value)
-                                            <div class="info_msg_wrap">
-                                                <div class="info_requested" > {{$value->message}}</div>
-                                                <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
-
+                                <div class="notification">
+                                    <div class="lawyer_req_info">
+                                        <div class="req_info_wrap">
+                                            <div class="info_header">
+                                                <h4>Lawyer Requested Info</h4>
                                             </div>
-                                            @endforeach
-                                           
+                                            <div class="info_body info_scroll">
+                                                @foreach($data->lawyerNotifications as $item => $value)
+                                                <div class="info_msg_wrap">
+                                                    <div class="info_requested" > {{$value->message}}</div>
+                                                    <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
+
+                                                </div>
+                                                @endforeach
+                                            
+                                            </div>
+                                        
                                         </div>
-                                      
                                     </div>
                                 </div>
                             </div>
