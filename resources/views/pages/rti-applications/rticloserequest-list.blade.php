@@ -59,7 +59,7 @@
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">
-                                            <a href="{{route('rtiapplication.view', $item->rtiApplication->id)}}" target="_blank">{{$item->rtiApplication->application_no}}</a></h6>
+                                            <a href="{{route('rtiapplication.view', $item->rtiApplication->id ?? '')}}" target="_blank">{{$item->rtiApplication->application_no ?? ''}}</a></h6>
                                         </div>
                                     </div>
                                 </td>
@@ -96,7 +96,7 @@
                                     </button>
                                     </div>
                                     <form class="form-submit" action="{{route('approve.layer.request',( $item->id ?? ''))}}" method="post">
-                                    <input type="text" name="application_id" value="{{$item->application_id}}"  >
+                                    <input type="hidden" name="application_id" value="{{$item->application_id ?? ''}}"  >
                                     <div class="modal-body">
                                         
                                         <div class="form-group">

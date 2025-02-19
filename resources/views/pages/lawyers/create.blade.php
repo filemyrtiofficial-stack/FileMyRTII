@@ -36,6 +36,17 @@
                                 </div>
                             </div>
                         </div>
+                        @if($data['employee_id'] ?? '')
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Employee ID</label>
+                                <div class="input-group">
+                                    <input id="employee_id" name="employee_id" value="{{$data['employee_id'] ?? ''}}" class="form-control"
+                                        type="text" placeholder="Employee ID" disabled>
+                                </div>
+                            </div>
+                        </div> 
+                        @endif
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label">DOB</label>
@@ -47,32 +58,41 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="form-label">Contact Number</label>
+                                <label class="form-label">Phone No.</label>
                                 <div class="input-group">
                                     <input id="phone" name="phone" value="{{$data['phone'] ?? ''}}" class="form-control"
-                                        type="text" min="6" max="15" placeholder="Contact Number">
+                                        type="text" min="6" max="15" placeholder="Phone No.">
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="form-label">Email ID</label>
+                                <label class="form-label">Company email ID (@filemyrti.com)</label>
                                 <div class="input-group">
                                     <input id="email" name="email" value="{{$data['email'] ?? ''}}" class="form-control"
-                                        type="email" placeholder="Email ID">
+                                        type="email" placeholder="Company email ID (@filemyrti.com)">
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="form-label">Qualification</label>
+                                <label class="form-label">Password</label>
                                 <div class="input-group">
-                                    <input id="qualification" name="qualification" value="{{$data['qualification'] ?? ''}}" class="form-control"
-                                        type="text" placeholder="Qualification">
+                                    <input id="password" name="password" value="" class="form-control"
+                                        type="text" min="6" max="15" placeholder="Password">
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Educational & Technical Qualification</label>
+                                <div class="input-group">
+                                    <input id="qualification" name="qualification" value="{{$data['qualification'] ?? ''}}" class="form-control"
+                                        type="text" placeholder="Educational & Technical Qualification">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label">Experience</label>
                                 <div class="input-group">
@@ -80,7 +100,7 @@
                                         type="text" placeholder="Experience">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                                 
                         <div class="col-6">
                             <div class="form-group">
@@ -119,7 +139,7 @@
                             <div class="form-group">
                                 <label class="form-label">Emergency/ Alternative Phone No. </label>
                                 <div class="input-group">
-                                    <input id="alternative_phone_no" name="alternative_phone_no" value="{{$data->lawyerProfile->alternative_phone_no ?? ''}}" class="form-control"  type="text" min="6" max="15" placeholder="Emergency/ Alternative Phone No. ">
+                                    <input id="alternative_phone_no" name="alternative_phone_no" value="{{$data->lawyerProfile->alternative_phone_no ?? ''}}" class="form-control"  type="text" min="6" max="15" placeholder="Emergency/ Alternative Phone No.">
                                 </div>
                             </div>
                         </div>
@@ -183,7 +203,7 @@
                             <div class="form-group">
                                 <label class="form-label">Account holder</label>
                                 <div class="input-group">
-                                    <input id="bank_account_holder" name="bank_account_holder" value="{{$data->lawyerProfile->bank_account_holder ?? ''}}" class="form-control" type="text" placeholder="Mother Name">
+                                    <input id="bank_account_holder" name="bank_account_holder" value="{{$data->lawyerProfile->bank_account_holder ?? ''}}" class="form-control" type="text" placeholder="Account holder">
                                 </div>
                             </div>
                         </div>
@@ -247,17 +267,17 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">About</label>
                                 <div class="input-group">
                                     <textarea name="about" class="form-control" id="about" rows="12">{{$data['about'] ?? ''}}</textarea>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">Address</label>
+                                <label class="form-label">Address for correspondence</label>
                                 <div class="input-group">
                                     <textarea name="address" class="form-control" id="address" rows="12">{{$data['address'] ?? ''}}</textarea>
                                 </div>
@@ -265,7 +285,7 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">Profile Image</label>
+                                <label class="form-label">Photograph</label>
                                 <div class="input-group">
                                     <input name="image" type="file" class="form-control dropify" id="image" @if(isset($data)) data-default-file="{{ asset($data->image) }}" @endif>
                                 </div>
@@ -293,7 +313,7 @@
                        
                         <div class="col-12">
                         <hr>
-                            <h5>Attachments</h5>
+                            <h5>Attachments (Resume / PAN / Aadhar, Certificates, etc.)</h5>
                             <div class="document row mb-3" id="sortable_product">
                             @if(isset($data->lawyerProfile->attachments ))
                                 @foreach($data->lawyerProfile->attachments['document_name'] ?? [] as $key => $value)
