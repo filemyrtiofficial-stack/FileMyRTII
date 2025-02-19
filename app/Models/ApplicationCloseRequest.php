@@ -24,7 +24,7 @@ class ApplicationCloseRequest extends Model
         $order_by_key = $filter_data['order_by'] ?? 'id';
         $order_by_type = $filter_data['order_by_type'] ?? 'desc';
 
-        $list = ApplicationCloseRequest::orderBy($order_by_key, $order_by_type);
+        $list = ApplicationCloseRequest::wherehas('rtiApplication')->orderBy($order_by_key, $order_by_type);
         if (!empty($filters)) {
             foreach ($filters as $key => $filter) {
                 if ($filter != null) {

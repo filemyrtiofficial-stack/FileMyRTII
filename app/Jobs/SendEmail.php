@@ -20,6 +20,7 @@ use App\Mail\MoreInfoReplyMail;
 use App\Mail\EditRequestMail;
 use App\Mail\MoreInfoMail;
 use App\Mail\FirstAppealPaymentMail;
+use App\Mail\LawyerRegister;
 
 
 
@@ -86,9 +87,12 @@ class SendEmail implements ShouldQueue
         elseif($this->type == 'more-info') {
             $email = new MoreInfoMail($this->details);
         }
+        elseif($this->type == 'lawyer-resgister') {
+            $email = new LawyerRegister($this->details);
+            // $this->details['email'] = ['personal_email_id'];
+        }
         else {
             $email = new ApplicationRegister($this->details);
-
         }
         
         Mail::to($this->details['email'])->send($email);
