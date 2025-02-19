@@ -10,7 +10,7 @@
             <div class="waiting_msg">
                 <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/waiting.webp')}}" alt="">
                 <h4 class="heading">Waiting for approval on the drafted RTI</h4>
-                <a href="javascript:void(0);" class="theme-btn"><span>Back</span></a>
+                <!-- <a href="javascript:void(0);" class="theme-btn"><span>Back</span></a> -->
             </div>
         </div>
         @elseif($data->lastRevision && !empty($data->lastRevision->customer_change_request) )

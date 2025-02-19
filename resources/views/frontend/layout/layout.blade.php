@@ -57,6 +57,15 @@
             margin-top: 5px;
             display: inline-block;
         }
+        .loader {
+            position: fixed;
+    z-index: 999;
+    background: #00000038;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+        }
     </style>
 </head>
 
@@ -105,7 +114,11 @@
             </div>
           </div>
 
-
+    <!-- <div class="loader" style="display:none">
+        <div>
+        <span>Please Wait...</span>
+        </div>
+    </div> -->
     @include('frontend.footer')
     <!-- <script src="js/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
@@ -130,7 +143,8 @@
         $('.form-error-list').remove();
         // var data = $(this).serialize();
         var data = new FormData($(this)[0]);
-        $(this).find('button').attr('disabled', true)
+        $(this).find('button').attr('disabled', true);
+        $('.loader').show();
 
         var action = $(this).attr('action');
         var method = $(this).attr('method');
@@ -153,7 +167,8 @@
                     if(response.tab != undefined) {
                         $('.contact_faq_tab').removeClass('active');
                         $('#'+response.tab).addClass('active');
-                        _this.find('button').attr('disabled', false)
+                        _this.find('button').attr('disabled', false);
+                        $('.loader').hide();
 
                     }
                     else if(response.redirect) {
@@ -167,7 +182,8 @@
                         }
                        
                         closeMessagePopup();
-                        _this.find('button').attr('disabled', false)
+                        _this.find('button').attr('disabled', false);
+                        $('.loader').hide();
 
                     }
                     else {
@@ -189,7 +205,8 @@
                     _this.find('textarea[name='+index+']').parents().eq(0).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
                 });
-                _this.find('button').attr('disabled', false)
+                _this.find('button').attr('disabled', false);
+                $('.loader').hide();
 
             }
         });

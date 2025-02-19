@@ -215,7 +215,7 @@ class RtiController extends Controller
             $data['to_user'] = "customer";
 
             $query = LawyerRtiQuery::create($data);
-            Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
+            // Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $application_id, 'type' => "more-info", 'from_type' => 'lawyer', 'from_id' => auth()->guard('lawyers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
             $application = RtiApplication::where(['id' => $application_id])->first();
             // SendEmail::dispatch('filed-rti', $application);
             SendEmail::dispatch('more-info', $application);
@@ -330,6 +330,26 @@ class RtiController extends Controller
 
       
 
+    }
+
+    public function rtiList(Request $request) {
+        if(isset($request->status)) {
+            if($request['status'] == 'all') {
+                unset($request['status']);
+            }
+            else {
+                $request['status'] =  applicationStatusString()[$request->status];
+            }
+            
+        }
+        else {
+            $request['status'] = 1;
+        }
+        $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
+        $list = RtiApplication::list(true, $request->all()); 
+        $html  =  view('lawyer.listing', compact('list'))->render();
+        $list = $list->toArray();
+        return response(['data' =>  $html, 'pages' => ['next_page' =>  $list['current_page']+1, 'last_page' => $list['last_page']]]);
     }
 
 }

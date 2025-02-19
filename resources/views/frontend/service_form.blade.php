@@ -110,7 +110,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form_row form_step_2 hide">
+                                    <div class="form_row form_step_2 hide1">
                                         <div class="form_data">
                                             
                                             @if($service->name == 'Custom Request')

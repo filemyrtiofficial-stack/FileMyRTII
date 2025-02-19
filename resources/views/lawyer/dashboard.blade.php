@@ -99,8 +99,8 @@
                                         <th> Status </th>    
                                     </thead>
 
-                                    <tbody>
-                                        @foreach($list as $item)
+                                    <tbody id="rti-listing">
+                                        <!-- @foreach($list as $item)
                                         <tr>
                                                 <td><a href="javascript:void(0);"> <div class="date_month_table"> <span class="date_table"> {{Carbon\Carbon::parse($item->created_at)->format('d')}} </span> <span class="month_table"> {{Carbon\Carbon::parse($item->created_at)->format('M y')}} </span> </div> </a> </td>
                                                 <td><a href="javascript:void(0);"> {{$item->application_no}} </a></td>
@@ -110,14 +110,14 @@
                                                     </svg> </span></a> </div>
                                                 </td>
                                         </tr>
-                                        @endforeach
+                                        @endforeach -->
 
                                     </tbody>
 
                                 </table>
 
                                 <div class="btn_view_more">
-                                    <a href="javascript:void(0);" class="theme-btn"> <span> View More </span> </a>
+                                    <a href="javascript:void(0);" class="theme-btn view-more-rti" data-page="1"> <span> View More </span> </a>
                                 </div>
 
                              </div>
@@ -160,5 +160,34 @@
         
     @include('lawyer.auth.my-profile')
 @endsection
+@push('js')
+<script>
+    getRTI()
+    $(document).on('click', '.view-more-rti', function(e){
+        getRTI();
+    })
+    function getRTI() {
+        let page = $( '.view-more-rti').attr('data-page');
+        $.ajax({
+            type : 'get',
+            datatType : 'json',
+            data : {page : page, 'status' : "{{$_GET['status'] ?? ''}}"},
+            url : "{{route('lawyer.rti-list')}}",
+            success :  function(response) {
+                console.log(response, 'response')
+                $('#rti-listing').append(response.data);
+                
+                if(parseInt(response.pages.last_page) >= parseInt(response.pages.next_page)) {
+                    $('.view-more-rti').attr('data-page', response.pages.next_page)
+
+                }
+                else {
+                    $('.view-more-rti').hide()
+                }
+            }
+        })
+    }
+</script>
+@endpush
 
 

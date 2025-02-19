@@ -291,9 +291,11 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
+                                <embed src="{{asset($value)}}" width="100" />
+                                <br>
                                 <a href="{{route('preview-document', encryptString($value))}}" target="blank">
-                                    <embed src="{{asset($value)}}" width="100" />
-                                </a>
+                                View</a>
+
                             </div>
                         </div>
                     </div>

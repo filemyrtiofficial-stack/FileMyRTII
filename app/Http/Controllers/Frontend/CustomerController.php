@@ -93,6 +93,8 @@ class CustomerController extends Controller
             ApplicationStatus::create(['status' => "approved", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
 
             SendEmail::dispatch('approve-rti', $rti);
+            Notification::create(['message' => "RTI have been appoved", 'linkable_type' => "rti-application", 'linkable_id' => $rti->id, 'type' => "approved-rti", 'to_type' => 'lawyer', 'to_id' => $rti['lawyer_id'],  'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id()]);
+
             // session()->flash('success', "Your rti is successfully sended to lawyer for further process.");
             return response(['status' => 'success', 'tab' => "thankyou-process"]);
         }
@@ -154,7 +156,7 @@ class CustomerController extends Controller
                 }
             }
             $revision->update(['customer_change_request' => json_encode($data)]);
-            Notification::create(['message' => "You have received change request", 'linkable_type' => "rti-application", 'linkable_id' => $revision->application_id, 'type' => "change-request", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id()]);
+            Notification::create(['message' => "You have received change request", 'linkable_type' => "rti-application", 'linkable_id' => $revision->application_id,'to_type' => 'lawyer', 'to_id' => $revision->rtiApplication->lawyer_id, 'type' => "change-request", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id()]);
             SendEmail::dispatch('edit-request', $revision->rtiApplication);
 
             session()->flash("success", "Change request sended to lawyer");
@@ -188,7 +190,7 @@ class CustomerController extends Controller
         $application = RtiApplication::find($application_id);
         $application->update(['process_status' => false]);
         $appeal = RtiAppeal::where(['appeal_no' => $request->appeal_no, 'application_id' => $application_id])->first();
-        $applications = RtiApplication::list(false, ['application_no' => $application->application_no, 'appeal_no' => $request->appeal_no]);
+        $list_id = RtiApplication::where(['application_no' => $application->application_no, 'appeal_no' => $request->appeal_no])->first();
         
         // dd( $appeal );
         // if(count($applications) > 0) {
@@ -272,8 +274,13 @@ class CustomerController extends Controller
             $application['pio_expected_date'] = null;
 
             // return response(['data' =>  $application], 500);
+            if(!$list_id) {
 
-          $list_id =  RtiApplication::create($application);
+                $list_id =  RtiApplication::create($application);
+            }
+            else {
+                $list_id->update($application);
+            }
        
             session()->flash('success', "Success");
             $url= route('customer.payment-rti', encryptString($list_id->id));
@@ -295,7 +302,7 @@ class CustomerController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
         $query = LawyerRtiQuery::where(['id' => $request_id])->first();
-        Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $query->application_id, 'type' => "more-info", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
+        Notification::create(['message' => "lawyer need more information", 'linkable_type' => "rti-application", 'linkable_id' => $query->application_id, 'type' => "more-info", 'to_type' => 'lawyer', 'to_id' => $query->rtiApplication->lawyer_id, 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id(), 'additional' => ['id' => $query->id, 'module' => "lawyer_query"]]);
 
         $query->update(['reply' => $request->reply, 'documents' => $request->documents, 'marked_read' => true]);
         $documents = $query->rtiApplication->documents ?? [];
@@ -318,13 +325,13 @@ class CustomerController extends Controller
         if($application) {
 
             if($application->appeal_no == 1){
-            $payment = Setting::getSettingData('first_appeal_payment');
+                $payment = Setting::getSettingData('first_appeal_payment');
             }
             else if($application->appeal_no == 2){
-            $payment = Setting::getSettingData('second_appeal_payment');
+                $payment = Setting::getSettingData('second_appeal_payment');
             }
             else{
-            $payment = Setting::getSettingData('payment');
+                $payment = Setting::getSettingData('payment');
             }
          
            $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
