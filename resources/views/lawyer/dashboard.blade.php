@@ -95,7 +95,9 @@
                                      <thead> 
                                         <th> Date</th>    
                                         <th> Application No </th>    
-                                        <th> Name</th>    
+                                        <th> Name</th>  
+                                        <th> Appeeal No. </th>    
+
                                         <th> Status </th>    
                                     </thead>
 

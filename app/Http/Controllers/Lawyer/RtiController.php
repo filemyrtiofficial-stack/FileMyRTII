@@ -21,6 +21,7 @@ use DB;
 class RtiController extends Controller
 {
     public function myRti(Request $request, $application_no = null, $tab="case-details") {
+
         $lawyerdata = Lawyer::get(auth()->guard('lawyers')->id());
         // dd($lawyerdata);
         if($application_no == null) {
@@ -41,6 +42,8 @@ class RtiController extends Controller
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
             $list = RtiApplication::list(true, $request->all());
             $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
+            // $test_rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('application_no')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
+          
             $total_rti = ["total" => 0, 'pending' => 0, 'filed' => 0, 'active' => 0];
             foreach($rti_count as $count) {
                 $total_rti['total'] += $count['total'];
@@ -57,7 +60,11 @@ class RtiController extends Controller
             return view('lawyer.dashboard', compact('list', 'total_rti','lawyerdata'));
         }
         else {
-            $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no]);
+            $application_nos = $application_no;
+            $application_no = substr($application_no, 0, 8);
+            $application_id = substr($application_nos, 8);
+            // echo $application_id;die;
+            $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no, 'id' => $application_id]);
             $data = RtiApplication::rtiNumberDetails($request->all());
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];

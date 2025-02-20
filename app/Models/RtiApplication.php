@@ -34,7 +34,9 @@ class RtiApplication extends Model
         $order_by_key = $filter_data['order_by'] ?? 'id';
         $order_by_type = $filter_data['order_by_type'] ?? 'desc';
 
-        $list = RtiApplication::with('service')->orderBy($order_by_key, $order_by_type)->where('process_status', true);
+        $list = RtiApplication::with('service')->orderBy($order_by_key, $order_by_type)
+        // ->where('process_status', true)
+        ;
         if (!empty($filters)) {
             foreach ($filters as $key => $filter) {
                 if ($filter != null) {

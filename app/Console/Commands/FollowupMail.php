@@ -28,7 +28,8 @@ class FollowupMail extends Command
     public function handle()
     {
 
-        // $list = RtiApplication::where('status', 1)->wherehas('lastRevision', function($query) {
+        // $list = RtiApplication::where('status', 1)
+        // ->wherehas('lastRevision', function($query) {
         //     $query->whereNull('customer_change_request')
         // })
         return Command::SUCCESS;

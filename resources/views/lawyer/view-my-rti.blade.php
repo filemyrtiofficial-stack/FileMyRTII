@@ -13,8 +13,10 @@
                         <div class="col-12 col-sm-12">
                             <div class="breadcrumb">
                                <ol>
-                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <li class="fs-24 active">My RTI</li>
+                                <li class="fs-24"><a href="/">Home</a></li>
+                                <li class="fs-24"><a href="{{route('lawyer.my-rti')}}">My RTI</a></li>
+
+                                <li class="fs-24 active">{{$data->application_no ?? ''}}</li>
                                </ol>
                             </div>
                           
@@ -33,52 +35,55 @@
                     <ul class="contact_faq_list">
                         <li class="contact_faq_item @if($tab == 'application-status')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab1" href="{{route('lawyer.my-rti', [$data->application_no, 'case-details'])}}">Case Details</a>
+                            <a class="faq_list_item" href1="#tab1" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'case-details'])}}">Case Details</a>
                         </li>
+                        @if($data->status != 3)
+
                         <li class="contact_faq_item @if($tab == 'pio-address')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab2" href="{{route('lawyer.my-rti', [$data->application_no, 'pio-address'])}}">PIO Address</a>
+                            <a class="faq_list_item" href1="#tab2" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'pio-address'])}}">PIO Address</a>
                         </li>
+                        @endif
                         <li class="contact_faq_item @if($tab == 'draft-rti')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab3" href="{{route('lawyer.my-rti', [$data->application_no, 'draft-rti'])}}">Draft RTI</a>
+                            <a class="faq_list_item" href1="#tab3" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'draft-rti'])}}">Draft RTI</a>
                         </li>
                         @if($data->status < 2 )
                         <li class="contact_faq_item @if($tab == 'drafted-rti')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no, 'drafted-rti'])}}">Drafted RTI</a>
+                            <a class="faq_list_item" href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'drafted-rti'])}}">Drafted RTI</a>
                         </li>
                         @endif
                         <li class="contact_faq_item @if($tab == 'approved-rti')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab5" href="{{route('lawyer.my-rti', [$data->application_no, 'approved-rti'])}}">Approved RTI</a>
+                            <a class="faq_list_item" href1="#tab5" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'approved-rti'])}}">Approved RTI</a>
                         </li>
                         <li class="contact_faq_item @if($tab == 'upload-rti')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab6" href="{{route('lawyer.my-rti', [$data->application_no, 'upload-rti'])}}">Upload RTI</a>
+                            <a class="faq_list_item" href1="#tab6" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'upload-rti'])}}">Upload RTI</a>
                         </li>
                         <li class="contact_faq_item @if($tab == 'notification')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab7" href="{{route('lawyer.my-rti', [$data->application_no, 'notification'])}}">Notification</a>
+                            <a class="faq_list_item" href1="#tab7" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'notification'])}}">Notification</a>
                         </li>
                         @if($data->status >=2 )
 
                         <li class="contact_faq_item @if($tab == 'tracking-no')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab8" href="{{route('lawyer.my-rti', [$data->application_no, 'tracking-no'])}}">Enter Tracking No</a>
+                            <a class="faq_list_item" href1="#tab8" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'tracking-no'])}}">Enter Tracking No</a>
                         </li>
                         @endif
-                        @if($data->parentFirstAppeal)
+                        @if($data->firstAppeal)
                         <li class="contact_faq_item @if($tab == 'first-appeal')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab9" href="{{route('lawyer.my-rti', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
+                            <a class="faq_list_item" href1="#tab9" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'first-appeal'])}}">First Appeal</a>
                         </li>
                         @endif
-                        @if($data->parentSecondAppeal)
+                        @if($data->secondAppeal)
 
                         <li class="contact_faq_item @if($tab == 'second-appeal')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab10" href="{{route('lawyer.my-rti', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
+                            <a class="faq_list_item" href1="#tab10" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'second-appeal'])}}">Second Appeal</a>
                         </li>
                         @endif
                     </ul>
@@ -88,7 +93,7 @@
                 <div class="contact_wrapper db_tab_wrapper">
                     <div class="contact_faq">
                         <div class="contact_faq_tab_content lawyer_accordion">
-                        <a class="accord_item" href1="#tab1" data-id="tab1" href="{{route('lawyer.my-rti', [$data->application_no, 'case-details'])}}">Case Details</a>
+                        <a class="accord_item" href1="#tab1" data-id="tab1" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'case-details'])}}">Case Details</a>
 
                             <div id="tab1" class="contact_faq_tab @if($tab == 'case-details')active @endif">
                                 <div class="case_details">
@@ -154,12 +159,17 @@
                                                         <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="attachment-popup"><span>View Attachment</span></a>
                                                     </div>
                                                     <div class="tab_action_bottom">
+                                                    @if($data->status < 3 )
                                                         <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="lawyer-request"><span>More Information Required</span></a>
-                                                        @if($data->status < 2 )
-                                                        <a class="theme-btn " href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no, 'drafted-rti'])}}"><span>Draft This Application</span></a>
                                                         @endif
+                                                        @if($data->status < 2 )
+                                                        <a class="theme-btn " href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'drafted-rti'])}}"><span>Draft This Application</span></a>
+                                                        @endif
+                                                        @if($data->status < 3 )
                                                         <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="admin-request"><span>Send Back To Admin</span></a>
+                                                        @endif
                                                     </div>
+                                                    
                                                     <!-- for disabled modal remove class active -->
                                                     <div class="lawyer_req_info_modal active1">
                                                         <div class="lawyer_req_info_modal_wrap">
@@ -217,9 +227,12 @@
                                                             <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
                                                         </div> -->
                                                     </div>
+                                                    @if($data->status < 3 )
+
                                                     <div class="info_footer">
                                                         <a href="javascript:void(0);" class="theme-btn"><span>Send Reminder</span></a>
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -240,7 +253,7 @@
                             
                             @include('lawyer.auth.tab6')
 
-                            <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('lawyer.my-rti', [$data->application_no, 'notification'])}}">Notification</a>
+                            <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'notification'])}}">Notification</a>
 
                             <div id="tab7" class="contact_faq_tab @if($tab == 'notification')active @endif">
                                 <div class="notification">
@@ -268,8 +281,8 @@
                                 @include('lawyer.auth.tab8')
                             @endif
 
-                            @if($data->parentFirstAppeal)
-                            <a class="accord_item" href1="#tab9" data-id="tab9" href="{{route('lawyer.my-rti', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
+                            @if($data->firstAppeal)
+                            <a class="accord_item" href1="#tab9" data-id="tab9" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'first-appeal'])}}">First Appeal</a>
 
                             <div id="tab9" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
                                 <div class="rti_appeal">
@@ -281,12 +294,13 @@
                                         <div class="db_tab_form">
                                             <div class="db_item_wrap single">
                                                 <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->parentFirstAppeal->reason ?? ''}}</textarea>
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->firstAppeal->reason ?? ''}}</textarea>
                                                 </div>
                                             </div>
-                                            @if($data->parentFirstAppeal->received_appeal == 1)
-                                            <a href="{{filePreview($data->parentFirstAppeal->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
+                                            @if(!empty($data->firstAppeal->document ))
+                                            <a href="{{filePreview($data->firstAppeal->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
                                             @endif
+                                            <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>
                                           
                                         </div>
 
@@ -294,8 +308,8 @@
                                 </div>
                             </div>
                             @endif
-                            @if($data->parentSecondAppeal)
-                            <a class="accord_item" href1="#tab10" data-id="tab10" href="{{route('lawyer.my-rti', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
+                            @if($data->secondAppeal)
+                            <a class="accord_item" href1="#tab10" data-id="tab10" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'second-appeal'])}}">Second Appeal</a>
 
                             <div id="tab10" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">
                                 <div class="rti_appeal">
@@ -307,12 +321,13 @@
                                         <div class="db_tab_form">
                                             <div class="db_item_wrap single">
                                                 <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->parentSecondAppeal->reason ?? ''}}</textarea>
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->secondAppeal->reason ?? ''}}</textarea>
                                                 </div>
                                             </div>
-                                            @if($data->parentSecondAppeal->received_appeal == 1)
-                                            <a href="{{filePreview($data->parentSecondAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
+                                            @if(!empty($data->secondAppeal->document ))
+                                            <a href="{{filePreview($data->secondAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
                                             @endif
+                                            <a href="{{route('lawyer.my-rti', $data->secondAppeal->application_no.$data->secondAppeal->id)}}" class="theme-btn"><span>View</span></a>
                                           
                                         </div>
 

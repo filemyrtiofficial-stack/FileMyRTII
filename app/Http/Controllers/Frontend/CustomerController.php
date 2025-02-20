@@ -28,7 +28,7 @@ class CustomerController extends Controller
         $payment = Setting::getSettingData('payment');
         if ($application_no == null) {
 
-            $request->merge(['user_id' => auth()->guard('customers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
+            $request->merge(['user_id' => auth()->guard('customers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc', 'process_status' => 1]);
             $list = RtiApplication::list(true, $request->all());
             // print_r($list);die();
             return view('frontend.profile.my-rti', compact('list', 'payment'));

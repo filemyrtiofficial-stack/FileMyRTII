@@ -18,7 +18,9 @@
                             <div class="breadcrumb">
                                <ol>
                                 <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <li class="fs-24 active">My RTI</li>
+                                <li class="fs-24"><a href="{{route('my-rti')}}">My RTI</a></li>
+
+                                <li class="fs-24 active">{{$data->application_no ?? ''}}</li>
                                </ol>
                             </div>
                           
@@ -55,7 +57,7 @@
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab5" href="{{route('my-rtis', [$data->application_no, 'invoice'])}}">Payment Info & Invoice</a>
                         </li>   
-                        @if(count($list)== 1)
+                        @if(count($list)== 1 && $data->status == 3)
                         <li class="contact_faq_item @if($tab == 'first-appeal')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
@@ -63,7 +65,7 @@
                         @endif
                         @if($data->filedTime && addDays(30, $data->filedTime->created_at) <= Carbon\Carbon::now() && addDays(60, $data->filedTime->created_at) > Carbon\Carbon::now())
                         @endif
-                        @if(count($list)== 2)
+                        @if(count($list)== 2 && $data->status == 3)
                         <li class="contact_faq_item @if($tab == 'second-appeal')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>

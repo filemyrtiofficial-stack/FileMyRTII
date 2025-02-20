@@ -47,6 +47,10 @@
                     <div class="col-12">
                         
                             {!! $data['template'] ?? '' !!}
+                           <div>
+                           {!! $data['signature'] ?? '' !!}
+                           </div>
+
                     </div>
                 </div>
             </div>

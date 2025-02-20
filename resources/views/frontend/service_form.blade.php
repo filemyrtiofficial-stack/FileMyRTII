@@ -140,7 +140,7 @@
                                                             @elseif($value == 'date') 
                                                             <input class="form_field" type="date" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
                                                             @elseif($value == 'file') 
-                                                            <input class="form_field" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
+                                                            <input class="form_field"   accept="image/*,.pdf" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
                                                             @elseif($value == 'select')
                                                             <select name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file"  class="form_field" >
                                                                 {!! getOptions($fields['options'][$key]) !!}    
@@ -170,7 +170,7 @@
                                                 <div class="form_number">RTI Application No: <span id="application_number"></span></div>
                                                 <div class="upload_file" id="upload_file-section">
                                                     <button class="upload-file-btn">Upload File <span>+</span></button>
-                                                    <input type="file" name="file[]" id="document-upload" multiple/>
+                                                    <input type="file" name="file[]" id="document-upload" multiple   accept="image/*,.pdf"/>
                                                     
                                                 </div>
                                                 <div class="upload_file hide" id="preview-section">
