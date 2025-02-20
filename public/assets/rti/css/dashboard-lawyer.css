@@ -629,6 +629,7 @@ margin-bottom: 1.286em;
     -moz-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
+    display: none;
 }
 .view_draft_area:hover::before {
     opacity: 1;
