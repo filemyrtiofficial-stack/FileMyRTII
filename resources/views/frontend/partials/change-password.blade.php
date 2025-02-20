@@ -26,7 +26,7 @@
                     
                     <div class="modal_action_bottom">
                         <!-- <a class="theme-btn singin-register-btn" data-target="login-step-1" href="javascript:void(0);">Back</a> -->
-                        <button class="theme-btn register-btn" href="javascript:void(0);">Update Password</button>
+                        <button class="theme-btn register-btn update-pwd" href="javascript:void(0);">Update Password</button>
                     </div>
                    
                 </form>

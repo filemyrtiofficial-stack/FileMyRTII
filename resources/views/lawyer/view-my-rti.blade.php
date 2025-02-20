@@ -181,7 +181,7 @@
                                                     <div class="info_header">
                                                         <h4>Lawyer Requested Info</h4>
                                                     </div>
-                                                    <div class="info_body info_scroll">
+                                                    <div class="info_body v_scroll">
                                                         @foreach($data->rtiQueries as $item => $value)
                                                         <div class="info_msg_wrap">
                                                             <div class="info_requested" > <a href="{{route('lawyer.get-query',[$value->id])}}" data-reply="{{$value->reply}}" data-documents="{{json_encode($value->documents)}}">{{$value->message}}</a></div>
@@ -271,7 +271,7 @@
                                                 </div>
                                             </div>
                                             @if($data->parentFirstAppeal->received_appeal == 1)
-                                            <a href="{{filePreview($data->parentFirstAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
+                                            <a href="{{filePreview($data->parentFirstAppeal->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
                                             @endif
                                           
                                         </div>

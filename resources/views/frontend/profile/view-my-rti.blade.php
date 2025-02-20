@@ -101,10 +101,12 @@
                                     </div>
                                     @foreach($list as $key =>  $item)
                                     <div class="db_tab_status">
-                                        <div>
-                                            @if($item->appeal_no > 0)
-                                               {{$item->appeal_no == 1 ? "First" : "Second"}} Appeal Status
-                                            @endif
+                                        <div class="db_tab_heading">
+                                            <div>
+                                                @if($item->appeal_no > 0)
+                                                {{$item->appeal_no == 1 ? "First" : "Second"}} Appeal Status
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="form_table_detail">
                                             <ul class="charge_list">
@@ -559,11 +561,11 @@
                                                             <input type="radio" id="rti_yes" name="signature_type"  value="manual" checked>
                                                             <label for="rti_yes">Manual</label>
                                                             <div class="sign_area_wrap">
-                                                                <div class="sign_area1">
-                                                                    <input type="text" name="signature" id="signature">
+                                                                <div class="sign_area">
+                                                                    <input class="form-field" type="text" name="signature" id="signature">
                                                                    
                                                                 </div>
-                                                                <button class="theme-btn">Submit Signature</button>
+                                                                <button class="theme-btn"><span>Submit Signature</span></button>
 
                                                             </div>
                                                         </div>
@@ -592,7 +594,7 @@
 
                                                             </div>
                                                             <div class="preview" id="signature-preview"></div>
-                                                            <button class="theme-btn">Submit</button>
+                                                            <button class="theme-btn"><span>Submit</span></button>
 
                                                         </div>
 
