@@ -12,7 +12,6 @@
 
         
 <header class="breadcrumb_banner bg_none">
-            <img class="img-fluid bg_img" src="images/contact/contact-banner.webp" alt="contact us banner">
                 <div class="container">
                     <div class="row banner_row">
                         <div class="col-12 col-sm-12">

@@ -62,7 +62,9 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:services,name",
+            // 'name' => "required|unique:services,name",
+            'name' => "required",
+
             'slug' => "required|unique:slug_masters,slug",
             'status' => "required",
             'description' => "required",
@@ -115,7 +117,9 @@ class ServiceController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:services,name,".$id,
+            // 'name' => "required|unique:services,name,".$id,
+            'name' => "required",
+
             'status' => "required",
             'slug' => "required",
             'description' => "required",

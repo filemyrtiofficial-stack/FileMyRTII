@@ -12,26 +12,15 @@
         </div>
         <div class="modal_body">
             <div class="modal_area">
-                <div class="modal_left">
-                    <ul>
                         @if($data->documents)
                         @foreach($data->documents as $key => $value)
-                        <li>
-                            <a href="{{filePreview($value)}}" target="blank">
-                                <span class="list_icon">
-                                    <embed src="{{$value}}" width="100%" height="100%" />
-                                </span>Document Name
+                            <a  class="doc_btn" href="{{filePreview($value)}}" target="blank">
+                                    <embed src="{{$value}}" width="200" height="200"/>
                             </a>
-                        </li>
                         @endforeach
                         @endif
                       
-                    </ul>
-                </div>
-                <div class="modal_right">
-                   
-                    </ul>
-                </div>
+               
             </div>
         </div>
      

@@ -7,7 +7,22 @@
 @endpush
 @section('content')
 
-        
+<header class="breadcrumb_banner bg_none">
+                <div class="container">
+                    <div class="row banner_row">
+                        <div class="col-12 col-sm-12">
+                            <div class="breadcrumb">
+                               <ol>
+                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
+                                <li class="fs-24 active">My RTI</li>
+                               </ol>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+        </header>
+
 
 
 <section class="contact_section dbtab_section lawyer_db_section">
@@ -214,10 +229,9 @@
                             @include('lawyer.auth.tab2')
                           
                             @include('lawyer.auth.tab3')
-                            @if($data->status < 2 )
 
                                 @include('lawyer.auth.tab4')
-                            @endif
+                          
 
 
                          
