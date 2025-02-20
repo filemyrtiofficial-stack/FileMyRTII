@@ -18,6 +18,14 @@
                     @endif
                  
                     <div class="row mt-5">
+                    <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <div class="input-group">
+                                    <textarea id="address" name="address" class="form-control" type="text" placeholder="Address" rows="12">{{ $data['address'] ?? ''}}</textarea>
+                                </div>
+                            </div>
+                        </div>
                         <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Name</label>
@@ -71,7 +79,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">District</label>
                                 <div class="input-group">
@@ -86,7 +94,7 @@
                                     <input name="mandal" class="form-control" id="mandal" rows="12" value="{{$data['mandal'] ?? ''}}">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Tahsildar</label>
@@ -95,7 +103,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Department</label>
                                 <div class="input-group">
@@ -119,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="row">
                         
                         

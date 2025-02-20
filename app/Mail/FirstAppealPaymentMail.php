@@ -64,6 +64,8 @@ class FirstAppealPaymentMail extends Mailable
      */
     public function attachments()
     {
-        return [];
+        return [
+            asset($this->data['invoice_path'])
+        ];
     }
 }

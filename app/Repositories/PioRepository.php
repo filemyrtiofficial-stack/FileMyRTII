@@ -10,8 +10,9 @@ use Exception;
 class PioRepository implements PioInterface {
 
     public function store($request) {
-        $data = $request->only([ 'state', 'pincode', 'mandal', 'tahsildar', 'department', 'city']);
-        $data['address'] = $this->setAddressAttribute($data);
+        $data = $request->only([ 'address']);
+        // $data = $request->only(['state', 'pincode', 'mandal', 'tahsildar', 'department', 'city']);
+        // $data['address'] = $this->setAddressAttribute($data);
         $lawyer = PioMaster::create($data);
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added"]);
@@ -24,9 +25,9 @@ class PioRepository implements PioInterface {
     }
     
     public function update($request, $id) {
-        $data = $request->only(['state', 'pincode', 'mandal', 'tahsildar', 'department', 'city']);
-        $data['address'] = $this->setAddressAttribute($data);
-
+        // $data = $request->only(['state', 'pincode', 'mandal', 'tahsildar', 'department', 'city']);
+        // $data['address'] = $this->setAddressAttribute($data);
+        $data = $request->only([ 'address']);
         PioMaster::where('id', $id)->update($data);
 
         Session::flash("success", "Data successfully updated");

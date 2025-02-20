@@ -51,11 +51,11 @@ class PioController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'state' => "required",
-            'pincode' => "required|numeric|digits:6",
-            // 'address' => "required",
-            'department' => "required",
-            'mandal' => "required"
+            // 'state' => "required",
+            // 'pincode' => "required|numeric|digits:6",
+            'address' => "required",
+            // 'department' => "required",
+            // 'mandal' => "required"
 
 
         ]);
@@ -86,7 +86,7 @@ class PioController extends Controller
     public function edit($id)
     {
         $data = PioMaster::get($id);
-
+   
         return view('pages.pio-master.create', compact('data'));
     }
 
