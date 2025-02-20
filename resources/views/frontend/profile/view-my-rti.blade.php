@@ -649,7 +649,7 @@
                 // $('.upload-file-img').attr('src', response.data);
               $('.image-input').val(response.data);
                 $('#'+preview).html(
-                    `<div class="preview-item"><img src="${response.data}"><button type="button" class="delete-icon"></button></div>`
+                    `<div class="preview-item"><embed src="${response.data}" width="50" height="50"><button type="button" class="delete-icon"></button></div>`
                 );
                 _this.val(null)
 

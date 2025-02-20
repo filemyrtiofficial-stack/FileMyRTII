@@ -126,20 +126,20 @@
 
                         <div class="overview_data" data-id="pending_rti"> 
                             <div class="tab_overview_data">
-                               2
+                             
                             </div>
                         </div>
 
 
                          <div class="overview_data" data-id="filed_rti"> 
                             <div class="tab_overview_data">
-                              3
+                           
                             </div>
                          </div>
 
                         <div class="overview_data" data-id="total_rti"> 
                             <div class="tab_overview_data">
-                              4
+                            
                             </div>
                         </div>
 
