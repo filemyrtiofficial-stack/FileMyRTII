@@ -423,6 +423,9 @@ a.theme-btn:hover::before {
     margin-top: 2.60417vw;
     margin-bottom: 2.60417vw;
 }
+.track_wrap {
+    padding-top: 2.08333vw;
+}
 .track_wrap .track_no {
     font-size: 28px;
     font-weight: 700;

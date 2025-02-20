@@ -484,9 +484,9 @@
                             <a class="accord_item" href1="#tab8" data-id="tab8" href="{{route('my-rtis', [$data->application_no, 'requested-info'])}}">More Info Request</a>
 
                             <div id="tab8" class="contact_faq_tab @if($tab == 'requested-info')active @endif">
-                                <div class="contact_form">
-                                    <div class="contact_form_heading">
-                                        Lawyer Requested Info
+                                <div class="rti_application">
+                                    <div class="db_tab_heading">
+                                        <h2>Lawyer Requested Info</h2>
                                     </div>
                                     <div>
                                         @include('frontend.profile.tab-section.query-request')
@@ -496,9 +496,9 @@
                             </div>
 
                             <div id="edit-request" class="contact_faq_tab @if($tab == 'edit-request')active @endif">
-                                <div class="contact_form">
-                                    <div class="contact_form_heading">
-                                        RTI Application Details
+                                <div class="rti_application">
+                                    <div class="db_tab_heading">
+                                        <h2>RTI Application Details</h2>
                                     </div>
 
                                     <div>
