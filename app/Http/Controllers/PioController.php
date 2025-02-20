@@ -8,6 +8,9 @@ use App\Repositories\PioRepository;
 use App\Interfaces\PioInterface;
 use Validator;
 use Carbon\Carbon;
+use App\Imports\PioImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class PioController extends Controller
 {
     private PioRepository $pioRepository;
@@ -15,10 +18,10 @@ class PioController extends Controller
     public function __construct(PioInterface $pioRepository)
     {
         $this->pioRepository = $pioRepository;
-        $this->middleware(['can:Manage PIO']); 
-        $this->middleware(['can:Delete PIO'], ['only' => ['destroy']]); 
-        $this->middleware(['can:Create PIO'], ['only' => ['create', 'store']]); 
-        $this->middleware(['can:Edit PIO'], ['only' => ['edit', 'update']]); 
+        $this->middleware(['can:Manage PIO']);
+        $this->middleware(['can:Delete PIO'], ['only' => ['destroy']]);
+        $this->middleware(['can:Create PIO'], ['only' => ['create', 'store']]);
+        $this->middleware(['can:Edit PIO'], ['only' => ['edit', 'update']]);
     }
 
     /**
@@ -86,7 +89,7 @@ class PioController extends Controller
     public function edit($id)
     {
         $data = PioMaster::get($id);
-   
+
         return view('pages.pio-master.create', compact('data'));
     }
 
@@ -100,14 +103,14 @@ class PioController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'state' => "required",
-            'pincode' => "required|numeric|digits:6",
-            // 'address' => "required",
-            'department' => "required",
-            'mandal' => "required"
+            // 'state' => "required",
+            // 'pincode' => "required|numeric|digits:6",
+                'address' => "required",
+            // 'department' => "required",
+            // 'mandal' => "required"
 
         ]);
-        
+
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
@@ -136,4 +139,14 @@ class PioController extends Controller
 
         return response(['data' => $list]);
     }
+
+
+    public function importPio(Request $request){
+        $request->validate([
+            'file'=>'required|max:2024'
+        ]);
+        Excel::import(new PioImport, $request->file('file'));
+        return back()->with('success', 'File Imported Successfully!');
+    }
+
 }

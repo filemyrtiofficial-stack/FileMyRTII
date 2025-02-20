@@ -4,6 +4,29 @@
 @include('layouts.navbars.auth.topnav', ['title' => 'Lawyer Management'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
+        <form action="{{route('pio.import')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+        <div class="card mb-4">
+            <div class="card-header list-header">
+
+                <h4>PIO Import</h4>
+
+            </div>
+            <div class="card-body">
+                <div class="d-flex">
+                    <input type="file" name="file" class="form-control" class="col-12">
+                    <button class="btn btn-primary float-end ms-2">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+
+<div class="row mt-4 mx-4">
+    <div class="col-12">
 
         <div class="card mb-4">
             <div class="card-header list-header">
@@ -18,18 +41,18 @@
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
-                              
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">State</th>
+                                {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">State</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">District</th>
 
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pincode
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mandal</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mandal</th> --}}
                                 <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tahsildar</th> -->
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Department</th>
+                                {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Department</th> --}}
 
-                               
+
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
@@ -42,14 +65,14 @@
                         <tbody>
                             @foreach($list as $item)
                             <tr>
-                               
+
                                 <td class="align-middle text-sm">{{$item->address?? ''}} </td>
-                                <td class="align-middle text-sm">{{$item->state?? ''}} </td>
+                                {{-- <td class="align-middle text-sm">{{$item->state?? ''}} </td>
                                 <td class="align-middle text-sm">{{$item->city ?? ''}} </td>
                                 <td class="align-middle text-sm">{{$item->pincode?? ''}} </td>
-                                <td class="align-middle text-sm">{{$item->mandal?? ''}} </td>
+                                <td class="align-middle text-sm">{{$item->mandal?? ''}} </td> --}}
                                 <!-- <td class="align-middle text-sm">{{$item->tahsildar?? ''}} </td> -->
-                                <td class="align-middle text-sm">{{$item->department?? ''}} </td>
+                                {{-- <td class="align-middle text-sm">{{$item->department?? ''}} </td> --}}
 
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}

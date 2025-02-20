@@ -12,6 +12,7 @@ class PioMaster extends Model
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
+        unset($filters['page']);
         $list = PioMaster::orderBy('id', 'desc');
 
         if(!empty($filters)) {
@@ -42,6 +43,7 @@ class PioMaster extends Model
     public static function get($id) {
         return PioMaster::find($id);
     }
+
 
 
 }
