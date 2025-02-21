@@ -220,6 +220,11 @@ class RtiApplication extends Model
         return $this->hasone(ApplicationCloseRequest::class, 'application_id', 'id')->where('lawyer_id', auth()->guard('lawyers')->id());
     }
 
+    public function intialAppeal()
+    {
+        return $this->hasone(RtiApplication::class, 'application_no', 'application_no')->where('appeal_no', 0);
+    }
+
     public function firstAppeal()
     {
         return $this->hasone(RtiApplication::class, 'application_no', 'application_no')->where('appeal_no', 1);

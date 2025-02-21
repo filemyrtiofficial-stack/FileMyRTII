@@ -247,17 +247,23 @@
 
 
 .tab_overview_data table th, .tab_overview_data table td{
-    width: 30%;
+    width: 23.33335%;
     text-align: center;
     padding: 1.042vw 0px;
 }
 
 .tab_overview_data table th:first-child{
-    width: 10%;
+    width: 15%;
 }
 
 .tab_overview_data table td:first-child{
-    width: 10%;
+    width: 15%;
+}
+.tab_overview_data table th:last-child {
+    width: 15%;
+}
+.tab_overview_data table td:last-child {
+    width: 15%;
 }
 
 .tab_overview_data table th{

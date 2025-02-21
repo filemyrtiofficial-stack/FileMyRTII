@@ -265,7 +265,7 @@
                                             <div class="info_body info_scroll">
                                                 @foreach($data->lawyerNotifications as $item => $value)
                                                 <div class="info_msg_wrap">
-                                                    <div class="info_requested" > {{$value->message}}  <span style="color: var(--theme-btn-color);">({{Carbon\Carbon::parse($value->created_at)->format('d M, Y h:i A')}})</span></div>
+                                                    <div class="info_requested" > {{$value->message}}  <span >({{Carbon\Carbon::parse($value->created_at)->format('d M, Y h:i A')}})</span></div>
                                                     <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
 
                                                 </div>
@@ -381,6 +381,13 @@
 
 $(document).on('change', '.multiple-document-upload', function () {
     let _this = $(this);
+    let files = this.files;
+         
+         let validation =   imagevaladition(files);
+         if(validation == false){
+              return;
+         }
+
     let form = $(this).attr('data-form');
        let preview = $(this).attr('data-preview');
         var data = new FormData($('.'+form)[0]);

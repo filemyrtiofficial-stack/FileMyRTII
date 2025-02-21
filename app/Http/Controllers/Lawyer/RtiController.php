@@ -266,11 +266,11 @@ class RtiController extends Controller
 
     public function assignCourierTracking(Request $request, $revision_id) {
         $validator = Validator::make($request->all(), [
-            'courier_name' => "required",
-            'courier_tracking_number' => "required",
+            'courier_name' => "required|max:50",
+            'courier_tracking_number' => "required|max:50",
             'courier_date' => "required|date",
-            'charges' => "required|numeric",
-            'address' => "required"
+            'charges' => "required|numeric|digits_between:1,6",
+            'details' => "required|max:255"
 
         ]);
         if($validator->fails()) {
@@ -280,7 +280,8 @@ class RtiController extends Controller
             
             $revision = RtiApplicationRevision::find($revision_id);
             if($revision) {
-                $data = $request->only(['courier_name', 'courier_date', 'courier_tracking_number', 'charges', 'address']);
+                $data = $request->only(['courier_name', 'courier_date', 'courier_tracking_number', 'charges']);
+                $data['address'] = $request->details;
                 $data['documents'] = $request->documents;
                 $data['application_id'] = $revision->application_id;
                 $data['revision_id'] = $revision->id;
@@ -360,7 +361,7 @@ class RtiController extends Controller
 
     public function assignPIO(Request $request, $application_id) {
         $validator = Validator::make($request->all(), [
-            'pio_address' => "required",
+            'pio_address' => "required|max:255",
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
@@ -414,7 +415,8 @@ class RtiController extends Controller
     public function uploadFinalRTI(Request $request, $application_id) {
 
         $validator = Validator::make($request->all(), [
-            'document' => "required",
+            'document' => 'required|file|mimes:pdf|max:3072',
+       
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
