@@ -23,8 +23,10 @@
         <div class="card mb-4">
             <div class="card-header  list-header">
                 <h4>Service Template</h4>
-                @if(auth()->user()->can('Create Service Template'))
-                <a href="{{route('service-template.create', $service->id)}}" class="btn btn-primary float-end">Add Template</a>
+                @if(count($list) < 1)
+                    @if(auth()->user()->can('Create Service Template'))
+                    <a href="{{route('service-template.create', $service->id)}}" class="btn btn-primary float-end">Add Template</a>
+                    @endif
                 @endif
             </div>
             <div class="card-body mt-3">
