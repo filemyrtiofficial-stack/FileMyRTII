@@ -396,7 +396,7 @@
                                                     <div class="icon_wrap">
                                                         <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                                                     </div>
-                                                    <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="first-appeal-form" data-preview="first-appeal-preview"></p>
+                                                    <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="first-appeal-form" data-preview="first-appeal-preview"    accept="image/*,.pdf"/></p>
                                                     <div class="upload_img_wrap"></div>
                                                     
                                                 </div>
@@ -590,7 +590,7 @@
                                                                     <p>Drag and drop response received from PIO or <label>Choose File</label></p>
                                                                     <div class="upload_img_wrap"></div>
                                                                 </div>
-                                                                <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form    ">
+                                                                <input id="document-upload" accept="image/*,.pdf" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form    ">
                                                                 <input type="hidden" name="signature_file" class="image-input"  id="signature_file"/>
 
                                                             </div>
@@ -630,6 +630,13 @@
  
     $(document).on('change', '.document-upload', function () {
         let _this = $(this);
+        let files = this.files;
+
+        let validation =   imagevaladition(files);
+        if(validation == false){
+        return;
+        }
+
        let form = $(this).attr('data-form');
        let preview = $(this).attr('data-preview');
 
@@ -709,5 +716,24 @@ $(document).on('change', '.multiple-document-upload', function () {
         error : function(error) {}
         });
     });
+    $(document).on('change', '.form-image', function () {
+        let file = this.files[0]; // Get selected file
+        let files = this.files;
+        let previewLink = $(this).closest('.custom_choose_file').find('.form-image-preview'); // Find related anchor
+        let validation =   imagevaladition(files);
+                if(validation == false){
+                    $(this).val(null)
+                     return;
+                }
+        if (file) {
+        let fileURL = URL.createObjectURL(file); // Create a temporary file URL
+
+        // Set href attribute for the correct preview link
+        previewLink
+        .attr('href', fileURL)
+        .attr('target', '_blank') // Open in new tab
+
+        }
+        });
 </script>
 @endpush

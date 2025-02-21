@@ -32,27 +32,27 @@
                 <div class="db_item_wrap">
                     <div class="form_item">
                         <label for="first_name">Courier Name*</label>
-                        <input class="form_field" type="text" name="courier_name" value="{{$data->courierTracking->courier_name ?? ''}}" placeholder="" required="" @if($data->courierTracking) disabled @endif>
+                        <input class="form_field" type="text" name="courier_name" value="{{$data->courierTracking->courier_name ?? ''}}" placeholder=""  @if($data->courierTracking) disabled @endif>
                     </div>
                     <div class="form_item">
                         <label for="last_name">Courier Tracking Number*</label>
-                        <input class="form_field"  name="courier_tracking_number" value="{{$data->courierTracking->courier_tracking_number ?? ''}}" placeholder="" required="" @if($data->courierTracking) disabled @endif>
+                        <input class="form_field"  name="courier_tracking_number" value="{{$data->courierTracking->courier_tracking_number ?? ''}}" placeholder=""  @if($data->courierTracking) disabled @endif>
                     </div>
                 </div>
                 <div class="db_item_wrap">
                     <div class="form_item">
                         <label for="first_name">Courier Date*</label>
-                        <input class="form_field" type="date" name="courier_date" value="{{$data->courierTracking->courier_date ?? ''}}" placeholder="" required="" @if($data->courierTracking) disabled @endif>
+                        <input class="form_field" type="date" name="courier_date" value="{{$data->courierTracking->courier_date ?? ''}}" placeholder=""  @if($data->courierTracking) disabled @endif>
                     </div>
                     <div class="form_item">
                         <label for="last_name">Courier Charges*</label>
-                        <input class="form_field" type="" name="charges" value="{{$data->courierTracking->charges ?? ''}}" placeholder="" required="" @if($data->courierTracking) disabled @endif>
+                        <input class="form_field" type="" name="charges" value="{{$data->courierTracking->charges ?? ''}}" placeholder=""  @if($data->courierTracking) disabled @endif>
                     </div>
                 </div>
                 <div class="db_item_wrap single">
                     <div class="form_item">
                         <label for="first_name">Courier Delivered Details*</label>
-                        <textarea class="form_field" name="address" id="" @if($data->courierTracking) disabled @endif>{{$data->courierTracking->address ?? ''}}</textarea>
+                        <textarea class="form_field" name="details" id="" @if($data->courierTracking) disabled @endif>{{$data->courierTracking->address ?? ''}}</textarea>
                     </div>
                 </div>
                 @if($data->courierTracking)
@@ -75,7 +75,7 @@
                             <p>Drag and drop your courier acknowledgement or <label>Choose File</label></p>
                             <div class="upload_img_wrap"></div>
                         </div>
-                        <input  accept="image/*" class="upload_inputfile multiple-document-upload" type="file" name="file[]" multiple data-preview="courier-images" data-form="courier-tacking-form">
+                        <input  accept="image/*,.pdf" class="upload_inputfile multiple-document-upload" type="file" name="file[]" multiple data-preview="courier-images" data-form="courier-tacking-form">
 
                     </div>
                     <div class="preview" id="courier-images"></div>

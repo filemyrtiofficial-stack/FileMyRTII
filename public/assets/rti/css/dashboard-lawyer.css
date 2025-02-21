@@ -245,6 +245,9 @@ margin-bottom: 1.286em;
 .info_msg_wrap > * + * {
     margin-top: 1.04167vw;
 }
+.info_requested span {
+    color: var(--theme-btn-color);
+}
 .info_footer {
     display: -webkit-box;
     display: -moz-box;

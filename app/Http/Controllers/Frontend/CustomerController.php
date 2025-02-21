@@ -196,7 +196,7 @@ class CustomerController extends Controller
         // if(count($applications) > 0) {
             $validation = [
                 'appeal_no' => "required",
-                'reason' => "required",
+                'reason' => "required|max:255",
                 'received_appeal' => 'required'
     
             ];
