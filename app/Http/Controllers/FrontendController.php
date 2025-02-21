@@ -30,6 +30,7 @@ use App\Models\ApplicationStatus;
 use Carbon\Carbon;
 use PDF;
 use App\Mail\ApplicationRegister;
+use App\Models\LawyerRtiQuery;
 
 class FrontendController extends Controller
 {
@@ -480,27 +481,41 @@ class FrontendController extends Controller
 
     public function invoicePdf($application_no = null) {
    
+        $queries = LawyerRtiQuery::wherehas('rtiApplication')
+        ->where('reply', '=',Null)
+        ->join('rti_applications', 'rti_applications.id', '=', 'lawyer_rti_queries.application_id')
+        ->join('application_statuses', 'application_statuses.application_id', '=', 'lawyer_rti_queries.application_id')
+        ->where('application_statuses.status', '!=','approved')
+        ->where('application_statuses.status', '!=','filed')
+        // ->wheredate('lawyer_rti_queries.created_at', $date)
+        ->select('rti_applications.*','lawyer_rti_queries.*')
+        ->get();
+     
+        foreach($queries as $query) {
+            SendEmail::dispatch('more-info', $query->rtiApplication);
+  
+        }
 //         $currentDate = Carbon::now()->format('Ymd');;  // Output: 2025-02-17
 //             // $application_no = date('y') . date('m') . rand(0000, 9999);
 //             $invoiceNumber = "INV-{$currentDate}".rand(0000, 9999);
 //  echo "<pre>";   print_r($invoiceNumber); die();
-        $application = RtiApplication::where(['application_no' => $application_no])->first();
-        $email = new ApplicationRegister($application);
-        // Mail::to($application['email'])->send($email);
+        // $application = RtiApplication::where(['application_no' => $application_no])->first();
+        // $email = new ApplicationRegister($application);
+        // // Mail::to($application['email'])->send($email);
 
-        $payment_details = json_decode($application->success_response , true);
-        $company = Setting::getSettingData('invoice-setting');
-        // Decode the JSON string into an associative array
-        $paymentdata = json_decode($application->success_response, true);
-        // $paymentdata = json_decode( $data, true);
+        // $payment_details = json_decode($application->success_response , true);
+        // $company = Setting::getSettingData('invoice-setting');
+        // // Decode the JSON string into an associative array
+        // $paymentdata = json_decode($application->success_response, true);
+        // // $paymentdata = json_decode( $data, true);
     
-        $logo = asset($company['invoice_logo'] ?? '');
+        // $logo = asset($company['invoice_logo'] ?? '');
         
-        $signature = public_path($company['invoice_logo'] ?? '');
-        $signature = "data:image/png;base64,".base64_encode(file_get_contents($logo));
+        // $signature = public_path($company['invoice_logo'] ?? '');
+        // $signature = "data:image/png;base64,".base64_encode(file_get_contents($logo));
       
-        $fileName = 'invoice_' .$application->application_no .'_appeal_no_'.$application->appeal_no.'.pdf';
-        RtiApplication::ApplicationPaymentInvoice($application,$fileName);
+        // $fileName = 'invoice_' .$application->application_no .'_appeal_no_'.$application->appeal_no.'.pdf';
+        // RtiApplication::ApplicationPaymentInvoice($application,$fileName);
 
         // echo $logo;
         // $pdf = PDF::loadView('frontend.profile.invoice',compact('company','application','paymentdata','logo') );

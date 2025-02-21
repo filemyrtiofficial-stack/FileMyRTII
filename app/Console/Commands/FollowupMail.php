@@ -3,7 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\RtiApplication;
+use App\Models\LawyerRtiQuery;
+use App\Jobs\SendEmail;
+use carbon\Carbon;
+
 class FollowupMail extends Command
 {
     /**
@@ -11,7 +14,7 @@ class FollowupMail extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:follow-up-mail';
 
     /**
      * The console command description.
@@ -28,10 +31,21 @@ class FollowupMail extends Command
     public function handle()
     {
 
-        // $list = RtiApplication::where('status', 1)
-        // ->wherehas('lastRevision', function($query) {
-        //     $query->whereNull('customer_change_request')
-        // })
-        return Command::SUCCESS;
+        $date = Carbon::now()->subDays('30');
+      $queries = LawyerRtiQuery::wherehas('rtiApplication')
+      ->where('reply', '=',Null)
+      ->join('rti_applications', 'rti_applications.id', '=', 'lawyer_rti_queries.application_id')
+      ->join('application_statuses', 'application_statuses.application_id', '=', 'lawyer_rti_queries.application_id')
+      ->where('application_statuses.status', '!=','approved')
+      ->where('application_statuses.status', '!=','filed')
+      // ->wheredate('lawyer_rti_queries.created_at', $date)
+      ->select('rti_applications.*','lawyer_rti_queries.*')
+      ->get();
+   
+      foreach($queries as $query) {
+          SendEmail::dispatch('more-info', $query->rtiApplication);
+
+      }
+        // return Command::SUCCESS;
     }
 }
