@@ -308,8 +308,8 @@ class CustomerController extends Controller
             $application['pio_expected_date'] = null;
 
             // return response(['data' =>  $application], 500);
+            $application['rti_appeal_id'] = $appeal->id;
             if(!$list_id) {
-
                 $list_id =  RtiApplication::create($application);
             }
             else {

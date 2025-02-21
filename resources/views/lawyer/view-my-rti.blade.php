@@ -280,8 +280,7 @@
                             @if($data->status >=2 )
                                 @include('lawyer.auth.tab8')
                             @endif
-
-                            @if($data->firstAppeal)
+                            @if($data->firstAppeal&& $data->firstAppeal->appealDeatils)
                             <a class="accord_item" href1="#tab9" data-id="tab9" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'first-appeal'])}}">First Appeal</a>
 
                             <div id="tab9" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
@@ -294,11 +293,11 @@
                                         <div class="db_tab_form">
                                             <div class="db_item_wrap single">
                                                 <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->firstAppeal->reason ?? ''}}</textarea>
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->firstAppeal->appealDeatils->reason ?? ''}}</textarea>
                                                 </div>
                                             </div>
-                                            @if(!empty($data->firstAppeal->document ))
-                                            <a href="{{filePreview($data->firstAppeal->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
+                                            @if(!empty($data->firstAppeal->appealDeatils->document ))
+                                            <a href="{{filePreview($data->firstAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
                                             @endif
                                             @if($data->firstAppeal->lawyer_id == auth()->guard('lawyers')->id())
                                             <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>
@@ -309,7 +308,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($data->secondAppeal)
+                            @if($data->secondAppeal && $data->secondAppeal->appealDeatils)
                             <a class="accord_item" href1="#tab10" data-id="tab10" href="{{route('lawyer.my-rti', [$data->application_no.$data->id, 'second-appeal'])}}">Second Appeal</a>
 
                             <div id="tab10" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">
@@ -322,11 +321,11 @@
                                         <div class="db_tab_form">
                                             <div class="db_item_wrap single">
                                                 <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->secondAppeal->reason ?? ''}}</textarea>
+                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->secondAppeal->appealDeatils->reason ?? ''}}</textarea>
                                                 </div>
                                             </div>
-                                            @if(!empty($data->secondAppeal->document ))
-                                            <a href="{{filePreview($data->secondAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
+                                            @if(!empty($data->secondAppeal->appealDeatils->document ))
+                                            <a href="{{filePreview($data->secondAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
                                             @endif
                                             @if($data->secondAppeal->lawyer_id == auth()->guard('lawyers')->id())
                                             <a href="{{route('lawyer.my-rti', $data->secondAppeal->application_no.$data->secondAppeal->id)}}" class="theme-btn"><span>View</span></a>
