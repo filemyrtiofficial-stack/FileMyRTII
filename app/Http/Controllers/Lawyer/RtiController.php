@@ -155,9 +155,103 @@ class RtiController extends Controller
 
     public function processRTIApplication(Request $request, $application_id) {
         
+       
         $application = RtiApplication::where(['id' => $application_id])->first();
+
+        $validation = [
+            'first_name' => "required|max:50",
+            'last_name' => "required|max:50",
+            'email' => "required|email|max:75",
+            'phone_number' => "required|digits:10",
+            'address' => "required|max:255",
+            'city' => "required|max:50",
+            'state' => "required|max:50",
+            'pincode' => "required|digits:6",
+
+        ];
+
+        $fields = isset($application->service->fields,) ? json_decode($application->service->fields, true) : [];
+
+        // if($request->service_key == '0') {
+        //     $validation['rti_query'] = 'required';
+
+        //     if($request->pio_addr == 'yes') {
+        //         $validation['pio_address'] = 'required';
+        //     }
+        // }
+        $input = $request->all();
+        $filelist = [];
+        foreach ($fields['field_type'] ?? [] as $key => $value) {
+            if( isset($fields['form_field_type'][$key]) ) {
+                $slug_key = getFieldName($fields['field_lable'][$key]);
+                $validation_string = '';
+                if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
+                    $validation_string = 'required';
+                }
+           
+                if($value == "input") {
+                    $validation_string .= '|max:75';
+                }
+                if($value == "textarea") {
+                    $validation_string .= '|max:200';
+                }
+                if($value == 'date') {
+                    $validation_string .= '|date';
+                    if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key])) {
+                        $validation_string .= "|before:".$fields['maximum_date'][$key];
+                    }
+                    if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key])) {
+                        $validation_string .= "|after_or_equal:".$fields['minimum_date'][$key];
+                    }
+                    if(isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
+                        $field_key = getFieldName($fields['dependency_date_field'][$key]);
+                        $validation_string .= "|after_or_equal:".$request[$field_key];
+                    }
+                }
+                 $validation_string = trim($validation_string, "|");
+            
+                if($validation_string != '') {
+                    $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
+                    
+                }
+                if($value == 'file') {
+                    $new_slug_key = $slug_key."_file";
+                  
+                    array_push( $filelist , $slug_key);
+                    $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' =>null];
+
+                }
+                else {
+
+                    $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
+                }
+                
+            }
+        }
+
+        // return response(['data' =>  $validation], 500);
+
+        $validator = Validator::make($request->all(), $validation);
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+
+        // return response(['data' =>  $application], 500);
         $application_no = $application->application_no;
         $input = $request->except(['_token', 'template_id']);
+        $document_file = "";
+        foreach($filelist as $list) {
+            $slug = $list."_file";
+            $file_name = $slug  ;
+
+            $file =  uploadFile($request, $slug, 'page_images');
+            if(empty($file)) {
+                $file = $input[$list];
+            }
+            $field_data[$slug_key]['value'] = $file;
+            $input[$list] = $file;
+            unset($input[$slug]);
+        }
         RtiApplicationRevision::create([
             'application_id' =>  $application->id, 
             'template_id' => $request->template_id,

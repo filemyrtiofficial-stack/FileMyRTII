@@ -628,6 +628,29 @@
 @push('js')
 <script>
  
+ $(document).on('change', '.form-image', function () {
+        let file = this.files[0]; // Get selected file
+        let files = this.files;
+        let previewLink = $(this).closest('.custom_choose_file').find('.form-image-preview'); // Find related anchor
+        let validation =   imagevaladition(files);
+                if(validation == false){
+                    $(this).val(null)
+                     return;
+                }
+        if (file) {
+        let fileURL = URL.createObjectURL(file); // Create a temporary file URL
+
+        // Set href attribute for the correct preview link
+        previewLink
+        .attr('href', fileURL)
+        .attr('target', '_blank').show() // Open in new tab
+
+        }
+        else {
+            previewLink.hide()
+        }
+        });
+
     $(document).on('change', '.document-upload', function () {
         let _this = $(this);
        let form = $(this).attr('data-form');

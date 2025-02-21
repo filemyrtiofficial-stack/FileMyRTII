@@ -125,8 +125,11 @@ class RtiApplication extends Model
             $signature_html = $revision->serviceTemplate->signature;
 
             foreach ($field_data as $key => $value) {
-                $html = str_replace("[" . $key . "]", $value, $html);
-                $signature_html = str_replace("[" . $key . "]", $value, $signature_html);
+                if(!empty($value)) {
+
+                    $html = str_replace("[" . $key . "]", $value, $html);
+                    $signature_html = str_replace("[" . $key . "]", $value, $signature_html);
+                }
 
             }
             $html = str_replace("[pio_address]", $data->pio_address, $html);

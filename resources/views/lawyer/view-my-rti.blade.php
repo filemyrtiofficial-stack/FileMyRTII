@@ -536,7 +536,11 @@ $(document).on('change', '.multiple-document-upload', function () {
         // Set href attribute for the correct preview link
         previewLink
         .attr('href', fileURL)
-        .attr('target', '_blank') // Open in new tab
+        .attr('target', '_blank').show() // Open in new tab
+
+        }
+        else {
+            previewLink.hide()
 
         }
         });
