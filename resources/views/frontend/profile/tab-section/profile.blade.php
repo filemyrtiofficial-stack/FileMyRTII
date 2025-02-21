@@ -34,7 +34,7 @@
         </div>
         <div class="form_item">
             <label for="">Pincode</label>
-            <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->pincode  ?? '')}}" disabled>
+            <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->postal_code  ?? '')}}" disabled>
         </div>
     </div>
     <div class="db_item_wrap">
