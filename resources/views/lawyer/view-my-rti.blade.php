@@ -300,8 +300,9 @@
                                             @if(!empty($data->firstAppeal->document ))
                                             <a href="{{filePreview($data->firstAppeal->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
                                             @endif
+                                            @if($data->firstAppeal->lawyer_id == auth()->guard('lawyers')->id())
                                             <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>
-                                          
+                                            @endif
                                         </div>
 
                                  
@@ -327,8 +328,9 @@
                                             @if(!empty($data->secondAppeal->document ))
                                             <a href="{{filePreview($data->secondAppeal->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
                                             @endif
+                                            @if($data->secondAppeal->lawyer_id == auth()->guard('lawyers')->id())
                                             <a href="{{route('lawyer.my-rti', $data->secondAppeal->application_no.$data->secondAppeal->id)}}" class="theme-btn"><span>View</span></a>
-                                          
+                                            @endif
                                         </div>
 
                                  
@@ -518,5 +520,29 @@ $(document).on('change', '.multiple-document-upload', function () {
 
         }
     });
+    
+    $(document).on('change', '.form-image', function () {
+        let file = this.files[0]; // Get selected file
+        let files = this.files;
+        let previewLink = $(this).closest('.custom_choose_file').find('.form-image-preview'); // Find related anchor
+        let validation =   imagevaladition(files);
+                if(validation == false){
+                    $(this).val(null)
+                     return;
+                }
+        if (file) {
+        let fileURL = URL.createObjectURL(file); // Create a temporary file URL
+
+        // Set href attribute for the correct preview link
+        previewLink
+        .attr('href', fileURL)
+        .attr('target', '_blank').show() // Open in new tab
+
+        }
+        else {
+            previewLink.hide()
+
+        }
+        });
 </script>
 @endpush

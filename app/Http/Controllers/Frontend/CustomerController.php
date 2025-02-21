@@ -113,32 +113,53 @@ class CustomerController extends Controller
             'pincode' => "required|digits:6",
 
         ];
+        $filelist = [];
 
         $fields = isset($revision->rtiApplication->service->fields,) ? json_decode($revision->rtiApplication->service->fields, true) : [];
         foreach ($fields['field_type'] ?? [] as $key => $value) {
-            if (isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] != "lawyer") {
+            if( isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] != "lawyer" ) {
+                $slug_key = getFieldName($fields['field_lable'][$key]);
                 $validation_string = '';
-                if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes') {
+                if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
                     $validation_string = 'required';
                 }
-                if ($value == 'date') {
+           
+                if($value == "input") {
+                    $validation_string .= '|max:75';
+                }
+                if($value == "textarea") {
+                    $validation_string .= '|max:200';
+                }
+                if($value == 'date') {
                     $validation_string .= '|date';
-                    if (isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key])) {
-                        $validation_string .= "|before:" . $fields['maximum_date'][$key];
+                    if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key])) {
+                        $validation_string .= "|before:".$fields['maximum_date'][$key];
                     }
-                    if (isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key])) {
-                        $validation_string .= "|after_or_equal:" . $fields['minimum_date'][$key];
+                    if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key])) {
+                        $validation_string .= "|after_or_equal:".$fields['minimum_date'][$key];
                     }
-                    if (isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
+                    if(isset($fields['dependency_date_field'][$key]) && !empty($fields['dependency_date_field'][$key])) {
                         $field_key = getFieldName($fields['dependency_date_field'][$key]);
-                        $validation_string .= "|after_or_equal:" . $request[$field_key];
+                        $validation_string .= "|after_or_equal:".$request[$field_key];
                     }
                 }
-                $slug_key = getFieldName($fields['field_lable'][$key]);
-                if ($validation_string != '') {
-                    $validation[$slug_key] =  $validation_string;
+                 $validation_string = trim($validation_string, "|");
+            
+                if($validation_string != '') {
+                    $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
+                    
                 }
-                $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
+                if($value == 'file') {
+                    array_push( $filelist , $slug_key);
+                  
+                    $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => null];
+
+                }
+                else {
+
+                    $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
+                }
+                
             }
         }
 
@@ -150,10 +171,23 @@ class CustomerController extends Controller
 
         if ($revision) {
             $data = $request->except(['_token']);
+            
             foreach(json_decode($revision->details, true) ?? [] as $key => $value) {
                 if(!isset($data[$key])) {
                     $data[$key] = $value;
                 }
+            }
+            foreach($filelist as $list) {
+                $slug = $list."_file";
+                $file_name = $slug  ;
+    
+                $file =  uploadFile($request, $slug, 'page_images');
+                if(empty($file)) {
+                    $file = $data[$list];
+                }
+                $field_data[$slug_key]['value'] = $file;
+                $data[$list] = $file;
+                unset($data[$slug]);
             }
             $revision->update(['customer_change_request' => json_encode($data)]);
             Notification::create(['message' => "You have received change request", 'linkable_type' => "rti-application", 'linkable_id' => $revision->application_id,'to_type' => 'lawyer', 'to_id' => $revision->rtiApplication->lawyer_id, 'type' => "change-request", 'from_type' => 'customer', 'from_id' => auth()->guard('customers')->id()]);
@@ -294,7 +328,7 @@ class CustomerController extends Controller
 
     public function sendReply(Request $request, $request_id) {
         $validation = [
-            'reply' => "required",
+            'reply' => "required|max:255",
             
         ];
         $validator = Validator::make($request->all(),  $validation);

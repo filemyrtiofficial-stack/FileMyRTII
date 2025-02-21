@@ -59,7 +59,7 @@
                                             @endif RTI Application No: <span id="application_number">{{$application->application_no}}</span></div>
                                                 <div class="upload_file" id="upload_file-section">
                                                     <button class="upload-file-btn">Upload File <span>+</span></button>
-                                                    <input type="file" name="file[]" id="document-upload" multiple/>
+                                                    <input type="file" name="file[]" id="document-upload"  accept="image/*,.pdf" multiple/>
                                                     
                                                 </div>
                                                 <div class="upload_file hide" id="preview-section">
@@ -221,6 +221,13 @@ $(document).on('click', '.delete-icon', function(){
 
     $(document).on('change', '#document-upload', function () {
         let _this = $(this);
+
+        let files = this.files;
+         let validation =   imagevaladition(files);
+         if(validation == false){
+              return;
+         }
+
         var data = new FormData($('.service-form')[0]);
          $.ajaxSetup({
             headers: {
