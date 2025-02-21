@@ -141,9 +141,11 @@
                                                             <input class="form_field" type="date" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
                                                             @elseif($value == 'file') 
                                                             <div class="custom_choose_file">
-                                                                <input class="form_field" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
-                                                                <a class="preview_icon" href="javascript:void(0);"><svg fill="#000000" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224.549 224.549"><g><path d="M223.476,108.41c-1.779-2.96-44.35-72.503-111.202-72.503S2.851,105.45,1.072,108.41c-1.43,2.378-1.43,5.351,0,7.729c1.779,2.96,44.35,72.503,111.202,72.503s109.423-69.543,111.202-72.503C224.906,113.761,224.906,110.788,223.476,108.41z M112.274,173.642c-49.925,0-86.176-47.359-95.808-61.374c9.614-14.032,45.761-61.36,95.808-61.36c49.925,0,86.176,47.359,95.808,61.374C198.468,126.313,162.321,173.642,112.274,173.642z"/><path d="M112.274,61.731c-27.869,0-50.542,22.674-50.542,50.543c0,27.868,22.673,50.54,50.542,50.54c27.868,0,50.541-22.672,50.541-50.54C162.815,84.405,140.143,61.731,112.274,61.731z M112.274,147.814c-19.598,0-35.542-15.943-35.542-35.54c0-19.599,15.944-35.543,35.542-35.543s35.541,15.944,35.541,35.543C147.815,131.871,131.872,147.814,112.274,147.814z"/><path d="M112.274,92.91c-10.702,0-19.372,8.669-19.372,19.364c0,10.694,8.67,19.363,19.372,19.363c10.703,0,19.373-8.669,19.373-19.363C131.647,101.579,122.977,92.91,112.274,92.91z"/></g></svg></a>
+                                                                <input class="form_field form-image" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif accept="image/*,.pdf"/>
+                                                                <a class="preview_icon form-image-preview" href="javascript:void(0);"><svg fill="#000000" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224.549 224.549"><g><path d="M223.476,108.41c-1.779-2.96-44.35-72.503-111.202-72.503S2.851,105.45,1.072,108.41c-1.43,2.378-1.43,5.351,0,7.729c1.779,2.96,44.35,72.503,111.202,72.503s109.423-69.543,111.202-72.503C224.906,113.761,224.906,110.788,223.476,108.41z M112.274,173.642c-49.925,0-86.176-47.359-95.808-61.374c9.614-14.032,45.761-61.36,95.808-61.36c49.925,0,86.176,47.359,95.808,61.374C198.468,126.313,162.321,173.642,112.274,173.642z"/><path d="M112.274,61.731c-27.869,0-50.542,22.674-50.542,50.543c0,27.868,22.673,50.54,50.542,50.54c27.868,0,50.541-22.672,50.541-50.54C162.815,84.405,140.143,61.731,112.274,61.731z M112.274,147.814c-19.598,0-35.542-15.943-35.542-35.54c0-19.599,15.944-35.543,35.542-35.543s35.541,15.944,35.541,35.543C147.815,131.871,131.872,147.814,112.274,147.814z"/><path d="M112.274,92.91c-10.702,0-19.372,8.669-19.372,19.364c0,10.694,8.67,19.363,19.372,19.363c10.703,0,19.373-8.669,19.373-19.363C131.647,101.579,122.977,92.91,112.274,92.91z"/></g></svg></a>
                                                             </div>
+                                                               <!-- Image Preview -->
+                                                             <img id="imagePreview" src="" alt="Image Preview" style="display: none;" width="50" height="50"/>
                                                             @elseif($value == 'select')
                                                             <select name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file"  class="form_field" >
                                                                 {!! getOptions($fields['options'][$key]) !!}    
@@ -174,7 +176,6 @@
                                                 <div class="upload_file" id="upload_file-section">
                                                     <button class="upload-file-btn">Upload File <span>+</span></button>
                                                     <input type="file" name="file[]" id="document-upload" multiple   accept="image/*,.pdf"/>
-                                                    
                                                 </div>
                                                 <div class="upload_file hide" id="preview-section">
                                                     <a class="upload-file-btn" target="blank">Preview </a>
@@ -313,48 +314,78 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+
+        $(document).on('change', '.form-image', function () {
+        let file = this.files[0]; // Get selected file
+        let files = this.files;
+        let previewLink = $(this).closest('.custom_choose_file').find('.form-image-preview'); // Find related anchor
+        let validation =   imagevaladition(files);
+                if(validation == false){
+                    $(this).val(null)
+                     return;
+                }
+        if (file) {
+        let fileURL = URL.createObjectURL(file); // Create a temporary file URL
+
+        // Set href attribute for the correct preview link
+        previewLink
+        .attr('href', fileURL)
+        .attr('target', '_blank') // Open in new tab
+
+        }
+        });
+        
     $(document).on('click', '.remove-file', function(){
         $('#preview-section').addClass('hide').find('a').attr('href' , null);
         $('#upload_file-section').removeClass('hide')
         $('.image-input').val(null)
 
     });
- $(document).on('change', '#document-upload', function () {
-        let _this = $(this);
-        var data = new FormData($('.service-form')[0]);
-         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-         $.ajax({
-            url: "{{route('upload-multiple-files')}}",
-            method: "POST",
-            data: data,
-            cache : false,
-            processData: false,
-            contentType: false,
-            dataType : 'json',
-            success : function(response){
-                $.each(response.data, function(index, value){
 
-                    $('#preview').append(`<div class="preview-item">
-                                                    
-                                                        <a href="${value.path}" target="blank">
-                                                            <embed src="{{url('/')}}${value.file}" width="50" height="50" />
-                                                            <input hidden value="${value.file}" name="documents[]">
-                                                        </a>
-                                                        <button type="button" class="delete-icon"></button>
-                                                    </div>`);
-                })
-            //     console.log('upload-image', response)
-            //     $('#upload_file-section').addClass('hide');
-            //     // _this.parents().eq(0).find('.upload-file-btn').text('Uploaded');
-            //   _this.parents().eq(1).find('.image-input').val(response.data);
-            //   console.log(_this.parents().eq(1).find('.image-input').attr('class'));
-            //           $('#preview-section').removeClass('hide').find('a').attr('href' , response.preview_path);
+         $(document).on('change', '#document-upload', function () {
+                let _this = $(this);
+                let files = this.files;
+         
+                let validation =   imagevaladition(files);
+                if(validation == false){
+                     return;
+                }
+              
+            
+                var data = new FormData($('.service-form')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{route('upload-multiple-files')}}",
+                    method: "POST",
+                    data: data,
+                    cache : false,
+                    processData: false,
+                    contentType: false,
+                    dataType : 'json',
+                    success : function(response){
+                        $.each(response.data, function(index, value){
 
-            },
+                            $('#preview').append(`<div class="preview-item">
+                                                            
+                                                                <a href="${value.path}" target="blank">
+                                                                    <embed src="{{url('/')}}${value.file}" width="50" height="50" />
+                                                                    <input hidden value="${value.file}" name="documents[]">
+                                                                </a>
+                                                                <button type="button" class="delete-icon"></button>
+                                                            </div>`);
+                        })
+                    //     console.log('upload-image', response)
+                    //     $('#upload_file-section').addClass('hide');
+                    //     // _this.parents().eq(0).find('.upload-file-btn').text('Uploaded');
+                    //   _this.parents().eq(1).find('.image-input').val(response.data);
+                    //   console.log(_this.parents().eq(1).find('.image-input').attr('class'));
+                    //           $('#preview-section').removeClass('hide').find('a').attr('href' , response.preview_path);
+
+                    },
             error : function(error) {}
          });
       });
@@ -362,17 +393,17 @@
         e.preventDefault();
         $(this).parents().eq(1).remove();
       })
-// $(document).on('change', "#document-upload", function (e) {
-//                 file = this.files[0];
-//                 if (file) {
-//                     let reader = new FileReader();
-//                     reader.onload = function (event) {
-//                       console.log(event.target.result)
-//                       $('#preview-dodument').attr('href' , event.target.result).removeClass('hide');
-//                     };
-//                     reader.readAsDataURL(file);
-//                 }
-//             });
+            // $(document).on('change', "#document-upload", function (e) {
+            //                 file = this.files[0];
+            //                 if (file) {
+            //                     let reader = new FileReader();
+            //                     reader.onload = function (event) {
+            //                       console.log(event.target.result)
+            //                       $('#preview-dodument').attr('href' , event.target.result).removeClass('hide');
+            //                     };
+            //                     reader.readAsDataURL(file);
+            //                 }
+            //             });
 
     $(document).on('change', '.pio_addr', function(e) {
         if($(this).val() == 'yes') {

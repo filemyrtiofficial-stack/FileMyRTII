@@ -667,6 +667,14 @@
 
 $(document).on('change', '.multiple-document-upload', function () {
     let _this = $(this);
+    let files = this.files;
+
+    let validation =   imagevaladition(files);
+    if(validation == false){
+    return;
+    }
+
+
     let form = $(this).attr('data-form');
        let preview = $(this).attr('data-preview');
         var data = new FormData($('.'+form)[0]);

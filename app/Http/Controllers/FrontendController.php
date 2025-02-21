@@ -205,13 +205,13 @@ class FrontendController extends Controller
         if ($request->step_no == 1) {
 
             $validator = Validator::make($request->all(), [
-                'first_name' => "required",
-                'last_name' => "required",
-                'email' => "required|email",
+                'first_name' => "required|max:50",
+                'last_name' => "required|max:50",
+                'email' => "required|email|max:75",
                 'phone_number' => "required|digits:10",
-                'address' => "required",
-                'city' => "required",
-                'state' => "required",
+                'address' => "required|max:255",
+                'city' => "required|max:50",
+                'state' => "required|max:50",
                 'postal_code' => "required|digits:6",
 
             ]);
@@ -238,6 +238,13 @@ class FrontendController extends Controller
                     if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
                         $validation_string = 'required';
                     }
+               
+                    if($value == "input") {
+                        $validation_string .= '|max:75';
+                    }
+                    if($value == "textarea") {
+                        $validation_string .= '|max:200';
+                    }
                     if($value == 'date') {
                         $validation_string .= '|date';
                         if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key])) {
@@ -251,6 +258,8 @@ class FrontendController extends Controller
                             $validation_string .= "|after_or_equal:".$request[$field_key];
                         }
                     }
+                     $validation_string = trim($validation_string, "|");
+                
                     if($validation_string != '') {
                         $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
                         
@@ -269,8 +278,11 @@ class FrontendController extends Controller
                     
                 }
             }
+             
+
+        
             $validator = Validator::make($request->all(), $validation);
-            // print_r($validation);die;
+        
             if ($validator->fails()) {
                 return response(['errors' => $validator->errors()], 422);
             }

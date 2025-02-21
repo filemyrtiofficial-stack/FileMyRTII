@@ -126,6 +126,44 @@
     <script src="{{asset('assets/rti/js/custom-script.js')}}"></script>
     @stack('js')
     <script>
+        function imagevaladition(files){
+                let allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+                let maxFiles = 5;
+                let maxSize = 3 * 1024 * 1024; // 3MB
+                let errorMessage = "";
+
+                    // Check file count
+                    if (files.length > maxFiles) {
+                    errorMessage = "You can only upload a maximum of 5 files.";
+                } else {
+                    for (let i = 0; i < files.length; i++) {
+                        let file = files[i];
+
+                        // Check file type
+                        if (!allowedTypes.includes(file.type)) {
+                            errorMessage = "Only images (JPG, PNG, WEBP) and PDFs are allowed.";
+                            break;
+                        }
+
+                        // Check file size
+                        if (file.size > maxSize) {
+                            errorMessage = "Each file must be smaller than 3MB.";
+                            break;
+                        }
+                    }
+                }
+                if (errorMessage) {
+                    $('.error_toast_msg').addClass('active').find('.error-message').html(errorMessage);
+                    setTimeout(function() {
+                    $('.error_toast_msg').fadeOut('slow', function() {
+                    $(this).removeClass('active').show(); // Reset state after fading out
+                    });
+                    }, 3000);
+                    return false;
+                }
+             
+
+        }
         closeMessagePopup();
         function closeMessagePopup() {
             setTimeout(() => {

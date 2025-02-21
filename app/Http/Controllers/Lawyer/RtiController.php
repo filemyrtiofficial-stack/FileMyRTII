@@ -154,6 +154,7 @@ class RtiController extends Controller
     }
 
     public function processRTIApplication(Request $request, $application_id) {
+        
         $application = RtiApplication::where(['id' => $application_id])->first();
         $application_no = $application->application_no;
         $input = $request->except(['_token', 'template_id']);
@@ -209,7 +210,7 @@ class RtiController extends Controller
 
     public function sendQuery(Request $request, $application_id) {
         $validator = Validator::make($request->all(), [
-            'message' => "required",
+            'message' => "required|max:255",
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
@@ -241,7 +242,7 @@ class RtiController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'message' => "required",
+            'message' => "required|max:255",
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);

@@ -294,7 +294,7 @@ class CustomerController extends Controller
 
     public function sendReply(Request $request, $request_id) {
         $validation = [
-            'reply' => "required",
+            'reply' => "required|max:255",
             
         ];
         $validator = Validator::make($request->all(),  $validation);
