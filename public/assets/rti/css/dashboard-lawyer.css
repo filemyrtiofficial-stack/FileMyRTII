@@ -399,6 +399,10 @@ margin-bottom: 1.286em;
     column-gap: 8.33333vw;
     row-gap: 20px;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+.upload_doc_modal .modal_area::after {
+    display: none;
 }
 .upload_doc_modal .modal_area .doc_btn {
     display: block;
@@ -406,11 +410,14 @@ margin-bottom: 1.286em;
     font-size: 1.25vw;
     letter-spacing: 0.24px;
     color: var(--theme-black-color);
-    background-color: #cde6f6;
+    background-color: transparent;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: calc(50% - (8.33333vw / 2));
+    width: 200px;
+    height: 200px;
+    padding: 0;
+    border: 1px solid #b5b5b5;
 }
 .upload_doc_modal .modal_area .modal_left,
 .upload_doc_modal .modal_area .modal_right {
@@ -622,6 +629,7 @@ margin-bottom: 1.286em;
     -moz-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
+    display: none;
 }
 .view_draft_area:hover::before {
     opacity: 1;
@@ -883,6 +891,7 @@ margin-bottom: 1.286em;
 .upload_rti_lawyer .pdf_preview {
     height: 400px;
     max-height: 36.45833vw;
+    overflow: hidden;
 }
 
 /* notification */
