@@ -31,20 +31,22 @@ class FollowupMail extends Command
     public function handle()
     {
 
-      $queries = LawyerRtiQuery::wherehas('rtiApplication')
-      ->whereNull('reply')
-      ->join('rti_applications', 'rti_applications.id', '=', 'lawyer_rti_queries.application_id')
-      ->join('application_statuses', 'application_statuses.application_id', '=', 'lawyer_rti_queries.application_id')
-      ->where('application_statuses.status', '!=','approved')
-      ->where('application_statuses.status', '!=','filed')
-      // ->wheredate('lawyer_rti_queries.created_at', $date)
-      ->select('rti_applications.*','lawyer_rti_queries.*')
-      ->get();
-   
-      foreach($queries as $query) {
-          SendEmail::dispatch('more-info', $query->rtiApplication);
+        $applications = RtiApplication::where('status', '<', 2)->wherehas('lastRevision', function($query) {
+            $query->whereNull('customer_change_request');
+        })->get();
+        foreach($applications as $application) {
+            SendEmail::dispatch('draft-rti', $application);
+        }
+      
+        $queries = LawyerRtiQuery::whereNull('reply')
+        ->join('rti_applications', 'rti_applications.id', '=', 'lawyer_rti_queries.application_id')
+        ->where('rti_applications.status', '<', 3)
+        ->get();        
+        foreach($queries as $query) {
+            SendEmail::dispatch('more-info', $query->rtiApplication);
+  
+        }
 
-      }
         // return Command::SUCCESS;
     }
 }
