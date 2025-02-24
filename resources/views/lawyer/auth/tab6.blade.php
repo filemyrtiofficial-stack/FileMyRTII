@@ -17,7 +17,7 @@
                         </div>
                         <input id="document" name="document"  class="upload_inputfile upload-final-pdf" type="file" accept="application/pdf">
                     </div>
-                    <div class="pdf_preview">
+                    <div class="pdf_preview v_scroll">
                         <iframe id="pdfPreview" width="100%" height="700" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
                     </div>
                 </div>
@@ -26,8 +26,8 @@
                 </div>
             </form>
             @else
-            <div class="pdf_preview">
-                <iframe class="pdf_preview" id="pdfPreview" width="100%" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
+            <div class="pdf_preview v_scroll">
+                <iframe class="pdf_preview" id="pdfPreview" width="100%" height="700" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
             </div>
 
             @endif

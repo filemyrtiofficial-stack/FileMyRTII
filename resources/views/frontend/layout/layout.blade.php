@@ -58,6 +58,8 @@
             color: #f00;
             margin-top: 5px;
             display: inline-block;
+            font-weight: 400;
+            font-size: 16px;
         }
       
     </style>

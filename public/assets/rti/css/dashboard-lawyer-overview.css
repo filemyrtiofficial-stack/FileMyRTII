@@ -569,7 +569,14 @@
         line-height: 3.771vw;
         padding-bottom: 3.042vw;
     }
-
+    .tab_overview_data {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .tab_overview_data table {
+        width: 150%;
+    }
     .tab_overview_data table th {
         font-size: 2.558vw;
     }

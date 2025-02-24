@@ -402,7 +402,8 @@ margin-bottom: 1.286em;
     column-gap: 8.33333vw;
     row-gap: 20px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    margin-bottom: 2.20833vw;
 }
 .upload_doc_modal .modal_area::after {
     display: none;
@@ -878,7 +879,7 @@ margin-bottom: 1.286em;
 
 /* upload rti */
 .upload_rti_wrap {
-    padding: 10.41667vw 0 0;
+    padding: 2.41667vw 0 0;
 }
 .upload_rti_wrap .upload_area {
     padding-top: 4.16667vw;
@@ -892,9 +893,10 @@ margin-bottom: 1.286em;
     margin-top: 1.5625vw;
 }
 .upload_rti_lawyer .pdf_preview {
-    height: 400px;
-    max-height: 36.45833vw;
-    overflow: hidden;
+    /* height: 400px;
+    max-height: 36.45833vw; */
+    /* overflow: hidden; */
+    border: 1px solid #ccc;
 }
 
 /* notification */
