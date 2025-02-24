@@ -1,4 +1,4 @@
-<a class="accord_item" href1="#tab8" data-id="tab8" href="{{route('lawyer.my-rti', [$data->application_no, 'tracking-no'])}}">Enter Tracking No</a>
+<a class="accord_item" href1="#tab8" data-id="tab8" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'tracking-no'])}}">Enter Tracking No</a>
 
 <div id="tab8" class="contact_faq_tab @if($tab == 'tracking-no')active @endif">
     <div class="tracking_app">

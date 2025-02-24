@@ -354,147 +354,159 @@
                                     </ul>
                                 </div>
                             </div>
-                            <a class="accord_item" href1="#tab6" data-id="tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
+                            @if(count($list)== 1 && $data->status == 3)
 
-                            <div id="tab6" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
-                                <div class="rti_appeal">
-                                    <div class="db_tab_heading">
-                                        <h2>First Appeal</h2>
-                                    </div>
-                                    <form action="{{route('rti-appeal', $data->id)}}" class="authentication first-appeal-form " method="post">
-                                        @csrf
-                                        <input type="hidden" name="appeal_no" value="1">
-                                        <div class="appeal_wrap">
-                                            <div class="appeal_info">
-                                                <div class="appeal_heading">
-                                                    <h4>What is First Appeal?</h4>
-                                                </div>
-                                                <div class="appeal_content">
-                                                    <p>According to the RTI Act, if a response is unsatisfactory or delayed beyond 30 days, you have the right to file a First Appeal. This ensures your application is reviewed by a higher authority within the same department.</p>
-                                                </div>
-                                            </div>
-                                            <div class="appeal_info">
-                                                <div class="appeal_heading">
-                                                    <h4>Apply for First Appeal after {{Carbon\Carbon::parse($data->created_at)->addDays(30)->format('d/m/Y')}}</h4>
-                                                </div>
-                                            </div>
-                                            <div class="appeal_info with_input">
-                                                <div class="appeal_heading">
-                                                    <h4>Did you receive response for your Initial Appeal?</h4>
-                                                </div>
-                                                <div class="custom_radio">
-                                                    <input type="radio" id="fappeal_yes" name="received_appeal" checked="" value="1">
-                                                    <label for="fappeal_yes">Yes</label>
-                                                </div>
-                                                <div class="custom_radio">
-                                                    <input type="radio" id="fappeal_no" name="received_appeal" value="0">
-                                                    <label for="fappeal_no">No</label>
-                                                </div>
-                                            </div>
-                                            <div class="upload_area">
-                                                <div class="upload_wrap">
-                                                    <div class="icon_wrap">
-                                                        <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
+                                <a class="accord_item" href1="#tab6" data-id="tab6" href="{{route('my-rtis', [$data->application_no, 'first-appeal'])}}">First Appeal</a>
+
+                                <div id="tab6" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
+                                    <div class="rti_appeal">
+                                        <div class="db_tab_heading">
+                                            <h2>First Appeal</h2>
+                                        </div>
+                                        <form action="{{route('rti-appeal', $data->id)}}" class="authentication first-appeal-form " method="post">
+                                            @csrf
+                                            <input type="hidden" name="appeal_no" value="1">
+                                            <div class="appeal_wrap">
+                                                <div class="appeal_info">
+                                                    <div class="appeal_heading">
+                                                        <h4>What is First Appeal?</h4>
                                                     </div>
-                                                    <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="first-appeal-form" data-preview="first-appeal-preview"    accept="image/*,.pdf"/></p>
-                                                    <div class="upload_img_wrap"></div>
-                                                    
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="document" class="image-input" />
-                                            <div class="preview" id="first-appeal-preview"></div>
-                                        </div>
-                                        <div class="db_tab_form">
-                                            <div class="db_item_wrap single">
-                                                <div class="form_item">
-                                                    <input class="form_field" type="text" id="" placeholder="Type your reason here (request to provide in English)" name="reason">
-                                                </div>
-                                            </div>
-                                            <div class="db_tab_status_action">
-                                                <button class="theme-btn"><span>Proceed Payment</span></button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
-
-                            <div id="tab7" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">
-                                <div class="rti_appeal">
-                                    <div class="db_tab_heading">
-                                        <h2>What is Second Appeal?</h2>
-                                    </div>
-                                    <form action="{{route('rti-appeal', $data->id)}}" class="authentication second-appeal-form " method="post">
-                                        @csrf
-                                        <input type="hidden" name="appeal_no" value="2">
-                                        <div class="appeal_wrap">
-                                            <div class="appeal_info">
-                                                <div class="appeal_heading">
-                                                    <h4>What is Second Appeal?</h4>
-                                                </div>
-                                                <div class="appeal_content">
-                                                    <p>If the First Appeal didn't yield a satisfactory outcome, the RTI Act empowers you to file a Second Appeal with the Central Information Commission (CIC) or State Information Commission (SIC). This is your final step to seek justice and transparency.</p>
-                                                </div>
-                                            </div>
-                                            <div class="appeal_info">
-                                                <div class="appeal_heading">
-                                                    <h4>Apply for Second Appeal after {{Carbon\Carbon::parse($data->created_at)->addDays(60)->format('d/m/Y')}}</h4>
-                                                </div>
-                                            </div>
-                                            <div class="appeal_info with_input">
-                                                <div class="appeal_heading">
-                                                    <h4>Did you receive response for your First Appeal?</h4>
-                                                </div>
-                                                <div class="custom_radio">
-                                                    <input type="radio" id="sappeal_yes" name="received_appeal" checked="" value="1">
-                                                    <label for="sappeal_yes">Yes</label>
-                                                </div>
-                                                <div class="custom_radio">
-                                                    <input type="radio" id="sappeal_no" name="received_appeal" value="0">
-                                                    <label for="sappeal_no">No</label>
-                                                </div>
-                                            </div>
-                                            <div class="upload_area">
-                                                <div class="upload_wrap">
-                                                    <div class="icon_wrap">
-                                                        <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
+                                                    <div class="appeal_content">
+                                                        <p>According to the RTI Act, if a response is unsatisfactory or delayed beyond 30 days, you have the right to file a First Appeal. This ensures your application is reviewed by a higher authority within the same department.</p>
                                                     </div>
-                                                    <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="second-appeal-form" data-preview="second-appeal-preview"></p>
-                                                    <div class="upload_img_wrap"></div>
-                                                    <input type="hidden" name="document" class="image-input" />
-
+                                                </div>
+                                                <div class="appeal_info">
+                                                    <div class="appeal_heading">
+                                                        <h4>Apply for First Appeal after {{Carbon\Carbon::parse($data->created_at)->addDays(30)->format('d/m/Y')}}</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="appeal_info with_input">
+                                                    <div class="appeal_heading">
+                                                        <h4>Did you receive response for your Initial Appeal?</h4>
+                                                    </div>
+                                                    <div class="custom_radio">
+                                                        <input type="radio" id="fappeal_yes" name="received_appeal" checked="" value="1">
+                                                        <label for="fappeal_yes">Yes</label>
+                                                    </div>
+                                                    <div class="custom_radio">
+                                                        <input type="radio" id="fappeal_no" name="received_appeal" value="0">
+                                                        <label for="fappeal_no">No</label>
+                                                    </div>
+                                                </div>
+                                                <div class="upload_area">
+                                                    <div class="upload_wrap">
+                                                        <div class="icon_wrap">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
+                                                        </div>
+                                                        <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="first-appeal-form" data-preview="first-appeal-preview"    accept="image/*,.pdf"/></p>
+                                                        <div class="upload_img_wrap"></div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="document" class="image-input" />
+                                                <div class="preview" id="first-appeal-preview"></div>
+                                            </div>
+                                            <div class="db_tab_form">
+                                                <div class="db_item_wrap single">
+                                                    <div class="form_item">
+                                                        <input class="form_field" type="text" id="" placeholder="Type your reason here (request to provide in English)" name="reason">
+                                                    </div>
+                                                </div>
+                                                <div class="db_tab_status_action">
+                                                    <button class="theme-btn"><span>Proceed Payment</span></button>
                                                 </div>
                                             </div>
-                                            <div class="preview" id="second-appeal-preview"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($data->filedTime && addDays(30, $data->filedTime->created_at) <= Carbon\Carbon::now() && addDays(60, $data->filedTime->created_at) > Carbon\Carbon::now())
+                            @endif
+                            @if(count($list)== 2 && $data->status == 3)
+                                <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('my-rtis', [$data->application_no, 'second-appeal'])}}">Second Appeal</a>
+
+                                <div id="tab7" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">
+                                    <div class="rti_appeal">
+                                        <div class="db_tab_heading">
+                                            <h2>What is Second Appeal?</h2>
                                         </div>
-                                        <div class="db_tab_form">
-                                            <div class="db_item_wrap single">
-                                                <div class="form_item">
-                                                    <input class="form_field" type="text" name="reason" id="" placeholder="Type your reason here (request to provide in English)" required="">
+                                        <form action="{{route('rti-appeal', $data->id)}}" class="authentication second-appeal-form " method="post">
+                                            @csrf
+                                            <input type="hidden" name="appeal_no" value="2">
+                                            <div class="appeal_wrap">
+                                                <div class="appeal_info">
+                                                    <div class="appeal_heading">
+                                                        <h4>What is Second Appeal?</h4>
+                                                    </div>
+                                                    <div class="appeal_content">
+                                                        <p>If the First Appeal didn't yield a satisfactory outcome, the RTI Act empowers you to file a Second Appeal with the Central Information Commission (CIC) or State Information Commission (SIC). This is your final step to seek justice and transparency.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="appeal_info">
+                                                    <div class="appeal_heading">
+                                                        <h4>Apply for Second Appeal after {{Carbon\Carbon::parse($data->created_at)->addDays(60)->format('d/m/Y')}}</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="appeal_info with_input">
+                                                    <div class="appeal_heading">
+                                                        <h4>Did you receive response for your First Appeal?</h4>
+                                                    </div>
+                                                    <div class="custom_radio">
+                                                        <input type="radio" id="sappeal_yes" name="received_appeal" checked="" value="1">
+                                                        <label for="sappeal_yes">Yes</label>
+                                                    </div>
+                                                    <div class="custom_radio">
+                                                        <input type="radio" id="sappeal_no" name="received_appeal" value="0">
+                                                        <label for="sappeal_no">No</label>
+                                                    </div>
+                                                </div>
+                                                <div class="upload_area">
+                                                    <div class="upload_wrap">
+                                                        <div class="icon_wrap">
+                                                            <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
+                                                        </div>
+                                                        <p>Drag and drop response received from PIO or <label>Choose File<input class="upload_inputfile document-upload" type="file" name="file"  data-form="second-appeal-form" data-preview="second-appeal-preview"></p>
+                                                        <div class="upload_img_wrap"></div>
+                                                        <input type="hidden" name="document" class="image-input" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="preview" id="second-appeal-preview"></div>
+                                            </div>
+                                            <div class="db_tab_form">
+                                                <div class="db_item_wrap single">
+                                                    <div class="form_item">
+                                                        <input class="form_field" type="text" name="reason" id="" placeholder="Type your reason here (request to provide in English)" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="db_tab_status_action">
+                                                    <button href="javascript:void(0);" class="theme-btn"><span>Proceed Payment</span></button>
                                                 </div>
                                             </div>
-                                            <div class="db_tab_status_action">
-                                                <button href="javascript:void(0);" class="theme-btn"><span>Proceed Payment</span></button>
-                                            </div>
+
+                                        </form>
+                                    
+                                    </div>
+                                </div>
+                            @endif
+                            @if($data->filedTime && addDays(60, $data->filedTime->created_at) <= Carbon\Carbon::now())
+                            @endif
+                            @if($data->lastRtiQuery && $data->lastRtiQuery->marked_read == 0)
+
+                                <a class="accord_item" href1="#tab8" data-id="tab8" href="{{route('my-rtis', [$data->application_no, 'requested-info'])}}">More Info Request</a>
+
+                                <div id="tab8" class="contact_faq_tab @if($tab == 'requested-info')active @endif">
+                                    <div class="rti_application">
+                                        <div class="db_tab_heading">
+                                            <h2>Lawyer Requested Info</h2>
                                         </div>
-
-                                    </form>
-                                 
-                                </div>
-                            </div>
-                            <a class="accord_item" href1="#tab8" data-id="tab8" href="{{route('my-rtis', [$data->application_no, 'requested-info'])}}">More Info Request</a>
-
-                            <div id="tab8" class="contact_faq_tab @if($tab == 'requested-info')active @endif">
-                                <div class="rti_application">
-                                    <div class="db_tab_heading">
-                                        <h2>Lawyer Requested Info</h2>
+                                        <div>
+                                            @include('frontend.profile.tab-section.query-request')
+                                        </div>
+                                    
                                     </div>
-                                    <div>
-                                        @include('frontend.profile.tab-section.query-request')
-                                    </div>
-                                   
                                 </div>
-                            </div>
+                            @endif
 
                             <div id="edit-request" class="contact_faq_tab @if($tab == 'edit-request')active @endif">
                                 <div class="rti_application">
@@ -542,79 +554,58 @@
                             </div>
 
 
-                            <div id="signing-process" class="contact_faq_tab @if($tab == 'approve-rti')active @endif">
-                                <div class="contact_form">
-                                  
+                                <div id="signing-process" class="contact_faq_tab @if($tab == 'approve-rti')active @endif">
+                                    <div class="contact_form">
+                                        <div>
+                                            <div class="signing_procedure">
+                                                <div class="db_tab_heading">
+                                                    <h2>Review Your Application: Check Your Drafted RTI</h2>
+                                                </div>
+                                                <div class="db_tab_signing">
+                                                    <div class="signing_wrap">
+                                                        <form action="{{route('approve-rti', $data->application_no)}}" class="form-submit signature-form" method="post">
+                                                        @csrf
+                                                            <div class="contact_option custom_radio">
+                                                                <input type="radio" id="rti_yes" name="signature_type"  value="manual" checked>
+                                                                <label for="rti_yes">Manual</label>
+                                                                <div class="sign_area_wrap">
+                                                                    <div class="sign_area">
+                                                                        <input class="form-field" type="text" name="signature" id="signature">
+                                                                    
+                                                                    </div>
+                                                                    <button class="theme-btn"><span>Submit Signature</span></button>
 
-                                    <div>
-                                        <div class="signing_procedure">
-                                            <div class="db_tab_heading">
-                                                <h2>Review Your Application: Check Your Drafted RTI</h2>
-                                            </div>
-                                            
-
-                                            <div class="db_tab_signing">
-                                                <div class="signing_wrap">
-                                                    <form action="{{route('approve-rti', $data->application_no)}}" class="form-submit signature-form" method="post">
-                                                    @csrf
-                                                    <!-- <input type="hidden" name="signature_type" value="manual"> -->
-                                                        <div class="contact_option custom_radio">
-                                                            <input type="radio" id="rti_yes" name="signature_type"  value="manual" checked>
-                                                            <label for="rti_yes">Manual</label>
-                                                            <div class="sign_area_wrap">
-                                                                <div class="sign_area">
-                                                                    <input class="form-field" type="text" name="signature" id="signature">
-                                                                   
                                                                 </div>
-                                                                <button class="theme-btn"><span>Submit Signature</span></button>
-
                                                             </div>
-                                                        </div>
-                                                    <!-- </form> -->
+                                                            <div class="contact_option custom_radio">
+                                                                <input type="radio" id="rti_no" name="signature_type" value="upload">
+                                                                <label for="rti_no">Upload Scanned Signature</label>
+                                                                <div class="sign_area_wrap">
+                                                                    <div class="upload_area drop-area" id="drop-area">
+                                                                        <div class="upload_wrap">
+                                                                            <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
+                                                                            <p>Drag and drop response received from PIO or <label>Choose File</label></p>
+                                                                            <div class="upload_img_wrap"></div>
+                                                                        </div>
+                                                                        <input id="document-upload" accept="image/*,.pdf" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form    ">
+                                                                        <input type="hidden" name="signature_file" class="image-input"  id="signature_file"/>
 
-                                                    
-                                                    <div class="contact_option custom_radio">
-
-<!-- 
-                                                    <form action="{{route('approve-rti', $data->application_no)}}" class="authentication signature-form-upload" method="post">
-                                                            @csrf -->
-
-                                                            <!-- <input type="hidden" name="signature_type" value="upload"> -->
-
-                                                        <input type="radio" id="rti_no" name="signature_type" value="upload">
-                                                        <label for="rti_no">Upload Scanned Signature</label>
-                                                        <div class="sign_area_wrap">
-                                                            <div class="upload_area drop-area" id="drop-area">
-                                                                <div class="upload_wrap">
-                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
-                                                                    <p>Drag and drop response received from PIO or <label>Choose File</label></p>
-                                                                    <div class="upload_img_wrap"></div>
+                                                                    </div>
+                                                                    <div class="preview" id="signature-preview"></div>
+                                                                    <button class="theme-btn"><span>Submit</span></button>
                                                                 </div>
-                                                                <input id="document-upload" accept="image/*,.pdf" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form    ">
-                                                                <input type="hidden" name="signature_file" class="image-input"  id="signature_file"/>
-
                                                             </div>
-                                                            <div class="preview" id="signature-preview"></div>
-                                                            <button class="theme-btn"><span>Submit</span></button>
-
-                                                        </div>
-
-                                                        </div>
-                                                    </form>
-
-                                                    
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                   
                                 </div>
                             </div>
                            
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>

@@ -11,6 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{asset('assets/rti/css/custom-style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/rti/css/loader.css')}}">
+
     @stack('style')
 
     <style>
@@ -57,15 +59,7 @@
             margin-top: 5px;
             display: inline-block;
         }
-        .loader {
-            position: fixed;
-    z-index: 999;
-    background: #00000038;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-        }
+      
     </style>
 </head>
 
@@ -113,6 +107,8 @@
               </div>
             </div>
           </div>
+
+    <div class="loading loader" style="display:none;"><span>Please Wait ...</span>&#8230;</div>
 
     <!-- <div class="loader" style="display:none">
         <div>

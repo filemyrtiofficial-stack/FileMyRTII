@@ -31,9 +31,8 @@ class FollowupMail extends Command
     public function handle()
     {
 
-        $date = Carbon::now()->subDays('30');
       $queries = LawyerRtiQuery::wherehas('rtiApplication')
-      ->where('reply', '=',Null)
+      ->whereNull('reply')
       ->join('rti_applications', 'rti_applications.id', '=', 'lawyer_rti_queries.application_id')
       ->join('application_statuses', 'application_statuses.application_id', '=', 'lawyer_rti_queries.application_id')
       ->where('application_statuses.status', '!=','approved')

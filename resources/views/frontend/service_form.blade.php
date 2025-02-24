@@ -449,6 +449,8 @@
         let type = $(this).attr('method');
         var data = new FormData($(this)[0]);
         $('.form-error-list').remove();
+        $('.loader').show();
+
         $.ajax({
             url : action,
             type :  type,
@@ -479,6 +481,8 @@
                         finalrayzorpayment(response.rti)
 
                     }
+                    $('.loader').hide();
+
                 }
             },
             error :  function(error) {
@@ -487,13 +491,16 @@
                     index = index.replaceAll('.', '_')
                     $('#' + index).parents().eq(0).append(
                         `<span class="text-danger form-error-list">${value}</span>`)
-                })
+                });
+                $('.loader').hide();
+
             }
         });
 
     });
 
     function finalrayzorpayment(rti){
+        $('.service-form').find('button').attr('disabled', true);
             $('#razor_order_number').val(rti.application_no);
             var options = {
                 "key": "{{ env('RAZORPAY_KEY') }}", // rzp_live_ILgsfZCZoFIKMb
@@ -516,6 +523,8 @@
                 },
                 "modal": {
                     "ondismiss": function(){
+                        $('.service-form').find('button').attr('disabled', false);
+
                             $('.popup').css('display','none');
                             $('#proceed-to-payment').css("pointer-events", "visible");
                             $('#proceed-to-payment').css("opacity", "1");
@@ -538,8 +547,7 @@
                         razorpay_payment_id: razorpay_paymentfail_id ,order_id : razorpay_paymentfail_id,paymet_fail:response, application_no : rti.application_no
                     }, 
                     success: function (msg) {
-                        // saveshipping(); 
-                    // window.location.href = "{{url('checkout/order-success')}}";
+                        $('.service-form').find('button').attr('disabled', false);
                     }
                 });
             });

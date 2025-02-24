@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- endinject -->
+  <link rel="stylesheet" href="{{asset('assets/rti/css/loader.css')}}">
 
   <style>
     .list-header {
@@ -117,6 +118,7 @@ span.permission-list {
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+  <div class="loading loader" style="display:none;"><span>Please Wait ...</span>&#8230;</div>
 
   <!-- plugins:js -->
   <script src="{{asset('assets/vendors/js/vendor.bundle.base.js')}}"></script>
@@ -246,6 +248,7 @@ $(document).ready(function() {
         var data = new FormData($(this)[0]);
         var action = $(this).attr('action');
         var method = $(this).attr('method');
+        $('.loader').show();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -275,6 +278,7 @@ $(document).ready(function() {
                         `<span class="text-danger form-error-list">${value}</span>`)
                 });
                 _this.find('button').attr('disabled', false);
+                $('.loader').hide();
             }
         });
     })

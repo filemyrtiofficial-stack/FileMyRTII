@@ -1,4 +1,4 @@
-<a class="accord_item" href1="#tab2" data-id="tab2" href="{{route('lawyer.my-rti', [$data->application_no, 'pio-address'])}}">PIO Address</a>
+<a class="accord_item" href1="#tab2" data-id="tab2" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'pio-address'])}}">PIO Address</a>
 
 <div id="tab2" class="contact_faq_tab @if($tab == 'pio-address')active @endif">
     <div class="pio_address">

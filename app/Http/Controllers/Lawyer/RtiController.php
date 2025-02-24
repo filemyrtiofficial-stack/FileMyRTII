@@ -61,8 +61,13 @@ class RtiController extends Controller
         }
         else {
             $application_nos = $application_no;
-            $application_no = substr($application_no, 0, 8);
-            $application_id = substr($application_nos, 8);
+            // $application_no = substr($application_no, 0, 8);
+            // $application_id = substr($application_nos, 8);
+            $application_nos  = explode("-",$application_nos);
+            $application_no = $application_nos[0];
+            $application_id = $application_nos[1];
+
+
             // echo $application_id;die;
             $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no, 'id' => $application_id]);
             $data = RtiApplication::rtiNumberDetails($request->all());
