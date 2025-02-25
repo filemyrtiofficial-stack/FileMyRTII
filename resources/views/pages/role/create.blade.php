@@ -1,10 +1,21 @@
 
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('roles.index')}}">Roles</a></li>
+@if(isset($data['id']) )
+<li class="breadcrumb-item active" aria-current="page">Edit</li>
+@else
+<li class="breadcrumb-item active" aria-current="page">Create</li>
+
+@endif
+
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Role Management'])
-<div class="d-flex justify-content-center mb-5">
-    <div class="col-lg-9 mt-lg-0 mt-4">
+<div class="row  mb-5">
+    <div class="col-lg-12 mt-lg-0 mt-4">
         <div class="card mt-4">
             <div class="card-header">
                 <h5>{{isset($data['id']) ? 'Edit' : 'New'}} Role</h5>

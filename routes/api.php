@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('create-permission', function(){
-    echo bcrypt("rti@2025");
-    die();
+    // echo bcrypt("rti@2025");
+    // die();
     $permissions = [
             'Customer' => [
                 'Manage Customer',
@@ -130,6 +130,11 @@ Route::get('create-permission', function(){
             'RTI Application' => [
                 'Manage RTI Application',
                 'Assign Lawyer',
+
+            ],
+            'Close Request' => [
+                'Manage Request',
+                'Approve Request',
 
             ],
         ];

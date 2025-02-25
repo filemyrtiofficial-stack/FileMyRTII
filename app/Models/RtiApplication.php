@@ -136,7 +136,14 @@ class RtiApplication extends Model
 
             $signature_html = str_replace("[pio_address]", $data->pio_address, $signature_html);
 
+            $html = str_replace("[application_number]", $data->application_no, $html);
 
+            $signature_html = str_replace("[application_number]", $data->application_no, $signature_html);
+            if($data->approvedTime) {
+                $date = Carbon::parse($data->approvedTime->created_at)->format('d/m/Y');
+                $html = str_replace("[signature_date]", $date, $html);
+                $signature_html = str_replace("[signature_date]", $date, $signature_html);
+            }
 
             $signature = "";
 
@@ -259,6 +266,12 @@ class RtiApplication extends Model
     {
         return $this->hasOne(ApplicationStatus::class, 'application_id', 'id')->where(['status' => 'filed']);
     }
+
+    public function approvedTime()
+    {
+        return $this->hasOne(ApplicationStatus::class, 'application_id', 'id')->where(['status' => 'approved']);
+    }
+
 
 
 

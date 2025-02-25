@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('rti.applications.list')}}">RTI Applications</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{$data->application_no}}</li>
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'RTI Applications'])
 <div class="row mt-4 mx-md-4">

@@ -1,5 +1,11 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.index')}}">Page Management</a></li>
+
+<li class="breadcrumb-item active" aria-current="page">Edit</li>
+
+@endsection
 @section('content')
 <style>
     ul.accordion-list {

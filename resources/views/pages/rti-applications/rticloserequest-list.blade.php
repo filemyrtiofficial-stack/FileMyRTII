@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@section('breadcrumbs')
+
+<li class="breadcrumb-item" aria-current="page">Lawyer Request</li>
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'RTI Applications'])
 <div class="row mt-4 mx-4">
@@ -90,12 +94,12 @@
                                     <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">New Request</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                     </div>
-                                    <form class="form-submit" action="{{route('approve.layer.request',( $item->id ?? ''))}}" method="post">
+                                    <form class="form-submit" action="{{route('approve.lawyer.request',( $item->id ?? ''))}}" method="post">
                                     <input type="hidden" name="application_id" value="{{$item->application_id ?? ''}}"  >
                                     <div class="modal-body">
                                         
@@ -109,8 +113,11 @@
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @if($item->status == '0')  
-                                    <button type="submit" class="btn btn-primary">Approve</button>
+                                    <h4>Role</h4>
+                                    @if(auth()->user()->can('Approve Request')  )
+                                        @if($item->status == '0')  
+                                        <button type="submit" class="btn btn-primary">Approve</button>
+                                        @endif
                                     @endif
                                     </div>
                                       </form>

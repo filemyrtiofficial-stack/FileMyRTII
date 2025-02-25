@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page">Page Management</li>
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Page Management'])
 <div class="row mt-4 mx-4">

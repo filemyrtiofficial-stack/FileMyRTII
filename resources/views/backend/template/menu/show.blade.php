@@ -1,5 +1,11 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('menu-setting.index')}}">Menu Setting</a></li>
+
+<li class="breadcrumb-item active" aria-current="page">Edit</li>
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Menu Management'])
 <div class="d-flex justify-content-center mb-5">

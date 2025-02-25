@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item active" aria-current="page">Customer</li>
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Customer Management'])
 <div class="row mt-4 mx-4">

@@ -1,5 +1,10 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('services.index')}}">Service</a></li>
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('service-template.index',[$service->id])}}">Templates</a></li>
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Service Management'])
 

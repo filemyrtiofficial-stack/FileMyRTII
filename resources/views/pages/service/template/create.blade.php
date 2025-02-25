@@ -1,5 +1,15 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('services.index')}}">Service</a></li>
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('service-template.index',[$service->id])}}">Templates</a></li>
+
+@if(isset($data['id']) )
+<li class="breadcrumb-item active" aria-current="page">Edit</li>
+@else
+<li class="breadcrumb-item active" aria-current="page">Create</li>
+@endif
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Service Management'])
 <style>
@@ -129,6 +139,14 @@
                                 <tr>
                                     <td>Signature</td>
                                     <td>[signature]</td>
+                                </tr>
+                                <tr>
+                                    <td>Application Number</td>
+                                    <td>[application_number]</td>
+                                </tr>
+                                <tr>
+                                    <td>Signature Date</td>
+                                    <td>[signature_date]</td>
                                 </tr>
                                 @if(isset($fields) && isset($fields['field_type']))
                                     @foreach($fields['field_type'] as $key => $field)

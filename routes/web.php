@@ -144,7 +144,7 @@ Route::get("subscribe-now", function(){
 		Route::get('/rtiapplications/{id?}', [ServiceController::class, 'view'])->name('rtiapplication.view');
 
 		Route::get('/rticloserequest', [ServiceController::class, 'rticloserequestList'])->name('rticloserequest.list');
-		Route::post('/approvelayerrequest/{id?}', [ServiceController::class, 'approveLayerRequest'])->name('approve.layer.request');
+		Route::post('/approvelayerrequest/{id?}', [ServiceController::class, 'approveLawyerRequest'])->name('approve.lawyer.request');
 
 		Route::get('/update-services-section/{services_id}/{section_type}/{id?}', [ServiceController::class, 'getSectionservices'])->name('get-services-section');
 		Route::delete('/delete-services-section/{id?}', [ServiceController::class, 'deleteSectionservices'])->name('delete-services-section');

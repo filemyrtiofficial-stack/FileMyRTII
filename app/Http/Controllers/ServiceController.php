@@ -24,7 +24,7 @@ class ServiceController extends Controller
         $this->middleware(['can:Delete Service'], ['only' => ['destroy']]); 
         $this->middleware(['can:Create Service'], ['only' => ['create', 'store']]); 
         $this->middleware(['can:Edit Service'], ['only' => ['edit', 'update']]); 
-        $this->middleware(['can:Manage RTI Application'], ['only' => ['rtiApplicationsList', 'view']]); 
+        $this->middleware(['can:Manage RTI Application'], ['only' => ['rtiApplicationsList', 'view', 'rticloserequestList']]); 
         $this->middleware(['can:Assign Lawyer'], ['only' => ['assignLawyer']]); 
 
     }
@@ -345,7 +345,7 @@ class ServiceController extends Controller
         
     }
 
-    public function approveLayerRequest($id,Request $request) {
+    public function approveLawyerRequest($id,Request $request) {
        
         
         $validator = Validator::make($request->all(), [

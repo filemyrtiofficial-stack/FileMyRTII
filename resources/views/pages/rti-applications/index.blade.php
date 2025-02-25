@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@section('breadcrumbs')
+
+<li class="breadcrumb-item" aria-current="page">RTI Applications</li>
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'RTI Applications'])
 <div class="row mt-4 mx-4">

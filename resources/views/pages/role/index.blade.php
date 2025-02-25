@@ -1,6 +1,11 @@
 
 @extends('layouts.app')
 
+@section('breadcrumbs')
+
+<li class="breadcrumb-item active" aria-current="page">Roles</li>
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Role Management'])
 <div class="row mt-4 mx-4">

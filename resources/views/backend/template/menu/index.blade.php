@@ -1,5 +1,8 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page">Menu Setting</li>
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Menu Management'])
 

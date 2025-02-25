@@ -89,6 +89,9 @@ span.permission-list {
 .permission-list-section .permission-list {
     margin : 5px;
 }
+.breadcrumb {
+    border : unset;
+}
     </style>
 </head>
 <body>
@@ -106,8 +109,15 @@ span.permission-list {
         @include('layouts.navbars.auth.sidenav')
       <!-- partial -->
       <div class="main-panel">
-      
-        <div class="content-wrapper">
+          
+          <div class="content-wrapper">
+          <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    @yield('breadcrumbs')
+</ol>
+</nav>
+          
         @yield('content')
           </div>
        

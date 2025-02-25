@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page">Header Footer Settings</li>
+
+@endsection
 @section('content')
 <form action="{{route('settings.store')}}" method="post" class="form-submit">
 @csrf

@@ -1,5 +1,13 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('blogs.index')}}">Blogs</a></li>
+@if(isset($data['id']) )
+<li class="breadcrumb-item active" aria-current="page">Edit</li>
+@else
+<li class="breadcrumb-item active" aria-current="page">Create</li>
+@endif
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Blog Management'])
 <form method="POST"
