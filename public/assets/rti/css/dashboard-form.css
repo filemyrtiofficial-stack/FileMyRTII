@@ -297,6 +297,10 @@ a.theme-btn:hover::before {
 .upload_area:hover {
     background-color: rgba(3, 132, 212, 0.30);
 }
+.upload_area .form-error-list {
+    width: 100%;
+    text-align: center;
+}
 .upload_wrap {
     display: -webkit-box;
     display: -moz-box;

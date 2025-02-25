@@ -1305,8 +1305,12 @@
         color: var(--theme-blue-color);
         line-height: 1.1;
     }
-
-
+    .form_data {
+        row-gap: 20px;
+    }
+    .form_action_wrap {
+        margin-top: 30px;
+    }
     .form_item label {
         font-size: 16px;
     }

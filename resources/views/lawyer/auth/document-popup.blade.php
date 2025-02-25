@@ -11,7 +11,7 @@
             </button>
         </div>
         <div class="modal_body">
-            <div class="modal_area">
+            <div class="modal_area v_scroll">
                     <!-- <ul> -->
                         @foreach($data->documents ?? [] as $key => $value)
                         <!-- <li> -->

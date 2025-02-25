@@ -2,8 +2,8 @@
 
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'RTI Applications'])
-<div class="row mt-4 mx-4">
-    <div class="col-6">
+<div class="row mt-4 mx-md-4">
+    <div class="col-12 col-md-6">
 
         <div class="card mb-4">
             <div class="card-header list-header">
@@ -211,7 +211,7 @@
                 </div>
             </div>
         </div>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
         @if(empty($data->lawyer_id))
             @if(auth()->user()->can('Assign Lawyer'))
             <div class="card mb-4">
