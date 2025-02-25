@@ -300,7 +300,7 @@
                                             <a href="{{filePreview($data->firstAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
                                             @endif
                                             @if($data->firstAppeal->lawyer_id == auth()->guard('lawyers')->id())
-                                            <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>
+                                            <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.'-'.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>
                                             @endif
                                         </div>
 
