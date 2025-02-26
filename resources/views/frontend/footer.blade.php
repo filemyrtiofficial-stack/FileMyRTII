@@ -94,7 +94,7 @@
         <hr>
         <div class="row footer_bottom">
             <div class="col-12 col-sm-6">
-                <p class="fs-20">Your Trusted RTI Partner - © {{date('Y')}} FileMyRTI | A Product of Ranazonai Technologies, Built with and Dedication.</p>
+                <p class="fs-20">Your Trusted RTI Partner - © {{date('Y')}} FileMyRTI A Product of Ranazonai Technologies, Built with and Dedication.</p>
             </div>
             <div class="col-12 col-sm-6">
                 <div class="footer_terms">

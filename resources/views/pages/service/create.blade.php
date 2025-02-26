@@ -228,7 +228,7 @@
                                     <div class="card mt-3">
                                         <div class="card-body">
                                         <div class="form-group">
-                                                <label for="">Field Type</label> <br>
+                                                <label for="">Field For</label> <br>
                                                 <div class="input-group">
                                                     <select type="text" name="form_field_type[]" class="form-control" required>
                                                         @foreach(formAdditionalFields() as $field_type_key  => $value)
@@ -251,6 +251,12 @@
                                                 <label for="">Field Lable</label> <br>
                                                 <div class="input-group">
                                                     <input type="text" name="field_lable[]" class="form-control" required value="{{$fields['field_lable'][$key]}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Place Holder for Document</label> <br>
+                                                <div class="input-group">
+                                                    <input type="text" name="document_placeholder[]" class="form-control" required value="{{$fields['document_placeholder'][$key] ?? ''}}">
                                                 </div>
                                             </div>
                                             

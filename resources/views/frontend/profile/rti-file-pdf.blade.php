@@ -10,8 +10,12 @@
     .pdf-section .title {
         text-align:center;
     }
-
+    @page { margin: 70px 50px 70px 50px; }
+    #footer { position: fixed; left: 50%; bottom: -70px; right: 0px; text-align : "center"}
 </style>
+<div id="footer">
+    <p class="page">{{$revision->rtiApplication->application_no}} </p>
+    </div>
 <div class="pdf-section">
 
 

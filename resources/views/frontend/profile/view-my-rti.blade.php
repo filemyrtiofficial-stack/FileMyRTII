@@ -296,7 +296,12 @@
                                                 <div class="doc_content">Your RTI Application</div>
                                             </div>
                                             <div class="doc_action">
-                                                <a class="theme-btn @if(!$data->lastRevision) disabled @endif" href="{{route('customer.download-rti', $data->application_no)}}" target="blank"><span>Download RTI</span></a>
+                                            @if(!empty($data->final_rti_document)) 
+                                            <a class="theme-btn " href="{{filePreview($data->final_rti_document)}}" target="blank"><span>Download RTI</span></a>
+                                            @else
+                                            <a class="theme-btn @if(!$data->lastRevision) disabled @endif" href="{{route('customer.download-rti', $data->application_no)}}" target="blank"><span>Download RTI</span></a>
+
+                                            @endif
                                             </div>
                                         </li>
                                         <li class="rti_document_list">
@@ -587,7 +592,7 @@
                                                                             <p>Drag and drop response received from PIO or <label>Choose File</label></p>
                                                                             <div class="upload_img_wrap"></div>
                                                                         </div>
-                                                                        <input id="document-upload" accept="image/*,.pdf" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form    ">
+                                                                        <input id="document-upload" accept="image/*" class="upload_inputfile document-upload" type="file" name="file" data-preview="signature-preview" data-form="signature-form" accept="image/*">
                                                                         <input type="hidden" name="signature_file" class="image-input"  id="signature_file"/>
 
                                                                     </div>
@@ -619,34 +624,35 @@
 @push('js')
 <script>
  
- $(document).on('change', '.form-image', function () {
-        let file = this.files[0]; // Get selected file
-        let files = this.files;
-        let previewLink = $(this).closest('.custom_choose_file').find('.form-image-preview'); // Find related anchor
-        let validation =   imagevaladition(files);
-                if(validation == false){
-                    $(this).val(null)
-                     return;
-                }
-        if (file) {
-        let fileURL = URL.createObjectURL(file); // Create a temporary file URL
+//  $(document).on('change', '.form-image', function () {
+//         let file = this.files[0]; // Get selected file
+//         let files = this.files;
+//         let previewLink = $(this).closest('.custom_choose_file').find('.form-image-preview'); // Find related anchor
+//         let validation =   imagevaladition(files);
+//                 if(validation == false){
+//                     $(this).val(null)
+//                      return;
+//                 }
+//         if (file) {
+//         let fileURL = URL.createObjectURL(file); // Create a temporary file URL
 
-        // Set href attribute for the correct preview link
-        previewLink
-        .attr('href', fileURL)
-        .attr('target', '_blank').show() // Open in new tab
+//         // Set href attribute for the correct preview link
+//         previewLink
+//         .attr('href', fileURL)
+//         .attr('target', '_blank').show() // Open in new tab
 
-        }
-        else {
-            previewLink.hide()
-        }
-        });
+//         }
+//         else {
+//             previewLink.hide()
+//         }
+//         });
 
     $(document).on('change', '.document-upload', function () {
         let _this = $(this);
         let files = this.files;
-
-        let validation =   imagevaladition(files);
+        let accept = $(this).attr('accept');
+        let validation =   imagevaladition(files, accept);
+        
         if(validation == false){
         return;
         }

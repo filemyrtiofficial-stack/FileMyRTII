@@ -124,8 +124,15 @@
     <script src="{{asset('assets/rti/js/custom-script.js')}}"></script>
     @stack('js')
     <script>
-        function imagevaladition(files){
-                let allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+        function imagevaladition(files, type = null){
+            var allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+
+            if(type == "image/*") {
+             allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+            }
+            console.log(allowedTypes, 'allowedTypes', type)
+           
                 let maxFiles = 5;
                 let maxSize = 3 * 1024 * 1024; // 3MB
                 let errorMessage = "";

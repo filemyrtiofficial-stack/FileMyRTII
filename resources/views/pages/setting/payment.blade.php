@@ -138,7 +138,7 @@
                                     <tr>
                                         <th>Type</th>
                                         <th>Amount</th>
-                                        <th>Basic</th>
+                                        <!-- <th>Basic</th> -->
                                         <th>Advance</th>
                                     </tr>
                                 </thead>
@@ -152,7 +152,7 @@
                                                 <td>
                                                     <span><input type="number" name="amount[]" class="form-control first-appeal-update-amount amount-input" value="{{$first_appeal_payment['amount'][$key] ?? 0}}" id="amount_{{$key}}"></span>
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <span>
                                                         <select type="text" name="basic[]" class="form-control first-appeal-update-amount basic-input" id="basic_{{$key}}">
                                                             @foreach(BooleanList() as $basic_key => $value)
@@ -160,7 +160,7 @@
                                                             @endforeach
                                                         </select>
                                                     </span>
-                                                </td>
+                                                </td> -->
                                                 <td>
                                                     <span>
                                                      
@@ -184,7 +184,7 @@
                                             <td>
                                                 <span><input type="number" name="amount[]" class="form-control first-appeal-update-amount amount-input" value="0" id="amount_0"></span>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <span>
                                                     <select type="text" name="basic[]" class="form-control first-appeal-update-amount basic-input" id="basic_0">
                                                         @foreach(BooleanList() as $key => $value)
@@ -192,7 +192,7 @@
                                                         @endforeach
                                                     </select>
                                                 </span>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <span>
                                                     <select type="text" name="advance[]" class="form-control first-appeal-update-amount advance-input" id="advance_0">
@@ -211,9 +211,9 @@
                                 <tfoot>
                                     <tr>
                                         <th colspan="2"></th>
-                                        <th>
+                                        <!-- <th>
                                             <input type="text" readonly id="first_basic_total" name="basic_total" class="form-control" value="{{$first_appeal_payment['basic_total'] ?? 0}}">
-                                        </th>
+                                        </th> -->
                                         <th>
                                             <input type="text" readonly id="first_advance_total" name="advance_total" class="form-control" value="{{$first_appeal_payment['advance_total'] ?? 0}}">
                                         </th>
@@ -252,7 +252,7 @@
                                     <tr>
                                         <th>Type</th>
                                         <th>Amount</th>
-                                        <th>Basic</th>
+                                        <!-- <th>Basic</th> -->
                                         <th>Advance</th>
                                     </tr>
                                 </thead>
@@ -266,7 +266,7 @@
                                                 <td>
                                                     <span><input type="number" name="amount[]" class="form-control second-appeal-update-amount amount-input" value="{{$second_appeal_payment['amount'][$key] ?? 0}}" id="amount_{{$key}}"></span>
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <span>
                                                         <select type="text" name="basic[]" class="form-control second-appeal-update-amount basic-input" id="basic_{{$key}}">
                                                             @foreach(BooleanList() as $basic_key => $value)
@@ -274,7 +274,7 @@
                                                             @endforeach
                                                         </select>
                                                     </span>
-                                                </td>
+                                                </td> -->
                                                 <td>
                                                     <span>
                                                      
@@ -298,7 +298,7 @@
                                             <td>
                                                 <span><input type="number" name="amount[]" class="form-control second-appeal-update-amount amount-input" value="0" id="amount_0"></span>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <span>
                                                     <select type="text" name="basic[]" class="form-control second-appeal-update-amount basic-input" id="basic_0">
                                                         @foreach(BooleanList() as $key => $value)
@@ -306,7 +306,7 @@
                                                         @endforeach
                                                     </select>
                                                 </span>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <span>
                                                     <select type="text" name="advance[]" class="form-control second-appeal-update-amount advance-input" id="advance_0">
@@ -325,9 +325,9 @@
                                 <tfoot>
                                     <tr>
                                         <th colspan="2"></th>
-                                        <th>
+                                        <!-- <th>
                                             <input type="text" readonly id="second_basic_total" name="basic_total" class="form-control" value="{{$second_appeal_payment['basic_total'] ?? 0}}">
-                                        </th>
+                                        </th> -->
                                         <th>
                                             <input type="text" readonly id="second_advance_total" name="advance_total" class="form-control" value="{{$second_appeal_payment['advance_total'] ?? 0}}">
                                         </th>

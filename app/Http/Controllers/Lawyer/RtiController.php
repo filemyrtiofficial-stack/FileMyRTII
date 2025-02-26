@@ -39,9 +39,10 @@ class RtiController extends Controller
                 $request['status'] = 1;
 
             }
-            $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
+            $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc', 'payment_status' => 'paid']);
+            // print_r(json_encode($request->all()));die;
             $list = RtiApplication::list(true, $request->all());
-            $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
+            $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true, 'payment_status' => 'paid'])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
             // $test_rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('application_no')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
           
             $total_rti = ["total" => 0, 'pending' => 0, 'filed' => 0, 'active' => 0];
@@ -57,6 +58,8 @@ class RtiController extends Controller
                     $total_rti['pending'] += $count['total'];
                 }
             }
+            // echo count($list);die;
+
             return view('lawyer.dashboard', compact('list', 'total_rti','lawyerdata'));
         }
         else {
@@ -69,7 +72,7 @@ class RtiController extends Controller
 
 
             // echo $application_id;die;
-            $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no, 'id' => $application_id]);
+            $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'application_no' => $application_no, 'id' => $application_id, 'payment_status' => 'paid']);
             $data = RtiApplication::rtiNumberDetails($request->all());
             if(count($data) > 0) {
                 $data = $data[count($data)-1] ?? [];
@@ -454,7 +457,7 @@ class RtiController extends Controller
         else {
             $request['status'] = 1;
         }
-        $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc']);
+        $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc', 'payment_status' => 'paid']);
         $list = RtiApplication::list(true, $request->all()); 
         $html  =  view('lawyer.listing', compact('list'))->render();
         $list = $list->toArray();

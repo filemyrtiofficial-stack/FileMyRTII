@@ -73,13 +73,13 @@
                             <a class="faq_list_item" href1="#tab8" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'tracking-no'])}}">Enter Tracking No</a>
                         </li>
                         @endif
-                        @if($data->firstAppeal)
+                        @if($data->firstAppeal && $data->firstAppeal->payment_status == 'paid')
                         <li class="contact_faq_item @if($tab == 'first-appeal')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab9" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'first-appeal'])}}">First Appeal</a>
                         </li>
                         @endif
-                        @if($data->secondAppeal)
+                        @if($data->secondAppeal && $data->secondAppeal->payment_status == 'paid')
 
                         <li class="contact_faq_item @if($tab == 'second-appeal')active @endif">
                             <span class="shape"></span>
@@ -280,7 +280,7 @@
                             @if($data->status >=2 )
                                 @include('lawyer.auth.tab8')
                             @endif
-                            @if($data->firstAppeal&& $data->firstAppeal->appealDeatils)
+                            @if($data->firstAppeal &&  $data->firstAppeal->payment_status == 'paid' && $data->firstAppeal->appealDeatils)
                             <a class="accord_item" href1="#tab9" data-id="tab9" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'first-appeal'])}}">First Appeal</a>
 
                             <div id="tab9" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
@@ -308,7 +308,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($data->secondAppeal && $data->secondAppeal->appealDeatils)
+                            @if($data->secondAppeal &&  $data->secondAppeal->payment_status == 'paid' && $data->secondAppeal->appealDeatils)
                             <a class="accord_item" href1="#tab10" data-id="tab10" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'second-appeal'])}}">Second Appeal</a>
 
                             <div id="tab10" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">

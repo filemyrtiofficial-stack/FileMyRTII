@@ -1,7 +1,20 @@
+
 @extends('frontend.layout.layout')
 @push('style')
 <link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-form.css')}}">
 
+
+<style>
+   @media (min-width: 767px) 
+    {
+        ul.charge_list.charge_list-first-appeal li, ul.charge_list.charge_list-second-appeal li{
+            width: 33%;
+        }
+        ul.charge_list.option_list.option_list-first-appeal li:first-child, ul.charge_list.option_list.option_list-second-appeal li:first-child {
+            width:  67% !important;
+        }
+    }
+</style>
 @endpush
 @section('content')
 <style>
@@ -78,9 +91,10 @@
                                             <div class="form_table_detail">
                                             @if(isset($payment) && isset($payment['amount_type']))
                                                 @foreach($payment['amount_type'] as $key =>  $value)
-                                                    <ul class="charge_list">
+                                                    <ul class="charge_list @if($application->appeal_no == 1) charge_list-first-appeal @elseif($application->appeal_no == 2) charge_list-second-appeal @endif">
                                                         <li>{{$payment['amount_type'][$key] ?? ''}}</li>
                                                         <li>₹ {{$payment['amount'][$key] ?? ''}}</li>
+                                                        @if($application->appeal_no == 0)
                                                         <li>
                                                             <span class="check_icon_wrapper">
                                                                 @if($payment['basic'][$key] == 'yes')
@@ -90,6 +104,7 @@
                                                                 @endif
                                                             </span>
                                                         </li>
+                                                        @endif
                                                         <li>
                                                             <span class="check_icon_wrapper">
                                                                 @if($payment['advance'][$key] == 'yes')
@@ -103,9 +118,11 @@
                                                 @endforeach
                                             @endif
                                                
-                                                <ul class="charge_list option_list">
+                                                <ul class="charge_list option_list @if($application->appeal_no == 1) option_list-first-appeal @elseif($application->appeal_no == 2) option_list-second-appeal @endif">
                                                     <li>Choose An Option</li>
+                                                    @if($application->appeal_no == 0)
                                                     <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
+                                                    @endif
                                                     <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
                                                 </ul>
                                             </div>
