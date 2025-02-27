@@ -26,7 +26,7 @@
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Slug
                                 </th>
-                                
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Description
                                 </th>
@@ -45,14 +45,14 @@
                             <tr>
                                 <td>
                                     <div class="d-flex px-3 py-1">
-                                        
+
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm"><a href="{{url($item->slugMaster->slug ?? '')}}" tagret="blank">{{$item->title}}</a></h6>
+                                            <h6 class="mb-0 text-sm"><a href="{{url($item->slugMaster->slug ?? '')}}" tagret="blank">{{ stringLimit($item->title, 20) }}</a></h6>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle text-sm">{{$item->slugMaster->slug ?? ''}}</td>
-                                <td class="align-middle text-sm">{!! $item->description ?? ''!!}</td>
+                                <td class="align-middle text-sm">{{ stringLimit($item->slugMaster->slug ?? '', 20) }}</td>
+                                <td class="align-middle text-sm">{{ stringLimit(strip_tags($item->description ?? ''), 50) }}</td>
 
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
@@ -60,7 +60,7 @@
                                 @if(auth()->user()->can('Edit Pages') || auth()->user()->can('Delete Pages'))
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                   
+
                                         @if(auth()->user()->can('Edit Pages'))
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('pages.edit', $item->id)}}">Edit</a>

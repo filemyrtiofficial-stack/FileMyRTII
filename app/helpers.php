@@ -93,7 +93,7 @@ function paymentStatus() {
                 'name' => 'Paid',
                 'class' => 'text-success'
             ],
-           
+
         ];
 }
 
@@ -113,7 +113,7 @@ function blogStatus() {
 
 function daysList() {
     return [
-        'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' 
+        'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
     ];
 }
 
@@ -461,13 +461,13 @@ function templateList() {
                                 "type" => 'input',
                                 "lable" => 'Title',
                                 'name' => "banner_link_title",
-        
+
                             ],
                             [
                                 "type" => 'input',
                                 "lable" => 'Url',
                                 'name' => "banner_link_url",
-        
+
                             ],
                         ]
                     ],
@@ -523,13 +523,13 @@ function templateList() {
             //                     "type" => 'input',
             //                     "lable" => 'Title',
             //                     'name' => "link_title",
-        
+
             //                 ],
             //                 [
             //                     "type" => 'input',
             //                     "lable" => 'Url',
             //                     'name' => "link_url",
-        
+
             //                 ],
             //             ]
             //         ]
@@ -552,7 +552,7 @@ function templateList() {
                         'options' => yesNoOption(),
                         'target' => 'our_blogs_blog_list'
 
-                        
+
                     ],
                     [
                         "type" => 'select',
@@ -560,9 +560,9 @@ function templateList() {
                         'name' => "blog_list",
                         'options' => App\Models\Blog::list(false, ['status' => 2]),
                         'check_multiple_type' => 'our_blogs_all_multiple'
-                        
+
                     ]
-                    
+
                 ]
             ],
             'how_it_works' => [
@@ -583,13 +583,13 @@ function templateList() {
                                 "type" => 'input',
                                 "lable" => 'Title',
                                 'name' => "link_title",
-        
+
                             ],
                             [
                                 "type" => 'input',
                                 "lable" => 'Url',
                                 'name' => "link_url",
-        
+
                             ],
                         ]
                     ],
@@ -620,10 +620,10 @@ function templateList() {
                             ],
                         ]
 
-                        
+
                     ],
-                    
-                    
+
+
                 ]
             ],
             'service_tabs' => [
@@ -644,13 +644,13 @@ function templateList() {
                                 "type" => 'input',
                                 "lable" => 'Title',
                                 'name' => "link_title",
-        
+
                             ],
                             [
                                 "type" => 'input',
                                 "lable" => 'Url',
                                 'name' => "link_url",
-        
+
                             ],
                         ]
                     ],
@@ -669,66 +669,66 @@ function templateList() {
                             ]
                         ]
 
-                        
+
                     ],
-                    
-                    
+
+
                 ]
             ],
             'top_banner' => [
                 "section_name" => "Banner Design 2",
                 'key' => 'top_banner'
-               
+
             ],
 
             'footer_banner' => [
                 "section_name" => "Footer Banner",
                 'key' => 'footer_banner'
-               
+
             ],
             'left_image_right_text' => [
                 "section_name" => "Left Image Right Text",
                 'key' => 'left_image_right_text'
-               
+
             ],
             'right_image_left_text' => [
                 "section_name" => "Right Image Left Text",
                 'key' => 'right_image_left_text'
-               
+
             ],
             'right_image_left_accordian' => [
                 "section_name" => "Right Image Left Accordian",
                 'key' => 'right_image_left_accordian'
-               
+
             ],
             'our_team' => [
                 "section_name" => "Our Team",
                 'key' => 'our_team'
-               
+
             ],
             'faqs' => [
                 "section_name" => "Faqs",
                 'key' => 'faqs'
-               
+
             ],
             'accordian_with_side_tabing' => [
                 "section_name" => "Accordian with side tabing",
                 'key' => 'accordian_with_side_tabing'
-               
+
             ],
             'testimonial_slider' => [
                 "section_name" => "Testimonial Slider",
                 'key' => 'testimonial_slider'
-               
+
             ],
             'why_choose' => [
                 "section_name" => "Why Choose",
                 'key' => 'why_choose'
-               
-            ],
-                
 
-      
+            ],
+
+
+
     ];
 }
 
@@ -801,7 +801,7 @@ function sectionTypeList() {
                     'name' => 'description',
                     'required' => true
                 ],
-                
+
             ]
         ],
             'footer_banner' => [
@@ -835,7 +835,7 @@ function sectionTypeList() {
                 [
                     "type" => 'link',
                     'lable' => "File My RTI Now"
-                    
+
                 ],
             ]
             ],
@@ -1081,7 +1081,7 @@ function applicationCloseRequestsStatus() {
                 'name' => 'Approved',
                 'class' => 'text-info'
             ]
-           
+
         ];
 }
 
@@ -1151,12 +1151,12 @@ function bloodGroup() {
             'name' => 'AB-',
             'class' => 'text-success'
         ],
-        
+
         'O+' => [
             'name' => 'O+',
             'class' => 'text-success'
         ],
-        
+
         'O-' => [
             'name' => 'O-',
             'class' => 'text-success'
@@ -1194,4 +1194,8 @@ function appealDetails() {
         1 => "First Appeal",
         2 => "Second Appeal"
     ];
+}
+
+function stringLimit($string, $limit) {
+    return Illuminate\Support\Str::limit($string, $limit, '...');
 }

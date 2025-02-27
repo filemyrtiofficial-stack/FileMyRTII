@@ -46,17 +46,17 @@
                             <tr>
                                 <td>
                                     <div class="d-flex px-3 py-1">
-                                        
+
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->username}}</h6>
-                                           
+                                            <h6 class="mb-0 text-sm">{{ stringLimit($item->username, 20) }}</h6>
+
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-sm">{{$item->email?? ''}}</td>
                                 <td class="align-middle text-sm">{{$item->roles[0]['name'] ?? ''}}</td>
 
-                                
+
                                 <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>
