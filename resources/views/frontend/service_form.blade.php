@@ -21,7 +21,7 @@
                             <div class="breadcrumb">
                                <ol>
                                 <li class="fs-24"><a href="{{ url('/') }}">Home</a></li>
-                                <li class="fs-24"><a href="{{ url('/'.$service_category->slug->slug ?? '') }}">{{$service_category->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="{{ url('/services/'.$service_category->slug->slug ?? '') }}">{{$service_category->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$service->name ?? ''}}</li>
                                </ol>
                             </div>
@@ -59,31 +59,31 @@
 
                                     <div class="form_row form_step_1">
                                         <div class="form_data">
-                                            
+
                                             <div class="form_item">
                                                 <label for="first_name">First Name</label>
                                                 <input class="form_field" type="text" name="first_name" id="first_name" placeholder="" >
                                             </div>
-                                        
-                                        
+
+
                                             <div class="form_item">
                                                 <label for="last_name">Last Name</label>
                                                 <input class="form_field" type="text" name="last_name" id="last_name" placeholder="" >
                                             </div>
-                                        
-                                        
+
+
                                             <div class="form_item">
                                                 <label for="email">Email Address</label>
                                                 <input class="form_field" type="email" name="email" id="email" placeholder="" >
                                             </div>
-                                        
-                                        
+
+
                                             <div class="form_item">
                                                 <label for="phone_number">Phone Number</label>
                                                 <input class="form_field" type="tel" pattern="\d{3}[\s-]?\d{3}[\s-]?\d{4}" name="phone_number" id="phone_number" placeholder="" >
                                             </div>
-                                        
-                                        
+
+
                                             <div class="form_item">
                                                 <label for="address">Address</label>
                                                 <input class="form_field" type="text" name="address" id="address" placeholder="" >
@@ -92,13 +92,13 @@
                                                 <label for="address">City</label>
                                                 <input class="form_field" type="text" name="city" id="city" placeholder="" >
                                             </div>
-                                        
+
                                             <div class="form_item">
                                                 <label for="address">State</label>
                                                 <input class="form_field" type="text" name="state" id="state" placeholder="" >
                                             </div>
-                                        
-                                        
+
+
                                             <div class="form_item">
                                                 <label for="postal_code">Postal Code</label>
                                                 <input class="form_field" type="text" pattern="^\d{6}$" name="postal_code" id="postal_code" placeholder="" >
@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="form_row form_step_2 hide">
                                         <div class="form_data">
-                                            
+
                                             @if($service->name == 'Custom Request')
                                                 <div class="form_item">
                                                     <label for="rt_query">RTI Query</label>
@@ -133,13 +133,13 @@
                                                 @foreach($fields['field_type'] ?? [] as $key => $value)
                                                 @if( !isset($fields['form_field_type'][$key]) || (isset($fields['form_field_type'][$key])  && strtolower($fields['form_field_type'][$key]) != "lawyer"))
                                                         <div class="form_item">
-                                                        
+
                                                             <label for="{{getFieldName($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
-                                                            @if($value == 'textarea') 
+                                                            @if($value == 'textarea')
                                                                 <textarea class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder=""></textarea>
-                                                            @elseif($value == 'date') 
+                                                            @elseif($value == 'date')
                                                             <input class="form_field" type="date" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
-                                                            @elseif($value == 'file') 
+                                                            @elseif($value == 'file')
                                                             <div class="custom_choose_file">
                                                                 <input class="form_field form-image" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif accept="image/*,.pdf"/>
                                                                 <a class="preview_icon form-image-preview" href="javascript:void(0);" style="display:none"><svg fill="#000000" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224.549 224.549"><g><path d="M223.476,108.41c-1.779-2.96-44.35-72.503-111.202-72.503S2.851,105.45,1.072,108.41c-1.43,2.378-1.43,5.351,0,7.729c1.779,2.96,44.35,72.503,111.202,72.503s109.423-69.543,111.202-72.503C224.906,113.761,224.906,110.788,223.476,108.41z M112.274,173.642c-49.925,0-86.176-47.359-95.808-61.374c9.614-14.032,45.761-61.36,95.808-61.36c49.925,0,86.176,47.359,95.808,61.374C198.468,126.313,162.321,173.642,112.274,173.642z"/><path d="M112.274,61.731c-27.869,0-50.542,22.674-50.542,50.543c0,27.868,22.673,50.54,50.542,50.54c27.868,0,50.541-22.672,50.541-50.54C162.815,84.405,140.143,61.731,112.274,61.731z M112.274,147.814c-19.598,0-35.542-15.943-35.542-35.54c0-19.599,15.944-35.543,35.542-35.543s35.541,15.944,35.541,35.543C147.815,131.871,131.872,147.814,112.274,147.814z"/><path d="M112.274,92.91c-10.702,0-19.372,8.669-19.372,19.364c0,10.694,8.67,19.363,19.372,19.363c10.703,0,19.373-8.669,19.373-19.363C131.647,101.579,122.977,92.91,112.274,92.91z"/></g></svg></a>
@@ -148,7 +148,7 @@
                                                              <img id="imagePreview" src="" alt="Image Preview" style="display: none;" width="50" height="50"/>
                                                             @elseif($value == 'select')
                                                             <select name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file"  class="form_field" >
-                                                                {!! getOptions($fields['options'][$key]) !!}    
+                                                                {!! getOptions($fields['options'][$key]) !!}
                                                             </select>
                                                             @else
                                                             <input class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" >
@@ -159,17 +159,17 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        
+
                                         <div class="form_action_wrap">
                                         <div class="form_action">
                                             <button type="button" class="theme-btn back-btn" data-tab="form_step_1" data-index="2"><span>Previous</span></button>
                                             <button type="submit" class="theme-btn"><span>Next</span></button>
                                         </div>
                                     </div>
-                                                
+
                                     </div>
                                     <div class="form_row form_step_3 hide">
-                                        
+
                                         <div class="form_table">
                                             <div class="form_info">
                                                 <div class="form_number">RTI Application No: <span id="application_number"></span></div>
@@ -180,10 +180,10 @@
                                                 <div class="upload_file hide" id="preview-section">
                                                     <a class="upload-file-btn" target="blank">Preview </a>
                                                     <span class="remove-file">X</span>
-                                                    
+
                                                 </div>
 
-                                               
+
                                                 <input type="hidden" name="document" class="image-input" />
                                             </div>
                                             <div class="preview" id="preview">
@@ -217,7 +217,7 @@
                                                     </ul>
                                                 @endforeach
                                             @endif
-                                            
+
                                             <ul class="charge_list option_list">
                                                 <li>Choose An Option</li>
                                                 <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
@@ -247,9 +247,9 @@
                                         </div>
 
                                 </div>
-                                    
+
                                 </div>
-                             
+
                             </form>
                         </div>
                     </div>
@@ -261,7 +261,7 @@
                             <ul class="sidebar_list">
                                 @foreach($why_choose as $item)
                                 <?php
-                                    
+
                                     $item_data = json_decode($item->data, true);
                                     ?>
                                 <li>
@@ -271,7 +271,7 @@
                                     <span class="list_content"><strong>{{$item_data['title'] ?? ''}}</strong> - {{$item_data['description'] ?? ''}}</span>
                                 </li>
                                 @endforeach
-                                
+
                             </ul>
                             <ul class="support_list">
                                 <li>
@@ -300,7 +300,7 @@
         </section>
 
 
-     
+
 
 
         <form method="post" id="razorsubmission" action="{{route('update.payment.success')}}">
@@ -337,7 +337,7 @@
 
         }
         });
-        
+
     $(document).on('click', '.remove-file', function(){
         $('#preview-section').addClass('hide').find('a').attr('href' , null);
         $('#upload_file-section').removeClass('hide')
@@ -348,13 +348,13 @@
          $(document).on('change', '#document-upload', function () {
                 let _this = $(this);
                 let files = this.files;
-         
+
                 let validation =   imagevaladition(files);
                 if(validation == false){
                      return;
                 }
-              
-            
+
+
                 var data = new FormData($('.service-form')[0]);
                 $.ajaxSetup({
                     headers: {
@@ -373,7 +373,7 @@
                         $.each(response.data, function(index, value){
 
                             $('#preview').append(`<div class="preview-item">
-                                                            
+
                                                                 <a href="${value.path}" target="blank">
                                                                     <embed src="{{url('/')}}${value.file}" width="50" height="50" />
                                                                     <input hidden value="${value.file}" name="documents[]">
@@ -417,7 +417,7 @@
 
         }
     });
-   
+
     $(document).on('click', '.back-btn', function(e){
         let target = $(this).attr('data-tab');
         let tab_index = parseInt($(this).attr('data-index'));
@@ -434,7 +434,7 @@
                 $('#form_step_tab_'+index).find('.step_check').hide();
 
             }
-            
+
 
         }
         $('#form_step_tab_'+tab_index).find('a').removeClass('active');
@@ -519,7 +519,7 @@
                     $('#razorsubmission').append('<input type="hidden" class="" name="razorpay_payment_id" value="'+reason_result.razorpay_payment_id+'"> <input type="hidden" class="" name="order_id" value="'+rti.application_no+'"> ');
                     $('#razorsubmission').submit();
                     $('.popup').css('display','block');
-                
+
                 },
                 "modal": {
                     "ondismiss": function(){
@@ -545,7 +545,7 @@
                     dataType: 'json',
                     data: {
                         razorpay_payment_id: razorpay_paymentfail_id ,order_id : razorpay_paymentfail_id,paymet_fail:response, application_no : rti.application_no
-                    }, 
+                    },
                     success: function (msg) {
                         $('.service-form').find('button').attr('disabled', false);
                     }
@@ -553,7 +553,7 @@
             });
             rzp1.open();
             // e.preventDefault();
-        } 
+        }
 
     $(document).on('click', '.delete-icon', function(){
         $(this).parents().eq(0).remove();

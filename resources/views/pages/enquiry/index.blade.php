@@ -22,7 +22,7 @@
                 </div>
         </div>
         <div class="card mb-4">
-               
+
             <div class="card-header  list-header">
                 <h4>Enquiries</h4>
                 {{-- <a href="{{route('testimonials.create')}}" class="btn btn-primary float-end">Add Testimonial</a> --}}
@@ -35,12 +35,12 @@
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Name   </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email
                                 </th>
-                               
-                                
-                                
+
+
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number   </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Reason   </th>
-                              
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Message   </th>
                                 {{--   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Status
@@ -59,7 +59,7 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->name}}</h6>
+                                            <h6 class="mb-0 text-sm">{{ stringLimit($item->name, 50) }}</h6>
                                         </div>
                                     </div>
                                 </td>
@@ -80,18 +80,18 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->reason}}</h6>
+                                            <h6 class="mb-0 text-sm">{{ stringLimit($item->reason, 50) }}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->message}}</h6>
+                                            <h6 class="mb-0 text-sm">{{$item->message}}{{ stringLimit($item->message, 50) }}</h6>
                                         </div>
                                     </div>
                                 </td>
-                                
+
 
                                 {{--   <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
@@ -99,7 +99,7 @@
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
-                                
+
                             </tr>
                             @endforeach
 
