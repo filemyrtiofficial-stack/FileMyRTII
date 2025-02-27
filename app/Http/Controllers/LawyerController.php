@@ -16,10 +16,10 @@ class LawyerController extends Controller
     public function __construct(LawyerInterface $lawyerRepository)
     {
         $this->lawyerRepository = $lawyerRepository;
-        $this->middleware(['can:Manage Lawyer']); 
-        $this->middleware(['can:Delete Lawyer'], ['only' => ['destroy']]); 
-        $this->middleware(['can:Create Lawyer'], ['only' => ['create', 'store']]); 
-        $this->middleware(['can:Edit Lawyer'], ['only' => ['edit', 'update']]); 
+        $this->middleware(['can:Manage Lawyer']);
+        $this->middleware(['can:Delete Lawyer'], ['only' => ['destroy']]);
+        $this->middleware(['can:Create Lawyer'], ['only' => ['create', 'store']]);
+        $this->middleware(['can:Edit Lawyer'], ['only' => ['edit', 'update']]);
 
     }
 
@@ -52,9 +52,10 @@ class LawyerController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
-            'first_name' => "required",
+            'first_name' => "required|max:50",
+            'last_name' => "nullable|max:50",
             'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
             'phone' => "required|numeric|digits:10",
             'email' => "required|email|unique:lawyers,email|regex:/@filemyrti\.com$/",
@@ -68,8 +69,8 @@ class LawyerController extends Controller
             'bank_account_number' => 'numeric'
 
         ]);
-      
-     
+
+
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
@@ -110,7 +111,8 @@ class LawyerController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => "required",
+            'first_name' => "required|max:50",
+            'last_name' => "nullable|max:50",
             'dob' => "required|date|before:".Carbon::now()->subYear('10')->format('Y-m-d'),
             'phone' => "required|numeric|digits:10",
             'email' => "required|email|unique:lawyers,email,".$id."|regex:/@filemyrti\.com$/",
@@ -124,7 +126,7 @@ class LawyerController extends Controller
             'bank_account_number' => 'numeric'
 
         ]);
-        
+
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
