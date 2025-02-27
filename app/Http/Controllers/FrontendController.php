@@ -65,16 +65,16 @@ class FrontendController extends Controller
                 $footer_banner = json_decode($footer_banner->data, true);
             }
         }
-  
 
-     
+
+
         $categoryIds = $data->blogCategories->pluck('category_id');
-       
+
         $relatedBlogs = Blog::where('id','!=', $data->id)->where('status', 2)->whereHas('blogCategories', function ($query) use ($categoryIds) {
             $query->whereIn('category_id', $categoryIds);
         })->limit(8)->get();
-       
-    
+
+
         return view('frontend.blog_details', compact('data','relatedBlogs', 'footer_banner'));
     }
 
@@ -85,14 +85,14 @@ class FrontendController extends Controller
             $service = Service::wherehas('slug', function ($query) use ($service_slug) {
                 $query->where('slug', $service_slug);
             })->where('status', 1)->select('services.*')->first();
-           
+
             if (!$service) {
                 abort(404);
             }
             $page_section = $service->serviceData;
             $seo = $service->seo;
             $page_type = "service";
-           
+
             return view('frontend.service_details', compact('service', 'page_section', 'seo', 'page_type'));
         }
         else if($service_category != null) {
@@ -194,7 +194,7 @@ class FrontendController extends Controller
         }
 
 
-       
+
         return view('frontend.service_form', compact('service', 'fields', 'payment', 'why_choose', 'service_category'));
     }
 
@@ -238,7 +238,7 @@ class FrontendController extends Controller
                     if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
                         $validation_string = 'required';
                     }
-               
+
                     if($value == "input") {
                         $validation_string .= '|max:75';
                     }
@@ -259,10 +259,10 @@ class FrontendController extends Controller
                         }
                     }
                      $validation_string = trim($validation_string, "|");
-                
+
                     if($validation_string != '') {
                         $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
-                        
+
                     }
                     if($value == 'file') {
                         $new_slug_key = $slug_key."_file";
@@ -275,14 +275,14 @@ class FrontendController extends Controller
 
                         $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
                     }
-                    
+
                 }
             }
-             
 
-        
+
+
             $validator = Validator::make($request->all(), $validation);
-        
+
             if ($validator->fails()) {
                 return response(['errors' => $validator->errors()], 422);
             }
@@ -369,8 +369,8 @@ class FrontendController extends Controller
             $currentDate = Carbon::now()->format('Ymd');;  // Output: 2025-02-17
             $invoiceNumber = "INV-{$currentDate}".rand(0000, 9999);
 
-           
-            
+
+
             $rti->update(['payment_id' => $paymentResponse['razorpay_payment_id'], 'success_response' => $response, 'status' => 1, 'payment_status' => 'paid','invoice_number'=> $invoiceNumber]);
             $fileName = 'invoice_' .$rti->application_no .'_appeal_no_'.$rti->appeal_no.'.pdf';
 
@@ -378,7 +378,7 @@ class FrontendController extends Controller
                 $rti->update(['invoice_path'=> $invoice_path]);
             Session::flash('success', 'Payment Successful');
             DB::commit();
-         
+
 
             SendEmail::dispatch('application-register', $rti);
 
@@ -391,7 +391,7 @@ class FrontendController extends Controller
                 }
             }
             ApplicationStatus::create(['status' => "confirmed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $rti->id]);
-      
+
                 if($rti->appeal_no == 1){
                 $payment = Setting::getSettingData('first_appeal_payment');
                 }
@@ -492,7 +492,7 @@ class FrontendController extends Controller
     }
 
     public function invoicePdf($application_no = null) {
-   
+
         $queries = LawyerRtiQuery::wherehas('rtiApplication')
         ->where('reply', '=',Null)
         ->join('rti_applications', 'rti_applications.id', '=', 'lawyer_rti_queries.application_id')
@@ -502,10 +502,10 @@ class FrontendController extends Controller
         // ->wheredate('lawyer_rti_queries.created_at', $date)
         ->select('rti_applications.*','lawyer_rti_queries.*')
         ->get();
-     
+
         foreach($queries as $query) {
             SendEmail::dispatch('more-info', $query->rtiApplication);
-  
+
         }
 //         $currentDate = Carbon::now()->format('Ymd');;  // Output: 2025-02-17
 //             // $application_no = date('y') . date('m') . rand(0000, 9999);
@@ -520,12 +520,12 @@ class FrontendController extends Controller
         // // Decode the JSON string into an associative array
         // $paymentdata = json_decode($application->success_response, true);
         // // $paymentdata = json_decode( $data, true);
-    
+
         // $logo = asset($company['invoice_logo'] ?? '');
-        
+
         // $signature = public_path($company['invoice_logo'] ?? '');
         // $signature = "data:image/png;base64,".base64_encode(file_get_contents($logo));
-      
+
         // $fileName = 'invoice_' .$application->application_no .'_appeal_no_'.$application->appeal_no.'.pdf';
         // RtiApplication::ApplicationPaymentInvoice($application,$fileName);
 

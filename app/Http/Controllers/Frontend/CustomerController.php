@@ -20,7 +20,7 @@ use App\Models\Notification;
 use App\Models\Section;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-
+use App\Models\RtiApplicationLawyer;
 class CustomerController extends Controller
 {
     public function myRti(Request $request, $application_no = null, $tab = "application-status")
@@ -81,7 +81,7 @@ class CustomerController extends Controller
             $signature = $request->signature_file;
 
         }
-        
+
         if ($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
@@ -123,7 +123,7 @@ class CustomerController extends Controller
                 if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
                     $validation_string = 'required';
                 }
-           
+
                 if($value == "input") {
                     $validation_string .= '|max:75';
                 }
@@ -144,14 +144,14 @@ class CustomerController extends Controller
                     }
                 }
                  $validation_string = trim($validation_string, "|");
-            
+
                 if($validation_string != '') {
                     $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
-                    
+
                 }
                 if($value == 'file') {
                     array_push( $filelist , $slug_key);
-                  
+
                     $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => null];
 
                 }
@@ -159,7 +159,7 @@ class CustomerController extends Controller
 
                     $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
                 }
-                
+
             }
         }
 
@@ -171,7 +171,7 @@ class CustomerController extends Controller
 
         if ($revision) {
             $data = $request->except(['_token']);
-            
+
             foreach(json_decode($revision->details, true) ?? [] as $key => $value) {
                 if(!isset($data[$key])) {
                     $data[$key] = $value;
@@ -180,7 +180,7 @@ class CustomerController extends Controller
             foreach($filelist as $list) {
                 $slug = $list."_file";
                 $file_name = $slug  ;
-    
+
                 $file =  uploadFile($request, $slug, 'page_images');
                 if(empty($file)) {
                     $file = $data[$list];
@@ -219,20 +219,20 @@ class CustomerController extends Controller
     }
 
     public function rtiAppeal(Request $request, $application_id) {
-        
-        
+
+
         $application = RtiApplication::find($application_id);
         $application->update(['process_status' => false]);
         $appeal = RtiAppeal::where(['appeal_no' => $request->appeal_no, 'application_id' => $application_id])->first();
         $list_id = RtiApplication::where(['application_no' => $application->application_no, 'appeal_no' => $request->appeal_no])->first();
-        
+
         // dd( $appeal );
         // if(count($applications) > 0) {
             $validation = [
                 'appeal_no' => "required",
                 'reason' => "required|max:255",
                 'received_appeal' => 'required'
-    
+
             ];
             if($request->received_appeal) {
                 $validation['document'] = 'required';
@@ -247,8 +247,8 @@ class CustomerController extends Controller
             if(!$appeal) {
                 $appeal = RtiAppeal::create($data);
             }
-           
-          
+
+
             if($application->lastRevision) {
                 $revision_data = [];
                 if( $application->lastRevision) {
@@ -256,7 +256,7 @@ class CustomerController extends Controller
                     $service_field_data = [];
                     if(!empty($application->service_fields)) {
                         $service_field_data = json_decode($application->service_fields, true);
-                        
+
                     }
                     $revision_data = json_decode($application->lastRevision->details, true);
                     foreach($service_field_data['field_data'] ?? [] as  $key =>  $value) {
@@ -277,7 +277,7 @@ class CustomerController extends Controller
                             $service_field_data[$key] = $value;
                         }
                     }
-                    
+
                     // return response(['data' => $service_field_data], 500);
                     $application = $application->toArray();
                     $remove = ['process_status', 'charges', 'id', 'created_at', 'updated_at', 'status', 'signature_image', 'signature_type', 'success_response', 'payment_status', 'payment_details', 'payment_id', 'error_response'];
@@ -290,9 +290,9 @@ class CustomerController extends Controller
                     $application['postal_code'] = $revision_data['pincode'];
 
                     $application['service_fields'] = json_encode($service_field_data);
-                    
+
                 }
-                
+
 
             }
             else {
@@ -311,11 +311,12 @@ class CustomerController extends Controller
             $application['rti_appeal_id'] = $appeal->id;
             if(!$list_id) {
                 $list_id =  RtiApplication::create($application);
+                RtiApplicationLawyer::create(['application_id' => $list_id->id, 'lawyer_id' => $application['lawyer_id']]);
             }
             else {
                 $list_id->update($application);
             }
-       
+
             session()->flash('success', "Success");
             $url= route('customer.payment-rti', encryptString($list_id->id));
             // echo $list_id->id; die('hello');
@@ -329,7 +330,7 @@ class CustomerController extends Controller
     public function sendReply(Request $request, $request_id) {
         $validation = [
             'reply' => "required|max:255",
-            
+
         ];
         $validator = Validator::make($request->all(),  $validation);
         if ($validator->fails()) {
@@ -367,12 +368,12 @@ class CustomerController extends Controller
             else{
                 $payment = Setting::getSettingData('payment');
             }
-         
+
            $why_choose = Section::list(true, ['status' => 1, 'type' => 'why_choose', 'order_by' => 'sequance', 'order_by_type' => 'asc', 'limit' => 3]);
            return view('frontend.profile.payment-rti', compact( 'payment','why_choose', 'application'));
         }
 
     }
 
-    
+
 }

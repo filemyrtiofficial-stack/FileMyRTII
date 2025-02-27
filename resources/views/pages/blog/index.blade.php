@@ -69,7 +69,7 @@
                                                 alt="image">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm"><a href="{{url('blog/'.$item->slug ?? '')}}" target="_blank">{{$item->title}}</a></h6>
+                                            <h6 class="mb-0 text-sm"><a href="{{url('blog/'.$item->slug ?? '')}}" target="_blank">{{ stringLimit($item->title, 50) }} </a></h6>
                                         </div>
                                     </div>
                                 </td>

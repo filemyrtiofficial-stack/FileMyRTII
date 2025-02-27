@@ -28,7 +28,7 @@
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status
                                 </th>
-                             
+
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
@@ -47,14 +47,14 @@
                             <tr>
                                 <td>
                                     <div class="d-flex px-3 py-1">
-                                        
+
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{sectionTypeList()[$item->type]['title'] ?? ''}}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-sm">
-                                   {{$item->title}}
+                                   {{ stringLimit($item->title, 20) }}
                                 </td>
                                 <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
@@ -63,14 +63,14 @@
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
-                                
+
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->updated_at)->format('d M, Y')}}
                                 </td>
                                 @if(auth()->user()->can('Edit Section Data') || auth()->user()->can('Delete Section Data'))
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                   
+
                                         @if(auth()->user()->can('Edit Section Data'))
                                             <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('template-section.edit', $item->id)}}">Edit</a>
@@ -122,7 +122,7 @@
           </div>
           @endforeach
         </div>
-                                        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

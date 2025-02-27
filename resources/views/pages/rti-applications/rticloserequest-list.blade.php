@@ -14,7 +14,7 @@
                                         <div class="col-md-3">
                                                 <input type="text" name="search" class="form-control" placeholder="Search By Application No." value="{{$_GET['search'] ?? ''}}">
                                         </div>
-                                     
+
                                     <div class="col-md-3">
                                         <select  name="lawyer_id" class="form-control">
                                                 <option value="">Select Lawyer</option>
@@ -70,7 +70,7 @@
                                 <td>
                                     <a href="{{route('lawyers.edit',( $item->lawyer->id ?? ''))}}" target="blank">{{$item->lawyer->first_name ?? ""}} {{$item->lawyer->last_name ?? ""}}</a>
                                 </td>
-                              
+
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
@@ -78,7 +78,7 @@
                                         </div>
                                     </div>
                                 </td>
-                               
+
                                   <td>
                                     <span class="{{applicationCloseRequestsStatus()[$item->status]['class'] ??''}}"><b>{{applicationCloseRequestsStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>
@@ -102,23 +102,22 @@
                                     <form class="form-submit" action="{{route('approve.lawyer.request',( $item->id ?? ''))}}" method="post">
                                     <input type="hidden" name="application_id" value="{{$item->application_id ?? ''}}"  >
                                     <div class="modal-body">
-                                        
+
                                         <div class="form-group">
                                             <label for="message-text" class="col-form-label">Message</label>
                                             <textarea class="form-control" id="message-text" name="message">
                                             {{$item->message}}
                                             </textarea>
                                         </div>
-                                      
+
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <h4>Role</h4>
-                                    @if(auth()->user()->can('Approve Request')  )
-                                        @if($item->status == '0')  
+                                    {{-- @if(auth()->user()->can('Approve Request')  ) --}}
+                                        @if($item->status == '0')
                                         <button type="submit" class="btn btn-primary">Approve</button>
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
                                     </div>
                                       </form>
                                     </div>

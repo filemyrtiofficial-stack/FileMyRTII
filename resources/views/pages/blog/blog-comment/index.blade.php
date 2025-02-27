@@ -31,12 +31,12 @@
                                         </div>
                                 </div>
 
-                                
+
                       </form>
                 </div>
         </div>
         <div class="card mb-4">
-               
+
             <div class="card-header  list-header">
                 <h4>Blog Comment</h4>
                 {{-- <a href="{{route('testimonials.create')}}" class="btn btn-primary float-end">Add Testimonial</a> --}}
@@ -48,7 +48,7 @@
                             <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Name   </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email
-                                </th>    
+                                </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  comment   </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Blog Name   </th>
                                 {{--     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -68,33 +68,33 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->first_name}} {{$item->last_name}}</h6>
+                                            <h6 class="mb-0 text-sm"> {{ stringLimit(($item->first_name." ".$item->last_name), 20) }}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->email}}</h6>
+                                            <h6 class="mb-0 text-sm">{{$item->email}} </h6>
                                         </div>
                                     </div>
                                 </td>
-                             
+
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->comment}}</h6>
+                                            <h6 class="mb-0 text-sm">{{ stringLimit($item->comment, 20) }}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm"><a href="{{url('blog/'.$item->blog->slug ?? '')}}" target="_blank">{{$item->blog->title ?? ''}}</a></h6>
+                                            <h6 class="mb-0 text-sm"><a href="{{url('blog/'.$item->blog->slug ?? '')}}" target="_blank">{{ stringLimit(($item->blog->title ?? ''), 20) }}</a></h6>
                                         </div>
                                     </div>
                                 </td>
-                                
+
 
                                 {{-- <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
@@ -102,7 +102,7 @@
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
-                                
+
                             </tr>
                             @endforeach
 

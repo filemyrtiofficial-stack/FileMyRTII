@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
                 <div class="d-flex">
-                    <input type="file" name="file" class="form-control" class="col-12" accept=".pdf">
+                    <input type="file" name="file" class="form-control" class="col-12" accept=".csv">
                     <button class="btn btn-primary float-end ms-2">Submit</button>
                 </div>
                 @if($errors->has('file'))
@@ -73,7 +73,7 @@
                             @foreach($list as $item)
                             <tr>
 
-                                <td class="align-middle text-sm">{{$item->address?? ''}} </td>
+                                <td class="align-middle text-sm">{{ stringLimit(($item->address?? ''), 70) }} </td>
                                 {{-- <td class="align-middle text-sm">{{$item->state?? ''}} </td>
                                 <td class="align-middle text-sm">{{$item->city ?? ''}} </td>
                                 <td class="align-middle text-sm">{{$item->pincode?? ''}} </td>

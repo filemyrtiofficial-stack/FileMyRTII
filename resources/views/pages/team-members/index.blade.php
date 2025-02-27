@@ -47,7 +47,7 @@
                                                 alt="image">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->name}}</h6>
+                                            <h6 class="mb-0 text-sm">{{ stringLimit($item->name, 20) }}</h6>
                                         </div>
                                     </div>
                                 </td>
