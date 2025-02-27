@@ -74,7 +74,7 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->message}}</h6>
+                                            <h6 class="mb-0 text-sm">{{ stringLimit($item->message, 50) }}</h6>
                                         </div>
                                     </div>
                                 </td>

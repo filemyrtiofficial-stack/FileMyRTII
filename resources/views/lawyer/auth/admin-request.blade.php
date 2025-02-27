@@ -16,13 +16,13 @@
                 <div class="db_tab_form">
                     <div class="db_item_wrap single">
                         <div class="form_item">
-                            <textarea class="form_field" name="message" id="" required  @if($data->closeRequest)           readonly  @endif >{{$data->closeRequest->message ?? ''}}</textarea>
+                            <textarea class="form_field" name="message" id="" required  @if($data->closeRequest && $data->closeRequest->request_type == 'new')           readonly  @endif >@if($data->closeRequest && $data->closeRequest->request_type == 'new') {{$data->closeRequest->message ?? ''}} @endif</textarea>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal_action">
-            @if($data->closeRequest)   
+            @if($data->closeRequest && $data->closeRequest->request_type == 'new')   
             <span style="color:red"> Requested has already been sent to admin. Please wait for approval.</span>
             @else
             <button class="theme-btn"><span>Send</span></button>

@@ -356,9 +356,11 @@ class ServiceController extends Controller
         }
         try {
             
-       ;
+   
             $data['message'] = $request->message;
             $data['status'] = 1;
+             $data['request_type'] = 'old';
+
             ApplicationCloseRequest::where('id', $id)->update($data);
             $close_data = ApplicationCloseRequest::where('id', $id)->get();
             // print_r($close_data); die;
