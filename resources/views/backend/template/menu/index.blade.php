@@ -12,13 +12,13 @@
         <div class="card mb-4">
             <div class="card-header list-header">
                 <h4>Menu</h4>
-            
+
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
 
 					<div class="row" id="category_body">
-						<div class="col-lg-4">      
+						<div class="col-lg-4">
 							<div class="card">
 								<div class="card-body">
 									<div class="alert alert-danger none">
@@ -40,7 +40,7 @@
 												<label for="position">{{ __('Menu Position') }}</label>
 												<select class="custom-select mr-sm-2 form-control" id="position" name="position">
 													@if(!empty($positions))
-													
+
 													@foreach($positions as $key=>$row)
 													<option value="{{ $key }}">{{ $row }}</option>
 													@endforeach
@@ -50,7 +50,7 @@
 													@endif
 												</select>
 											</div>
-											
+
 											<div class="form-group">
 												<label for="position">{{ __('Menu Status') }}</label>
 												<select class="custom-select mr-sm-2 form-control" id="status" name="status">
@@ -63,12 +63,12 @@
 											</div>
 										</div>
 									</form>
-									
+
 								</div>
 							</div>
 						</div>
 
-						<div class="col-lg-8" >      
+						<div class="col-lg-8" >
 							<div class="card">
 								<div class="card-body">
 									<div class="table-responsive">
@@ -119,24 +119,27 @@
 														<td>{{ $menu->name }} </td>
 														<td>{{ $menu->position }}</td>
 														<td>@if($menu->status==1) <p class="badge badge-success">{{ __('Active Menu') }}</p> @else <p class="badge badge-danger">{{ __('Draft Menu') }}</p> @endif</td>
-														
 														<td><a href="{{ route('menu-setting.show',$menu->id) }}"><i class="fas fa-arrows-alt"></i> {{ __('Customize') }}</a></td>
-														<td><a  class="text-success" href="{{ route('menu-setting.edit',$menu->id) }}" ><i class="far fa-edit"></i></a></td>
+														<td>
+                                                            <a href="{{route('menu-setting.destroy', $menu->id)}}"
+                                                                class=" delete-btn text-danger"><i class="fa fa-trash"></i></a>
+                                                            <a  class="text-success" href="{{ route('menu-setting.edit',$menu->id) }}" ><i class="far fa-edit"></i></a>
+                                                        </td>
 													</tr>
 													@endforeach
 												</tbody>
-											</form>	
-											
+											</form>
+
 										</table>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
 
 
-                  
+
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class MenuController extends Controller
     public function __construct(MenuInterface $menuRepository)
     {
         $this->menuRepository = $menuRepository;
-        $this->middleware(['can:Manage Menu']); 
+        $this->middleware(['can:Manage Menu']);
 
     }
 
@@ -38,7 +38,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -81,7 +81,7 @@ class MenuController extends Controller
     {
         $info= MenuSetting::find($id);
         $positions=MenuSetting::MenuPositions();
- 
+
         return view('backend.template.menu.edit',compact('info','positions'));
     }
 
@@ -112,7 +112,14 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        {
+            try {
+                $data = $this->menuRepository->delete($id);
+                return response(['message' => 'Data is successfully deleted']);
+            } catch (Exception $ex) {
+                return response(['error' => $ex->getMessage()], 500);
+            }
+        }
     }
 
     public function updateMenuNode(Request $request) {

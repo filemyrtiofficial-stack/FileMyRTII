@@ -8,11 +8,11 @@ use Exception;
 class MenuRepository implements MenuInterface {
 
     public function store($request) {
-        
+
         if ($request->status==1) {
             if ($request->position == 'header') {
                 MenuSetting::where('position',$request->position)->update(['status'=>0]);
-            }   
+            }
         }
         $men=new MenuSetting;
         $men->name=$request->name;
@@ -24,14 +24,14 @@ class MenuRepository implements MenuInterface {
         Session::flash("success", "Data successfully added");
         return response(['message' => "Data successfully added"]);
     }
-    
+
     public function update($request, $id) {
         if ($request->status==1) {
             if ($request->position == 'header') {
                     MenuSetting::where('position',$request->position)->update(['status'=>0]);
             }
         }
-    
+
         $men= MenuSetting::find($id);
         $men->name=$request->name;
         $men->position=$request->position;
@@ -41,16 +41,14 @@ class MenuRepository implements MenuInterface {
         Session::flash("success", "Data successfully updated");
         return response(['message' => "Data successfully updated"]);
     }
-    
 
-   
+
+
 
     public function delete($id) {
         $data = MenuSetting::where(['id' => $id])->first();
         if($data) {
-            if($data->diseases) {
-                $data->diseases()->delete();
-            }
+
             $data->delete();
         }
         else {
