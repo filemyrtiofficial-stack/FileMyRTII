@@ -36,7 +36,7 @@
                                                 <span> <input type="text" name="amount_type[]" class="form-control type-input" id="amount_type_{{$key}}" value="{{$data['amount_type'][$key] ?? ''}}"></span>
                                                 </td>
                                                 <td>
-                                                    <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="{{$data['amount'][$key] ?? 0}}" id="amount_{{$key}}"></span>
+                                                    <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="{{$data['amount'][$key] ?? 0}}" id="amount_{{$key}}" max="1000"></span>
                                                 </td>
                                                 <td>
                                                     <span>
@@ -68,7 +68,7 @@
                                             <span> <input type="text" name="amount_type[]" class="form-control type-input" id="amount_type_0"></span>
                                             </td>
                                             <td>
-                                                <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0" id="amount_0"></span>
+                                                <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0" id="amount_0" max="1000"></span>
                                             </td>
                                             <td>
                                                 <span>
@@ -150,7 +150,7 @@
                                                 <span> <input type="text" name="amount_type[]" class="form-control type-input" id="amount_type_{{$key}}" value="{{$first_appeal_payment['amount_type'][$key] ?? ''}}"></span>
                                                 </td>
                                                 <td>
-                                                    <span><input type="number" name="amount[]" class="form-control first-appeal-update-amount amount-input" value="{{$first_appeal_payment['amount'][$key] ?? 0}}" id="amount_{{$key}}"></span>
+                                                    <span><input type="number" name="amount[]" class="form-control first-appeal-update-amount amount-input" value="{{$first_appeal_payment['amount'][$key] ?? 0}}" id="amount_{{$key}}" max="1000"></span>
                                                 </td>
                                                 <!-- <td>
                                                     <span>
@@ -182,7 +182,7 @@
                                             <span> <input type="text" name="amount_type[]" class="form-control type-input" id="amount_type_0"></span>
                                             </td>
                                             <td>
-                                                <span><input type="number" name="amount[]" class="form-control first-appeal-update-amount amount-input" value="0" id="amount_0"></span>
+                                                <span><input type="number" name="amount[]" class="form-control first-appeal-update-amount amount-input" value="0" id="amount_0" max="1000"></span>
                                             </td>
                                             <!-- <td>
                                                 <span>
@@ -264,7 +264,7 @@
                                                 <span> <input type="text" name="amount_type[]" class="form-control type-input" id="amount_type_{{$key}}" value="{{$second_appeal_payment['amount_type'][$key] ?? ''}}"></span>
                                                 </td>
                                                 <td>
-                                                    <span><input type="number" name="amount[]" class="form-control second-appeal-update-amount amount-input" value="{{$second_appeal_payment['amount'][$key] ?? 0}}" id="amount_{{$key}}"></span>
+                                                    <span><input type="number" name="amount[]" class="form-control second-appeal-update-amount amount-input" value="{{$second_appeal_payment['amount'][$key] ?? 0}}" id="amount_{{$key}}" max="1000"></span>
                                                 </td>
                                                 <!-- <td>
                                                     <span>
@@ -296,7 +296,7 @@
                                             <span> <input type="text" name="amount_type[]" class="form-control type-input" id="amount_type_0"></span>
                                             </td>
                                             <td>
-                                                <span><input type="number" name="amount[]" class="form-control second-appeal-update-amount amount-input" value="0" id="amount_0"></span>
+                                                <span><input type="number" name="amount[]" class="form-control second-appeal-update-amount amount-input" value="0" id="amount_0" max="1000"></span>
                                             </td>
                                             <!-- <td>
                                                 <span>
@@ -355,7 +355,7 @@
                                             <span><input type="text" name="amount_type[]" class="form-control type-input"></span>
                                         </td>
                                         <td>
-                                            <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0"></span>
+                                            <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0" max="1000"></span>
                                         </td>
                                         <td>
                                             <span>
@@ -405,6 +405,16 @@
         first_appeal_calculate();
 
     });
+    $(document).on('change', '.amount-input', function(){
+        let max = $(this).attr('max');
+        if(parseFloat($(this).val()) > parseFloat(max)) {
+            $(this).val(max)
+        }
+        else if(parseFloat($(this).val())  < 0) {
+            $(this).val(0)
+
+        }
+    })
     function calculate() {
         var basic = 0;
         var advance = 0;
@@ -440,7 +450,7 @@
                                             <span><input type="text" name="amount_type[]" class="form-control type-input"></span>
                                         </td>
                                         <td>
-                                            <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0"></span>
+                                            <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0" max="1000"></span>
                                         </td>
                                         <td>
                                             <span>
@@ -516,7 +526,7 @@
                                             <span><input type="text" name="amount_type[]" class="form-control type-input"></span>
                                         </td>
                                         <td>
-                                            <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0"></span>
+                                            <span><input type="number" name="amount[]" class="form-control update-amount amount-input" value="0" max="1000"></span>
                                         </td>
                                         <td>
                                             <span>

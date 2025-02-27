@@ -63,7 +63,7 @@ class ServiceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             // 'name' => "required|unique:services,name",
-            'name' => "required",
+            'name' => "required|max:255",
 
             'slug' => "required|unique:slug_masters,slug",
             'status' => "required",
@@ -118,7 +118,7 @@ class ServiceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             // 'name' => "required|unique:services,name,".$id,
-            'name' => "required",
+            'name' => "required|max:255",
 
             'status' => "required",
             'slug' => "required",

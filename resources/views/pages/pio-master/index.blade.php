@@ -18,9 +18,12 @@
             </div>
             <div class="card-body">
                 <div class="d-flex">
-                    <input type="file" name="file" class="form-control" class="col-12">
+                    <input type="file" name="file" class="form-control" class="col-12" accept=".pdf">
                     <button class="btn btn-primary float-end ms-2">Submit</button>
                 </div>
+                @if($errors->has('file'))
+    <div class="error">{{ $errors->first('file') }}</div>
+@endif
             </div>
         </div>
     </form>

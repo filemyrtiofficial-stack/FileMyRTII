@@ -53,7 +53,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:roles,name",
+            'name' => "required|max:255|unique:roles,name",
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
@@ -99,7 +99,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:roles,name,".$id,
+            'name' => "required|max:255|unique:roles,name,".$id,
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);

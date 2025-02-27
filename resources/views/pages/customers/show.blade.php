@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h5 class="card-title">{{ $data->firstName}}</h5>
+                        <h5 class="card-title">{{ $data->fullName}}</h5>
                     </div>
                 </div>
                 <hr>

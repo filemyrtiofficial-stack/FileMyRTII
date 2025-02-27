@@ -143,8 +143,9 @@ class PioController extends Controller
 
     public function importPio(Request $request){
         $request->validate([
-            'file'=>'required|max:2024'
+            'file'=>'required|max:2024|mimes:csv'
         ]);
+        
         Excel::import(new PioImport, $request->file('file'));
         return back()->with('success', 'File Imported Successfully!');
     }

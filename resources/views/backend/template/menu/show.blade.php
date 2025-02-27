@@ -29,7 +29,7 @@
 												<div class="form-group">
 													<label for="text">{{ __('Text') }}</label>
 													<!--<div class="input-group">-->
-														<input type="text" class="form-control item-menu" name="text" id="text" placeholder="Text" autocomplete="off">
+														<input type="text" class="form-control item-menu" name="text" id="text" placeholder="Text" autocomplete="off" maxmaxlength="40">
 														<!--<div class="input-group-append">
 															<button type="button" id="myEditor_icon" class="btn btn-primary btn-sm"></button>
 														</div>

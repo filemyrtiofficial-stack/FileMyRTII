@@ -54,7 +54,7 @@ class ServiceCategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:service_categories,name",
+            'name' => "required|max:255|unique:service_categories,name",
             // 'icon' => "required",
             'status' => "required"
         ]);
@@ -99,7 +99,7 @@ class ServiceCategoryController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required|unique:service_categories,name,".$id,
+            'name' => "required|max:255|unique:service_categories,name,".$id,
             'status' => "required"
         ]);
         if($validator->fails()) {

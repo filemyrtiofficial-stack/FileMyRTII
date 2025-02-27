@@ -52,7 +52,7 @@ class TestimonialController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'client_name' => "required",
+            'client_name' => "required|max:75",
             'status' => "required",
             'comment' => "required",
             // 'image' => "required"
@@ -100,7 +100,7 @@ class TestimonialController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'client_name' => "required",
+            'client_name' => "required|max:75",
             'status' => "required",
             'comment' => "required",
             // 'image' => "required"

@@ -92,7 +92,7 @@ class LawyerRepository implements LawyerInterface
             'about' => $request->about,
             'experience' => $request->experience,
             'address' => $request->address,       
-            'employee_id' =>$employee_id
+            'employee_id' =>$id
         ];
 
         if(!empty($request->password)){

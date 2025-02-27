@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Name</label>
                                     <div class="input-group">
-                                        <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control enable-slug"
+                                        <input id="name" name="name" value="{{$data['name'] ?? ''}}" class="form-control {{!isset($data['id']) ? 'enable-slug' : ''}}"
                                         type="text" placeholder="Name">
                                     </div>
                                 </div>

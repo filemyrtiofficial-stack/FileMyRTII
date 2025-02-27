@@ -54,7 +54,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => "required|unique:blogs,title",
+            'title' => "required|unique:blogs,title|max:255",
             'status' => "required",
             'short_description' => "required",
             'description' => "required",
@@ -108,7 +108,7 @@ class BlogController extends Controller
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-          'title' => "required|unique:blogs,title,".$id,
+          'title' => "required|max:255|unique:blogs,title,".$id,
             'status' => "required",
             'short_description' => "required",
             'description' => "required",

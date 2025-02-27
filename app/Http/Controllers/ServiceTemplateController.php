@@ -63,7 +63,7 @@ class ServiceTemplateController extends Controller
     public function store(Request $request, $service_id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required",
+            'name' => "required|max:255",
             'description' => "required",
 
         ]);
@@ -116,7 +116,7 @@ class ServiceTemplateController extends Controller
     public function update(Request $request, $service_id, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required",
+            'name' => "required|max:255",
             'description' => "required",
 
         ]);
