@@ -66,7 +66,10 @@
 
                                                     </div>
                                                     <div class="modal_action">
+                                                        @if($item->payment_status == 'paid')
+
                                                         <a href="{{ route('my-rti',$item->application_no) }}" class="theme-btn">Edit RTI</a>
+                                                        @endif
                                                         <a href="javascript:void(0);" class="theme-btn" onclick="event.preventDefault(); document.getElementById('delete-rti-form').submit();">Yes, Delete</a>
                                                         <form role="form" method="post" action="{{ route('customer.rti.delete') }}" id="delete-rti-form">
                                                             @csrf
@@ -126,7 +129,10 @@
                                             <!-- <a class="theme-btn pay-now-form" href="javascript:void(0);" data-id="{{$item->application_no}}"  >Pay Now</a> -->
                                             <a class="theme-btn" href="{{route('customer.payment-rti', encryptString($item->id))}}"  >Pay Now </a>
                                             @endif
+                                            @if($item->payment_status == 'paid')
+
                                             <a class="theme-btn" href="{{route('my-rti', $item->application_no)}}">Details</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
