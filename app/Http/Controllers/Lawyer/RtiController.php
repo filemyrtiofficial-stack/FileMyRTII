@@ -33,7 +33,7 @@ class RtiController extends Controller
 
                     $request['status'] =  applicationStatusString()[$request->status];
                 }
-                
+
             }
             else {
                 $request['status'] = 1;
@@ -44,7 +44,7 @@ class RtiController extends Controller
             $list = RtiApplication::list(true, $request->all());
             $rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true, 'payment_status' => 'paid'])->groupBy('status')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
             // $test_rti_count = RtiApplication::where(['lawyer_id' => auth()->guard('lawyers')->id(), 'process_status'=> true])->groupBy('application_no')->select('rti_applications.status', DB::raw('count(*) as total'))->get()->toArray();
-          
+
             $total_rti = ["total" => 0, 'pending' => 0, 'filed' => 0, 'active' => 0];
             foreach($rti_count as $count) {
                 $total_rti['total'] += $count['total'];
@@ -92,10 +92,10 @@ class RtiController extends Controller
                     $change_request =  json_decode($data->lastRevision->customer_change_request, true);
                 }
                 $html = RtiApplication::draftedApplication($data);
-           
+
               $rti_id =  $data->id;
-                
-              
+
+
             }
             else {
                 abort(404);
@@ -107,7 +107,7 @@ class RtiController extends Controller
     public function draftApplication($application_no) {
 
 
-        
+
         $data = RtiApplication::where(['application_no' => $application_no])->first();
         $revision = $data->lastRevision;
         // print_r(json_encode($revision));
@@ -142,19 +142,19 @@ class RtiController extends Controller
                 else {
                     $signature_html = str_replace("[signature]", " <img src=".$signature." alt='' width='100'>", $signature_html);
                 }
-               
+
             }
             // $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature', 'signature_html'))->render();
 
 
 //         $html = view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'))->render();
 //         	header("Content-type: application/vnd.ms-word");
-//   header("Content-Disposition: attachment;Filename=document_name.doc");    
+//   header("Content-Disposition: attachment;Filename=document_name.doc");
 //   echo $html;
 //   die;
 
 
-        // 
+        //
 	    // return view('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature'));
 
         $pdf = PDF::loadView('frontend.profile.rti-file-pdf', compact('data', 'field_data', 'revision', 'html', 'signature', 'signature_html'));
@@ -162,8 +162,8 @@ class RtiController extends Controller
     }
 
     public function processRTIApplication(Request $request, $application_id) {
-        
-       
+
+
         $application = RtiApplication::where(['id' => $application_id])->first();
 
         $validation = [
@@ -196,7 +196,7 @@ class RtiController extends Controller
                 if (isset($fields['is_required']) && isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'yes' && $value != 'file') {
                     $validation_string = 'required';
                 }
-           
+
                 if($value == "input") {
                     $validation_string .= '|max:75';
                 }
@@ -217,14 +217,14 @@ class RtiController extends Controller
                     }
                 }
                  $validation_string = trim($validation_string, "|");
-            
+
                 if($validation_string != '') {
                     $validation[getFieldName($fields['field_lable'][$key])] =  $validation_string;
-                    
+
                 }
                 if($value == 'file') {
                     $new_slug_key = $slug_key."_file";
-                  
+
                     array_push( $filelist , $slug_key);
                     $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' =>null];
 
@@ -233,7 +233,7 @@ class RtiController extends Controller
 
                     $field_data[$slug_key] = ['lable' => $fields['field_lable'][$key], 'type' => $fields['field_type'][$key], 'value' => $request[$slug_key]];
                 }
-                
+
             }
         }
 
@@ -261,9 +261,9 @@ class RtiController extends Controller
             unset($input[$slug]);
         }
         RtiApplicationRevision::create([
-            'application_id' =>  $application->id, 
+            'application_id' =>  $application->id,
             'template_id' => $request->template_id,
-            'details' => json_encode($input), 
+            'details' => json_encode($input),
         ]);
         $application->url = route('my-rti', $application_no);
         SendEmail::dispatch('draft-rti', $application);
@@ -276,7 +276,7 @@ class RtiController extends Controller
         $validator = Validator::make($request->all(), [
             'courier_name' => "required|max:50",
             'courier_tracking_number' => "required|max:50",
-            'courier_date' => "required|date",
+            'courier_date' => "required|date|after_or_equal:today",
             'charges' => "required|numeric|digits_between:1,6",
             'details' => "required|max:255"
 
@@ -285,7 +285,7 @@ class RtiController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
         try {
-            
+
             $revision = RtiApplicationRevision::find($revision_id);
             if($revision) {
                 $data = $request->only(['courier_name', 'courier_date', 'courier_tracking_number', 'charges']);
@@ -299,12 +299,12 @@ class RtiController extends Controller
                 ApplicationStatus::create(['status' => "filed", "date" => Carbon::now(), 'time' => Carbon::now(), 'application_id' => $revision->application_id]);
                 SendEmail::dispatch('filed-mail', $revision->rtiApplication);
                 $revision->rtiApplication()->update(['pio_expected_date' => Carbon::now()->addDays(40)]);
-           
+
             }
             session()->flash('success', "RTI Application ".$revision->rtiApplication->application_no." is successully filed.");
             return response(['status' => 'success', 'message1' => "Tracking details are successfully added"]);
-                
-                
+
+
         } catch (\Throwable $th) {
             return response(['errors' => $th->getMessage()], 500);
 
@@ -319,7 +319,7 @@ class RtiController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
         try {
-            
+
             $data['application_id'] = $application_id;
             $data['message'] = $request->message;
             $data['from_user'] = "lawyer";
@@ -333,8 +333,8 @@ class RtiController extends Controller
 
             session()->flash('success', 'Requested Info is sended to user.');
             return response(['status' => 'success']);
-                
-                
+
+
         } catch (\Throwable $th) {
             return response(['errors' => $th->getMessage()], 500);
 
@@ -351,20 +351,20 @@ class RtiController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
         try {
-            
+
             $data['application_id'] = $application_id;
             $data['message'] = $request->message;
             $data['lawyer_id'] = auth()->guard('lawyers')->id();
             ApplicationCloseRequest::create($data);
             session()->flash('success', 'Requested Info is sended to admin.');
             return response(['status' => 'success', 'message' => ""]);
-                
-                
+
+
         } catch (\Throwable $th) {
             return response(['errors' => $th->getMessage()], 500);
 
         }
-        
+
     }
 
     public function assignPIO(Request $request, $application_id) {
@@ -379,7 +379,7 @@ class RtiController extends Controller
             if($application) {
                 $application->update(['pio_address' => $request->pio_address, 'manual_pio' => isset($request['manual_pio']) && $request['manual_pio'] == 'on'  ? 1 : 0]);
             }
-            return response(['status' => 'success', 'message' => "PIO is successfully assigned"]);    
+            return response(['status' => 'success', 'message' => "PIO is successfully assigned"]);
         } catch (\Throwable $th) {
             return response(['errors' => $th->getMessage()], 500);
 
@@ -387,7 +387,7 @@ class RtiController extends Controller
     }
 
     public function approveChangeRequest(Request $request, $application_id) {
-       
+
         try {
             $application = RtiApplication::find($application_id);
             if($application && $application->lastRevision) {
@@ -397,17 +397,17 @@ class RtiController extends Controller
                     $details[$key] = $value;
                 }
                 RtiApplicationRevision::create([
-                    'application_id' =>  $application->id, 
+                    'application_id' =>  $application->id,
                     'template_id' => $application->lastRevision->template_id,
-                    'details' => json_encode($details), 
+                    'details' => json_encode($details),
                 ]);
 
                 SendEmail::dispatch('draft-rti', $application);
 
                 session()->flash('success', "RTI is successfully drafted.");
-                return response(['status' => 'success']);    
+                return response(['status' => 'success']);
             }
-            return response(['status' => 'error', 'message' => "invalid applicatio  no."]);    
+            return response(['status' => 'error', 'message' => "invalid applicatio  no."]);
 
         } catch (\Throwable $th) {
             return response(['errors' => $th->getMessage()], 500);
@@ -424,7 +424,7 @@ class RtiController extends Controller
 
         $validator = Validator::make($request->all(), [
             'document' => 'required|file|mimes:pdf|max:3072',
-       
+
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
@@ -434,13 +434,13 @@ class RtiController extends Controller
             $application = RtiApplication::find($application_id);
             $application->update(['final_rti_document' => $data]);
             session()->flash('success', "Document successfully uploaded.");
-            return response(['status' => 'success']);    
+            return response(['status' => 'success']);
         } catch (\Throwable $th) {
             return response(['errors' => $th->getMessage()], 500);
 
         }
 
-      
+
 
     }
 
@@ -452,13 +452,13 @@ class RtiController extends Controller
             else {
                 $request['status'] =  applicationStatusString()[$request->status];
             }
-            
+
         }
         else {
             $request['status'] = 1;
         }
         $request->merge(['lawyer_id' => auth()->guard('lawyers')->id(), 'order_by' => 'created_at', 'order_by_type' => 'desc', 'payment_status' => 'paid']);
-        $list = RtiApplication::list(true, $request->all()); 
+        $list = RtiApplication::list(true, $request->all());
         $html  =  view('lawyer.listing', compact('list'))->render();
         $list = $list->toArray();
         return response(['data' =>  $html, 'pages' => ['next_page' =>  $list['current_page']+1, 'last_page' => $list['last_page']]]);

@@ -23,7 +23,7 @@
                     <div class="content">
                         <p>The Public Information Officer</p>
                         <p>{{$data->pio_address}}</p>
-                        
+
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <div class="db_item_wrap">
                     <div class="form_item">
                         <label for="first_name">Courier Date*</label>
-                        <input class="form_field" type="date" name="courier_date" value="{{$data->courierTracking->courier_date ?? ''}}" placeholder=""  @if($data->courierTracking) disabled @endif>
+                        <input class="form_field" type="date" name="courier_date" min="{{date('Y-m-d')}}" value="{{$data->courierTracking->courier_date ?? ''}}" placeholder=""  @if($data->courierTracking) disabled @endif>
                     </div>
                     <div class="form_item">
                         <label for="last_name">Courier Charges*</label>
@@ -61,7 +61,7 @@
                             <div class="preview-item">
                                 <a href="{{route('preview-document',Crypt::encryptString($document))}}" target="blank">
                                     <embed src="{{asset($document)}}" width="50" height="50" />
-                                  
+
                                 </a>
                             </div>
                         @endforeach

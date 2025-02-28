@@ -47,36 +47,36 @@
 
                     <div class="col_box_right">
                         <div class="col_logo"> {{auth()->guard('lawyers')->user()->fullName[0]}} </div>
-                        <div class="arrow_col"> 
-                            <a href="javascript:void(0);" class="click_col"> 
+                        <div class="arrow_col">
+                            <a href="javascript:void(0);" class="click_col">
                                 <span class="dot"></span>
                                 <span class="dot"></span>
                                 <span class="dot"></span>
-                            </a> 
+                            </a>
 
                             <div class="col_dropdown">
                                 <ul>
-                                    <li> <a href="javascript:void(0);" class="rti-popup" data-id="personal_detail_modal" > <span class="icon"> <img class="img-fluid" src="{{asset('assets/rti/images/dashboard-overview/user-new.png')}}" alt=""> </span> Profile Edit </a> </li>
+                                    <li> <a href="javascript:void(0);" class="rti-popup" data-id="personal_detail_modal" > <span class="icon"> <img class="img-fluid" src="{{asset('assets/rti/images/dashboard-overview/user-new.png')}}" alt=""> </span> Profile </a> </li>
                                     <li> <a href="javascript:void(0);"  class="change-password-modal"> <span class="icon"> <img src="{{asset('assets/rti/iimages/dashboard-overview/password.png')}}" alt=""> </span> Change Password</a> </li>
                                     <li> <a href="javascript:void(0);"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span class="icon"> <img src="{{asset('assets/rti/iimages/dashboard-overview/log-out.png')}}" alt=""> </span> Log Out </a> </li>
 
 
 
-                                
+
                                 <form role="form" method="post" action="{{ route('lawyer.logout') }}" id="logout-form">
                                     @csrf
-                                    
+
                                 </form>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                         
+
                 </div>
 
 
                 <div class="tab_overview">
-              
+
                      <div class="tab_overview_up">
                         <ul>
                             <li><a href="{{route('lawyer.my-rti')}}?status=active" class="overview_click @if(!isset($_GET['status']) || (isset($_GET['status']) && strtolower($_GET['status']) == 'active'))active @endif" data-id="active_rti"> Active RTIs </a></li>
@@ -89,16 +89,16 @@
 
                      <div class="tab_overview_bottom">
 
-                        <div class="overview_data tab-active" data-id="active_rti"> 
+                        <div class="overview_data tab-active" data-id="active_rti">
                              <div class="tab_overview_data">
                                 <table>
-                                     <thead> 
-                                        <th> Date</th>    
-                                        <th> Application No </th>    
-                                        <th> Name</th>  
-                                        <th> Appeeal No. </th>    
+                                     <thead>
+                                        <th> Date</th>
+                                        <th> Application No </th>
+                                        <th> Name</th>
+                                        <th> Appeeal No. </th>
 
-                                        <th> Status </th>    
+                                        <th> Status </th>
                                     </thead>
 
                                     <tbody id="rti-listing">
@@ -126,22 +126,22 @@
                         </div>
 
 
-                        <div class="overview_data" data-id="pending_rti"> 
+                        <div class="overview_data" data-id="pending_rti">
                             <div class="tab_overview_data">
-                             
+
                             </div>
                         </div>
 
 
-                         <div class="overview_data" data-id="filed_rti"> 
+                         <div class="overview_data" data-id="filed_rti">
                             <div class="tab_overview_data">
-                           
+
                             </div>
                          </div>
 
-                        <div class="overview_data" data-id="total_rti"> 
+                        <div class="overview_data" data-id="total_rti">
                             <div class="tab_overview_data">
-                            
+
                             </div>
                         </div>
 
@@ -152,14 +152,14 @@
                 </div>
 
 
-                
-                
-               
+
+
+
             </div>
         </section>
 
 
-        
+
     @include('lawyer.auth.my-profile')
 @endsection
 @push('js')
@@ -178,7 +178,7 @@
             success :  function(response) {
                 console.log(response, 'response')
                 $('#rti-listing').append(response.data);
-                
+
                 if(parseInt(response.pages.last_page) >= parseInt(response.pages.next_page)) {
                     $('.view-more-rti').attr('data-page', response.pages.next_page)
 
