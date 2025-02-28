@@ -207,6 +207,7 @@ Route::get("subscribe-now", function(){
 
 
 		Route::group(['middleware' => 'lawyer-auth'], function () {
+            Route::post('change-password', [LawyerAuthController::class, 'changePassword'])->name('lawyer.change-password');
 
 			Route::get('myrti/{application_no?}/{tab?}', [LawyerRtiController::class, 'myRti'])->name('lawyer.my-rti');
 			Route::get('draft-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.draft-rti');

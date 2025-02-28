@@ -61,7 +61,7 @@
             font-weight: 400;
             font-size: 16px;
         }
-      
+
     </style>
 </head>
 
@@ -82,7 +82,7 @@
 
 
     </main>
-    <div class="success_toast_msg @if(session()->has('success')) active @endif">  
+    <div class="success_toast_msg @if(session()->has('success')) active @endif">
             <div class="toast_content">
               <div class="toast_img_wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -96,7 +96,7 @@
             </div>
           </div>
 
-          <div class="error_toast_msg @if(session()->has('error')) active @endif">  
+          <div class="error_toast_msg @if(session()->has('error')) active @endif">
             <div class="toast_content">
               <div class="toast_img_wrap">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -132,7 +132,7 @@
 
             }
             console.log(allowedTypes, 'allowedTypes', type)
-           
+
                 let maxFiles = 5;
                 let maxSize = 3 * 1024 * 1024; // 3MB
                 let errorMessage = "";
@@ -166,7 +166,7 @@
                     }, 3000);
                     return false;
                 }
-             
+
 
         }
         closeMessagePopup();
@@ -178,7 +178,7 @@
         }, 2000);
         }
 
-        
+
 
         $(document).on('submit', '.authentication', function(e){
             e.preventDefault();
@@ -206,7 +206,7 @@
             processData: false,
             success: function(response) {
                   if(response.status == 'success') {
-                    
+
                     if(response.tab != undefined) {
                         $('.contact_faq_tab').removeClass('active');
                         $('#'+response.tab).addClass('active');
@@ -223,7 +223,7 @@
 
                             _this.find('input').val("");
                         }
-                       
+
                         closeMessagePopup();
                         _this.find('button').attr('disabled', false);
                         $('.loader').hide();
@@ -286,13 +286,13 @@
 
                     $('.success-message').html(response.message);
                     $('.success_toast_msg').addClass('active');
-    
+
                     closeMessagePopup();
-    
+
                         _this.find('input').val(null);
                 }
                 _this.find('button').attr('disabled', false);
-                  
+
             },
             error: function(error) {
                 $.each(error.responseJSON.errors, function(index, value) {
@@ -323,7 +323,7 @@
             processData: false,
             type: method, // For jQuery < 1.9
             success: function(response) {
-              
+
                 if(response.redirect) {
                     window.location.href = response.redirect;
                 }
