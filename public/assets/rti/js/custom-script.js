@@ -207,34 +207,33 @@
             });
         }
 
-        if($('.my-rtis').lenght == 0) {
+      
 
             // contact tabs
             if ($('.contact_faq_tab_content .contact_faq_tab').length) {
-                const $listItem = $('.contact_faq_list li');
+                const $listItem = $('.contact-us-accordian li');
                 $('.contact_faq_tab').first().addClass('active');
                 $listItem.first().addClass('active');
-                $('.contact_faq_list li a').click(function(e) {
+                $('.contact-us-accordian li a').click(function(e) {
                     e.preventDefault();
                     $('.contact_faq_tab').removeClass('active');
                     $listItem.removeClass('active');
                     const targetTab = $(this).attr('href');
                     $(targetTab).addClass('active');
                     $(this).parent().addClass('active');
-                    const $activeListItem = $('.contact_faq_list li.active');
+                    const $activeListItem = $('.contact-us-accordian li.active');
                     const $prevItem = $activeListItem.prev();
-                    $('.contact_faq_list li:last-child').css('border', 'none');
+                    $('.contact-us-accordian li:last-child').css('border', 'none');
                     // console.log($activeListItem);
                     if ($prevItem.length) {
                         $listItem.css('border-bottom','1px solid rgba(212, 212, 212, 0.5)');
                         $activeListItem.css('border', 'none')
                         $prevItem.css('border', 'none');
-                        $('.contact_faq_list li:last-child').css('border', 'none');
+                        $('.contact-us-accordian li:last-child').css('border', 'none');
                     }
                 });
             }
-        }
-
+       
         // $('.form_yes').hide();
         // $('.form_no').hide();
     
@@ -407,6 +406,13 @@
                 $('.col_dropdown').toggleClass('active');
             });
         }
+
+        // $(document).on('click', '.contact_faq_item .faq_list_item', function(e) {
+        //         e.preventDefault();
+        //         let target = $(this).attr('href');
+
+        //         $(target).addClass('active').siblings().removeClass('active')
+        // })
   
 })(jQuery);
 

@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-5">
                         <div class="contact_faq_wrapper">
-                            <ul class="contact_faq_list">
+                            <ul class="contact_faq_list contact-us-accordian">
                             @foreach($data['category'] as $key =>  $value)
                                 <li class="contact_faq_item">
                                     <span class="shape"></span>
