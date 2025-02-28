@@ -225,6 +225,8 @@ Route::get("subscribe-now", function(){
 			Route::post('upload-final-rti/{application_id?}', [LawyerRtiController::class, 'uploadFinalRTI'])->name('lawyer.upload-final-rti');
 			Route::get('rt-list', [LawyerRtiController::class, 'rtiList'])->name('lawyer.rti-list');
 
+			Route::get('download-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.download-rti');
+
 
 
 		});

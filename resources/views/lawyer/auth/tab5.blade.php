@@ -28,7 +28,7 @@
             <div class="form_action">
                 <!-- <a href="javascript:void(0);" class="theme-btn"><span>Print RTI</span></a> -->
                 <!-- <a href="javascript:void(0);" class="theme-btn"><span>Download</span></a> -->
-                <a href="{{route('customer.download-rti', $data->application_no)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download</span></a>
+                <a href="{{route('lawyer.download-rti', $data->application_no)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download</span></a>
 
             </div>
             @endif
