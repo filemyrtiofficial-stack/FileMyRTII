@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Mail\Admin;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
+
+class DraftRTIMail extends Mailable
+{
+    use Queueable, SerializesModels;
+    public $data;
+    public $type;
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($data, $type)
+    {
+        $this->data = $data;
+        $this->type = $type;
+  
+    }
+
+    /**
+     * Get the message envelope.
+     *
+     * @return \Illuminate\Mail\Mailables\Envelope
+     */
+    public function envelope()
+    {
+        if($this->type == "first") {
+
+            if($this->data->rtiApplication['appeal_no'] == 0) {
+                return new Envelope(
+                    subject: 'Lawyer drafted RTI (Application No: '.$this->data->rtiApplication['application_no'].')',
+                );
+            }
+            else if($this->data->rtiApplication['appeal_no'] == 1) {
+                return new Envelope(
+                    subject: 'Lawyer drafted first appeal (Application No: '.$this->data->rtiApplication['application_no'].')',
+                );
+            }
+            else {
+                return new Envelope(
+                    subject: 'Lawyer drafted second appeal (Application No: '.$this->data->rtiApplication['application_no'].')',
+                );
+            }
+        }
+        else {
+            if($this->data->rtiApplication['appeal_no'] == 0) {
+                return new Envelope(
+                    subject: 'Laywer revised the rti draft and sent to customer for review and approve (Application No: '.$this->data->rtiApplication['application_no'].')',
+                );
+            }
+            else if($this->data->rtiApplication['appeal_no'] == 1) {
+                return new Envelope(
+                    subject: 'Laywer revised the rti draft and sent to customer for review and approve (Application No: '.$this->data->rtiApplication['application_no'].')',
+                );
+            }
+            else {
+                return new Envelope(
+                    subject: 'Laywer revised the rti draft and sent to customer for review and approve (Application No: '.$this->data->rtiApplication['application_no'].')',
+                );
+            }
+        }
+        
+    }
+
+   
+    /**
+     * Get the message content definition.
+     *
+     * @return \Illuminate\Mail\Mailables\Content
+     */
+    public function content()
+    {
+        
+        return new Content(
+            view: 'email.admin.draft_rti',
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array
+     */
+    public function attachments()
+    {
+        return [];
+    }
+}

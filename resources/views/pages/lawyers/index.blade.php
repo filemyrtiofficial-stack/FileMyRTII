@@ -8,6 +8,38 @@
 @include('layouts.navbars.auth.topnav', ['title' => 'Lawyer Management'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                  <form action="" id="search-form">
+                            <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Search</label>
+                                            <input type="text" name="search" class="form-control" placeholder="Search By Name" value="{{$_GET['search'] ?? ''}}">
+                                    </div>
+                                    <div class="col-md-3">
+                                          <label>Status</label>
+                                            <select  name="status" class="form-control">
+                                                    <option value="">Select Status</option>
+                                                    @foreach(commonStatus() as $key =>  $value)
+                                                            <option value="{{$key}}" {{isset($_GET['status']) && $_GET['status'] == $key ? 'selected' : ''}}>{{$value['name'] ?? ''}}</option>
+                                                    @endforeach
+                                            </select>
+                                    </div>
+                                         <div class="col-md-3">
+                                               <label>RTI Date Range</label>
+                                       <input type="text" name="daterange" id="" class="form-control daterange" value="{{$_GET['daterange'] ?? ''}}">
+                                    </div>
+
+                                    
+                                    <div class="col-12">
+                                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                            <a href="{{route('lawyers.export')}}?search={{$_GET['search'] ?? ''}}&status={{$_GET['status'] ?? ''}}&daterange={{$_GET['daterange'] ?? ''}}" class="btn btn-sm btn-secondary float-right">Export</a>
+
+                                    </div>
+                            </div>
+                  </form>
+            </div>
+        </div>
 
         <div class="card mb-4">
             <div class="card-header list-header">
@@ -28,7 +60,10 @@
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email ID
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Total Applications</th>
+                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Total Applications</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Filed RTI</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Pending RTI</th>
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Status
                                 </th>
@@ -57,7 +92,11 @@
                                 </td>
                                 <td class="align-middle text-sm">{{$item->phone?? ''}}</td>
                                 <td class="align-middle text-sm">{{$item->email?? ''}}</td>
-                                <td class="align-middle text-center"><a target="blank" href="{{route('rti.applications.list')}}?lawyer_id={{$item->id}}">{{count($item->rtiApplications)}}</a></td>
+                                  <td class="align-middle text-center"><a target="blank" href="{{route('rti.applications.list')}}?lawyer_id={{$item->id}}">{{$item['rti_applications_count'] ?? 0}}</a></td>
+                                <td class="align-middle text-center"><a target="blank" href="{{route('rti.applications.list')}}?lawyer_id={{$item->id}}&status=3">{{$item['filed_rti_count'] ?? 0}}</a></td>
+                                <td class="align-middle text-center">{{$item['pending_rti_count'] ?? 0}}</td>
+
+            
                                 <td>
                                     <span class="{{commonStatus()[$item->status]['class'] ??''}}"><b>{{commonStatus()[$item->status]['name'] ??''}}</b></span>
                                 </td>
@@ -72,8 +111,13 @@
                                             href="{{route('lawyers.edit', $item->id)}}">Edit</a>
                                         @endif
                                         @if(auth()->user()->can('Delete Lawyer'))
+                                            @if(count($item->rtiApplications) > 0)
+                                             <a href="#"
+                                            class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary ml-2 delete-lawyer" data-rti="{{$item['rti_applications_count'] ?? 0}}" data-href="{{route('rti.applications.list')}}?lawyer_id={{$item->id}}">Delete</a>
+                                            @else
                                         <a href="{{route('lawyers.destroy', $item->id)}}"
                                             class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>

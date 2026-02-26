@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use Hash;
+use Session;
 class AuthController extends Controller
 {
     public function login() {
@@ -22,8 +23,14 @@ class AuthController extends Controller
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
-        if (Auth::guard('lawyers')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response(['status' => 'success', 'redirect' => route('lawyer.my-rti')]);
+        if (Auth::guard('lawyers')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1])) {
+             $redirect_url = route('lawyer.my-rti');
+            if(Session::has('lawyer_request_url') && !empty(Session::get('lawyer_request_url'))) {
+                $redirect_url = Session::get('lawyer_request_url');
+                  Session::forget('lawyer_request_url');
+            }
+            
+            return response(['status' => 'success', 'redirect' =>  $redirect_url]);
         }
 
         return response(['errors' => ['password' => 'The provided credentials do not match our records.']], 422);

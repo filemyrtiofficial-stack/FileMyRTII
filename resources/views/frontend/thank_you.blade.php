@@ -17,8 +17,8 @@
                         <div class="col-12 col-sm-12">
                             <div class="breadcrumb">
                                <ol>
-                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <li class="fs-24"><a href="javascript:void(0);">{{$rti->serviceCategory->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="/">Home</a></li>
+                                <li class="fs-24"><a href="{{ url('/service/'.$rti->serviceCategory->slug->slug ?? '') }}">{{$rti->serviceCategory->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$rti->service->name ?? 'Custom Request'}}</li>
                                </ol>
                             </div>
@@ -47,7 +47,14 @@
                                         <p>We appreciate your initiative and encourage you to continue making 
                                             a positive impact through informed citizenship.</p>
                                     </div>
+
+                                   
+                                    @if(auth()->guard('customers')->check())
                                     <a class="theme-btn" href="{{route('my-rti', $rti->application_no)}}"><span>Go to the Dashboard</span></a>
+                                    @else
+                                    <a class="theme-btn" href="{{route('track-my-rti', encryptString($rti->application_no))}}"><span>Go to the Dashboard</span></a>
+
+                                    @endif
                             </div>
                         </div>
                     </div>

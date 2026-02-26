@@ -15,18 +15,25 @@
             <div class="col-12 col-sm-4">
                 <div class="footer_social">
                     <ul>
-                        <li><a href="{{$data['linkedin'] ?? ''}}"><img class="img-fluid"
-                                    src="{{asset('assets/rti/images/footer/linkdin.webp')}}" alt="Linkedin"></a>
+                        @if(isset($data['social_link']))
+                    @foreach($data['social_link'] as $key => $value)
+                    <li><a target="blank" href="{{$value ?? '#'}}"><img class="img-fluid"
+                                    src="{{asset($data['icon'][$key] ?? '')}}" alt="Linkedin"></a>
                         </li>
-                        <li><a href="{{$data['facebook'] ?? ''}}"><img class="img-fluid"
-                                    src="{{asset('assets/rti/images/footer/facebook.webp')}}" alt="Facebook"></a>
-                        </li>
-                        <li><a href="{{$data['twitter'] ?? ''}}"><img class="img-fluid"
-                                    src="{{asset('assets/rti/images/footer/twitter.webp')}}" alt="Twitter"></a></li>
-                        <li><a href="{{$data['intagram'] ?? ''}}"><img class="img-fluid"
-                                    src="{{asset('assets/rti/images/footer/insta.webp')}}" alt="Instagram"></a></li>
-                        <li><a href="{{$data['youtube'] ?? ''}}"><img class="img-fluid"
-                                    src="{{asset('assets/rti/images/footer/youtube.webp')}}" alt="YouTube"></a></li>
+                    @endforeach
+                    @endif
+                        <!--<li><a target="blank" href="{{$data['linkedin'] ?? ''}}"><img class="img-fluid"-->
+                        <!--            src="{{asset('assets/rti/images/footer/linkdin.webp')}}" alt="Linkedin"></a>-->
+                        <!--</li>-->
+                        <!--<li><a target="blank" href="{{$data['facebook'] ?? ''}}"><img class="img-fluid"-->
+                        <!--            src="{{asset('assets/rti/images/footer/facebook.webp')}}" alt="Facebook"></a>-->
+                        <!--</li>-->
+                        <!--<li><a target="blank" href="{{$data['twitter'] ?? ''}}"><img class="img-fluid"-->
+                        <!--            src="{{asset('assets/rti/images/footer/twitter.webp')}}" alt="Twitter"></a></li>-->
+                        <!--<li><a target="blank" href="{{$data['intagram'] ?? ''}}"><img class="img-fluid"-->
+                        <!--            src="{{asset('assets/rti/images/footer/insta.webp')}}" alt="Instagram"></a></li>-->
+                        <!--<li><a target="blank" href="{{$data['youtube'] ?? ''}}"><img class="img-fluid"-->
+                        <!--            src="{{asset('assets/rti/images/footer/youtube.webp')}}" alt="YouTube"></a></li>-->
                     </ul>
                 </div>
             </div>
@@ -94,7 +101,8 @@
         <hr>
         <div class="row footer_bottom">
             <div class="col-12 col-sm-6">
-                <p class="fs-20">Your Trusted RTI Partner - © {{date('Y')}} FileMyRTI A Product of Ranazonai Technologies, Built with and Dedication.</p>
+                                <p class="fs-20">{!! $data['copyright'] ?? 'Trusted RTI Partner - © '.date('Y').' FileMyRTI A Product of Ranazonai Technologies, Built with and Dedication.' !!}</p>
+
             </div>
             <div class="col-12 col-sm-6">
                 <div class="footer_terms">

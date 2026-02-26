@@ -128,14 +128,17 @@ class ServiceCategoryController extends Controller
 
     public function getSectionServices($page_id, $section_key, $id = null) {
         $data = [];
+        $page = [];
         if($id != null) {
             $data = ServiceCategoryData::where(['service_category_id' => $page_id, 'id' => $id])->first();
             $data = json_decode($data->data, true);
+             $page = ServiceCategory::where(['id' => $page_id])->first();
+
         }
         $template = templateList()[$section_key];
         // print_r(json_encode( $template));
         $page_type = "service-category";
-       return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data', 'page_type'));
+       return view('backend.template.pages.section.'.$section_key, compact('page','template', 'page_id', 'section_key', 'id', 'data', 'page_type'));
     }
 
     public function deleteSectionServices($id) {

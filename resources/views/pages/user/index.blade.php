@@ -8,6 +8,29 @@
 @include('layouts.navbars.auth.topnav', ['title' => 'Users Management'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
+    <div class="card mb-3">
+            <div class="card-body">
+                  <form action="" id="search-form">
+                            <div class="row">
+                                    <div class="col-md-3">
+                                            <input type="text" name="search" class="form-control" placeholder="Search By Name/Email" value="{{$_GET['search'] ?? ''}}">
+                                    </div>
+                                    <div class="col-md-3">
+                                            <select  name="status" class="form-control">
+                                                    <option value="">Select Status</option>
+                                                    @foreach(commonStatus() as $key =>  $value)
+                                                            <option value="{{$key}}" {{isset($_GET['status']) && $_GET['status'] == $key ? 'selected' : ''}}>{{$value['name'] ?? ''}}</option>
+                                                    @endforeach
+                                            </select>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                    </div>
+                            </div>
+                  </form>
+            </div>
+        </div>
 
         <div class="card mb-4">
             <div class="card-header list-header">
@@ -43,6 +66,7 @@
                         </thead>
                         <tbody>
                             @foreach($list as $item)
+                            @if($item->id != auth()->user()->id)
                             <tr>
                                 <td>
                                     <div class="d-flex px-3 py-1">
@@ -54,7 +78,9 @@
                                     </div>
                                 </td>
                                 <td class="align-middle text-sm">{{$item->email?? ''}}</td>
-                                <td class="align-middle text-sm">{{$item->roles[0]['name'] ?? ''}}</td>
+                                <td class="align-middle text-sm">{{$item->roles[0]['name'] ?? ''}}
+                              
+                                </td>
 
 
                                 <td>
@@ -77,7 +103,9 @@
                                     </div>
                                 </td>
                                 @endif
+                             
                             </tr>
+                               @endif
                             @endforeach
 
                         </tbody>

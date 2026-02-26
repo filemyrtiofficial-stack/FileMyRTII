@@ -4,44 +4,44 @@
     
 
 
-<div class="faq_item_wrap db_tab_form_wrap d-none1">
+<div class="faq_item_wrap db_tab_form_wrap v_scroll">
         
         <div class="db_item_wrap">
             
-            <div class="form_item">
-                <label for="first_name">First Name</label>
-                <input type="text" name="first_name" class="form_field" value="{{$revision_data['first_name'] ?? ($data->first_name ?? '')}}" disabled >
+            <!--<div class="form_item">-->
+            <!--    <label for="first_name">First Name</label>-->
+            <!--    <input type="text" name="first_name" class="form_field" value="{{$revision_data['first_name'] ?? ($data->first_name ?? '')}}" disabled >-->
     
-            </div>
-            <div class="form_item">
-                <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" class="form_field" value="{{$revision_data['last_name'] ?? ($data->last_name ?? '')}}" disabled>
-            </div>
+            <!--</div>-->
+            <!--<div class="form_item">-->
+            <!--    <label for="last_name">Last Name</label>-->
+            <!--    <input type="text" name="last_name" class="form_field" value="{{$revision_data['last_name'] ?? ($data->last_name ?? '')}}" disabled>-->
+            <!--</div>-->
     
-            <div class="form_item">
-                <label for="">Email</label>
-                <input type="email" name="email" class="form_field" value="{{$revision_data['email'] ?? ($data->email ?? '')}}" disabled>
-            </div>
-            <div class="form_item">
-                <label for="">Phone Number</label>
-                <input type="text" name="phone_number" class="form_field" value="{{$revision_data['phone_number'] ?? ($data->phone_number ?? '')}}" disabled>
-            </div>
-            <div class="form_item">
-                <label for="">Address</label>
-                <input type="text" name="address" class="form_field" value="{{$revision_data['address'] ?? ($data->address ?? '')}}" disabled>
-            </div>
-            <div class="form_item">
-                <label for="">City</label>
-                <input type="text" name="city" class="form_field" value="{{$revision_data['city'] ?? ($data->city ?? '')}}" disabled>
-            </div>
-            <div class="form_item">
-                <label for="">State</label>
-                <input type="text" name="state" class="form_field" value="{{$revision_data['state'] ?? ($data->state ?? '')}}" disabled>
-            </div>
-            <div class="form_item">
-                <label for="">Pincode</label>
-                <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->postal_code  ?? '')}}" disabled>
-            </div>
+            <!--<div class="form_item">-->
+            <!--    <label for="">Email</label>-->
+            <!--    <input type="email" name="email" class="form_field" value="{{$revision_data['email'] ?? ($data->email ?? '')}}" disabled>-->
+            <!--</div>-->
+            <!--<div class="form_item">-->
+            <!--    <label for="">Phone Number</label>-->
+            <!--    <input type="text" name="phone_number" class="form_field" value="{{$revision_data['phone_number'] ?? ($data->phone_number ?? '')}}" disabled>-->
+            <!--</div>-->
+            <!--<div class="form_item">-->
+            <!--    <label for="">Address</label>-->
+            <!--    <input type="text" name="address" class="form_field" value="{{$revision_data['address'] ?? ($data->address ?? '')}}" disabled>-->
+            <!--</div>-->
+            <!--<div class="form_item">-->
+            <!--    <label for="">City</label>-->
+            <!--    <input type="text" name="city" class="form_field" value="{{$revision_data['city'] ?? ($data->city ?? '')}}" disabled>-->
+            <!--</div>-->
+            <!--<div class="form_item">-->
+            <!--    <label for="">State</label>-->
+            <!--    <input type="text" name="state" class="form_field" value="{{$revision_data['state'] ?? ($data->state ?? '')}}" disabled>-->
+            <!--</div>-->
+            <!--<div class="form_item">-->
+            <!--    <label for="">Pincode</label>-->
+            <!--    <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->postal_code  ?? '')}}" disabled>-->
+            <!--</div>-->
     
             <div class="form_item">
                 <label for="">Lawyer Query</label>
@@ -59,7 +59,8 @@
                 <div class="icon_wrap">
                     <img class="img-fluid" src="{{asset('assets/rti/images/dashboard/upload-icon.webp')}}" alt="">
                 </div>
-                <p>Drag and drop response received from PIO or <label>Choose File</p>
+                <!--<p>Drag and drop response received from PIO or <label>Choose File</p>-->
+                   <p><label>Attach the relevant documents if needed</p>
                 <div class="upload_img_wrap"></div>
             </div>
             <input class="upload_inputfile multiple-document-upload" type="file" name="file[]"  data-form="query-request-form" data-preview="query-request-form-preview"  accept="image/*,.pdf" multiple>
@@ -70,11 +71,11 @@
         <div class="preview" id="query-request-form-preview"></div>
 
         
-        <div class="form_action_wrap">
-            <div class="form_action">
+    </div>
+        <div class="form_action_wrap1">
+            <div class="form_action form_action-query">
                 <button type="submit" class="theme-btn"><span>Submit</span></button>
             </div>
         </div>
-    </div>
 </form>
 

@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'api-auth' => \App\Http\Middleware\ApiAuthMiddleware::class,
         'customer-auth' => \App\Http\Middleware\CustomerMiddleware::class,
         'lawyer-auth' => \App\Http\Middleware\LawyerAuthMiddleware::class,
+                'admin-auth' => \App\Http\Middleware\AdminMiddleware::class,
+
 
 
 

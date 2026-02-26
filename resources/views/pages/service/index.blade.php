@@ -10,7 +10,7 @@
     <div class="col-12">
         <div class="card mb-3">
             <div class="card-body">
-                  <form action="">
+                  <form action="" id="search-form">
                             <div class="row">
                                     <div class="col-md-3">
                                             <input type="text" name="name" class="form-control" placeholder="Search By Name" value="{{$_GET['name'] ?? ''}}">
@@ -92,6 +92,7 @@
                                 </td>
                                 <td class="align-middle text-end">
                                     
+                               
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
                                     @if(auth()->user()->can('Manage Service Template'))
                                     <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" href="{{route('service-template.index',$item->id)}}">Template</a>
@@ -99,6 +100,9 @@
                                     <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                     href="{{route('frontend.service',[$item->category->slug->slug ?? '', $item->slug->slug ?? ''])}}" target="blank">View</a>
                                     @if(auth()->user()->can('Edit Service'))
+                                    <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
+                                    href="{{route('service-field.index',$item->id)}}">Fields</a>
+
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('services.edit', $item->id)}}">Edit</a>
                                     @endif

@@ -35,6 +35,12 @@
                                                     <input type="text" name="document_placeholder[]" class="form-control" required >
                                                 </div>
                                             </div>
+                                             <div class="form-group">
+                                                    <label for="">Field Placeholder</label> <br>
+                                                    <div class="input-group">
+                                                        <input type="text" name="placeholder[]" class="form-control" >
+                                                    </div>
+                                                </div>
                                             
                                             <div class="form-group">
                                                 <label for="">Is Required</label> <br>
@@ -76,6 +82,26 @@
 
                                                     </div>
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="numeric-other-validation">
+                                                <div class="form-group">
+                                                    <label for="">Validations</label> <br>
+                                                    <div class="input-group">
+                                                    <input  name="validations[]" class="form-control" >
+
+                                                    </div>
+                                                </div>
+                                                <span class="text-danger">Note : digits:10|numeric </span>
+                                            </div>
+                                            <div class="numeric-other-validation">
+                                                <div class="form-group">
+                                                    <label for="">Default Value</label> <br>
+                                                    <div class="input-group">
+                                                    <textarea  name="default_values[]" class="form-control editor default_values"></textarea>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card-footer text-right">
@@ -83,3 +109,7 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+                                

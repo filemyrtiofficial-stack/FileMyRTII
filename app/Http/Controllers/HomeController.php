@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\Models\RtiApplication;
 use App\Models\Lawyer;
 use App\Models\ApplicationCloseRequest;
+use App\Models\RefundRequest;
+
 class HomeController extends Controller
 {
         /**
@@ -39,6 +41,8 @@ class HomeController extends Controller
         $lawyers = Lawyer::list(true, ['status' => true]);
         $close_request = ApplicationCloseRequest::list(false, ['status' => 0]);
         $close_request = collect($close_request )->where('status', 0)->values();
-        return view('pages.dashboard', compact('initial_application', 'first_application', 'second_application' ,'today_applications', 'pending_application', 'approved_application', 'filed_application', 'applications', 'lawyers', 'close_request'));
+                $refund_request = RefundRequest::list(false, ['status' => 'pending']);
+
+        return view('pages.dashboard', compact('initial_application', 'first_application', 'second_application' ,'today_applications', 'pending_application', 'approved_application', 'filed_application', 'applications', 'lawyers', 'close_request', 'refund_request'));
     }
 }

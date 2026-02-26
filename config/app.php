@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://filemyrit.devsproject.com'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -126,6 +126,10 @@ return [
     
     'cipher' => 'AES-256-CBC',
     'base_url' => env('BASE_URL', ""),
+      'admin_mail' => env('MAIL_ADMIN', 'admin@filemyrti.com'),
+    'support_mail' => env('SUPPORT_MAIL', 'support@filemyrti.com'),
+    'support_contact' => env('SUPPORT_CONTACT', '+91 99111 00589'),
+
 
     /*
     |--------------------------------------------------------------------------

@@ -83,7 +83,7 @@
     color: var(--theme-btn-color);
 }
 .db_item_wrap textarea.form_field {
-    height: 160px;
+    height: 160px !important;
 }
 .db_item_wrap textarea.form_field.textarea {
     height: 190px;
@@ -94,6 +94,9 @@
 .db_tab_form_wrap .form_action .theme-btn {
     font-size: 1.25vw;
     border: 1px solid var(--theme-btn-color);
+}
+.modal_body .db_tab_form_wrap .form_action .theme-btn {
+    background-color: var(--theme-btn-color);
 }
 a.theme-btn::before {
     transform: translateX(-101%);
@@ -284,9 +287,9 @@ a.theme-btn:hover::before {
 }
 .upload_area {
     margin-top: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 1.25vw;
     background-color: rgba(3, 132, 212, 0.20);
-    padding: 30px;
+    padding: 1.5625vw;
     position: relative;
     transition: all 0.3s ease;
     -webkit-transition: all 0.3s ease;
@@ -409,7 +412,8 @@ a.theme-btn:hover::before {
     text-align: center;
 }
 .db_tab_status .status_bar {
-    max-width: 47.91667vw;
+    max-width: unset;
+    width: 95%;
     margin: 2.08333vw auto 2.86458vw;
 }
 .db_tab_status .note {
@@ -512,8 +516,10 @@ a.theme-btn:hover::before {
     position: absolute;
     top: 0;
     width: 90%;
+    width: 100%;
     height: 1px;
     left: 1.25vw;
+    left: 0;
     right: auto;
     margin: auto;
     background-color: var(--theme-btn-color);
@@ -536,7 +542,10 @@ a.theme-btn:hover::before {
 }
 
 /* download invoice */
-
+.rti_document_list .doc_name img {
+    width: 4.47917vw;
+    height: 4.47917vw;
+}
 .rti_invoice .rti_document_list + .rti_document_list::before {
     background-color: rgba(3, 132, 212, 0.25);
     width: 100%;
@@ -553,7 +562,7 @@ a.theme-btn:hover::before {
     margin-bottom: 2.08333vw;
 }
 .appeal_info .appeal_heading * {
-    font-size: 24px;
+    font-size: 1.25vw;
     font-weight: 700;
     color: var(--theme-text-color);
     margin-bottom: 0;
@@ -562,7 +571,7 @@ a.theme-btn:hover::before {
     margin-top: 12px;
 }
 .appeal_content p {
-    font-size: 24px;
+    font-size: 1.25vw;
     font-weight: 400;
     color: var(--theme-text-color);
     margin-bottom: 0;
@@ -739,6 +748,15 @@ a.theme-btn:hover::before {
    .rti_documents_ul .theme-btn {
        font-size: 14px;
    }
+   .appeal_info .appeal_heading * {
+        font-size: 14px;
+    }
+    .appeal_content p {
+        font-size: 14px;
+    }
+    .appeal_info.with_input .custom_radio input[type="radio"] + label {
+        font-size: 14px;
+    }
 
    
    .c_accord_item {
@@ -761,6 +779,9 @@ a.theme-btn:hover::before {
     }
     .dbtab_section .contact_faq_wrapper {
         display: none;
+    }
+    .dbtab_section {
+        padding-bottom: 70px;
     }
    .review_option .option_no .theme-btn {
        margin-top: 10px;
@@ -913,6 +934,7 @@ a.theme-btn:hover::before {
        row-gap: 12px;
        padding-top: 20px;
        padding-bottom: 20px;
+       justify-content: center;
    }
    .rti_document_list .doc_name img {
        width: 50px;

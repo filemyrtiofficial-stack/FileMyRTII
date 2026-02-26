@@ -1,5 +1,27 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.index')}}">Page Management</a></li>
+@if($page_type == 'page')
+     @if(isset($page) && isset($page->id))
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.edit', $page->id)}}">{{$page->title}}</a></li>
+    @endif
+@elseif($page_type == 'service')
+
+     @if(isset($page) && isset($page->id))
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('services.edit', $page->id)}}">{{$page->name}}</a></li>
+    @endif
+@elseif($page_type == 'service-category')
+     @if(isset($page) && isset($page->id))
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('service-category.edit', $page->id)}}">{{$page->name}}</a></li>
+    @endif
+
+@endif
+
+
+<li class="breadcrumb-item active" aria-current="page">{{$template['section_name'] ?? ''}}</li>
+
+@endsection
 @section('content')
 <form action="{{route('update-page-section', $page_id)}}" method="post" class="form-submit">
 @csrf
@@ -38,6 +60,12 @@
                                                         <label class="form-label">Category</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control category" value="{{$value}}" name="category[]" id="category_{{$key}}">
+                                                    </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                        <label class="form-label">Subtitle</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control subtitle" value="{{$data['subtitle'][$key] ?? ''}}" name="subtitle[]" id="subtitle_{{$key}}">
                                                     </div>
                                                 </div>
                                                 <div class="text-right">
@@ -164,7 +192,9 @@
                     </div>`;
         if(type == 'faq') {
             let target = $(this).attr('data-target')
-            $('#'+target).find('.category-faq').append(card);
+            // $('#'+target).find('.category-faq').append(card);
+            $(this).parents().eq(1).find('.category-faq').append(card);
+
         }
         else {
             $('.category-list').append(` <div class="card-body pt-0 category-list-item">
@@ -177,6 +207,12 @@
                                                 <label class="form-label">Category</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control category"  name="category[]" id="category_0">
+                                            </div>
+                                        </div>
+                                          <div class="form-group">
+                                                <label class="form-label">Subtitle</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control subtitle" name="subtitle[]" id="subtitle_0">
                                             </div>
                                         </div>
                                         <div class="text-right">
@@ -217,6 +253,8 @@
         $('.category-list-item').each(function(){
             $(this).attr('id', 'category-list-item-'+index);
             $(this).find('.category').attr('id', 'category_'+index);
+            $(this).find('.subtitle').attr('id', 'subtitle_'+index);
+
 
             $(this).find('.add-more').attr('data-target', 'category-list-item-'+index);
             var child_index = 0;

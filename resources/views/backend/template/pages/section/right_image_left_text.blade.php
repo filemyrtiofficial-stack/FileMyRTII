@@ -1,5 +1,14 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.index')}}">Page Management</a></li>
+ @if(isset($page) && isset($page->id))
+<li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.edit', $page->id)}}">{{$page->title}}</a></li>
+@endif
+
+<li class="breadcrumb-item active" aria-current="page">{{$template['section_name'] ?? ''}}</li>
+
+@endsection
 @section('content')
 <form action="{{route('update-page-section', $page_id)}}" method="post" class="form-submit">
 @csrf

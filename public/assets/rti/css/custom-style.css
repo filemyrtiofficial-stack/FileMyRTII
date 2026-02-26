@@ -11,6 +11,12 @@
 @import url("service-listing.css");
 @import url("service-detail-page.css");
 @import url("dashboard.css");
+@import url("pricing-page.css");
+@import url("tracking.css");
+@import url("career.css");
+
+
+
 
 
 :root {
@@ -28,6 +34,8 @@
     --theme-text-color: #333333;
     --theme-grey-color: #cacaca;
     --theme-light-grey-color: #f8f8f8;
+    
+    
 }
 body {
 	margin: 0;
@@ -84,6 +92,7 @@ button {
     margin-right: calc(-0.5 * var(--theme-gutter-x));
     margin-left: calc(-0.5 * var(--theme-gutter-x));
 }
+
 
 
 @media (min-width: 768px) {
@@ -511,8 +520,9 @@ button {
         top: 0;
         min-width: 320px;
         width: 20.83333vw;
+        max-height: 100%;
         /* height: 60%; */
-        max-height: 840px;
+        /*max-height: 840px;*/
         /* max-height: calc(100vh - 220px); */
         padding: 6.77083vw 1.5625vw 3.125vw;
         margin-right: 0;
@@ -1202,7 +1212,11 @@ button {
 
 @media (max-width: 767px) {
     .section_banner {
-        padding-bottom: 50px;
+        padding-bottom: 0px;
+        min-height: auto;
+    }
+    .section_banner .header_text {
+        padding-bottom: 0px;
     }
     .header_bg_img {
         background-image: none !important;
@@ -1310,6 +1324,7 @@ button {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top left;
+    background-size: 100% 100%;
 }
 .rti_tab_list li a span {
     color: var(--theme-blue-rgba-5);
@@ -1320,6 +1335,7 @@ button {
     font-weight: 700;
     opacity: 1;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="392" height="126" viewBox="0 0 392 126" fill="none"><path d="M0 0H95.401L140.288 39.619H392V327H0V0Z" fill="%23026CB6"/></svg>');
+    background-size: contain;
 }
 .rti_tab_list li a.active span {
     color: var(--theme-white-color);
@@ -1679,9 +1695,10 @@ button {
 }
 .blog_item {
     position: relative;
-    min-height: 29.16667vw;
-    max-height: 29.16667vw;
+    min-height: 24.16667vw;
+    max-height: 24.16667vw;
 }
+
 .blog_item .blog_img {
     position: relative;
     overflow: hidden;
@@ -1736,6 +1753,9 @@ button {
     text-transform: capitalize;
 }
 
+
+
+
 /* modal login css start */
 .modal_wrapper {
     position: fixed;
@@ -1786,7 +1806,7 @@ button {
     color: var(--theme-white-color);
     text-align: center;
     font-weight: 400;
-    padding-bottom: 1.071em;
+    padding-bottom: 0.571em;
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
@@ -1900,7 +1920,7 @@ button {
     margin-bottom: 0;
 }
 .modal_body .form_item {
-    margin-bottom: 1.18333vw;
+    margin-bottom: 0.58333vw;
     position: relative;
     width: calc((100% - 2.1875vw) / 2);
 }
@@ -1909,6 +1929,7 @@ button {
     display: inline-block;
     margin-bottom: 0.5em;
     color: rgba(0, 0, 0, 0.6);
+    line-height: 1;
 }
 .modal_body .form_item .form_field {
     display: block;
@@ -1947,6 +1968,7 @@ button {
     display: inline-block;
     font-weight: 500;
     font-size: 0.9375vw;
+    line-height: 1;
 }
 
 /* login modal start */
@@ -2047,8 +2069,8 @@ button {
     border-color: var(--theme-text-color);
 }
 .register .modal_action_top {
-    margin-top: 1.5625vw;
-    margin-bottom: 1.875vw;
+    margin-top: 1.2625vw;
+    margin-bottom: 1.275vw;
 }
 .register .modal_action_bottom .register-btn.update-pwd {
     width: auto;
@@ -2166,13 +2188,13 @@ button {
     .blog_item {
         max-height: none;
         min-height: auto;
-        margin-bottom: 100px;
+        margin-bottom: 180px;
     }
     .blog_section .row [class*="col-"]:last-child .blog_item {
         margin-bottom: 0;
     }
     .blog_cta {
-        margin-top: 130px;
+        margin-top: 185px;
     }
     .blog_area .blog_text {
         min-height: auto;
@@ -2244,3 +2266,119 @@ button {
     }
 }
 /* cta section end */
+
+
+#edit-request-modal .form_action {
+    justify-content: center !important;
+    padding-top: 14px;
+}
+
+
+
+/* new changes css */
+.desktop-rti_item {
+    display: block;
+}
+.mobile-rti_item {
+    display: none;
+}
+
+/*new css starts fro pricing start*/
+.body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    color: #333;
+}
+
+.container1 {
+    text-align: center;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 30px;
+}
+
+.pricing-plans {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+}
+
+.plan {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 350px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    text-align: left;
+}
+
+.plan h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.plan .price {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 15px 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.plan ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.plan ul li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.plan ul li::before {
+    content: '✓';
+    color: #28a745; /* Green checkmark */
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pricing-plans {
+        flex-direction: row;
+       
+    }
+    .plan {
+        width: auto; /* Adjust width for smaller screens */
+    }
+}
+
+/*new pricing ends */
+
+

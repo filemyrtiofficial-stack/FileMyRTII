@@ -152,7 +152,7 @@
                                     <div class="input-group">
                                         <select name="create_new_page" id="create_new_page" class="form-control">
                                             @foreach(yesNoOption() as $key => $item)
-                                            <option value="{{$item['id']}}" @if(isset($fields['create_new_page']) && $fields['create_new_page']==$item['id'])
+                                            <option value="{{$item['id']}}" @if(isset($data['create_new_page']) && $data['create_new_page']==$item['id'])
                                                 selected @endif>
                                                 {{$item['name']}}</option>
                                             @endforeach
@@ -193,7 +193,7 @@
                         </div>
 
                         <div class="mt-5 text-right">
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#cutomer_field_popup" type="button">Add Form Fields</button>
+                            <!-- <button class="btn btn-secondary" data-toggle="modal" data-target="#cutomer_field_popup" type="button">Add Form Fields</button> -->
                             <button class="btn btn-primary">Submit</button>
                         </div>
                      
@@ -210,121 +210,7 @@
    
 
 
-    <div class="modal fade" id="cutomer_field_popup" tabindex="-1" role="dialog" aria-labelledby="lawyer_field_popup" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Field List</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <div class="row customer-field-list">
-                    @if(isset($fields) && isset($fields['field_type']))
-                                @foreach($fields['field_type'] as $key => $field)
-
-                                <div class="col-md-3">
-                                    <div class="card mt-3">
-                                        <div class="card-body">
-                                        <div class="form-group">
-                                                <label for="">Field For</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="form_field_type[]" class="form-control" required>
-                                                        @foreach(formAdditionalFields() as $field_type_key  => $value)
-                                                        <option value="{{$field_type_key}}" @if( isset($fields['form_field_type'][$key]) && $fields['form_field_type'][$key] == $field_type_key) selected @endif>{{$value['name'] ?? ''}}</option>
-                                                        @endforeach
-                                                        
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Field Type</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="field_type[]" class="form-control field_type" required>
-                                                        {!! fieldListOptions($fields['field_type'][$key]) !!}
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="">Field Lable</label> <br>
-                                                <div class="input-group">
-                                                    <input type="text" name="field_lable[]" class="form-control" required value="{{$fields['field_lable'][$key]}}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Place Holder for Document</label> <br>
-                                                <div class="input-group">
-                                                    <input type="text" name="document_placeholder[]" class="form-control" required value="{{$fields['document_placeholder'][$key] ?? ''}}">
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="form-group">
-                                                <label for="">Is Required</label> <br>
-                                                <div class="input-group">
-                                                    <select type="text" name="is_required[]" class="form-control" required>
-                                                            {!! booleanListOptions($fields['is_required'][$key] ?? '') !!}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="options-other-validations"  @if($fields['field_type'][$key] != "select")style="display:none;" @endif>
-                                                <div class="form-group">
-                                                    <label for="">Options</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="text" name="options[]" class="form-control" value="{{$fields['options'][$key] ?? null}}">
-
-                                                    </div>
-                                                    <span class="text-danger">Note :  Options should be comma separated like options1,option2</span>
-                                                </div>
-                                            </div>
-                                            <div class="date-other-validation" @if($fields['field_type'][$key] != "date")style="display:none;" @endif>
-                                                <div class="form-group">
-                                                    <label for="">Minimum Date</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="date" name="minimum_date[]" class="form-control" value="{{$fields['minimum_date'][$key] ?? null}}">
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Maximum Date</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="date" name="maximum_date[]" class="form-control" value="{{$fields['maximum_date'][$key] ?? null}}">
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Dependency Date Field</label> <br>
-                                                    <div class="input-group">
-                                                    <input type="" name="dependency_date_field[]" class="form-control" value="{{$fields['dependency_date_field'][$key] ?? ''}}">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer text-right">
-                                            <button class="btn btn-sm btn-danger remove-card" type="button">Remove</button>
-                                        </div>
-                                    </div>
-                        
-                                </div>
-                                @endforeach
-                            @else
-                    @include('pages.service.customer-field')      
-
-                                
-                            @endif
-
-                </div>                 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary add-more-lawyer-field"  >Add More Fields</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-      </div>
-    </div>
+  
 </form>
 
 

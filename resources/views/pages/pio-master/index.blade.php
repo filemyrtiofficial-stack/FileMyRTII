@@ -24,6 +24,8 @@
                 @if($errors->has('file'))
     <div class="error">{{ $errors->first('file') }}</div>
 @endif
+<a href="{{asset('assets/images/sample-pio.csv')}}" target="blank">Sample Sheet</a>
+
             </div>
         </div>
     </form>
@@ -34,7 +36,22 @@
 
 <div class="row mt-4 mx-4">
     <div class="col-12">
-
+    <div class="card mb-3">
+            <div class="card-body">
+                  <form action="" id="search-form">
+                            <div class="row">
+                                    <div class="col-md-3">
+                                            <input type="text" name="address" class="form-control" placeholder="Search By Address" value="{{$_GET['address'] ?? ''}}">
+                                    </div>
+                                  
+                                    
+                                    <div class="col-12">
+                                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                    </div>
+                            </div>
+                  </form>
+            </div>
+        </div>
         <div class="card mb-4">
             <div class="card-header list-header">
                 <h4>PIO</h4>

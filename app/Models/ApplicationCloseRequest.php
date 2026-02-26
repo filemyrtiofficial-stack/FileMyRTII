@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ApplicationCloseRequest extends Model
 {
     use HasFactory;
-    protected $fillable = ['application_id', 'message', 'lawyer_id', 'status', 'request_type'];
+    protected $fillable = ['application_id', 'message', 'lawyer_id', 'status', 'request_type', 'new_lawyer_id'];
 
 
     
@@ -65,5 +65,9 @@ class ApplicationCloseRequest extends Model
     public function rtiApplication()
     {
         return $this->belongsTo(RtiApplication::class, 'application_id', 'id');
+    }
+     public function newLawyer()
+    {
+        return $this->belongsTo(Lawyer::class, 'new_lawyer_id', 'id');
     }
 }

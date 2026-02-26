@@ -50,9 +50,12 @@
                             <div class="form-group">
                                 <label class="form-label">Password</label>
                                 <div class="input-group">
-                                    <input id="password" name="password" value="" class="form-control"
+                                    <input id="password" name="password" value="" class="form-control password"
                                         type="password" >
                                 </div>
+                                    <div class="show-password-section mb-1-2">
+                                        <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password" class="ml-2">Show Password</label>
+                                    </div>
                             </div>
                         </div>
                         
@@ -77,8 +80,9 @@
                                 <label class="form-label">Role</label>
                                 <div class="input-group">
                                     <select name="role" id="role" class="form-control">
+                                   
                                         @foreach($roles as $key => $item)
-                                        <option value=" {{$item['name']}}" @if(isset($data['status']) && $data['status']==$key)
+                                        <option value=" {{$item['name']}}" @if(isset($data)  && count($data->roles) > 0 && $data->roles[0]['name']==$key)
                                             selected @endif>
                                             {{$item['name']}}</option>
                                         @endforeach

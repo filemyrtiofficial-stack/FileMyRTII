@@ -26,6 +26,7 @@ $testimonials = App\Models\Testimonial::list(false, ['ids' => json_decode($data[
                                     <?php
                                         $item = collect($testimonials)->where('id', $data['testimonial_'.$index])->where('status', true)->values();
                                     ?>
+                                    @if(count($item) > 0)
                                     <div class="testimonial_item_wrap">
                                         <div class="testimonial_item">
                                             <div class="quote_left quote_left_img">
@@ -45,6 +46,7 @@ $testimonials = App\Models\Testimonial::list(false, ['ids' => json_decode($data[
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 @endfor
 
                                

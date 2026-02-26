@@ -56,7 +56,7 @@ class PioController extends Controller
         $validator = Validator::make($request->all(), [
             // 'state' => "required",
             // 'pincode' => "required|numeric|digits:6",
-            'address' => "required",
+            'address' => "required|unique:pio_masters,address|max:500",
             // 'department' => "required",
             // 'mandal' => "required"
 
@@ -105,7 +105,7 @@ class PioController extends Controller
         $validator = Validator::make($request->all(), [
             // 'state' => "required",
             // 'pincode' => "required|numeric|digits:6",
-                'address' => "required",
+                'address' => "required|unique:pio_masters,address|max:500,".$id,
             // 'department' => "required",
             // 'mandal' => "required"
 
@@ -143,10 +143,33 @@ class PioController extends Controller
 
     public function importPio(Request $request){
         $request->validate([
-            'file'=>'required|max:2024|mimes:csv',
+            'file'=>'required',
         ]);
+        if (($handle = fopen($request->file('file')->getPathname(), 'r')) !== false) {
+            $header = fgetcsv($handle); // Read the first row (column headers)
 
-        Excel::import(new PioImport, $request->file('file'));
+            while (($row = fgetcsv($handle)) !== false) {
+                $data = array_combine($header, $row); // Combine header with row values
+
+                foreach ($data as $item) {
+
+                    if(isset($item) && !empty($item)) {
+
+                        $check = PioMaster::where(['address' => $item])->first();
+                        if(!$check) {
+                            PioMaster::create(['address' => $item]);
+                        }
+                    }
+                }
+                // Process your data (e.g., save to database)
+                \Log::info($data); // Logging the data for now
+            }
+
+            fclose($handle);
+        }
+
+
+        // Excel::import(new PioImport, $request->file('file'));
         return back()->with('success', 'File Imported Successfully!');
     }
 

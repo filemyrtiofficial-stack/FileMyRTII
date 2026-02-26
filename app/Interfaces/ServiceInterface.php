@@ -9,6 +9,9 @@ interface ServiceInterface {
     public function assignLawyer($id, $data);
     public function storeTemplate($data, $service_id);
     public function updateTemplate($data, $id);
+    public function storeFields($request, $service_id);
+
+    public function deleteRTI($id);
 
 
 

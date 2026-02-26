@@ -31,19 +31,19 @@ class DraftRTIMail extends Mailable
      */
     public function envelope()
     {
-        if($this->data['appeal_no'] == 0) {
+        if($this->data->rtiApplication['appeal_no'] == 0) {
             return new Envelope(
-                subject: 'Action Required Approval for RTI - RTI Application No. : '.$this->data['application_no'],
+                subject: 'Action Required Approval for RTI - RTI Application No. : '.$this->data->rtiApplication['application_no'],
             );
         }
-        else if($this->data['appeal_no'] == 1) {
+        else if($this->data->rtiApplication['appeal_no'] == 1) {
             return new Envelope(
-                subject: 'Action Required Approval for First Appeal (RTI) - Application No. : '.$this->data['application_no'],
+                subject: 'Your First Appeal Draft is Ready for Review (Application No: '.$this->data->rtiApplication['application_no'].')',
             );
         }
         else {
             return new Envelope(
-                subject: 'Action Required Approval for Second Appeal (RTI)- Application No. : '.$this->data['application_no'],
+                subject: 'Your Second Appeal Draft is Ready for Review (Application No: '.$this->data->rtiApplication['application_no'].')',
             );
         }
         

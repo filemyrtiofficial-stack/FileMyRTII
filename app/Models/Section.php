@@ -24,9 +24,22 @@ class Section extends Model
 
 
         $list = Section::orderBy($order_by_key, $order_by_type);
-        if(!empty($filters)) {
-            $list->where($filters);
+          if(!empty($filters)) {
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'title') {
+                        $list->where('title', 'like', '%'.$filter.'%');
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+        // if(!empty($filters)) {
+        //     $list->where($filters);
+        // }
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);
         }

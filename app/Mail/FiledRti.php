@@ -8,11 +8,13 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-
+use PDF;
+use App\Models\RtiApplication;
 class FiledRti extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
+        public $attachment;
     /**
      * Create a new message instance.
      *
@@ -21,6 +23,17 @@ class FiledRti extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+        $html = RtiApplication::draftedApplication($data);
+        $pdf = \PDF::loadHtml($html);
+        $fileName = 'rti-application_' . $data->id . '.pdf';
+        $folderPath = public_path('app/temp-pdfs');
+    
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0755, true);
+        }
+    
+        $pdf->save($folderPath . '/' . $fileName);
+        $this->attachment = 'app/temp-pdfs/'.$fileName;
   
     }
 
@@ -34,17 +47,17 @@ class FiledRti extends Mailable
         
         if($this->data['appeal_no'] == 0) {
             return new Envelope(
-                subject: 'Your RTI Application Has Been Filed - Application No. : '.$this->data['application_no'],
+                subject: 'Your RTI Application Has Been Filed (Application No: '.$this->data['application_no'].')',
             );
         }
         else if($this->data['appeal_no'] == 1) {
             return new Envelope(
-                subject: 'Your First Appeal (RTI) Application Has Been Filed - Application No. : '.$this->data['application_no'],
+                subject: 'Your First Appeal is Filed – Tracking Number & Next Steps (Application No: '.$this->data['application_no'].')',
             );
         }
         else {
             return new Envelope(
-                subject: 'Your Second Appeal (RTI) Application Has Been Filed - Application No. : '.$this->data['application_no'],
+                subject: 'Your Second Appeal is Filed – Tracking Details (Application No: '.$this->data['application_no'].')',
             );
         }
         
@@ -71,6 +84,13 @@ class FiledRti extends Mailable
      */
     public function attachments()
     {
-        return [];
+          $array = [   asset($this->attachment)];
+        if($this->data && $this->data->courierTracking && count($this->data->courierTracking->documents) > 0) {
+            foreach($this->data->courierTracking->documents as $item) {
+
+                array_push($array, asset($item));
+            }
+        }
+        return $array;
     }
 }

@@ -13,7 +13,7 @@ use Mail;
 use App\Mail\ResetPassword;
 use App\Jobs\SendEmail;
 use Carbon\Carbon;
-use session;
+use Session;
 use Hash;
 class AuthController extends Controller
 {
@@ -41,23 +41,33 @@ class AuthController extends Controller
 
             $user = Socialite::driver('google')->user();
             $finduser = Customer::where('google_id', $user->id)->first();
-
+            $redirect_url = '/my-rti';
+            if(Session::has('request_url') && !empty(Session::get('request_url'))) {
+                $redirect_url = Session::get('request_url');
+            }
             if($finduser){
 
                 Auth::guard('customers')->login($finduser);
-
-                return redirect('/my-rti');
+                Session::forget('request_url');
+                return redirect($redirect_url);
 
             }else{
+                $newUser = Customer::where(['email' =>  $user->email])->first();
+                if($newUser) {
+                    $newUser->update(['google_id'=> $user->id]);
+                }
+                else {
 
-                $newUser = Customer::create([
-                    'first_name' => $user->name,
-                    'email' => $user->email,
-                    'google_id'=> $user->id
+                    $newUser = Customer::create([
+                        'first_name' => $user->name,
+                        'email' => $user->email,
+                        'google_id'=> $user->id
 
-                ]);
+                    ]);
+                }
                 Auth::guard('customers')->login($newUser);
-                return redirect('/my-rti');
+                 Session::forget('request_url');
+                return redirect($redirect_url);
 
             }
 
@@ -72,19 +82,25 @@ class AuthController extends Controller
     public function customerLogin(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'email' => "required|email",
+            'email' => "required|email|regex:/(.+)@(.+)\.(.+)/i",
             'password' => "required",
 
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
-        if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password, 'google_id' => NULL])) {
+        if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password])) {
+             if(Session::has('request_url') && !empty(Session::get('request_url'))) {
+                    $redirect_url = Session::get('request_url');
+                    Session::forget('request_url');
+                   
+                    return response(['status' => 'success', 'redirect' => $redirect_url]);
+                }
             return response(['status' => 'success', 'redirect' => route('my-rti')]);
         }
 
         return response(['errors' => ['password' => 'The provided credentials do not match our records.']], 422);
-       
+
     }
 
     public function logout(Request $request)
@@ -96,10 +112,10 @@ class AuthController extends Controller
     public function register(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'email' => "required|email|unique:customers,email",
+            'email' => "required|email|regex:/(.+)@(.+)\.(.+)/i|unique:customers,email",
             'password' => 'required|min:6',
 
-            'name' => "required",
+            'name' => "required|regex:/^[a-zA-Z\s.]+$/u",
             'confirm_password' => "required||same:password"
 
 
@@ -120,12 +136,12 @@ class AuthController extends Controller
         }
 
         return response(['errors' => ['password' => 'Something went wrong']], 422);
-       
+
     }
 
     public function forgotPassword(Request $request) {
         $validator = Validator::make($request->all(), [
-            'email' => "required|email",
+            'email' => "required|email|regex:/(.+)@(.+)\.(.+)/i",
         ]);
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
@@ -139,7 +155,7 @@ class AuthController extends Controller
         return response(['status' => 'success', 'message' => "Password reset mail has been to send to you register mail"]);
 
 
-        
+
     }
 
     public function resetPassword($email, $date) {
@@ -163,7 +179,7 @@ class AuthController extends Controller
             abort(404);
         }
 
-        
+
     }
 
     public function updatePassword(Request $request) {

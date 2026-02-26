@@ -33,44 +33,50 @@
             <div class="col-12 col-sm-3">
                 <div class="contact_faq_wrapper">
                     <ul class="contact_faq_list">
-                        <li class="contact_faq_item @if($tab == 'application-status')active @endif">
+                        <li class="contact_faq_item @if($tab == 'notification')active @endif">
+                            <span class="shape"></span>
+                            <a class="faq_list_item" href1="#tab7" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'notification'])}}">Notification</a>
+                        </li>
+                        <li class="contact_faq_item @if($tab == 'case-details')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab1" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'case-details'])}}">Case Details</a>
                         </li>
                         @if($data->status != 3)
 
-                        <li class="contact_faq_item @if($tab == 'pio-address')active @endif">
-                            <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab2" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'pio-address'])}}">PIO Address</a>
-                        </li>
+                        <!--<li class="contact_faq_item @if($tab == 'pio-address')active @endif">-->
+                        <!--    <span class="shape"></span>-->
+                        <!--    <a class="faq_list_item" href1="#tab2" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'pio-address'])}}">PIO Address</a>-->
+                        <!--</li>-->
                         @endif
-                        <li class="contact_faq_item @if($tab == 'draft-rti')active @endif">
+                        <li class="contact_faq_item @if($tab == 'rti-details')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab3" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'draft-rti'])}}">Draft RTI</a>
+                            <a class="faq_list_item" href1="#tab3" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'rti-details'])}}">RTI Details</a>
                         </li>
-                        @if($data->status < 2 )
+                        @if($data->status < 2)
                         <li class="contact_faq_item @if($tab == 'drafted-rti')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'drafted-rti'])}}">Drafted RTI</a>
+                            <a class="faq_list_item" href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'drafted-rti'])}}">  @if($data->status < 2) Draft RTI @else Drafted RTI @endif</a>
                         </li>
                         @endif
+                    
                         <li class="contact_faq_item @if($tab == 'approved-rti')active @endif">
                             <span class="shape"></span>
                             <a class="faq_list_item" href1="#tab5" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'approved-rti'])}}">Approved RTI</a>
                         </li>
-                        <li class="contact_faq_item @if($tab == 'upload-rti')active @endif">
-                            <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab6" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'upload-rti'])}}">Upload RTI</a>
-                        </li>
-                        <li class="contact_faq_item @if($tab == 'notification')active @endif">
-                            <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab7" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'notification'])}}">Notification</a>
-                        </li>
+                        @if($data->status >=2 )
+                            <li class="contact_faq_item @if($tab == 'upload-rti')active @endif">
+                                <span class="shape"></span>
+                                <a class="faq_list_item" href1="#tab6" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'upload-rti'])}}">Upload RTI</a>
+                            </li>
+                        @endif
+                       
                         @if($data->status >=2 )
 
-                        <li class="contact_faq_item @if($tab == 'tracking-no')active @endif">
+                        <li class="contact_faq_item track-mti-tab @if(empty($data->final_rti_document)) hide @endif @if($tab == 'tracking-no')active @endif">
                             <span class="shape"></span>
-                            <a class="faq_list_item" href1="#tab8" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'tracking-no'])}}">Enter Tracking No</a>
+                            <a class="faq_list_item" href1="#tab8" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'tracking-no'])}}">
+                            @if($data->status < 3 ) Enter Tracking No @else Tracking Details @endif 
+                            </a>
                         </li>
                         @endif
                         @if($data->firstAppeal && $data->firstAppeal->payment_status == 'paid')
@@ -94,178 +100,190 @@
                     <div class="contact_faq">
                         <div class="contact_faq_tab_content lawyer_accordion">
                         <a class="accord_item" href1="#tab1" data-id="tab1" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'case-details'])}}">Case Details</a>
-
-                            <div id="tab1" class="contact_faq_tab @if($tab == 'case-details')active @endif">
-                                <div class="case_details">
-                                    <div class="db_tab_heading">
-                                        <h2>Case Details</h2>
-                                    </div>
-                                    <div class="lawyer_details_wrap">
-                                        <div class="case_status">
-                                            <ul class="case_list">
-                                                <li>
-                                                    <div class="list_item">Status<span>:</span></div>
-                                                    <div class="list_value">{{lawyerApplicationStatus()[$data->status]['name'] ?? ''}} RTI</div>
-                                                </li>
-                                            </ul>
+                            @if($tab == 'case-details')
+                                <div id="tab1" class="contact_faq_tab @if($tab == 'case-details')active @endif">
+                                    <div class="case_details">
+                                        <div class="db_tab_heading">
+                                            <h2>Case Details</h2>
                                         </div>
-                                        <div class="lawyer_details">
-                                            <div class="lawyer_case_wrap">
-                                                <div class="lawyer_case v_scroll">
-                                                    <ul class="case_list">
-                                                        <li>
-                                                            <div class="list_item">Date<span>:</span></div>
-                                                            <div class="list_value">{{Carbon\Carbon::parse($data->create_at)->format('d/m/Y')}}</div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="list_item">Application Number<span>:</span></div>
-                                                            <div class="list_value">{{$data->application_no}}</div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="list_item">Name of the Applicant<span>:</span></div>
-                                                            <div class="list_value">{{$data->fullName}}</div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="list_item">Service Chosen<span>:</span></div>
-                                                            <div class="list_value">{{ $data->service->name ?? ( $data->service_id == 0 ? "Custom Request" : '') }}</div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="list_item">Pio Details<span>:</span></div>
-                                                            <div class="list_value">{{$data['customer_pio_address'] ?? $data['pio_address']}}</div>
-                                                        </li>
-                                                        <!-- <li>
-                                                            <div class="list_item">RTI Info<span>:</span></div>
-                                                            <div class="list_value">Details Provided by Customer</div>
-                                                        </li>
-                                                        -->
-                                                    </ul>
-                                                    <div class="case_status hide more_info_status">
+                                        <div class="lawyer_details_wrap">
+                                            <div class="case_status">
+                                                <ul class="case_list">
+                                                    <li>
+                                                        <div class="list_item">Status<span>:</span></div>
+                                                        <div class="list_value">{{lawyerApplicationStatus()[$data->status]['name'] ?? ''}} RTI</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="lawyer_details">
+                                                <div class="lawyer_case_wrap">
+                                                    <div class="lawyer_case v_scroll">
                                                         <ul class="case_list">
                                                             <li>
-                                                                <div class="list_item">Status<span>:</span></div>
-                                                                <div class="list_value"></div>
+                                                                <div class="list_item">Date<span>:</span></div>
+                                                                <div class="list_value">{{Carbon\Carbon::parse($data->create_at)->format('d/m/Y')}}</div>
                                                             </li>
+                                                            <li>
+                                                                <div class="list_item">Application Number<span>:</span></div>
+                                                                <div class="list_value">{{$data->application_no}}</div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="list_item">Name of the Applicant<span>:</span></div>
+                                                                <div class="list_value">{{$data->fullName}}</div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="list_item">Service Chosen<span>:</span></div>
+                                                                <div class="list_value">{{ $data->service->name ?? ( $data->service_id == 0 ? "Custom Request" : '') }}</div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="list_item">Pio Details<span>:</span></div>
+                                                                <div class="list_value">@if(!empty($data['customer_pio_address'])) {{$data['customer_pio_address']}} @elseif(!empty($data['pio_address'] )) {{$data['pio_address'] }} @else Not Provided  @endif </div>
+                                                            </li>
+                                                            <!-- <li>
+                                                                <div class="list_item">RTI Info<span>:</span></div>
+                                                                <div class="list_value">Details Provided by Customer</div>
+                                                            </li>
+                                                            -->
                                                         </ul>
-                                                    </div>
-                                                    <div class="more_info hide">
-                                                        <div class="more_info_header">More Info Provided by Client</div>
-                                                        <div class="more_info_body">
-                                                            <p></p>
+                                                        <div class="case_status hide more_info_status">
+                                                            <ul class="case_list">
+                                                                <li>
+                                                                    <div class="list_item">Request Status<span>:</span></div>
+                                                                    <div class="list_value"></div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="more_info hide">
+                                                            <div class="more_info_header">More Info Provided by Client</div>
+                                                            <div class="more_info_body">
+                                                                <p></p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="tab_action">
-                                                    <div class="tab_action_top">
-                                                        <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="attachment-popup"><span>View Attachment</span></a>
-                                                    </div>
-                                                    <div class="tab_action_bottom">
-                                                    @if($data->status < 3 )
-                                                        <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="lawyer-request"><span>More Information Required</span></a>
+                                                    <div class="tab_action">
+                                                        @if(isset($data->documents) && !empty($data->documents))
+                                                        <div class="tab_action_top">
+                                                            <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="attachment-popup"><span>View Attachment</span></a>
+                                                        </div>
                                                         @endif
-                                                        @if($data->status < 2 )
-                                                        <a class="theme-btn " href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'drafted-rti'])}}"><span>Draft This Application</span></a>
-                                                        @endif
+                                                        <div class="tab_action_bottom">
                                                         @if($data->status < 3 )
-                                                        <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="admin-request"><span>Send Back To Admin</span></a>
-                                                        @endif
-                                                    </div>
-                                                    
-                                                    <!-- for disabled modal remove class active -->
-                                                    <div class="lawyer_req_info_modal active1">
-                                                        <div class="lawyer_req_info_modal_wrap">
-                                                            <div class="modal_header">
-                                                                <h4 class="heading">Lawyer Requested Info</h4>
-                                                                <button class="close">
-                                                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#0F1729"></path>
-                                                                        </svg>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal_body">
-                                                                <div class="db_tab_form">
-                                                                    <div class="db_item_wrap single">
-                                                                        <div class="form_item">
-                                                                            <textarea class="form_field" name="" id=""></textarea>
+                                                            <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="lawyer-request"><span>More Information Required</span></a>
+                                                            @endif
+                                                            @if($data->status < 2 )
+                                                            <a class="theme-btn " href1="#tab4" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'drafted-rti'])}}"><span>Draft This Application</span></a>
+                                                            @endif
+                                                            @if($data->status < 3 )
+                                                            <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="admin-request"><span>Send Back To Admin</span></a>
+                                                            @endif
+                                                        </div>
+                                                        
+                                                        <!-- for disabled modal remove class active -->
+                                                        <div class="lawyer_req_info_modal active1">
+                                                            <div class="lawyer_req_info_modal_wrap">
+                                                                <div class="modal_header">
+                                                                    <h4 class="heading">Lawyer Requested Info</h4>
+                                                                    <button class="close">
+                                                                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#0F1729"></path>
+                                                                            </svg>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal_body">
+                                                                    <div class="db_tab_form">
+                                                                        <div class="db_item_wrap single">
+                                                                            <div class="form_item">
+                                                                                <textarea class="form_field" name="" id=""></textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="modal_action">
+                                                                    <a href="javascript:void(0);" class="theme-btn"><span>Send to Customer</span></a>
+                                                                </div>
                                                             </div>
-                                                            <div class="modal_action">
-                                                                <a href="javascript:void(0);" class="theme-btn"><span>Send to Customer</span></a>
-                                                            </div>
+                                                            <div class="modal_bg"></div>
                                                         </div>
-                                                        <div class="modal_bg"></div>
-                                                    </div>
 
-                                                    <!-- for disabled modal remove class active -->
-                                                  
+                                                        <!-- for disabled modal remove class active -->
+                                                    
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="lawyer_req_info">
-                                                <div class="req_info_wrap">
-                                                    <div class="info_header">
-                                                        <h4>Lawyer Requested Info</h4>
-                                                    </div>
-                                                    <div class="info_body v_scroll">
-                                                        @foreach($data->rtiQueries as $item => $value)
-                                                        <div class="info_msg_wrap">
-                                                            <div class="info_requested" > <a href="{{route('lawyer.get-query',[$value->id])}}" data-reply="{{$value->reply}}" data-documents="{{json_encode($value->documents)}}">{{$value->message}}</a></div>
-                                                            <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
+                                                <div class="lawyer_req_info">
+                                                    <div class="req_info_wrap">
+                                                        <div class="info_header">
+                                                            <h4>Lawyer Requested Info</h4>
+                                                        </div>
+                                                        <div class="info_body v_scroll">
+                                                            @foreach($data->rtiQueries as $item => $value)
+                                                            <div class="info_msg_wrap">
+                                                            <div class="info_requested" > <a href="{{route('lawyer.get-query',[$value->id])}}" data-reply="{{$value->reply}}" data-documents="{{json_encode($value->documents)}}">{{ stringLimit($value->message, 50) }}</a> @if($value->marked_read == 1) <span class="badge-success lawyer-request-status">Customer Replied</span> @else <span class="badge-danger lawyer-request-status">Pending</span> @endif</div>
 
+                                                            </div>
+                                                            @endforeach
+                                                            <!-- <div class="info_msg_wrap">
+                                                                <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
+                                                                <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
+                                                            </div>
+                                                            <div class="info_msg_wrap">
+                                                                <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
+                                                                <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
+                                                            </div>
+                                                            <div class="info_msg_wrap">
+                                                                <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
+                                                                <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
+                                                            </div> -->
                                                         </div>
-                                                        @endforeach
-                                                        <!-- <div class="info_msg_wrap">
-                                                            <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
-                                                            <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
-                                                        </div>
-                                                        <div class="info_msg_wrap">
-                                                            <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
-                                                            <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
-                                                        </div>
-                                                        <div class="info_msg_wrap">
-                                                            <div class="info_requested">Requested above information from the customer on 17/01/2025</div>
-                                                            <div class="info_reminder">Reminder sent to customer on 01/01/2025</div>
-                                                        </div> -->
-                                                    </div>
-                                                    @if($data->status < 3 )
+                                                        @if($data->status < 3 )
+                                                            @if($data->lastRtiQuery && empty($data->lastRtiQuery->customer_change_request) && $data->lastRtiQuery->marked_read == 0)
+                                                            <div class="info_footer">
+                                                                <form role="form" method="post" action="{{ route('lawyer.send-reminder',[$data->id]) }}?enquiry={{$data->lastRtiQuery->id}}" id="send-reminder-form">
+                                                                    @csrf
 
-                                                    <div class="info_footer">
-                                                        <a href="javascript:void(0);" class="theme-btn"><span>Send Reminder</span></a>
+                                                                </form>
+
+                                                                <a href="javascript:void(0);" class="theme-btn " onclick="event.preventDefault(); document.getElementById('send-reminder-form').submit();"><span>Send Reminder</span></a>
+                                                            </div>
+                                                            @endif
+                                                        @endif
                                                     </div>
-                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            @include('lawyer.auth.tab2')
+                            @endif
+                         
                           
                             @include('lawyer.auth.tab3')
 
                                 @include('lawyer.auth.tab4')
-                          
+                                @if($tab == 'drafted-rti')
+                              @include('lawyer.auth.tab12')
+                              @endif
 
 
                          
                             @include('lawyer.auth.tab5')
                                 
+                            @if($data->status >=2 )
                             
-                            @include('lawyer.auth.tab6')
+                                @include('lawyer.auth.tab6')
+                            @endif
 
                             <a class="accord_item" href1="#tab7" data-id="tab7" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'notification'])}}">Notification</a>
-
+                            @if($tab == 'notification')
                             <div id="tab7" class="contact_faq_tab @if($tab == 'notification')active @endif">
                                 <div class="notification">
                                     <div class="lawyer_req_info">
                                         <div class="req_info_wrap">
                                             <div class="info_header">
-                                                <h4>Lawyer Requested Info</h4>
+                                                <h4>Notifications</h4>
                                             </div>
                                             <div class="info_body info_scroll">
-                                                @foreach($data->lawyerNotifications as $item => $value)
+                                                @foreach(lawyerNotifictaionList(['linkable_id' => $data->id]) as $item => $value)
                                                 <div class="info_msg_wrap">
-                                                    <div class="info_requested" > {{$value->message}}  <span >({{Carbon\Carbon::parse($value->created_at)->format('d M, Y h:i A')}})</span></div>
+                                                    <div class="info_requested" > {{$value->message}}  @if(in_array($value->type, ['draft-rti', 'filed-mail', 'more-info-requested', 'more-info-sended', 'edit-request', 'draft-rti-again', 'approve-rti', 'send-reply']))<a target="blank" class="mail-data"  data-target="mail-popup" href="{{route('lawyer.get-notification-mail', $value->id)}}"><img width="20" src="{{asset('assets/rti/images/view.png')}}" alt=""></a> @endif<span class="notification">({{Carbon\Carbon::parse($value->created_at)->format('d M, Y h:i A')}})</span></div>
                                                     <!-- <div class="info_reminder">Reminder sent to customer on 01/01/2025</div> -->
 
                                                 </div>
@@ -277,65 +295,75 @@
                                     </div>
                                 </div>
                             </div>
-                            @if($data->status >=2 )
-                                @include('lawyer.auth.tab8')
                             @endif
+                                @if($data->status >=2 && !empty($data->final_rti_document))
+                                @include('lawyer.auth.tab8')
+                                @endif
+                          
                             @if($data->firstAppeal &&  $data->firstAppeal->payment_status == 'paid' && $data->firstAppeal->appealDeatils)
                             <a class="accord_item" href1="#tab9" data-id="tab9" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'first-appeal'])}}">First Appeal</a>
-
-                            <div id="tab9" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">
-                                <div class="rti_appeal">
-                                    <div class="db_tab_heading">
-                                        <h2>First Appeal</h2>
-                                    </div>
+                            @if($tab == 'first-appeal')
+                                 @include('lawyer.auth.tab9')
+                            <!--<div id="tab9" class="contact_faq_tab @if($tab == 'first-appeal')active @endif">-->
+                            <!--    <div class="rti_appeal">-->
+                            <!--        <div class="db_tab_heading">-->
+                            <!--            <h2>First Appeal</h2>-->
+                            <!--        </div>-->
                                            
                                             
-                                        <div class="db_tab_form">
-                                            <div class="db_item_wrap single">
-                                                <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->firstAppeal->appealDeatils->reason ?? ''}}</textarea>
-                                                </div>
-                                            </div>
-                                            @if(!empty($data->firstAppeal->appealDeatils->document ))
-                                            <a href="{{filePreview($data->firstAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>
-                                            @endif
-                                            @if($data->firstAppeal->lawyer_id == auth()->guard('lawyers')->id())
-                                            <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.'-'.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>
-                                            @endif
-                                        </div>
+                            <!--            <div class="db_tab_form">-->
+                            <!--                <div class="db_item_wrap single">-->
+                            <!--                    <div class="form_item">-->
+                            <!--                         <label for="">First Appeal Reason</label>-->
+                            <!--                        <textarea class="form_field" type="text" name="reason" id="" placeholder="First Appeal Reason" disabled>{{$data->firstAppeal->appealDeatils->reason ?? ''}}</textarea>-->
+                            <!--                    </div>-->
+                            <!--                </div>-->
+                            <!--                @if(!empty($data->firstAppeal->appealDeatils->document ))-->
+                            <!--                <a href="{{filePreview($data->firstAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>-->
+                            <!--                @endif-->
+                            <!--                @if($data->firstAppeal->lawyer_id == auth()->guard('lawyers')->id())-->
+                            <!--                <a href="{{route('lawyer.my-rti', $data->firstAppeal->application_no.'-'.$data->firstAppeal->id)}}" class="theme-btn"><span>View</span></a>-->
+                            <!--                @endif-->
+                            <!--            </div>-->
 
                                  
-                                </div>
-                            </div>
+                            <!--    </div>-->
+                            <!--</div>-->
+                            @endif
                             @endif
                             @if($data->secondAppeal &&  $data->secondAppeal->payment_status == 'paid' && $data->secondAppeal->appealDeatils)
                             <a class="accord_item" href1="#tab10" data-id="tab10" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'second-appeal'])}}">Second Appeal</a>
-
-                            <div id="tab10" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">
-                                <div class="rti_appeal">
-                                    <div class="db_tab_heading">
-                                        <h2>Second Appeal</h2>
-                                    </div>
+                            @if($tab == 'second-appeal')
+                            @include('lawyer.auth.tab10')
+                            <!--<div id="tab10" class="contact_faq_tab @if($tab == 'second-appeal')active @endif">-->
+                            <!--    <div class="rti_appeal">-->
+                            <!--        <div class="db_tab_heading">-->
+                            <!--            <h2>Second Appeal</h2>-->
+                            <!--        </div>-->
                                            
                                             
-                                        <div class="db_tab_form">
-                                            <div class="db_item_wrap single">
-                                                <div class="form_item">
-                                                    <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->secondAppeal->appealDeatils->reason ?? ''}}</textarea>
-                                                </div>
-                                            </div>
-                                            @if(!empty($data->secondAppeal->appealDeatils->document ))
-                                            <a href="{{filePreview($data->secondAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn">Documents</a>
-                                            @endif
-                                            @if($data->secondAppeal->lawyer_id == auth()->guard('lawyers')->id())
-                                            <a href="{{route('lawyer.my-rti', $data->secondAppeal->application_no.'-'.$data->secondAppeal->id)}}" class="theme-btn"><span>View</span></a>
-                                            @endif
-                                        </div>
+                            <!--            <div class="db_tab_form">-->
+                            <!--                <div class="db_item_wrap single">-->
+                            <!--                    <div class="form_item">-->
+                            <!--                        <label for="">Second Appeal Reason</label>-->
+                            <!--                        <textarea class="form_field" type="text" name="reason" id="" placeholder="Second Appeal Reason" disabled>{{$data->secondAppeal->appealDeatils->reason ?? ''}}</textarea>-->
+                            <!--                    </div>-->
+                            <!--                </div>-->
+                            <!--                @if(!empty($data->secondAppeal->appealDeatils->document ))-->
+                            <!--                <a href="{{filePreview($data->secondAppeal->appealDeatils->document ?? '')}}" target="blank" class="theme-btn"><span>Documents</span></a>-->
+                            <!--                @endif-->
+                            <!--                @if($data->secondAppeal->lawyer_id == auth()->guard('lawyers')->id())-->
+                            <!--                <a href="{{route('lawyer.my-rti', $data->secondAppeal->application_no.'-'.$data->secondAppeal->id)}}" class="theme-btn"><span>View</span></a>-->
+                            <!--                @endif-->
+                            <!--            </div>-->
 
                                  
-                                </div>
-                            </div>
+                            <!--    </div>-->
+                            <!--</div>-->
                             @endif
+                            @endif
+                        
+
                         </div>
                     </div>
                     
@@ -348,34 +376,93 @@
 @include('lawyer.auth.admin-request')
 
 @include('lawyer.auth.document-popup')
+@include('lawyer.auth.mail-data')
+@include('lawyer.tab-section.lawyer-reply-popup')
+
+
 
 @endsection
 
 @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.12.1/ckeditor.js"></script>
+
 <script>
+
+$(document).ready(function() {
+  $(".editor").each(function(_, ckeditor) {
+    CKEDITOR.replace(ckeditor);
+  });
+
+});
+
+
 
     $(document).on('click', '.info_requested a', function(e){
         e.preventDefault();
+        
         let href = $(this).attr('href');
-        $.ajax({
-            url : href,
-            dataType : 'json',
-            type : "get",
-            success : function(response) {
-                let reply = response.data.reply;
-                $('.more_info_body p').html(reply);
-                if(response.data.marked_read == 1) {
+        if(!$(this).hasClass('mail-data')) {
 
-                    $('.more_info').removeClass('hide');
+
+         
+            $.ajax({
+                url : href,
+                dataType : 'json',
+                type : "get",
+                success : function(response) {
+                    // let reply = response.data.reply;
+                    // $('.more_info_body p').html(reply);
+                    // if(response.data.marked_read == 1) {
+    
+                    //     $('.more_info').removeClass('hide');
+                    // }
+                    // else {
+                    //     $('.more_info').addClass('hide');
+    
+                    // }
+                    // $('.more_info_status').removeClass('hide').find('.list_value').html((response.data.marked_read == 0 ? "Not Replied" : "Customer Replied"))
+                    
+                    $('#lawyer-query-response-popup').addClass('active');
+                    $('#lawyer-query').html(response.data.message);
+                    $('#customer-reply').html(response.data.reply);
+                    let html = "";
+                    $(response.data.documents).each(function(index, value) {
+                        html += `<div class="relative">
+                       <a class="doc_btn" href="${value}" target="blank">
+                            <embed src="${value}" width="200" height="200" />
+                            </a>
+                            <div class="preview-btn">
+                    <a href="${value}" target="blank"> Preview
+                                                        </a>
+                                                        </div>
+                         
+                       </div>`;
+                    });
+                    $('#query-document').html(html);
+    
                 }
-                else {
-                    $('.more_info').addClass('hide');
+            });
+        }
+        else {
+            // let target = $(this).attr('data-target');
+            //    $('#mail-area').html(`<embed type="text/html" src="${href}" width="100%" height="100%">`);
+            // $('#' + target).addClass("active");
 
-                }
-                $('.more_info_status').removeClass('hide').find('.list_value').html((response.data.marked_read == 0 ? "Not Replied" : "Customer Replied"))
+            window.open(href);
 
-            }
-        });
+            // $.ajax({
+            //     url : href,
+            //     dataType : 'json',
+            //     type : "get",
+            //     success : function(response) {
+            //         $('#mail-area').html(response.data)
+            //         $('#' + target).addClass("active");
+                   
+            //     }
+            // });
+
+        }
+
       
     })
 
@@ -411,10 +498,12 @@ $(document).on('change', '.multiple-document-upload', function () {
        
                 $('#'+preview).append(`<div class="preview-item">
                                                 
-                                                    <a href="${value.path}" target="blank">
-                                                        <embed src="{{url('/')}}${value.file}" width="50" height="50" />
+                                                        <embed src="{{url('/')}}${value.file}" width="100" height="100" />
                                                         <input hidden value="${value.file}" name="documents[]">
-                                                    </a>
+                                                      <div class="preview-btn">
+                    <a href="${value.path}" target="blank"> Preview
+                                                        </a>
+                                                        </div>
                                                     <button type="button" class="delete-icon"></button>
                                                 </div>`);
             })
@@ -423,6 +512,10 @@ $(document).on('change', '.multiple-document-upload', function () {
         error : function(error) {}
         });
     });
+
+ $(document).on('click', '.delete-icon', function(){
+        $(this).parents().eq(0).remove();
+      });
 
 
     $(document).on('change', '#document-upload', function () {
@@ -459,7 +552,8 @@ $(document).on('change', '.multiple-document-upload', function () {
         // if (file.type === "application/pdf") {
             const fileURL = URL.createObjectURL(file);
             console.log(fileURL)
-            $('#pdfPreview').attr('src', fileURL)
+            $('#pdfPreview').attr('src', fileURL);
+            $('#pdfPreview').parents().eq(0).removeClass('hide');
         // } else {
         //     alert("Please upload a valid PDF file.");
         // }
@@ -527,6 +621,13 @@ $(document).on('change', '.multiple-document-upload', function () {
         }
     });
     
+    $(document).click(function(event) {
+        if (!$(event.target).closest(".search-pio-details").length) {
+            $(".pio-list").addClass('hide'); // Hide the menu
+        }
+    });
+
+    
     $(document).on('change', '.form-image', function () {
         let file = this.files[0]; // Get selected file
         let files = this.files;
@@ -550,5 +651,11 @@ $(document).on('change', '.multiple-document-upload', function () {
 
         }
         });
+
+        $(document).on('click', '.edi-drat-rti-btn', function(e) {
+            $('.draft-rti-btn').hide();
+            $('.draft-edit-rti-form').removeClass('hide');
+            $('.approval_form').hide();
+        })
 </script>
 @endpush

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Redirect;
-
+use Session;
 class LawyerAuthMiddleware
 {
     /**
@@ -20,11 +20,17 @@ class LawyerAuthMiddleware
     {
         if(!Auth::guard('lawyers')->check()) {
 
-            return  Redirect::to('/');
+            Session::put('lawyer_request_url', $request->url());
+            return  Redirect::to('/lawyer/login');
 
         }
         else {
-            return $next($request);
+              if(Auth::guard('lawyers')->user()->status == 1) {
+
+                return $next($request);
+            }
+            Auth::guard('lawyers')->logout();
+            return  Redirect::to('/lawyer/login');
         }
     }
 }

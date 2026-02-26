@@ -35,7 +35,8 @@
     margin-top: 1.563vw;
 }
 
-.col_box p{
+.col_box p,
+.col_box .overview_click {
     width: 100%;
     margin: 0;
     font-size: 1.25vw;
@@ -312,16 +313,16 @@
 
 
 .overview_table_section .btn_view_more {
-    position: absolute;
     bottom: 5.208vw;
     width: 100%;
     text-align: center;
     left: 0;
+    margin-top: 50px;
 }
 
 
 .overview_table_section {
-    padding-bottom: 11.979vw;
+    padding-bottom: 5.979vw;
 }
 
 .col_dropdown.active{
@@ -423,7 +424,8 @@
         line-height: 4.396vw;
     }
 
-    .col_box p {
+    .col_box p,
+    .col_box .overview_click {
         font-size: 1.65vw;
     }
 
@@ -460,7 +462,7 @@
     }
 
     .overview_table_section {
-        padding-bottom: 15.979vw;
+        padding-bottom: 6.979vw;
     }
 
     .overview_table_section .btn_view_more {
@@ -546,7 +548,8 @@
         line-height: 6.396vw;
     }
 
-    .col_box p {
+    .col_box p,
+    .col_box .overview_click {
         font-size: 2.35vw;
     }
 
@@ -586,7 +589,7 @@
     }
 
     .overview_table_section {
-        padding-bottom: 20.979vw;
+        padding-bottom: 7.979vw;
     }
 
     .overview_table_section .btn_view_more {
@@ -647,7 +650,8 @@
         margin-top: 6.563vw;
     }
 
-    .col_box p {
+    .col_box p,
+    .col_box .overview_click {
         font-size: 4.35vw;
     }
 
@@ -761,8 +765,8 @@
 
       .overview_table_section {
         padding-top: 20px;
-        padding-bottom: 40.979vw;
-      }
+        padding-bottom: 15.979vw;
+    }
 
     .overview_table_section .btn_view_more {
         bottom: 20.208vw;

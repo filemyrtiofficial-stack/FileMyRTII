@@ -4,7 +4,7 @@
 
 @if(isset($data['partition']) && $data['partition'] == '5-6')
 
-<section class="service_about_section">
+<section class="about_section ">
             <div class="container">
                 @if(isset($data['title']) && !empty($data['title']))
                     <div class="section_heading">
@@ -42,9 +42,11 @@
 @else
 <section class="about_section ">
             <div class="container">
+                 @if(isset($data['title']) && !empty($data['title']))
                 <div class="section_heading">
                     <h2>{{$data['title'] ?? ''}}</h2>
                 </div>
+                @endif
                 <div class="row about_row_top">
                     <div class="col-12   col-sm-6 ">
                         <div class="about_img">

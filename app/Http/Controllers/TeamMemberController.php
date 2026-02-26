@@ -58,7 +58,8 @@ class TeamMemberController extends Controller
             'profile_image' => "required|image",
             'status' => "required",
             'about' => "required",
-            'expertise' => "required"
+            'expertise' => "required",
+            
 
         ]);
         if($validator->fails()) {

@@ -1,9 +1,9 @@
-<a class="accord_item" href1="#tab3" data-id="tab3" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'draft-rti'])}}">Draft RTI</a>
-
-<div id="tab3" class="contact_faq_tab @if($tab == 'draft-rti')active @endif">
+<a class="accord_item" href1="#tab3" data-id="tab3" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'rti-details'])}}">RTI Details</a>
+@if($tab == 'rti-details')
+<div id="tab3" class="contact_faq_tab @if($tab == 'rti-details')active @endif">
     <div class="rti_application draft_rti">
         <div class="db_tab_heading">
-            <h2>Draft RTI</h2>
+            <h2>RTI Details</h2>
         </div>
         <div class="draft_rti_wrap">
             <div class="draft_rti_left">
@@ -12,7 +12,7 @@
                         <div class="heading">Personal Details</div>
                         <div class="content">
                             <p class="name">{{$data->fullName}}</p>
-                            <p class="address">{{$data->address}} {{$data->postal_code}}</p>
+                            <p class="address">{{$data->address}} {{$data->city}} {{$data->state}} {{$data->postal_code}}</p>
                             <p class="emial">{{$data->email}}</p>
                             <p class="phone_number">{{$data->phone_number}}</p>
                         </div>
@@ -32,7 +32,7 @@
                                 
                                         <tr>
                                             <td>{{$service_fields['field_lable'][$key] ?? ''}} </td>
-                                            <td>{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}</td>
+                                            <td>{!! $revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '') !!}</td>
                                         </tr>
 
                                     @endforeach
@@ -53,9 +53,11 @@
                             </p>
                        
                         </div>
+                        @if(isset($data->documents) && !empty($data->documents))
                         <div class="pio_action">
                             <a href="javascript:void(0);" class="theme-btn rti-popup" data-id="attachment-popup"><span>View Attachment</span></a>
                         </div>
+                        @endif
                     </div>
                    
                 </div>
@@ -63,7 +65,7 @@
             <div class="draft_rti_right">
                 <div class="select_draft_wrap">
                     <div class="select_draft">
-                        <input class="form_field" name="" id="" value="{{$data->service->name ?? ''}}" disabled>
+                        <input class="form_field" name="" id="" value="{{ stringLimit(($data->service->name ?? ''), 20) }}" disabled>
                     </div>
                     <div class="view_draft">
                         <div class="view_draft_area">
@@ -82,3 +84,4 @@
         </div>
     </div>
 </div>
+@endif

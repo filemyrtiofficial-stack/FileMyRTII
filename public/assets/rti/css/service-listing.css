@@ -123,6 +123,11 @@
     -o-border-radius: 100px;
 }
 
+.testimonial_img_wrap img{
+    width: 100%;
+    height: 100%;
+}
+
 .testimonial_profile_name > *,
 .testimonial_profile_name > h2,
 .testimonial_profile_name > h3,
@@ -137,6 +142,7 @@
     font-size: 1.25vw;
     font-weight: 400;
     margin-bottom: 0;
+    min-height: 9.479vw;
 }
 .quote_left,
 .quote_right {
@@ -237,6 +243,13 @@
         width: 50px;
         bottom: -10%;
     }
+
+
+    .testimonial_content, .testimonial_content p {
+        min-height: 12.779vw;
+    }
+
+
 }
 
 @media (max-width: 991px) {
@@ -267,6 +280,21 @@
         width: 40px;
         bottom: -6%;
     }
+
+    .testimonial_content, .testimonial_content p {
+        min-height: 19.779vw;
+    }
+
+    .process_section.process_section_inner .process_row > *:not(:first-child) {
+        margin-top: 5.20417vw;
+    }
+
+    .process_section.process_section_inner .process_row > *:not(:first-child) + * {
+        margin-top: 10.50833vw;
+    }
+
+   
+
 }
 
 @media (max-width: 768px) {
@@ -275,6 +303,14 @@
     }
     .rti_detail_section .rti_block:last-child .rti_item {
         padding-top: 4.2625vw;
+    }
+
+    .process_section.process_section_inner .process_row > *:not(:first-child) {
+        margin-top: 6.20417vw;
+    }
+
+    .process_section.process_section_inner .process_row > *:not(:first-child) + * {
+        margin-top: 12.50833vw;
     }
 }
 
@@ -326,7 +362,7 @@
         height: 80px;
     }
     .testimonial_img_wrap {
-        top: -8%;
+        top: -13%;
     }
     .testimonial_item {
         margin-top: 20.29167vw;
@@ -355,6 +391,20 @@
         width: 40px;
         height: 40px;
     }
+
+    .testimonial_content, .testimonial_content p {
+        min-height: 43.779vw;
+    }
+
+    
+
+
+    .testimonial_profile_name > *, .testimonial_profile_name > h2, .testimonial_profile_name > h3, .testimonial_profile_name > h4, .testimonial_profile_name > h5 {
+        font-size: 20px;
+        min-height: 50px;
+    }
+
+
 }
 @media (max-width: 575px) {
     .rti_detail_section .rti_block {

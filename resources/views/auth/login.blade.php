@@ -38,9 +38,12 @@
                         @error('email') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                     <div class="flex flex-col mb-3">
-                        <input type="password" name="password" class="form-control form-control-lg" aria-label="Password" value="" >
+                        <input type="password" name="password" class="form-control form-control-lg password" aria-label="Password" value="" >
                         @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
+                      <div class="show-password-section mb-1-2">
+                                        <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password" class="ml-2">Show Password</label>
+                                    </div>
                     <!-- <div class="form-check form-switch">
                         <input class="form-check-input" name="remember" type="checkbox" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>

@@ -9,7 +9,7 @@ $list = App\Models\Section::list(false, ['ids' => json_decode($data['how_it_work
         <div class="row process_head_row">
             <div class="col-12 col-sm-9">
                 <div class="section_heading">
-                    <h3 class="fs-56 fw-700">{!! $data['how_it_work_title'] ?? '' !!}</h3>
+                    <h2 class="fs-56 fw-700">{!! $data['how_it_work_title'] ?? '' !!}</h2>
                 </div>
             </div>
             <div class="col-12 col-sm-3 know-more">

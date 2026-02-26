@@ -227,7 +227,13 @@
           <li class="nav-item pl-3">
             <a class="nav-link"  href="{{ route('rticloserequest.list') }}">
               <i class="icon-query menu-icon"></i>
-              <span class="menu-title">RTI close Request</span>
+              <span class="menu-title">Lawyer Request</span>
+            </a>
+          </li>
+           <li class="nav-item pl-3">
+            <a class="nav-link"  href="{{ route('refund-request.list') }}">
+              <i class="icon-query menu-icon"></i>
+              <span class="menu-title">Refund Requests</span>
             </a>
           </li>
           @endif

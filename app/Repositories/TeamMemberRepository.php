@@ -24,8 +24,17 @@ class TeamMemberRepository implements TeamMemberInterface {
         ];
       
         $image = uploadFile($request, 'profile_image', 'profile_image');
-        if(!empty($image)) {
+        if (!empty($image)) {
+           
             $data['image'] = $image;
+        }
+        else {
+            if(isset($request['profile_image_preview'])&& !empty($request['profile_image_preview'])) {
+                $data['image'] =$request['profile_image_preview'];
+            }
+            else {
+                $data['image'] = null;
+            }
         }
         TeamMember::where('id', $id)->update($data);
 

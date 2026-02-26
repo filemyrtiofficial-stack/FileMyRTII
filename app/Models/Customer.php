@@ -60,13 +60,37 @@ class Customer extends Authenticatable
 
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
+     
+        unset($filters['_token']);
+        unset($filters['_method']);
         unset($filters['ids']);
         unset($filters['page']);
+        unset($filters['operation']);
+        unset($filters['mail_template']);
+
 
         $list = Customer::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'search') {
+                        $list->where(function($query) use($filter) {
+                            $query->where('first_name', 'like', '%'.$filter.'%')
+                            ->orwhere('last_name', 'like', '%'.$filter.'%')
+                            ->orwhere('phone_no', 'like', '%'.$filter.'%')
+                            ->orwhere('email', 'like', '%'.$filter.'%');
+                        });
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+        // if(!empty($filters)) {
+        //     $list->where($filters);
+        // }
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);
         }

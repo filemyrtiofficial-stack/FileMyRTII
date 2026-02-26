@@ -42,7 +42,10 @@
                 </div>
             </div>
     </header>
-
+    <input hidden val="{{$data['updated_at'] ?? ''}}" id="updated_at">
+     <input hidden val="{{$data['publish_date'] ?? ''}}" id="publish_date">
+        <input hidden val="{{asset($data['thumbnail'])}}" id="thumbnail-image">
+          <div id="short_description" class="hide">{{$data['short_description']}}</div>
     <section class="blog_detail_section">
             <div class="container">
                 <div class="row blog_row">
@@ -50,8 +53,20 @@
                         <div class="blog_post_wrap">
                             <ul class="blog_post_list">
                                 <li class="blog_post_date"> {{Carbon\Carbon::parse($data['publish_date'])->format('jS \of M. Y')}}</li>
-                                <li class="blog_post_admin">By - {{$data['author'] ?? ''}}</li>
+                                <li class="blog_post_admin">By - <span id="blog-author-name">{{$data['author'] ?? ''}}</span></li>
                             </ul>
+                              <div class="topic_wrap mobile-topic_wrap">
+                                <div class="topic_area">
+                                    <div class="topic_heading">
+                                        <h5 class="heading">Topics</h5>
+                                    </div>
+                                    <div class="topic_list_wrap">
+                                        <ul class="topic_list" id="mobile-topics-list">
+                                         
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="blog_post_content">
                             {!! $data['description'] ?? '' !!}
                             </div>
@@ -103,12 +118,12 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-4">
-                        <div class="topic_wrap">
+                        <div class="topic_wrap desktop-topic_wrap">
                             <div class="topic_area">
                                 <div class="topic_heading">
                                     <h5 class="heading">Topics</h5>
                                 </div>
-                                <div class="topic_list_wrap">
+                                <div class="topic_list_wrap ">
                                     <ul class="topic_list" id="topics-list">
                                      
                                     </ul>
@@ -152,6 +167,27 @@
 </section>
 @endif
         
+@if (!empty($data['faqs']) && count($data['faqs']) > 0)
+    <section class="faq_section pt-60 pb-60">
+        <div class="container">
+            <div class="section_heading text-center mb-40">
+                <h2 class="fs-40 fw-700">Frequently Asked Questions</h2>
+            </div>
+            <div class="faq_wrapper">
+                @foreach ($data['faqs'] as $faq)
+                    <div class="single_faq">
+                        <div class="faq_title">
+                            <h4>{{ $faq['question'] ?? '' }}</h4>
+                        </div>
+                        <div class="faq_content">
+                            <p>{{ $faq['answer'] ?? '' }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+@endif
   
 @endsection
 @push('js')
@@ -165,12 +201,13 @@
                 var text = $(this).text();
                 var trime_text = text.trim().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
                 $(this).attr('id', trime_text);
-                $('.topic_wrap').show();
+                // $('.topic_wrap').show();
                 $('#topics-list').append('<li class="topic_item"><a href="#'+trime_text+'">' +text + '</a></li>');
+                $('#mobile-topics-list').append('<li class="topic_item"><a href="#'+trime_text+'">' +text + '</a></li>');
               
             });
         }else{
-            $('.topic_wrap').hide();
+            // $('.topic_wrap').hide();
         }
             $('#topics-list li:first').addClass('active');
 

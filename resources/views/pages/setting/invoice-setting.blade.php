@@ -54,6 +54,23 @@
                                             </div>
                                         </div>
                                      
+                                      <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Invoice Footer</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['invoice_footer'] ?? ''}}" name="invoice_footer" data-lable="invoice_footer" id="invoice_footer">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">GST</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['gst'] ?? ''}}" name="gst" data-lable="gst" id="gst">
+                                                </div>
+                                            </div>
+                                        </div>
+                                     
                                     </div>
                                
                                   

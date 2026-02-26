@@ -91,7 +91,7 @@
                
                 <div class="card">
                     <div class="card-header"><h4>Fields For mapping</h4></div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>

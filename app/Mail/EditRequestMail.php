@@ -30,9 +30,24 @@ class EditRequestMail extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: 'Confirmation: RTI Draft Modifications Received - Application No : '.$this->data['application_no'],
-        );
+        if($this->data->rtiApplication->appeal_no == 0) {
+
+            return new Envelope(
+                subject: 'RTI Modification Request Received - Application No: '.$this->data->rtiApplication['application_no'],
+            );
+        }
+        elseif($this->data->rtiApplication->appeal_no == 1) {
+
+            return new Envelope(
+                subject: 'We’ve Received Your Modification Request - Application No: '.$this->data->rtiApplication['application_no'],
+            );
+        }
+        else {
+
+            return new Envelope(
+                subject: 'We’ve Received Your Modification Request - Application No: '.$this->data->rtiApplication['application_no'],
+            );
+        }
     }
 
     /**

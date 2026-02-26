@@ -86,9 +86,13 @@
                             <div class="form-group">
                                 <label class="form-label">Password</label>
                                 <div class="input-group">
-                                    <input id="password" name="password" value="" class="form-control"
+                                    <input id="password" name="password" type="password" class="form-control password"
                                         type="text" min="6" max="15" placeholder="Password">
                                 </div>
+                                 <div class="show-password-section mb-1-2">
+                                        <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password" class="ml-2">Show Password</label>
+                                    </div>
+                                
                             </div>
                         </div>
                         <div class="col-6">
@@ -241,7 +245,7 @@
                                 <label class="form-label">Account number</label>
                                 <div class="input-group">
                                     <input id="bank_account_number" name="bank_account_number" value="{{$data->lawyerProfile->bank_account_number ?? ''}}" class="form-control"
-                                        type="text" placeholder="Mother Name">
+                                        type="text" placeholder="Account number">
                                 </div>
                             </div>
                         </div>
@@ -295,6 +299,8 @@
                             <div class="form-group">
                                 <label class="form-label">Photograph</label>
                                 <div class="input-group">
+                                <input type="hidden" name="image_preview" id="image_preview" @if(isset($data)) value="{{$data->image }}" @endif>
+
                                     <input name="image" type="file" class="form-control dropify" id="image" @if(isset($data)) data-default-file="{{ asset($data->image) }}" @endif>
                                 </div>
                             </div>
@@ -346,6 +352,9 @@
                                                                 <input hidden type="text"  class="form-control image-input document_name_image image-input" value="{{$data->lawyerProfile->attachments['images'][$key] ?? ''}}" name="document_name_image[]" id="document_name_image_{{$key}}">
                                                             
                                                         </div>
+                                                       
+                                                        <a href="{{filePreview($data->lawyerProfile->attachments['images'][$key])}}"  target="blank" class="preview ">Preview</a>
+                                                     
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-sm btn-danger mt-4 document_remove" type="button">Remove</button>
@@ -377,6 +386,7 @@
 @endsection
 @push('js')
 <script>
+  
     $(document).on('click', '.document_remove', function(e){
         $(this).parents().eq(2).remove();
         restructureList();
@@ -407,10 +417,13 @@
                                                 <div class="form-group">
                                                     <label class="form-label">Image</label>
                                                     <div class="input-group">
-                                                        <input type="file" class=" upload-image dropify" >
+                                                        <input type="file" class=" upload-image dropify upload-final-pdf" >
                                                             <input hidden type="text"  class="form-control image-input document_name_image" name="document_name_image[]" id="document_name_image_0">
                                                     </div>
+                                                        <a href="" class="preview   hide " target="blank">Preview</a>
+
                                                 </div>
+
                                             </div>
                                             <button class="btn btn-sm btn-danger mt-4 document_remove" type="button">Remove</button>
 

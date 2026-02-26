@@ -257,7 +257,7 @@
     .single_faq .faq_title h3,
     .single_faq .faq_title h4,
     .single_faq .faq_title h5 {
-        font-size: 16px;
+        font-size: 18px;
     }
     .single_faq .faq_content p,
     .single_faq .faq_content ul li,
@@ -267,6 +267,10 @@
     .single_faq .faq_title *::after {
         width: 18px;
         height: 13px;
+    }
+    .faq_section .single_faq {
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 }
 @media (max-width: 991px) {
@@ -342,7 +346,7 @@
     }
     .reason_item .reason_img_wrap {
         flex: 0 0 auto;
-        width: calc(100% - (70% + 20px));
+        width: calc(100% - (80% + 20px));
     }
     .reason_item .reason_content,
     .reason_item .reason_content p {
@@ -385,4 +389,17 @@
         -ms-transform: translateY(0px) rotate(180deg);
         -o-transform: translateY(0px) rotate(180deg);
 }
+.faq_section .single_faq .faq_title *::after {
+    width: 25px;
+    height: 20px;
 }
+
+.service_about_section {
+    padding: 12.25vw 0 9.375vw;
+}
+
+}
+
+
+
+

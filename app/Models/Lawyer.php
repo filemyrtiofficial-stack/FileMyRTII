@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Carbon\Carbon;
+
 class Lawyer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -15,10 +17,57 @@ class Lawyer extends Authenticatable
     public static function list($pagination, $filters = null) {
         $filter_data = $filters;
         unset($filters['ids']);
+        unset($filters['page']);
+        unset($filters['daterange']);
+
+
         $list = Lawyer::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'search') {
+                        $list->where(function($query) use($filter) {
+                            $query->where('first_name', 'like', '%'.$filter.'%')
+                            ->orwhere('last_name', 'like', '%'.$filter.'%')
+                            ->orwhere('phone', 'like', '%'.$filter.'%')
+                            ->orwhere('email', 'like', '%'.$filter.'%');
+                        });
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+         if(!empty($filter_data['daterange'])) {
+            $date = explode(' - ', $filter_data['daterange']);
+            // dd($date);
+            $list->withCount(['rtiApplications' => function ($query) use($date) {
+                $query->wheredate('created_at', '>=', Carbon::parse($date[0]))
+                ->wheredate('created_at', '<', Carbon::parse($date[1]));
+            }])
+            ->withCount(['rtiApplications as filed_rti_count' => function ($query) use($date) {
+                $query->where('status', 3)
+                ->wheredate('created_at', '>=', Carbon::parse($date[0]))
+                ->wheredate('created_at', '<', Carbon::parse($date[1]));
+            }])
+            ->withCount(['rtiApplications as pending_rti_count' => function ($query) use($date) {
+                $query->where('status', '!=', 3)
+                ->wheredate('created_at', '>=', Carbon::parse($date[0]))
+                ->wheredate('created_at', '<', Carbon::parse($date[1]));
+            }]);
+        }
+        else {
+            $list->withCount('rtiApplications')
+            ->withCount(['rtiApplications as filed_rti_count' => function ($query) {
+                $query->where('status', 3);
+            }])
+            ->withCount(['rtiApplications as pending_rti_count' => function ($query) {
+                $query->where('status', '!=', 3);
+            }]);
+        }
+        
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);
         }

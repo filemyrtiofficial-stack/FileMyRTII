@@ -1,7 +1,11 @@
 @extends('frontend.layout.layout')
 @push('style')
 <link rel="stylesheet" href="{{asset('assets/rti/css/dashboard-lawyer.css')}}">
-
+<style>
+    .mb-10 {
+        margin-bottom: 10px;
+    }
+</style>
 @endpush
 @section('content')
 
@@ -27,12 +31,15 @@
                                     <input type="hidden" name="key" value="{{encryptString($customer->id)}}">
                                     <div class="form_item">
                                         <label for="pwd">Password</label>
-                                        <input class="form_field" type="password" name="password" id="" placeholder="Enter Your Password">
+                                        <input class="form_field password" type="password" name="password" id="" placeholder="Enter Your Password">
                                     </div>
                                     <div class="form_item">
                                         <label for="email_address">Confirm Password</label>
-                                        <input class="form_field" type="password" name="confirm_password" id="" placeholder="Enter Your Confirm Password">
+                                        <input class="form_field password" type="password" name="confirm_password" id="" placeholder="Enter Your Confirm Password">
                                     </div>
+                                      <div class="show-password-section mb-10">
+                                            <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password">Show Password</label>
+                                        </div>
                                   
                                     <div class="modal_action_bottom text-center">
                                         <button class="theme-btn login-btn" >Reset Password</button>

@@ -22,6 +22,15 @@ class BlogController extends Controller
        $this->middleware(['can:Edit Blog'], ['only' => ['edit', 'update']]); 
     }
 
+public function showJune2025()
+    {
+        // You can pass data to the view here, e.g., from a database
+        $title = 'Top 7 Legal Current Affairs: June 2025';
+        $content = []; // Array of sections if dynamic
+
+        return view('blog.june-2025', compact('title'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -153,7 +162,5 @@ class BlogController extends Controller
         return view('pages.blog.blog-comment.index', compact('list'));
         
     }
-
-
-   
+    
 }

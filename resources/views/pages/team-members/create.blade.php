@@ -75,6 +75,8 @@
                             <div class="form-group">
                                 <label class="form-label">Profile Image</label>
                                 <div class="input-group">
+                                    <input type="hidden" name="profile_image_preview" id="profile_image_preview" @if(isset($data)) value="{{ $data->image ?? '' }}" @endif>
+
                                     <input name="profile_image" type="file" class="form-control dropify" id="profile_image" @if(isset($data)) data-default-file="{{ asset($data->image) }}" @endif>
                                 </div>
                             </div>

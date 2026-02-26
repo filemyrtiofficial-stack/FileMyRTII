@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File you RTI in minutes</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #026cb6;
+        }
+
+        .cta-button {
+            background: #026cb6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #024d8a;
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-slider {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            min-height: 300px;
+        }
+.hero-slide {
+    background: url("") no-repeat center center;
+    background-color: blue;
+    background-size: cover; /* makes image cover the container */
+    padding: 40px;
+    color: white;
+    position: absolute;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 12px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        .hero-button {
+            background: white;
+            color: #026cb6;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+            margin-bottom: 100px;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-images {
+            position: absolute;
+            right: 40px;
+            top: 20px;
+            display: flex;
+            gap: 10px;
+            opacity: 0.8;
+        }
+
+        .hero-image {
+            width: 80px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .nav-arrows {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slider-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .article-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .article-category {
+            color: #026cb6;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .article-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .article-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .article-button {
+            background: #026cb6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .article-button:hover {
+            background: #024d8a;
+            transform: translateY(-2px);
+        }
+
+        /* Article specific backgrounds */
+        .article-1 { background: linear-gradient(135deg, #026cb6, #024d8a); }
+        .article-2 { background: linear-gradient(135deg, #026cb6, #0358a1); }
+        .article-3 { background: linear-gradient(135deg, #024d8a, #026cb6); }
+        .article-4 { background: linear-gradient(135deg, #0358a1, #026cb6); }
+        .article-5 { background: linear-gradient(135deg, #026cb6, #034075); }
+        .article-6 { background: linear-gradient(135deg, #024d8a, #034075); }
+        .article-7 { background: linear-gradient(135deg, #026cb6, #024d8a); }
+        .article-8 { background: linear-gradient(135deg, #0358a1, #034075); }
+        .article-9 { background: linear-gradient(135deg, #026cb6, #0358a1); }
+        .article-10 { background: linear-gradient(135deg, #024d8a, #026cb6); }
+        .article-11 { background: linear-gradient(135deg, #034075, #026cb6); }
+        .article-12 { background: linear-gradient(135deg, #026cb6, #024d8a); }
+        .article-13 { background: linear-gradient(135deg, #0358a1, #026cb6); }
+        .article-14 { background: linear-gradient(135deg, #024d8a, #034075); }
+        .article-15 { background: linear-gradient(135deg, #026cb6, #0358a1); }
+        .article-16 { background: linear-gradient(135deg, #034075, #024d8a); }
+        .article-17 { background: linear-gradient(135deg, #026cb6, #034075); }
+        .article-18 { background: linear-gradient(135deg, #0358a1, #024d8a); }
+
+        .article-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        .article-image::after {
+            content: '⚖️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            z-index: 2;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: #026cb6;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-images {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://i.postimg.cc/tJDTxg7y/logo-1733744798.webp" alt="File my rti Logo">
+            </div>
+          
+            <!-- <nav>     <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#legal">Legal</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul> 
+            </nav>  -->
+            <a href="#" class="cta-button">Get Started</a>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-slider">
+            <!-- Slide 1 -->
+            <div class="hero-slide active">
+                <div class="hero-content">
+                    <div class="hero-tag">Recent Updates</div>
+                    <h1 class="hero-title">Raise Any Specific Issue with Government Authorities</h1>
+                    <p class="hero-description">Facing years of government inaction or confusing digital records? You’re not alone. Here’s how a determined family in Medak, Telangana, finally reclaimed their agricultural land—thanks to the power of RTI and FileMyRTI.com.</p>
+                    <a href="#" class="hero-button">Continue Reading</a>
+                </div>
+                <div class="hero-images">
+                    <div class="hero-image">⚖️</div>
+                    <div class="hero-image">📚</div>
+                    <div class="hero-image">🏛️</div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="hero-slide">
+                <div class="hero-content">
+                    <div class="hero-tag">Constitutional Updates</div>
+                    <h1 class="hero-title">Major Supreme Court Verdicts: 2025</h1>
+                    <p class="hero-description">Landmark judgments that have reshaped the legal landscape, including fundamental rights interpretations, privacy laws, and constitutional amendments that impact every citizen.</p>
+                    <a href="#" class="hero-button">Read More</a>
+                </div>
+                <div class="hero-images">
+                    <div class="hero-image">⚖️</div>
+                    <div class="hero-image">📊</div>
+                    <div class="hero-image">🏛️</div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="hero-slide">
+                <div class="hero-content">
+                    <div class="hero-tag">Legal Reforms</div>
+                    <h1 class="hero-title">New Criminal Laws Implementation</h1>
+                    <p class="hero-description">Comprehensive analysis of the new Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and their impact on the Indian judicial system and law enforcement.</p>
+                    <a href="#" class="hero-button">Explore Now</a>
+                </div>
+                <div class="hero-images">
+                    <div class="hero-image">📋</div>
+                    <div class="hero-image">⚖️</div>
+                    <div class="hero-image">🔍</div>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="hero-slide">
+                <div class="hero-content">
+                    <div class="hero-tag">UPSC Preparation</div>
+                    <h1 class="hero-title">Legal Current Affairs for Competitive Exams</h1>
+                    <p class="hero-description">Essential legal updates for UPSC, CLAT, and Judiciary exams. Stay updated with the most important constitutional amendments, court judgments, and legal developments.</p>
+                    <a href="#" class="hero-button">Start Learning</a>
+                </div>
+                <div class="hero-images">
+                    <div class="hero-image">📚</div>
+                    <div class="hero-image">🎓</div>
+                    <div class="hero-image">📝</div>
+                </div>
+            </div>
+
+            <div class="nav-arrows">
+                <button class="nav-arrow" id="prevSlide">‹</button>
+                <button class="nav-arrow" id="nextSlide">›</button>
+            </div>
+
+            <div class="slider-dots">
+                <div class="slider-dot active" data-slide="0"></div>
+                <div class="slider-dot" data-slide="1"></div>
+                <div class="slider-dot" data-slide="2"></div>
+                <div class="slider-dot" data-slide="3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="articles-grid">
+            <article class="article-card">
+                <div class="article-image article-1"></div>
+                <div class="article-content">
+                    <div class="article-category">Current Affairs</div>
+                    <h3 class="article-title">Top Current Affairs for Last Six Months: Jan-June 2025</h3>
+                    <p class="article-description">From the amendment in election laws to the most important UPSC/CLAT/Judiciary exam preparation materials.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-2"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal Updates</div>
+                    <h3 class="article-title">Top 7 Legal Current Affairs June 2025</h3>
+                    <p class="article-description">Important constitutional milestones, different aspects from Supreme Court and High Court decisions nationwide.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-3"></div>
+                <div class="article-content">
+                    <div class="article-category">Recent Updates</div>
+                    <h3 class="article-title">Top 10 Current Affairs June 2025</h3>
+                    <p class="article-description">From Presidential Medals declaring for the Indian winners to Health and Safety concerns and new policies that across the country.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-4"></div>
+                <div class="article-content">
+                    <div class="article-category">Constitutional Developments</div>
+                    <h3 class="article-title">History of Fundamental Rights in India</h3>
+                    <p class="article-description">What if I tell you that the concept of fundamental rights was not in the original draft of the Constitution?</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-5"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">10 Major Legal Developments of 2025</h3>
+                    <p class="article-description">An overview of all important legal and constitutional changes that had its debut during this year, and is still making headlines.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-6"></div>
+                <div class="article-content">
+                    <div class="article-category">Recent Updates</div>
+                    <h3 class="article-title">Top 10 Current Affairs May 2025</h3>
+                    <p class="article-description">All current affairs from around the world, some important events that had happened in the current time.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-7"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Asylum and Extradition: Meaning, Purpose & Key Differences</h3>
+                    <p class="article-description">Two different concepts in destiny a one country aware of the other that comes under international law.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-8"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Top 10 Current Affairs April 2025</h3>
+                    <p class="article-description">Ten Major Developments that made its in the Telegraphs during the month of April from around the world-news.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-9"></div>
+                <div class="article-content">
+                    <div class="article-category">Recent Updates</div>
+                    <h3 class="article-title">India-Pakistan Attacks and Wars Since 1947</h3>
+                    <p class="article-description">The division of India and Pakistan saw to it that conflicts started and it continues on, despite decades of war.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-10"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Top 15 Legal Current Affairs: April 2025</h3>
+                    <p class="article-description">This month was been a significant month for the legal community as there were a number of important case decisions and verdicts.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-11"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Parliament of India: Structure & Functions Explained</h3>
+                    <p class="article-description">The Parliament of India is the federal supreme legislative body which is the foremost supreme of the country and well it acts...</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-12"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">How Parliament makes laws in India?</h3>
+                    <p class="article-description">Why do we work on the bill side of the equation? What is the order of importance when it comes to the law-making process?</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-13"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Death Penalty in India</h3>
+                    <p class="article-description">The concept of Capital punishment has been there in Indian judicial system since from the Independence of the Indian Economy...</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-14"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Top 10 Current Affairs March 2025</h3>
+                    <p class="article-description">Every important event and if it has not the Car is it about the the State and Central government.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-15"></div>
+                <div class="article-content">
+                    <div class="article-category">Recent Updates</div>
+                    <h3 class="article-title">What is Waqf Property? Waqf (Amendment) Act 2025 Explained</h3>
+                    <p class="article-description">Acquire a detailed understanding from A to Z of the present law (2025 Waqf Amendment Bill) which is being actively debated.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-16"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">Top 15 Legal Current Affairs: March 2025</h3>
+                    <p class="article-description">This month has been significantly packed with a number of important cases and judgment that have kept the legal...</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-17"></div>
+                <div class="article-content">
+                    <div class="article-category">Legal</div>
+                    <h3 class="article-title">File your RTi in Minutes</h3>
+                    <p class="article-description">Startups need to establish solid legal and financial foundations. They set up proper...</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image article-18"></div>
+                <div class="article-content">
+                    <div class="article-category">Recent Updates</div>
+                    <h3 class="article-title">Top 10 Current Affairs February 2025</h3>
+                    <p class="article-description">Latest Budget 2025 and current reforms, all of Pakistan Constitution Amendment and Diplomatic ties all around the world.</p>
+                    <a href="#" class="article-button">Continue Reading</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="social-icons">
+            <a href="#" class="social-icon">📘</a>
+            <a href="#" class="social-icon">🐦</a>
+            <a href="#" class="social-icon">📸</a>
+            <a href="#" class="social-icon">💼</a>
+        </div>
+        <p>&copy; 2025 Finology. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show current slide
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Event listeners
+        document.getElementById('nextSlide').addEventListener('click', nextSlide);
+        document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Auto-play slider (optional)
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+        // Rest of the existing JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const cards = document.querySelectorAll('.article-card');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -8,6 +8,33 @@
 @include('layouts.navbars.auth.topnav', ['title' => 'Section Management'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                  <form action="" id="search-form">
+                            <div class="row">
+
+                            
+                                    <div class="col-md-3">
+                                            <select type="text" name="type" class="form-control" >
+                                                <option value="">Select Sections</option>
+                                                @foreach(sectionTypeList() as $key => $value)
+                                                    <option value="{{$key}}" @if(isset($_GET['type']) && $_GET['type'] == $key) selected @endif>{{$value['title'] ?? ''}}</option>
+                                                @endforeach
+                                            </select>
+                                    </div>
+                                   
+                                    <div class="col-md-3">
+                                            <input type="text" name="title" class="form-control" placeholder="Search By Title" value="{{$_GET['title'] ?? ''}}">
+                                    </div>
+                                   
+                                    
+                                    <div class="col-12">
+                                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                    </div>
+                            </div>
+                  </form>
+            </div>
+        </div>
 
         <div class="card mb-4">
             <div class="card-header list-header">

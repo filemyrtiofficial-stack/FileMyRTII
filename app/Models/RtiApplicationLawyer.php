@@ -9,4 +9,8 @@ class RtiApplicationLawyer extends Model
 {
     use HasFactory;
     protected $fillable = ['lawyer_id', 'application_id'];
+    public function lawyer()
+    {
+        return $this->belongsTo(Lawyer::class, 'lawyer_id', 'id');
+    }
 }

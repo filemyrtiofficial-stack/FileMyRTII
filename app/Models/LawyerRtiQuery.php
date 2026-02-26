@@ -19,5 +19,10 @@ class LawyerRtiQuery extends Model
         return $this->belongsTo(RtiApplication::class, 'application_id', 'id')->orderBy('id', 'desc');
     }
 
+    public function lawyer()
+    {
+        return $this->belongsTo(Lawyer::class, 'from_id', 'id');
+    }
+
 
 }

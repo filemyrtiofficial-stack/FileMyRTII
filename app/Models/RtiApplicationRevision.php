@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RtiApplicationRevision extends Model
 {
     use HasFactory;
-    protected $fillable = ['application_id', 'details', 'template', 'status', 'signature', 'customer_change_request', 'template_id', 'lawyer_id'];
+    protected $fillable = ['application_id', 'details', 'template', 'status', 'signature', 'customer_change_request', 'template_id', 'lawyer_id', 'send_client'];
 
     public function serviceTemplate() {
         return $this->belongsTo(ServiceTemplate::class, 'template_id', 'id');
@@ -16,5 +16,9 @@ class RtiApplicationRevision extends Model
 
     public function rtiApplication() {
         return $this->belongsTo(RtiApplication::class, 'application_id', 'id');
+    }
+    public function lawyer()
+    {
+        return $this->belongsTo(Lawyer::class, 'lawyer_id', 'id');
     }
 }

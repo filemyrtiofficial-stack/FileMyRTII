@@ -37,12 +37,12 @@ class ApproveRti extends Mailable
         }
         else if($this->data['appeal_no'] == 1) {
             return new Envelope(
-                subject: 'Thank you for Approving Your First Appeal (RTI) - Application No : '.$this->data['application_no'],
+                subject: 'Thank You – Your First Appeal is Approved (Application No: '.$this->data['application_no'].')',
             );
         }
         else {
             return new Envelope(
-                subject: 'Thank you for Approving Your Second Appeal (RTI) - Application No : '.$this->data['application_no'],
+                subject: 'Thank You – Your Second Appeal is Approved (Application No: '.$this->data['application_no'].')',
             );
         }
 

@@ -16,31 +16,40 @@
 
 
                 <div class="col_box_main">
-                    <div class="col_box_left">
+                   <div class="col_box_left">
 
-                        <div class="col_box">
-                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon1.png')}}" alt=""> </div>
-                            <h2 class="title_part">  {{$total_rti['active']}} </h2>
-                            <p> Active RTIs </p>
-                        </div>
-
-                        <div class="col_box">
-                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon2.png')}}" alt=""> </div>
-                            <h2 class="title_part"> {{$total_rti['pending']}} </h2>
-                            <p> Pending RTIs </p>
-                        </div>
-
-                        <div class="col_box">
-                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon3.png')}}" alt=""> </div>
-                            <h2 class="title_part"> {{$total_rti['filed']}} </h2>
-                            <p> Filed RTIs </p>
-                        </div>
-
-                        <div class="col_box">
-                            <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon4.png')}}" alt=""> </div>
-                            <h2 class="title_part"> {{$total_rti['total']}} </h2>
-                            <p> Total RTIs </p>
-                        </div>
+                        <a href="{{route('lawyer.my-rti')}}?status=active" class="col_box overview_click @if(!isset($_GET['status']) || (isset($_GET['status']) && strtolower($_GET['status']) == 'active'))active @endif" data-id="active_rti">
+                            <div class="col_box1">
+                                <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon1.png')}}" alt=""> </div>
+                                <h2 class="title_part">  {{$total_rti['active']}} </h2>
+                                <span class="overview_click">Active RTIs </span>
+                                <!-- <a href="{{route('lawyer.my-rti')}}?status=active" class="overview_click @if(!isset($_GET['status']) || (isset($_GET['status']) && strtolower($_GET['status']) == 'active'))active @endif" data-id="active_rti"> Active RTIs </a> -->
+                            </div>
+                        </a>
+                        <a href="{{route('lawyer.my-rti')}}?status=pending" class="col_box overview_click  @if(isset($_GET['status']) && strtolower($_GET['status']) == 'pending')active @endif" data-id="pending_rti">
+                            <div class="col_box1">
+                                <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon2.png')}}" alt=""> </div>
+                                <h2 class="title_part"> {{$total_rti['pending']}} </h2>
+                                 <span class="overview_click">Pending RTIs </span>
+                                <!-- <a href="{{route('lawyer.my-rti')}}?status=pending" class="overview_click  @if(isset($_GET['status']) && strtolower($_GET['status']) == 'pending')active @endif" data-id="pending_rti"> Pending RTIs </a> -->
+                            </div>
+                        </a>
+                        <a href="{{route('lawyer.my-rti')}}?status=filed" class="col_box overview_click  @if(isset($_GET['status']) && strtolower($_GET['status']) == 'filed')active @endif" data-id="filed_rti">
+                            <div class="col_box1">
+                                <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon3.png')}}" alt=""> </div>
+                                <h2 class="title_part"> {{$total_rti['filed']}} </h2>
+                                 <span class="overview_click">Filed RTIs </span>
+                                <!-- <a href="{{route('lawyer.my-rti')}}?status=filed" class="overview_click  @if(isset($_GET['status']) && strtolower($_GET['status']) == 'filed')active @endif" data-id="filed_rti"> Filed RTIs </a> -->
+                            </div>
+                        </a>
+                        <a href="{{route('lawyer.my-rti')}}?status=all" class="col_box overview_click  @if(isset($_GET['status']) && strtolower($_GET['status']) == 'all')active @endif" data-id="total_rti">
+                            <div class="col_box1">
+                                <div class="col_box_ico"> <img src="{{asset('assets/rti/images/dashboard-overview/rti-icon4.png')}}" alt=""> </div>
+                                <h2 class="title_part"> {{$total_rti['total']}} </h2>
+                                 <span class="overview_click">Total RTIs </span>
+                                <!-- <a href="{{route('lawyer.my-rti')}}?status=all" class="overview_click  @if(isset($_GET['status']) && strtolower($_GET['status']) == 'all')active @endif" data-id="total_rti"> Total RTIs </a> -->
+                            </div>
+                        </a>
 
                     </div>
 
@@ -57,8 +66,8 @@
                             <div class="col_dropdown">
                                 <ul>
                                     <li> <a href="javascript:void(0);" class="rti-popup" data-id="personal_detail_modal" > <span class="icon"> <img class="img-fluid" src="{{asset('assets/rti/images/dashboard-overview/user-new.png')}}" alt=""> </span> Profile </a> </li>
-                                    <li> <a href="javascript:void(0);"  class="change-password-modal"> <span class="icon"> <img src="{{asset('assets/rti/iimages/dashboard-overview/password.png')}}" alt=""> </span> Change Password</a> </li>
-                                    <li> <a href="javascript:void(0);"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span class="icon"> <img src="{{asset('assets/rti/iimages/dashboard-overview/log-out.png')}}" alt=""> </span> Log Out </a> </li>
+                                    <li> <a href="javascript:void(0);"  class="change-password-modal"> <span class="icon"> <img src="{{asset('assets/rti/images/dashboard-overview/password.png')}}" alt=""> </span> Change Password</a> </li>
+                                    <li> <a href="javascript:void(0);"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span class="icon"> <img src="{{asset('assets/rti/images/dashboard-overview/log-out.png')}}" alt=""> </span> Log Out </a> </li>
 
 
 
@@ -96,7 +105,7 @@
                                         <th> Date</th>
                                         <th> Application No </th>
                                         <th> Name</th>
-                                        <th> Appeeal No. </th>
+                                        <th> Appeal Type </th>
 
                                         <th> Status </th>
                                     </thead>
@@ -118,9 +127,7 @@
 
                                 </table>
 
-                                <div class="btn_view_more">
-                                    <a href="javascript:void(0);" class="theme-btn view-more-rti" data-page="1"> <span> View More </span> </a>
-                                </div>
+                               
 
                              </div>
                         </div>
@@ -151,7 +158,9 @@
 
                 </div>
 
-
+                <div class="btn_view_more">
+                    <a href="javascript:void(0);" class="theme-btn view-more-rti" data-page="1"> <span> View More </span> </a>
+                </div>
 
 
 

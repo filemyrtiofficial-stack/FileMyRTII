@@ -11,12 +11,37 @@
             </button>
         </div>
         <div class="modal_body">
-            <div class="modal_area">
+            <div class="modal_area v_scroll rti-document-list">
                         @if($data->documents)
                         @foreach($data->documents as $key => $value)
-                            <a  class="doc_btn" href="{{filePreview($value)}}" target="blank">
-                                    <embed src="{{$value}}" width="200" height="200"/>
+                       <div class="relative">
+                         
+                           
+                         
+                       <a class="doc_btn" href="{{filePreview($value)}}" target="blank">
+                           
+                             <?php
+                           $filePath = public_path($value);
+
+if (Illuminate\Support\Facades\File::exists($filePath) && str_starts_with(Illuminate\Support\Facades\File::mimeType($filePath), 'image/')) { ?>
+    <img src="{{$value}}" >
+    <?php
+} else {?>
+   <embed src="{{$value}}" width="200" height="200" />
+<?php } 
+?>
+
+
+                            <!--<embed src="{{$value}}" width="200" height="200" />-->
+                            <!--<img src="{{$value}}">-->
+                              <!--<iframe src="{{$value}}"  width="200" height="200" ></iframe> -->
                             </a>
+                            <div class="preview-btn">
+                    <a href="{{filePreview($value)}}" target="blank"> Preview
+                                                        </a>
+                                                        </div>
+                         
+                       </div>
                         @endforeach
                         @endif
                       

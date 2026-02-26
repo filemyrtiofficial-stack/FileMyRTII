@@ -31,9 +31,22 @@ class MoreInfoMail extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: '[Action Required] More Information Needed - RTI Application No. : '.$this->data['application_no'],
-        );
+        if($this->data->rtiApplication->appeal_no == 0) {
+
+            return new Envelope(
+                subject: '[Action Required] More Information Needed - RTI Application No. : '.$this->data->rtiApplication['application_no'],
+            );
+        }
+        elseif($this->data->rtiApplication->appeal_no == 1) {
+            return new Envelope(
+                subject: 'Additional Information Required for Your First Appeal (Application No: '.$this->data->rtiApplication['application_no'].')',
+            );
+        }
+        elseif($this->data->rtiApplication->appeal_no == 2) {
+            return new Envelope(
+                subject: 'Additional Information Required for Your Second Appeal (Application No: '.$this->data->rtiApplication['application_no'].')',
+            );
+        }
     }
 
     /**

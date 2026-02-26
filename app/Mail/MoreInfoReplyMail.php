@@ -29,9 +29,21 @@ class MoreInfoReplyMail extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: 'More Information Received for RTI Application No.: '.$this->data['application_no'],
-        );
+        if($this->data->rtiApplication->appeal_no == 0) {
+            return new Envelope(
+                subject: 'More Information Received for RTI Application No.: '.$this->data->rtiApplication['application_no'],
+            );
+        }
+        else if($this->data->rtiApplication->appeal_no == 0) {
+            return new Envelope(
+                subject: 'We’ve Received Your Additional Information - Application No.: '.$this->data->rtiApplication['application_no'],
+            );
+        }
+        else {
+            return new Envelope(
+                subject: 'We’ve Received Your Additional Information - Application No.: '.$this->data->rtiApplication['application_no'],
+            );
+        }
     }
 
     /**
@@ -42,7 +54,7 @@ class MoreInfoReplyMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.more-info-required',
+            view: 'email.more-info-reply',
         );
     }
 

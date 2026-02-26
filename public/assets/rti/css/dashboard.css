@@ -47,6 +47,7 @@
 .profile .profile_img {
     width: 6.45833vw;
     height: 6.45833vw;
+    overflow: hidden;
 }
 .profile_name {
     max-width: 26.04167vw;
@@ -409,6 +410,19 @@
     border: 1px solid var(--theme-btn-color);
 }
 
+.col_logo-user{
+    border: 2px solid rgba(3, 132, 212, 0.50);
+    width: 5.729vw;
+    height: 5.729vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 53px; */
+    font-size: 2.08333vw;
+    color: var(--theme-btn-color);
+    border-radius: 50%;
+}
+
 
 @media (max-width: 1199px) {
     .profile_name .p_name {
@@ -563,6 +577,11 @@
     .delete_modal_wrap .theme-btn {
         min-width: 120px;
         justify-content: center;
+    }
+    .col_logo-user {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
     }
 }
 

@@ -8,7 +8,7 @@
    Our team will process It shortly and proceed with the next steps.
 </p>
 
-<p>Thank your for choosing FileMyRTI.</p>
+<p>Thank you for choosing FileMyRTI.</p>
 
 <p>Warm regards,</p>
 <p><strong>FileMyRTI Team</strong></p>

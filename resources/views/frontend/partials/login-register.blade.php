@@ -12,7 +12,7 @@
             <div class="modal_body">
                 <div class="modal_action_top">
                     <a class="theme-btn google" href="{{route('auth.google')}}"><img src="{{asset('assets/rti/images/home/google-logo.webp')}}" alt="">Login With Google</a>
-                    <a class="theme-btn guest" href="javascript:void(0);"><img src="{{asset('assets/rti/images/home/user.webp')}}" alt="">Continue as Guest</a>
+                    <a class="theme-btn guest close" href="javascript:void(0);"><img src="{{asset('assets/rti/images/home/user.webp')}}" alt="">Continue as Guest</a>
                 </div>
                 <div class="modal_content_top"><p>Or use your email Address</p></div>
                 <div class="modal_action_bottom">
@@ -41,10 +41,15 @@
                     </div>
                     <div class="form_item">
                         <label for="pwd">Password</label>
-                        <input class="form_field" type="password" name="password" id="" placeholder="Enter Your Password">
+                        <input class="form_field password" type="password" name="password" id="" placeholder="Enter Your Password">
                     </div>
-                    <div class="forgot_pwd">
-                        <a href="javascript:void(0);" class="theme-btn-link singin-register-btn" data-target="forgot-password-step-1">Forgot Password?</a>
+                    <div class="show-pwd-forgot-pwd">
+                        <div class="show-password-section">
+                            <input type="checkbox" class="show-password" id="login-show-password"><label for="login-show-password">Show Password</label>
+                        </div>
+                        <div class="forgot_pwd">
+                            <a href="javascript:void(0);" class="theme-btn-link singin-register-btn" data-target="forgot-password-step-1">Forgot Password?</a>
+                        </div>
                     </div>
                     <div class="modal_action_bottom">
                         <a class="theme-btn singin-register-btn" data-target="login-step-1" href="javascript:void(0);">Back</a>
@@ -74,11 +79,14 @@
                     </div>
                     <div class="form_item">
                         <label for="pwd">Password</label>
-                        <input class="form_field" type="password" name="password" id="" placeholder="Enter Your Password">
+                        <input class="form_field password" type="password" name="password" id="" placeholder="Enter Your Password">
                     </div>
                     <div class="form_item">
                         <label for="pwd">Confirm Password</label>
-                        <input class="form_field" type="password" name="confirm_password" id="" placeholder="Confirm Your Password">
+                        <input class="form_field password" type="password" name="confirm_password" id="" placeholder="Confirm Your Password">
+                    </div>
+                    <div class="show-password-section">
+                        <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password">Show Password</label>
                     </div>
                     <div class="or-seperator"><span>or</span></div>
                     <div class="modal_action_top">

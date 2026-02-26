@@ -18,9 +18,9 @@ As per our records, your RTI application (Application Number {{$data['applicatio
     <strong>Need Help Filing a First Appeal?</strong> <br>
     At FileMyRTI, our team of experts s here to assist you. We can draft your First Appeal application and file it on your behalf of ensure your case moves forward smoothly.
 </p>
-<a href="{{route('my-rtis', [$data['application_no'], 'first-appeal'])}}">Click Here to File Your First Appeal</a>
+<div class="btn-container"><a class="btn " href="{{route('my-rtis', [$data['application_no'], 'first-appeal'])}}">Click Here to File Your First Appeal</a></div>
 <p>Once You complete the payment, we'll take care of the entire process for you.</p>
-<p>Thank your for choosing FileMyRTI. We're committed to supporting you throughout your RTI journey. For any questions, feel free to <a href="{{url('contact-us')}}">Contact Us</a> via our COntact Us page.</p>
+<p>Thank you for choosing FileMyRTI. We're committed to supporting you throughout your RTI journey. For any questions, feel free to <a href="{{url('contact-us')}}">Contact Us</a> via our COntact Us page.</p>
 
 
 <p>Warm regards,</p>

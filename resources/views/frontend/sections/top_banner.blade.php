@@ -1,5 +1,5 @@
 <header class="breadcrumb_banner">
-            <img class="img-fluid bg_img" src="{{asset($data['top_banner_desktop_image'] ?? '')}}" alt="{{asset($data['top_banner_desktop_image_alt'] ?? '')}}">
+            <img class="img-fluid bg_img" data-mobile="{{asset($data['top_banner_mobile_image'] ?? $data['top_banner_desktop_image'])}}"  src="{{asset($data['top_banner_desktop_image'] ?? '')}}" alt="{{asset($data['top_banner_desktop_image_alt'] ?? '')}}">
                 <div class="container">
                     <div class="row banner_row">
                         <div class="col-12 col-sm-12">

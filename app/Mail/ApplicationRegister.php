@@ -30,9 +30,22 @@ class ApplicationRegister extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject: 'Payment Confirm for Your RTI Application Number : '.$this->data['application_no'],
-        );
+        if($this->data['appeal_no'] == 0) {
+            return new Envelope(
+                subject: 'Payment Confirm for Your RTI Application Number : '.$this->data['application_no'],
+            );
+        }
+        elseif($this->data['appeal_no'] == 1) {
+
+            return new Envelope(
+                subject: ' First Appeal Received – Invoice & Next Steps for RTI Application No:: '.$this->data['application_no'] ?? '',
+            );
+        }
+        else {
+            return new Envelope(
+                subject: 'Thank You – Your Second Appeal is Filed - Application No: '.$this->data['application_no'] ?? '',
+            );
+        }
     }
 
     /**

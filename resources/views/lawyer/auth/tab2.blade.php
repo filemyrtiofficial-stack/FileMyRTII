@@ -1,5 +1,5 @@
 <a class="accord_item" href1="#tab2" data-id="tab2" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'pio-address'])}}">PIO Address</a>
-
+@if($tab == 'pio-address')
 <div id="tab2" class="contact_faq_tab @if($tab == 'pio-address')active @endif">
     <div class="pio_address">
         <div class="db_tab_heading">
@@ -11,7 +11,7 @@
                 <div class="db_item_wrap single">
                     <div class="form_item">
                         <label for="first_name">Customer Entered PIO Address</label>
-                        <input class="form_field" type="text" disabled required="">
+                        <input class="form_field" type="text" disabled required="" value="{{$data->customer_pio_address}}">
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@
                     <div class="db_item_wrap single relative">
                         <div class="form_item">
                             <label for="last_name">Search PIO Data Base</label>
-                            <input class="form_field search-pio-address" type="text" name="" id="" >
+                            <input class="form_field search-pio-address" type="text" name="search_pio" id="" >
                         </div>
                         <ul class="pio-list hide">
                             
@@ -51,3 +51,4 @@
         </form>
     </div>
 </div>
+@endif

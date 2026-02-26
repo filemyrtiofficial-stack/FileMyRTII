@@ -17,7 +17,7 @@ class BlogComment extends Model
         unset($filters['blog']);
 
         $filters = array_remove_null($filters);
-        $list = BlogComment::orderBy('id', 'desc');
+        $list = BlogComment::wherehas('blog')->orderBy('id', 'desc');
         if (!empty($filters)) {
             foreach ($filters as $key => $filter) {
                 if ($filter != null) {

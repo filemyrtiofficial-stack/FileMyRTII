@@ -31,7 +31,7 @@ class NewsletterMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Newsletter Mail',
+            subject: 'Welcome to FileMyRTI – Your RTI Journey Begins Here!',
         );
     }
 

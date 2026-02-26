@@ -18,7 +18,7 @@
                                         <select  name="service_id" class="form-control">
                                                 <option value="">Select Service</option>
                                                 @foreach(App\Models\Service::list(false) as $item)
-                                                        <option value="{{$item->id ?? ''}}" {{isset($_GET['service_id']) && $_GET['service_id'] == $item->id ? 'selected' : ''}}>{{$item->name ?? ''}}</option>
+                                                        <option value="{{$item->id ?? ''}}" {{isset($_GET['service_id']) && $_GET['service_id'] == $item->id ? 'selected' : ''}}>{{$item->name ?? ''}} ({{$item->category->name ?? ''}})</option>
                                                 @endforeach
                                         </select>
                                     </div>
@@ -38,8 +38,17 @@
                                                     @endforeach
                                             </select>
                                     </div>
+                                      
+                                </div>
+                                 <div class="row mt-3">
+                                    <div class="col-md-3">
+                                       <input type="text" name="daterange" id="" class="form-control daterange" value="{{$_GET['daterange'] ?? ''}}">
+                                    </div>
+
                                         <div class="col-12">
-                                                <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                            <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                            <a href="{{route('rti.applications.export')}}?search={{$_GET['search'] ?? ''}}&service_id={{$_GET['service_id'] ?? ''}}&lawyer_id={{$_GET['lawyer_id'] ?? ''}}&status={{$_GET['status'] ?? ''}}&daterange={{$_GET['daterange'] ?? ''}}" class="btn btn-sm btn-secondary float-right">Export</a>
+
                                         </div>
                                 </div>
                       </form>
@@ -62,10 +71,15 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Service Name</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Service Category</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lawyer</th>
+                                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Charges</th>
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment Status</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                               
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Appeal</th>
+                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Create Date</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deleted By Customer</th>
+
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th>
                             </tr>
                         </thead>
@@ -75,7 +89,7 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->application_no}}</h6>
+                                           <a href="{{route('rtiapplication.view', $item->id)}}" > <h6 class="mb-0 text-sm">{{$item->application_no}}</h6></a>
                                         </div>
                                     </div>
                                 </td>
@@ -110,15 +124,22 @@
                                 <td>
                                     <div class="d-flex px-3 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$item->serviceCategory->name ?? ''}}</h6>
+                                            <h6 class="mb-0 text-sm">{{$item->service->category->name ?? ''}}</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <a href="{{route('lawyers.edit',( $item->lawyer->id ?? ''))}}" target="blank">{{$item->lawyer->first_name ?? ""}} {{$item->lawyer->last_name ?? ""}}</a>
                                 </td>
+                                  <td>
+                                    <div class="d-flex px-3 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{$item->final_price ?? $item->charges}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>
-                                <span class="{{paymentStatus()[$item->payment_status]['class'] ??''}}"><b>{{paymentStatus()[$item->payment_status]['name'] ??''}}</b></span>
+                                <span class="{{paymentStatus()[trim($item->payment_status)]['class'] ??''}}"><b>{{paymentStatus()[trim($item->payment_status)]['name'] ??''}}</b></span>
                                 </td>
                                 <td>{{appealDetails()[$item->appeal_no] ?? ''}}</td>
                                   <td>
@@ -127,10 +148,23 @@
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
                                 </td>
+                                   <td class="align-middle text-center text-sm">
+                                    {{!empty($item->deleted_at) ? "Yes" : ''}}
+                                </td>
                                 <td class="align-middle text-end">
                                     <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                        @if(!$item->lastRevision && empty($item->deleted_at))
+                                            <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
+                                        href="{{route('rtiapplication.edit', $item->id)}}">Edit</a>
+                                        @else
+                                          <button class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" disabled>Edit</button>
+                                        
+                                        @endif
+
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                             href="{{route('rtiapplication.view', $item->id)}}">View</a>
+                                                                                    <a href="{{route('rtiapplication.delete', $item->id)}}" class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
+
                                     </div>
                                 </td>
                             </tr>

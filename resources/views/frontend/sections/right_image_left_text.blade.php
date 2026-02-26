@@ -1,6 +1,6 @@
 
 
-<section class="about_section_2">
+<section class="about_section_2" @if(isset($data['style'] ) && !empty($data['style'])) style="{{$data['style']}}" @endif>
     <div class="container about_container">
     @if(isset($data['title'] ) && !empty($data['title']))
             <div class="section_heading">

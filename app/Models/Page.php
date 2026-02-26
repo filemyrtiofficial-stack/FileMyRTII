@@ -13,9 +13,22 @@ class Page extends Model
     public static function list($pagination, $filters = null) {
         unset($filters['page']);
         $list = Page::orderBy('id', 'desc');
-        if(!empty($filters)) {
-            $list->where($filters);
+          if(!empty($filters)) {
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'title') {
+                        $list->where('title', 'like', '%'.$filter.'%');
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
+        // if(!empty($filters)) {
+        //     $list->where($filters);
+        // }
         if($pagination) {
             return $list->paginate(10);
         }

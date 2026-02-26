@@ -23,6 +23,9 @@ function formAdditionalFields() {
         'lawyer' => [
             'name' => 'Lawyer',
         ],
+        'both-backend' => [
+            'name' => 'Template Fields',
+        ],
         ];
 }
 
@@ -93,9 +96,32 @@ function paymentStatus() {
                 'name' => 'Paid',
                 'class' => 'text-success'
             ],
+             'refunded' => [
+                'name' => 'Refunded',
+                'class' => 'text-warning'
+            ],
 
         ];
 }
+
+function refundRequestStatus() {
+    return [
+            'pending' => [
+                'name' => 'Pending',
+                'class' => 'text-danger'
+            ],
+            'approve' => [
+                'name' => 'Approved',
+                'class' => 'text-success'
+            ],
+            'reject' => [
+                'name' => 'Reject',
+                'class' => 'text-danger'
+            ],
+
+        ];
+}
+
 
 
 function blogStatus() {
@@ -142,6 +168,7 @@ function uploadFile($request, $key, $path) {
         $path = '/upload/'.$path;
         $filenameWithExt = $request->file($file_name)->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $filename = Illuminate\Support\Str::slug($filename, "_");
         $extension = $request->file($file_name)->getClientOriginalExtension();
         $fileNameToStore = $filename.'_'.time().'.'.$extension;
         $file = $request->file($file_name) ;
@@ -163,6 +190,7 @@ function multipleFiles($request, $key, $path) {
 
             $filenameWithExt = $file->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename = Illuminate\Support\Str::slug($filename, "_");
             $extension = $file->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             $destinationPath = public_path().$path ;
@@ -686,14 +714,29 @@ function templateList() {
                 'key' => 'footer_banner'
 
             ],
+            'footer_banner_template2' => [
+                "section_name" => "Footer Banner Template 2",
+                'key' => 'footer_banner_template2'
+
+            ],
             'left_image_right_text' => [
                 "section_name" => "Left Image Right Text",
                 'key' => 'left_image_right_text'
 
             ],
+            'left_image_right_text_template2' => [
+                "section_name" => "Left Image Right Text template 2",
+                'key' => 'left_image_right_text_template2'
+
+            ],
             'right_image_left_text' => [
                 "section_name" => "Right Image Left Text",
                 'key' => 'right_image_left_text'
+
+            ],
+            'right_image_left_text_template2' => [
+                "section_name" => "Right Image Left Text Template 2",
+                'key' => 'right_image_left_text_template2'
 
             ],
             'right_image_left_accordian' => [
@@ -724,6 +767,27 @@ function templateList() {
             'why_choose' => [
                 "section_name" => "Why Choose",
                 'key' => 'why_choose'
+
+            ],
+            'tracking_section' => [
+                "section_name" => "Track My RTI",
+                'key' => 'tracking_section'
+
+            ],
+            'pricing_section' => [
+                "section_name" => "Pricing Section",
+                'key' => 'pricing_section'
+
+            ],
+
+            'join_our_team' => [
+                "section_name" => "Join Our Team",
+                'key' => 'join_our_team'
+
+            ],
+            'description' => [
+                "section_name" => "Description",
+                'key' => 'description'
 
             ],
 
@@ -880,7 +944,69 @@ function sectionTypeList() {
                         'required' => true
                     ],
                 ]
-            ]
+                ],
+                'what_we_do' => [
+                    'title' => 'What We Do',
+                    'fields' => [
+                        [
+                            'type' => 'input',
+                            'label' => 'Title',
+                            'name' => 'title',
+                            'required' => true
+                        ],
+                        [
+                            'type' => 'select',
+                            'label' => 'Status',
+                            'name' => 'status',
+                            'required' => true,
+                            'options' => commonStatus()
+                        ],
+                        [
+                            'type' => 'image',
+                            'label' => 'Icon',
+                            'name' => 'image',
+                            'required' => true
+                        ],
+                        [
+                            'type' => 'textarea',
+                            'label' => 'Description',
+                            'name' => 'description',
+                            'required' => true
+                        ]
+                       
+                    ],
+                ],
+                'join_our_team' => [
+                    'title' => 'Join Our Team',
+                    'fields' => [
+                        [
+                            'type' => 'input',
+                            'label' => 'Title',
+                            'name' => 'title',
+                            'required' => true
+                        ],
+                        [
+                            'type' => 'select',
+                            'label' => 'Status',
+                            'name' => 'status',
+                            'required' => true,
+                            'options' => commonStatus()
+                        ],
+                        [
+                            'type' => 'image',
+                            'label' => 'Icon',
+                            'name' => 'image',
+                            'required' => true
+                        ],
+                        [
+                            'type' => 'textarea',
+                            'label' => 'Description',
+                            'name' => 'description',
+                            'required' => true
+                        ]
+                       
+                    ],
+                ]
     ];
 }
 
@@ -920,6 +1046,8 @@ function fieldList() {
         'date' => 'Date',
         'select' => 'Options',
         'file' => 'File',
+        'richtext' => 'Text Editor',
+
         // 'boolean' => 'boolean',
 
 
@@ -1031,11 +1159,13 @@ function getFieldName($field) {
 }
 
 function filePreview($file_name) {
-    return route('preview-document',Crypt::encryptString($file_name));
+
+    return route('preview-documents',Crypt::encryptString($file_name));
 }
 
 
 function invoicePreviewPath($application_no, $appeal_no) {
+    return asset('upload/pdf/'.'invoice_' .$application_no .'_appeal_no_'.$appeal_no.'.pdf');
     return filePreview(asset('upload/pdf/'.'invoice_' .$application_no .'_appeal_no_'.$appeal_no.'.pdf'));
 }
 
@@ -1165,7 +1295,8 @@ function bloodGroup() {
 }
 
 function InvoiceDate($date = Null){
-$date = Carbon\Carbon::parse($date); // Parse the created_at date
+$date = Carbon\Carbon::parse($date)->format('d-m-Y'); // Parse the created_at date
+return $date;
 $day = $date->day; // Get the day part of the date
 
 // Determine the suffix (st, nd, rd, th)
@@ -1183,14 +1314,18 @@ function getOptions($options ,$selected_option = null) {
     $options = explode(',', $options);
     $html = "";
     foreach($options as $option) {
-        $html .= "<option value=".$option.">".$option."</option>";
+        $is_selected = "";
+        if($option == $selected_option) {
+            $is_selected = "selected";
+        }
+        $html .= "<option value=".$option." ". $is_selected.">".$option."</option>";
     }
     return $html;
 }
 
 function appealDetails() {
     return [
-        0 => "Initial Apeeal",
+        0 => "Initial Appeal",
         1 => "First Appeal",
         2 => "Second Appeal"
     ];
@@ -1198,4 +1333,135 @@ function appealDetails() {
 
 function stringLimit($string, $limit) {
     return Illuminate\Support\Str::limit($string, $limit, '...');
+}
+
+function stateList() {
+    return [
+
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Assam",
+        "Bihar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Haryana",
+        "Himachal Pradesh",
+        "Jharkhand",
+        "Karnataka",
+        "Kerala",
+        "Maharashtra",
+        "Madhya Pradesh",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Rajasthan",
+        "Sikkim",
+        "Tamil Nadu",
+        "Tripura",
+        "Telangana",
+        "Uttar Pradesh",
+        "Uttarakhand",
+        "West Bengal",
+        "Andaman & Nicobar (UT)",
+        "Chandigarh (UT)",
+        "Dadra & Nagar Haveli and Daman & Diu (UT)",
+        "Delhi [National Capital Territory (NCT)]",
+        "Jammu & Kashmir (UT)",
+        "Ladakh (UT)",
+        "Lakshadweep (UT)",
+        "Puducherry (UT)",
+    ];
+}
+
+
+
+function getInitials($name) {
+    $words = explode(" ", $name);
+    $initials = "";
+    // $initials = $words[0][0] ?? '';
+    //  $initials .= $words[1][0] ?? '';
+    foreach ($words as $key => $w) {
+        if($key <= 1) {
+            
+         $initials .= $w[0] ?? '';
+        }
+    }
+    return $initials; 
+}
+
+
+
+function lawyerNotifictaionList($filter) {
+    return App\Models\Notification::where($filter)
+    ->where(function($query){
+        $query
+        // ->where(['from_id' => auth()->guard('lawyers')->user()->id, 'from_type' => 'lawyer'])
+        ->orwhere(['to_id' => auth()->guard('lawyers')->user()->id, 'to_type' => 'lawyer']);
+    })
+    
+    ->orderBy('id', 'desc')->get();
+}
+
+
+function customerNotifictaionList($filter) {
+    return App\Models\Notification::where($filter)
+    ->where(function($query){
+        $query
+        // where(['from_id' => auth()->guard('customers')->user()->id, 'from_type' => 'customers'])
+        ->orwhere(['to_id' => auth()->guard('customers')->user()->id, 'to_type' => 'customers']);
+    })
+    
+    ->orderBy('id', 'desc')->get();
+}
+
+
+function lawyerEntryTime($application_id, $lawyer_id) {
+    $data =  RtiApplicationLawyer::where(['application_id' => $application_id, 'lawyer_id' => $lawyer_id])->orderBy('id', 'desc')->first();
+    if($data) {
+        return Carbon\Carbon::parse($data->created_at)->format('d-m-Y g:i A');
+    }
+    return "";
+}
+
+
+
+function getData($data1, $key, $data2 = null, $service_field = null) {
+    // return $key;
+    if(!empty($data1) && isset($data1[$key]) ) {
+        // return json_encode($data1);
+        return $data1[$key] ?? '';
+    }
+    elseif(!empty($data2) && isset($data2[$key]) && !empty($data2[$key])) {
+        return $data2[$key];
+    }
+    elseif(!empty($service_field) && isset($service_field[$key]) && !empty($service_field[$key])) {
+        return $service_field[$key];
+    }
+    return "";
+} 
+
+
+function getTotalHours($rti) {
+    $hours = 0;
+    if($rti->confirmedTime) {
+        $timeDifference = Carbon\Carbon::now()->diffInMinutes(Carbon\Carbon::parse($rti->confirmedTime->created_at));
+        $hours = $timeDifference / 60; // decimal hours
+    }
+    return $hours;
+}
+
+
+function getGST($price) {
+    $company = App\Models\Setting::getSettingData('invoice-setting');
+    $gst = (($company['gst'] ?? 18)/100)*($price ?? 0);
+    return round($gst);
+}
+
+function getGSTNo() {
+    $company = App\Models\Setting::getSettingData('invoice-setting');
+    return $company['gst'] ?? 18;
 }

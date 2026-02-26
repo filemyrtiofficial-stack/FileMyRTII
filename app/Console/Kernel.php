@@ -16,10 +16,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('send-appeal-notification')->dailyAt("10:00");
-        $schedule->command('follow-up-mail')->dailyAt("11:00");
+        // $schedule->command('send-appeal-notification')->dailyAt("10:00");
+        // $schedule->command('follow-up-mail')->dailyAt("11:00");
+        
+        // ADDED: Schedule the command to check for abandoned applications every hour.
+        $schedule->command('app:check-abandoned-applications')->hourly(); 
+        
+        $schedule->command('queue:work')->everyMinute();
     }
-
+    
     /**
      * Register the commands for the application.
      *

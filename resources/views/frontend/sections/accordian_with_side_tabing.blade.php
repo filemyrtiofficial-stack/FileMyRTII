@@ -34,7 +34,7 @@
                                 @foreach($data['category'] as $key =>  $value)
                                     <div id="tab_{{$key}}" class="contact_faq_tab @if($key == 0) active @endif">
                                         <div class="contact_faq_heading">
-                                            <h2>Top queries</h2>
+                                            <h2>{{$data['subtitle'][$key] ?? 'Top queries'}}</h2>
                                         </div>
                                         <div class="faq_item_wrap">
                                         @foreach($data['answer_'.$key] as $answer_key =>  $answer_value)
@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="contact_form_option">
                                                 <div class="form_no">
-                                                    <a href="/backend/public/services" class="theme-btn"><span>Apply Now</span></a>
+                                                    <a href="/services" class="theme-btn"><span>Apply Now</span></a>
                                                 </div>
                                                 <div class="form_yes">
                                                     <div class="rti_form">
@@ -73,9 +73,9 @@
                                                             <div class="form_item">
                                                                 <select class="form_field custom_select" name="reason" id="contact_reason">
                                                                     <option value="">Please select a reason</option>
-                                                                    <option value="reason1">Lorem ipsum dolor sit amet.</option>
-                                                                    <option value="reason2">Lorem ipsum dolor sit amet.</option>
-                                                                    <option value="reason3">Lorem ipsum dolor sit amet.</option>
+                                                                       <option value="General Query">General Query</option>
+                                                                    <option value="Refund Query">Refund Query</option>
+                                                                    <option value="Technical Query">Technical Query</option>
                                                                 </select>
                                                             </div>
                                                             <div class="form_item col_2">
@@ -91,6 +91,10 @@
                                                             </div>
                                                             <div class="form_item">
                                                                 <input class="form_field" type="text" name="message" id="contact_message" placeholder="Message">
+                                                            </div>
+                                                               <div class="form_item">
+                                                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}" ></div>
+                                                                <div id="captcha-error" class="text-left"></div>
                                                             </div>
                                                             <button type="submit" class="theme-btn"><span>Submit</span></button>
                                                    

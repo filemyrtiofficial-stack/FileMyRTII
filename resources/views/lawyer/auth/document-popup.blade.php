@@ -15,9 +15,16 @@
                     <!-- <ul> -->
                         @foreach($data->documents ?? [] as $key => $value)
                         <!-- <li> -->
-                            <a class="doc_btn" href="{{filePreview($value)}}" target="blank">
+                        <div class="relative">
+                       <a class="doc_btn" href="{{filePreview($value)}}" target="blank">
                             <embed src="{{$value}}" width="200" height="200" />
                             </a>
+                            <div class="preview-btn">
+                    <a href="{{filePreview($value)}}" target="blank"> Preview
+                                                        </a>
+                                                        </div>
+                         
+                       </div>
                         <!-- </li> -->
                         @endforeach
                       

@@ -55,8 +55,12 @@
 .blog_area .fs-28 {
   font-size: 1.45833vw;
 }
-.blog_area .fs-20 {
-  font-size: 1.04167vw;
+.footer .fs-20 {
+    font-size: 1.04167vw;
+    color: #fff;
+}
+.footer span {
+       color: #fff;
 }
 
 .footer .fs-24 {
@@ -287,7 +291,11 @@
     .form-field {
       font-size: 16px;
     }
-
+ 
+ 
+    .rti_tabs .rti_tab_list {
+        border-bottom: none;
+    }
     /* about us */
     .about_area .fs-28 {
       font-size: 20px;
@@ -312,5 +320,16 @@
   }
   .team_post .fs-24 {
     font-size: 16px;
-  }
+}
+.form_item select.form_field {
+    background-size: 18px;
+}
+
+.desktop-rti_item {
+    display: none !important;
+}
+.mobile-rti_item {
+    display: block !important;
+}
+
 }

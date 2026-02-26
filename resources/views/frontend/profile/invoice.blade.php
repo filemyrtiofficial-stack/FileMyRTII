@@ -4,6 +4,12 @@
         <meta http-equiv="Content-Type" content="charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <style>
+              @font-face {
+        font-family: 'fa';
+            src: url('{{ storage_path("fonts/fa-solid-900.ttf") }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+    }
                 @font-face {
                     font-display: swap;
                     font-family: 'Poppins';
@@ -72,14 +78,16 @@
                     width: 100%;
                 }
                 body {
-                    margin: 0;
+                    /* margin: 0;
                     padding: 0;
                     background: #e1e1e1;
-                    font-family: "Poppins", sans-serif;
+                 
                     width: 100%;
                     height: 100%;
-                    background-color: #ffffff;
-                    -webkit-font-smoothing: antialiased;
+                    background-color: #e1e1e1;
+                    -webkit-font-smoothing: antialiased; */
+                       font-family: "Poppins", sans-serif;
+                    
                 }
                 div, p, a, li, td {
                     -webkit-text-size-adjust: none;
@@ -105,7 +113,7 @@
                   margin-bottom: 20px;
                 }
                 .wrapper {
-                  padding: 20px;
+                  padding: 60px 0 10px;
                 }
                 .header h1 {
                   font-size: 40px;
@@ -116,23 +124,55 @@
                   text-align: center;
                 }
                 .top-section {
-                  margin-left: 30px;
-                  margin-right: 30px;
+                  background-color: #3070be;
+                  margin-top: 0px;
+                  margin-right: 80px;
+                }
+                .inner-wrapper {
+                  padding-left: 50px;
+                  padding-right: 50px;
+                }
+                .top-section .inner-wrapper {
+                  padding-right: 100px;
                 }
                 .col_left {
                   float: left;
                   width: 50%;
                 }
+                .invoice-logo {
+                  padding: 0px;
+                  border: 1px solid #3070be;
+                  display: inline-block;
+                  margin-top: -18px;
+                  background-color: #ffffff;
+                }
                 .col_right {
                   float: left;
                   width: 50%;
                 }
+                .top-section .col_left {
+                  width: 40%;
+                }
+                .top-section .col_right {
+                  width: 60%;
+                }
                 .address_wrap {
                   text-align: right;
+                  padding-top: 5px;
+                  padding-bottom: 5px;
                 }
                 .address_heading {
+                  font-size: 18pt;
+                  font-weight: 500;
                   margin-top: 0;
-                  margin-bottom: 20px;
+                  margin-bottom: 0px;
+                  color: #fff;
+                }
+                .address {
+                  color: #000;
+                }
+                .top-section .address {
+                  color: #fff;
                 }
                 .clear {
                   clear: both;
@@ -161,15 +201,15 @@
                   display: none;
                 }
                 .middle-section {
-                  margin-left: 30px;
-                  margin-right: 30px;
+                  /* margin-left: 30px;
+                  margin-right: 30px; */
                 }
                 .c_address_wrap {
                   text-align: left;
                 }
                 .c_smallheading {
                   margin-top: 0;
-                  margin-bottom: 20px;
+                  margin-bottom: 5px;
                   font-size: 16px;
                   color: #000000;
                   font-family: 'Poppins', sans-serif;
@@ -178,32 +218,45 @@
                   text-align: left;
                 }
                 .c_largeheading {
-                  margin-top: 0;
+                  margin-top: 10px;
                   margin-bottom: 20px;
-                  font-size: 24px;
+                  font-size: 30px;
                   color: #333333;
                   font-family: 'Poppins', sans-serif;
                   font-weight: 700;
                   line-height: 1;
+                  vertical-align: top;
                   text-align: left;
+                  text-decoration: underline;
+                  text-transform: uppercase;
                 }
-                .billing {
+                .invoice-area {
                   width: 90%;
-                  margin-left: auto;
+                  /* margin-left: auto; */
                 }
-                .billing .address {
+                .invoice-area .invoice-info {
                   text-align: right;
+                }
+                .invoice-info .add_left {
+                  display: inline-block;
+                  font-weight: bold;
+                  padding-right: 5px;
+                }
+                .invoice-info .add_right {
+                  display: inline-block;
+                  width: 120px;
+                  text-align: left;
                 }
                 .s_space {
                   height: 15px;
                 }
                 .order_table {
-                  margin-left: 30px;
-                  margin-right: 30px;
+                  margin-left: 50px;
+                  margin-right: 50px;
                 }
                 .bottom-section {
-                  margin-left: 30px;
-                  margin-right: 30px;
+                  /* margin-left: 30px;
+                  margin-right: 30px; */
                 }
                 .tax {
                   font-size: 16px;
@@ -213,20 +266,34 @@
                   text-align: right;
                 }
                 .price {
-                  font-size: 30px;
+                  font-size: 16px;
                   font-family: 'Poppins', sans-serif;
                   color: #000000;
-                  font-weight: 700;
+                  font-weight: 400;
                   line-height: 1.2;
-                  text-align: right;
+                  text-align: center;
+                }
+                .bottom-line {
+                  height: 1px;
+                  width: 100%;
+                  margin-left: auto;
+                  margin-right: auto;
+                  background-color: #000000;
                 }
 
                 @media (max-width: 420px) {
+                  .wrapper {
+                    padding: 40px 0 10px;
+                  }
                   .dspace {
                     display: none;
                   }
                   .mspace {
                     display: block;
+                  }
+                  .inner-wrapper {
+                    padding-left: 20px;
+                    padding-right: 20px;
                   }
                   .top-section {
                     margin-left: 0;
@@ -243,6 +310,16 @@
                   .col_right {
                     float: none;
                     width: 100%;
+                  }
+                  .top-section .inner-wrapper {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                  }
+                  .top-section .col_right {
+                    width: 100%;
+                  }
+                  .invoice-area .invoice-info {
+                      text-align: left;
                   }
                   .address_wrap {
                     text-align: left;
@@ -267,133 +344,181 @@
                     margin-right: 0;
                   }
                   .system-info {
-                    margin-left: 0;
-                    margin-right: 0;
+                    margin-left: 20px;
+                    margin-right: 20px;
                   }
                 }
+                footer{
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        height: 50px;
+        margin-bottom: 0px;
+        bottom: 0px;
+        text-align: center;
+      }
+
             </style>
 
     </head>
     <body>
+    <footer>
+    <p>{!! $company['invoice_footer'] ?? '' !!}</p>
+                        
+    </footer>
       <div class="full-w-table">
                   <div class="wrapper">
-                    <div class="header">
-                      <h1>Invoice</h1>
-                    </div>
                     <div class="top-section">
+                      <div class="inner-wrapper">
                       <div class="col_left">
-                        
-                        <img src="{{ $logo ?? '' }}" width="130" height="120" alt="logoss" border="0" />
+                        <div class="invoice-logo">
+                          <img src="{{$logo}}" width="130" height="120" alt="logo" border="0" />
+                        </div>
+                        <div class="mspace"></div>
                       </div>
                       <div class="col_right">
                         <div class="address_wrap">
                           <h2 class="address_heading">{{$company['company_name'] ?? ''}}</h2>
                           <div class="address">
-                           
-                            {{$company['address'] ?? ''}}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="clear"></div>
-                    </div>
-                    <div class="dspace"></div>
-                    <div class="mspace"></div>
-                    <div class="seperator"></div>
-                    <div class="dspace"></div>
-                    <div class="mspace"></div>
-                    <div class="middle-section">
-                      <div class="col_left">
-                        <div class="c_address_wrap">
-                          <h5 class="c_smallheading">Bill To</h5>
-                          <h2 class="c_largeheading">{{$application['first_name']}} {{$application['last_name']}}</h2>
-                          <div class="address">
-                          {{$application['address']}} 
+                          {!! $company['address'] ?? '' !!}
                           </div>
                           <div class="mspace"></div>
                         </div>
                       </div>
-                      <div class="col_right">
-                        <div class="billing">
-                          <div class="address">
-                            Invoice Number: {{$application->invoice_number ?? ''}} <br>
-                            <div class="s_space"></div>
-                          
-                            Date: {{ InvoiceDate($application->created_at) }}
-                         <br>
-                            <div class="s_space"></div>
-                            Paid: {{ $paymentdata['method']}} <br>
-                            <div class="s_space"></div>
-                            <!-- Bank: Null -->
-                          </div>
-                        </div>
-                      </div>
                       <div class="clear"></div>
+                    </div>
                     </div>
                     <div class="dspace"></div>
                     <div class="mspace"></div>
-                    <div class="seperator"></div>
+                    <div class="middle-section">
+                      <div class="inner-wrapper">
+                          <div class="col_left">
+                            <div class="c_address_wrap">
+                              <h2 class="c_largeheading">Invoice</h2>
+                            </div>
+                          </div>
+                          <div class="col_right">
+                            <div class="invoice-area">
+                              <div class="invoice-info">
+                                <span class="add_left">Date:</span>
+                                <span class="add_right">{{ InvoiceDate($application->created_at) }}</span>
+                              </div>
+                              <div class="invoice-info">
+                                <span class="add_left">Invoice No:</span>
+                                <span class="add_right">{{$application->invoice_number ?? ''}}</span>
+                              </div>
+                              <div class="invoice-info">
+                                <span class="add_left">Paid by:</span>
+                                <span class="add_right">{{ $paymentdata['method']}}</span>
+                              </div>
+                               @if($paymentdata['method'] == 'upi')
+                                  <div class="invoice-info">
+                                    <span class="add_left">UPI Id:</span>
+                                    <span class="add_right">{{ $paymentdata['vpa']}}</span>
+                                  </div>
+                              @endif
+                            </div>
+                          </div>
+                          <div class="clear"></div>
+                      </div>
+                      <div class="dspace"></div>
+                      <div class="mspace"></div>
+                      <div class="inner-wrapper">
+                        <div class="col_left">
+                          <div class="c_address_wrap">
+                            <h5 class="c_smallheading">Bill TO</h5>
+                            <div class="address">
+                            {{$application['first_name']}} {{$application['last_name']}}, <br>
+                            {{$application['address']}}  
+                            <br>
+                            {{$application['city']}} {{$application['state']}} <br>
+                            {{$application['postal_code']}}
+                            </div>
+                            <div class="mspace"></div>
+                          </div>
+                        </div>
+                        <div class="col_right">
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    </div>
                     <div class="dspace"></div>
                     <div class="mspace"></div>
                     <div class="order_table">
-                      <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" style="box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15); -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15); -moz-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15); -o-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15); -ms-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);">
+                    <?php
+                      $gst = (18/100)*($application->charges ?? 0);
+                      ?>
+                       <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" style="">
                         <tbody>
                             <tr>
                                 <td height="10" colspan="4"></td>
                             </tr>
-                          <tr>
-                            <th style="font-size: 16px; color: #0384d4; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: top; text-align: center; padding: 20px 10px 10px;" width="50%" align="center">
-                            Particulars
+                          <tr style="background-color: #3070be;">
+                            <th style="font-size: 16px; color: #ffffff; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: middle; text-align: center; padding: 10px;" width="5%" align="center">
+                              Sl. No.
                             </th>
-                            <th style="font-size: 16px; color: #0384d4; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: top; text-align: center; padding: 20px 10px 10px;" align="center">
+                            <th style="font-size: 16px; color: #ffffff; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: middle; text-align: center; padding: 10px; border-left: 1px solid rgba(255, 255, 255, 0.4); border-right: 1px solid rgba(255, 255, 255, 0.4);" width="50%" align="center">
+                              Product
+                            </th>
+                            <th style="font-size: 16px; color: #ffffff; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: middle; text-align: center; padding: 10px 5px 10px; border-right: 1px solid rgba(255, 255, 255, 0.4);"  width="8%" align="center">
                               Qty
                             </th>
-                            <!-- <th style="font-size: 16px; color: #0384d4; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: top; text-align: center; padding: 20px 10px 10px;" align="center">
-                              Prize
-                            </th> -->
-                            <th style="font-size: 16px; color: #0384d4; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: top; text-align: center; padding: 20px 10px 10px;" align="center">
+                            <th style="font-size: 16px; color: #ffffff; font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1; vertical-align: middle; text-align: center; padding: 10px;" align="center">
                               Amount
                             </th>
                           </tr>
                           <tr>
-                            <td height="1" style="background: #ffffff;" colspan="4"></td>
-                          </tr>
-                          <tr>
-                            <td height="5" colspan="4"></td>
-                          </tr>
-                          <tr>
-                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1.4; vertical-align: top; text-align: left; padding:10px 10px 10px 20px;" class="article">
+                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1.4; vertical-align: middle; text-align: left; padding:10px;" class="article">
+                              01
+                            </td>
+                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1.4; vertical-align: middle; text-align: left; padding:10px;" class="article">
                               RTI Application No. {{$application->application_no ?? ''}}
                             </td>
-                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1; vertical-align: top; text-align: center; padding:10px;">1</td>
-                            <!-- <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1; vertical-align: top; text-align: center; padding:10px;" align="center">Rs.599</td> -->
-                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1; vertical-align: top; text-align: center; padding:10px;" align="center">Rs.{{$application->charges ?? ''}}</td>
+                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1; vertical-align: middle; text-align: center; padding:10px 5px 10px;">01</td>
+                            <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1; vertical-align: middle; text-align: right; padding:10px 40px 10px 10px;" align="center">
+                              <span style="display: inline-block;">Rs.</span>
+                              <span style="display: inline-block; width: 100px;"> {{($application->charges ?? 0)}}</span>
+                            </td>
                           </tr>
                           <tr>
-                            <td height="1" colspan="4" style="border-bottom:1px solid #ffffff"></td>
+                          <td colspan="3" style="font-size: 16px; color: #000000; font-family: Helvetica, Arial, sans-serif; font-weight: 400; line-height: 1; vertical-align: top; text-align: center; padding:10px;" align="center"></td>
+                          <!-- <td style="font-size: 20px; color: #000000; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 1; vertical-align: top; text-align: center; padding:10px 40px 10px 10px; text-align: right;border-bottom: 1px solid #000" align="center"><span style="display: inline-block;">GST 18%</span><span style="display: inline-block; width: 100px;">{{$application->charges ?? ''}}</span></td> -->
+                          <!-- <td style="font-size: 16px; color: #000000; font-family: Helvetica, Arial, sans-serif;line-height: 1; vertical-align: top; text-align: center; padding:10px 40px 10px 10px; text-align: right; display:flex" align="center"><span style="display: inline-block;">GST 18%</span><span style="display: inline-block; width: 100px;">{{$application->charges ?? ''}}</span></td> -->
+                          <td style="font-size: 16px; color: #333333; font-family: 'Poppins', sans-serif; font-weight: 400; line-height: 1; vertical-align: middle; text-align: right; padding:10px 40px 10px 10px;border-bottom: 1px solid #000" align="center">
+                              <span style="display: inline-block;">GST {{getGSTNo()}}%</span>
+                              <span style="display: inline-block; width: 80px;">{{$application->gst}}</span>
+                            </td>
+                          <!-- <td style="font-size: 16px; color: #000000; font-family: Helvetica, Arial, sans-serif; font-weight: 400; line-height: 1; vertical-align: top; text-align: center; padding:5px 40px 3px 10px; text-align: right;border-bottom: 1px solid #000" align="center"><span style="display: inline-block;">GST 18%</span><span style="display: inline-block; width: 100px;">{{$gst}}</span></td>  -->
                           </tr>
-                         
                           <tr>
-                            <td height="20" colspan="4"></td>
+                            <td colspan="3" style="font-size: 16px; color: #000000; font-family: Helvetica, Arial, sans-serif; font-weight: 400; line-height: 1; vertical-align: top; text-align: center; padding:10px;" align="center"></td>
+                            <td style="font-size: 20px; color: #000000; font-family: Helvetica, Arial, sans-serif; font-weight: bold; line-height: 1; vertical-align: top; text-align: center; padding:10px 40px 10px 10px; text-align: right;" align="center"><span style="display: inline-block;">Total</span><span style="display: inline-block; width: 100px;">{{$application->final_price ?? ''}}</span></td>
+                          </tr>
+                          <tr>
+                            <td height="1" style="background: #000000;" colspan="4"></td>
+                          </tr>
+                          <tr>
+                            <td height="50" colspan="4"></td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
+                    
+                    <div class="system-info">
+                      <i>This is a computer generated invoice and does not require signature.</i>
+                    </div>
+                    
+                    <div class="dspace"></div>
+                    <div class="mspace"></div>
+                    <div class="dspace"></div>
+                    <div class="mspace"></div>
+                    <div class="dspace"></div>
+                    <div class="mspace"></div>
                     <div class="dspace"></div>
                     <div class="mspace"></div>
                     <div class="bottom-section">
-                      <!-- <div class="tax">
-                        GST Tax (18%): 107.28
-                      </div> -->
-                      <div class="dspace"></div>
-                      <div class="mspace"></div>
-                      <div class="price">
-                        Total: Rs.{{$application->charges ?? ''}}
-                      </div>
-                    </div>
-                    <div class="dspace"></div>
-                    <div class="mspace"></div>
-                    <div class="system-info">
-                      THIS IS COMPUTER GENERATED INVOICE AND DOES NOT REQUIRE SIGNATURE
+                      <div class="bottom-line"></div>
+                   
                     </div>
                   </div>
       </div>

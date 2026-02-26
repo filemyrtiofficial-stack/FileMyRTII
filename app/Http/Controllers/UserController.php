@@ -16,10 +16,10 @@ class UserController extends Controller
     public function __construct(AuthInterface $authRepository)
     {
         $this->authRepository = $authRepository;
-        $this->middleware(['can:Manage User']); 
-        $this->middleware(['can:Delete User'], ['only' => ['destroy']]); 
-        $this->middleware(['can:Create User'], ['only' => ['create', 'store']]); 
-        $this->middleware(['can:Edit User'], ['only' => ['edit', 'update']]); 
+        $this->middleware(['can:Manage User']);
+        $this->middleware(['can:Delete User'], ['only' => ['destroy']]);
+        $this->middleware(['can:Create User'], ['only' => ['create', 'store']]);
+        $this->middleware(['can:Edit User'], ['only' => ['edit', 'update']]);
     }
 
     /**
@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        
+
         $roles = Role::get();
         return view('pages.user.create', compact('roles'));
     }
@@ -54,8 +54,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required",
-            'email' => "required|email|unique:users,email",
+            'name' => "required|max:45|regex:/^[a-zA-Z\s.]+$/u",
+            'email' => "required|email|regex:/(.+)@(.+)\.(.+)/i|unique:users,email|max:45",
             'status' => "required",
             'role' => 'required'
         ]);
@@ -101,13 +101,13 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => "required",
-            'email' => "required|email|unique:users,email,".$id,
+            'name' => "required|regex:/^[a-zA-Z\s.]+$/u|max:45",
+            'email' => "required|email|regex:/(.+)@(.+)\.(.+)/i|max:250|unique:users,email,".$id,
             'status' => "required",
             'role' => 'required'
 
         ]);
-        
+
         if($validator->fails()) {
             return response(['errors' => $validator->errors()], 422);
         }
@@ -130,4 +130,27 @@ class UserController extends Controller
             return response(['error' => $ex->getMessage()], 500);
         }
     }
+    
+    public function myProfile() {
+        $data = auth()->user();
+
+        return view('pages.user.my-profile', compact('data'));
+
+    }
+    public function updateProfile(Request $request)
+    {
+        $id = auth()->user()->id;
+        $validator = Validator::make($request->all(), [
+            'name' => "required|regex:/^[a-zA-Z\s.]+$/u|max:45",
+            'email' => "required|email|regex:/(.+)@(.+)\.(.+)/i|max:200|unique:users,email,".$id,
+
+        ]);
+
+        if($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+        $data = $this->authRepository->update($request, $id);
+        return $data;
+    }
+
 }

@@ -16,7 +16,20 @@ class TeamMember extends Model
 
         $list = TeamMember::orderBy('id', 'desc');
         if(!empty($filters)) {
-            $list->where($filters);
+            foreach($filters as $key => $filter) {
+                if($filter != null) {
+                    if($key == 'search') {
+                        $list->where(function($query) use($filter) {
+                            $query->where('name', 'like', '%'.$filter.'%')
+                            ->orwhere('expertise', 'like', '%'.$filter.'%');
+                        });
+                    }
+                    else {
+                        $list->where($key, $filter);
+
+                    }
+                }
+            }
         }
         if(isset($filter_data['ids'])) {
             $list->wherein('id', $filter_data['ids']);

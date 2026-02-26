@@ -46,4 +46,8 @@ class ServiceTemplate extends Model
         return ServiceTemplate::find($id);
     }
 
+    public function service() {
+        return $this->belongsTo(Service::class, 'service_id', 'id');
+    }
+
 }

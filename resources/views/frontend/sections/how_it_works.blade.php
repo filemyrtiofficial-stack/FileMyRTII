@@ -3,7 +3,7 @@
         <div class="row process_head_row">
             <div class="col-12 col-sm-9">
                 <div class="section_heading">
-                    <h3 class="fs-56 fw-700">{!! $data['title'] ?? '' !!}</h3>
+                    <h2 class="fs-56 fw-700">{!! $data['title'] ?? '' !!}</h2>
                 </div>
             </div>
             @if(isset($data['how_it_work_link_title']) && !empty($data['how_it_work_link_title']))
@@ -32,7 +32,7 @@
                                 <div class="process_icon">
                                     <img class="img-fluid" src="{{asset($details['image'] ?? '')}}" alt="{{$details['image_alt'] ?? ''}}">
                                 </div>
-                                <div class="process_title fs-36 fw-700">{{$details['title'] ?? ''}}</div>
+                              <h3 class="process_title fs-36 fw-700">{{$details['title'] ?? ''}}</h3>
                                 <div class="fs-24">
                                     <p>{{$details['description'] ?? ''}}</p>
                                 </div>

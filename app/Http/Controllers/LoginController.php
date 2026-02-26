@@ -22,11 +22,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'regex:/(.+)@(.+)\.(.+)/i'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' =>  1])) {
             $request->session()->regenerate();
 
             return redirect()->intended('admin/dashboard');

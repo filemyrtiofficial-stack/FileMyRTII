@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [L,QSA]
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW PWPROTECTID:qRBxHvzAcQ
+#AuthType Basic
+#AuthName "Restricted Access"
+#AuthUserFile /home/u799500030/domains/devsproject.com/public_html/filemyrit/.htpasswd
+#Require valid-user
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE qRBxHvzAcQ:PWPROTECTID
+
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ index.php [L]
+</IfModule>

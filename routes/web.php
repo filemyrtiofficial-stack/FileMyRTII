@@ -61,10 +61,30 @@ use App\Mail\MyTestEmail;
 use App\Mail\NewsletterMail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\RtiApplication;
+use App\Http\Controllers\ServiceFieldController;
+
 
 Route::get("test-mail", function(){
-	$data = RtiApplication::where(['application_no' => $_GET['application_no']])->first();
-	return view('frontend.profile.rti-file', compact('data'));
+    	$application = RtiApplication::where('id', '1477')->first();
+
+
+            $company = App\Models\Setting::getSettingData('invoice-setting');
+
+            $paymentdata = json_decode($application->success_response, true);
+
+            $logo = asset($company['invoice_logo'] ?? '');
+
+            $signature = public_path($company['invoice_logo'] ?? '');
+            $logo = "data:image/png;base64," . base64_encode(file_get_contents($signature));
+         
+
+            $pdf = PDF::loadView('frontend.profile.invoice', compact('company', 'application', 'paymentdata', 'logo'));
+return $pdf;
+	$data = RtiApplication::first();
+	$paymentdata = json_decode($data->success_response, true);
+	// return $paymentdata['created_at'] ?? ;
+	// return date("d-m-Y", $paymentdata['created_at']);
+	// return view('frontend.profile.rti-file', compact('data'));
 // 	header("Content-type: application/vnd.ms-word");
 //   header("Content-Disposition: attachment;Filename=document_name.doc");
 //   echo '<html>
@@ -94,16 +114,21 @@ Route::get("test-mail", function(){
 	// }
 });
 
+
+use App\Http\Controllers\PostController;
+Route::resource('posts', PostController::class);
+
 Route::get("subscribe-now", function(){
+
 	$name = "Test Coder";
 
     // The email sending is done using the to method on the Mail facade
-    if(Mail::to('developmentd299@gmail.com')->send(new NewsletterMail())){
-		echo "yes";
-	}
-	else {
-		echo "no";
-	}
+    // if(Mail::to('developmentd299@gmail.com')->send(new NewsletterMail())){
+	// 	echo "yes";
+	// }
+	// else {
+	// 	echo "no";
+	// }
 });
 
 // Route::get("test-mailer", function(){
@@ -127,8 +152,13 @@ Route::get("subscribe-now", function(){
 	Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
-	Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+	Route::group(['middleware' => ['auth', 'admin-auth'], 'prefix' => 'admin'], function () {
 		Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
+
+	Route::get('/my-profile', [UserController::class, 'myProfile'])->name('admin.my-profile');
+		Route::post('/my-profile', [UserController::class, 'updateProfile'])->name('admin.update-profile');
+
+
 
 		Route::resource('users', UserController::class);
 		Route::resource('enquiries', EnquiryController::class);
@@ -141,7 +171,20 @@ Route::get("subscribe-now", function(){
 
 		Route::post('/assign-lawyer/{id}', [ServiceController::class, 'assignLawyer'])->name('rti.applications.assign.lawyer');
 		Route::get('/rtiapplications', [ServiceController::class, 'rtiApplicationsList'])->name('rti.applications.list');
+		Route::get('/rtiapplications-export', [ServiceController::class, 'export'])->name('rti.applications.export');
+		Route::get('/rtiapplications/{id?}/edit', [ServiceController::class, 'editRTI'])->name('rtiapplication.edit');
+		Route::post('/rtiapplications/{id?}', [ServiceController::class, 'updateRTIApplication'])->name('rtiapplication.update');
+
+		Route::delete('/rtiapplications/{id}', [ServiceController::class, 'deleteRTI'])->name('rtiapplication.delete');
+
+			Route::delete('/rtiapplications/{id?}/{index}', [ServiceController::class, 'deleteRTIApplicationDocument'])->name('rtiapplication.document.delete');
+
 		Route::get('/rtiapplications/{id?}', [ServiceController::class, 'view'])->name('rtiapplication.view');
+		
+		Route::get('/refund-request', [ServiceController::class, 'refundRequestList'])->name('refund-request.list');
+
+		Route::post('/refund-request/{id?}', [ServiceController::class, 'refundRequestUpdate'])->name('refund-request.update');
+
 
 		Route::get('/rticloserequest', [ServiceController::class, 'rticloserequestList'])->name('rticloserequest.list');
 		Route::post('/approvelayerrequest/{id?}', [ServiceController::class, 'approveLawyerRequest'])->name('approve.lawyer.request');
@@ -154,6 +197,7 @@ Route::get("subscribe-now", function(){
 
 		Route::resource('{service_id}/service-template', ServiceTemplateController::class);
 
+		Route::resource('{service_id}/service-field', ServiceFieldController::class);
 
 
 		Route::get('/update-service-category-section/{service_category_id}/{section_type}/{id?}', [ServiceCategoryController::class, 'getSectionservices'])->name('get-service-category-section');
@@ -161,7 +205,18 @@ Route::get("subscribe-now", function(){
 
 		Route::resource('service-category', ServiceCategoryController::class);
 
+        Route::get('lawyers-export',[LawyerController::class,'export'])->name('lawyers.export');
+
 		Route::resource('lawyers', LawyerController::class);
+		
+		    Route::get('mail-template',[CustomerController::class,'mailTemplateIndex'])->name('mail-template.index');
+        Route::post('mail-template',[CustomerController::class,'mailTemplateStore'])->name('mail-template.store');
+        Route::post('mail-template/{id}',[CustomerController::class,'mailTemplateUpdate'])->name('mail-template.update');
+        Route::post('send-mail',[CustomerController::class,'sendMail'])->name('send-mail');
+
+		
+		Route::get('customers-export',[CustomerController::class,'export'])->name('customer.export');
+
 		Route::resource('customers', CustomerController::class);
 
 		Route::resource('pio', PioController::class);
@@ -187,6 +242,8 @@ Route::get("subscribe-now", function(){
 		Route::resource('template-section', SectionController::class);
 		// Route::resource('settings/{type?}', SettingController::class);
 		Route::resource('testimonials', TestimonialController::class);
+		Route::get('/newsletter-export', [NewsletterController::class, 'newsletterExport'])->name('newsletter-export');
+
 		Route::resource('newsletter', NewsletterController::class);
 		Route::resource('roles', RoleController::class);
 
@@ -198,6 +255,9 @@ Route::get("subscribe-now", function(){
 		Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 	});
+
+	Route::get('download-my-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('download-rti');
+
 
 
 	Route::group([ 'prefix' => 'lawyer'], function () {
@@ -212,6 +272,10 @@ Route::get("subscribe-now", function(){
 			Route::get('myrti/{application_no?}/{tab?}', [LawyerRtiController::class, 'myRti'])->name('lawyer.my-rti');
 			Route::get('draft-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.draft-rti');
 			Route::post('draft-rti/{application_no?}', [LawyerRtiController::class, 'processRTIApplication'])->name('lawyer.send-for-approval');
+			Route::post('send-tocustomer/{revision_id?}', [LawyerRtiController::class, 'sendDraftToCustomer'])->name('lawyer.send-customer-for-approval');
+			
+			
+			
 			Route::post('assign-courier/{revision_id?}', [LawyerRtiController::class, 'assignCourierTracking'])->name('lawyer.assign-courier');
 
 			Route::post('send-query/{application_id?}', [LawyerRtiController::class, 'sendQuery'])->name('lawyer.send-query');
@@ -226,9 +290,13 @@ Route::get("subscribe-now", function(){
 			Route::post('upload-final-rti/{application_id?}', [LawyerRtiController::class, 'uploadFinalRTI'])->name('lawyer.upload-final-rti');
 			Route::get('rt-list', [LawyerRtiController::class, 'rtiList'])->name('lawyer.rti-list');
 
+			Route::post('send-reminder/{revision_id?}', [LawyerRtiController::class, 'sendReminder'])->name('lawyer.send-reminder');
+
 			Route::get('download-rti/{application_no?}', [LawyerRtiController::class, 'draftApplication'])->name('lawyer.download-rti');
+			Route::get('get-notification-mail/{id?}', [LawyerRtiController::class, 'getNotification'])->name('lawyer.get-notification-mail');
 
-
+			
+			
 
 		});
 
@@ -247,6 +315,7 @@ Route::get("subscribe-now", function(){
 
 
 	Route::group(['middleware' => 'customer-auth'], function () {
+		Route::get('get-notification-mail/{id?}', [FrontendCustomerController::class, 'getNotification'])->name('customer.get-notification-mail');
 
 		Route::get('my-rtis/{application_no}/{tab?}', [FrontendCustomerController::class, 'myRti'])->name('my-rtis');
 		Route::post('change-password', [FrontendAuthController::class, 'changePassword'])->name('customer.change-password');
@@ -258,6 +327,7 @@ Route::get("subscribe-now", function(){
 
 		Route::post('rti-appeal/{application_id?}', [FrontendCustomerController::class, 'rtiAppeal'])->name('rti-appeal');
 
+		Route::post('customer-rti-refund-request/{id?}', [FrontendCustomerController::class, 'customerRtiRefundRequest'])->name('customer.rti.refund-request');
 
 
 		Route::post('customer-rti-delete', [FrontendCustomerController::class, 'customerRtiDelete'])->name('customer.rti.delete');
@@ -277,13 +347,18 @@ Route::get("subscribe-now", function(){
 	Route::get('/invoice-pdf/{application_no}', [FrontendController::class, 'invoicePdf'])->name('invoice-pdf');
 
 Route::post('/subscribe-now', [FrontendController::class, 'sendNewsletter'])->name('subscribe-now');
+Route::get('/preview-documents/{document?}', [FrontendController::class, 'previewDocument'])->name('preview-documents');
 
 Route::post('/service-form', [FrontendController::class, 'serviceFormAction'])->name('frontend.service-form');
 Route::post('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success');
 Route::post('/udpate-payment-failed', [FrontendController::class, 'updatePaymentFailure'])->name('update.payment.failed');
 Route::get('/apply/{service_category}/{service_slug?}', [FrontendController::class, 'serviceForm'])->name('frontend.service.form');
 Route::get('/service/{service_category}/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
-Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1	');
+Route::get('/thank-you', [FrontendController::class, 'udpatePaymentSuccess'])->name('update.payment.success1');
+
+Route::post('/verify-tracking-rti', [FrontendController::class, 'verifyTrackingRTI'])->name('verify-tracking-rti');
+Route::get('/track-rti/{application_id}/{tab?}', [FrontendController::class, 'trackingRTI'])->name('track-my-rti');
+
 
 // Route::get('/service/{service_slug?}', [FrontendController::class, 'serviceDetails'])->name('frontend.service');
 Route::get('/blog/{slug}', [FrontendController::class, 'blogDetail'])->name('blog-details');
@@ -295,7 +370,17 @@ Route::post('/blog-Comment', [FrontendController::class, 'blogComment'])->name('
 
 Route::get('/sample-rti-template/{service_id}', [FrontendController::class, 'sampleRtiTemplate'])->name('sample-rti-template');
 
-Route::post('/search-pio-adress', [PioController::class, 'searchPIO'])->name('search-pio-adress');
+Route::post('/search-pio-adress', [FrontendController::class, 'searchPIO'])->name('search-pio-adress');
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    return "All caches cleared!";
+});
 
 
 

@@ -47,6 +47,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                         <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Copyright</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" value="{{$data['copyright'] ?? ''}}" name="copyright" data-lable="copyright" id="copyright">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label class="form-label">header Timing</label>
@@ -91,28 +99,65 @@
                                     <hr>
                                     <h5><strong>Social Media Links</strong></h5>
                                     <div class="table-responsive">
-                                        <table class="table">
+                                          <table class="table social-media-list"  id="sortable_product">
+                                             @if(isset($data['social_link']))
+                                                @foreach($data['social_link'] as $key => $value)
+                                                <tr class="draggable"  id="row{{  $key }}"  draggable="true" productID="{{ $key}}">
+                                                    <th>
+                                                    <div class="input-group">
+                                                        <input type="file" class=" upload-image dropify1 icon-list" id="icon_1">
+                                                        <div class="image-collection mt-3" >
+                                                            <img src="{{asset($data['icon'][$key] ?? '')}}" class="preview" alt="" width="100">
+                                                            <input hidden type="text"   class="form-control image-input" name="icon[]" data-lable="icon" id="icon" value="{{$data['icon'][$key] ?? ''}}">
+                                                        </div>
+                                                    </div>
+                                                    </th>
+                                                    <th><input type="text" name="social_link[]" id="linkedin" class="form-control" value="{{$value}}"></th>
+                                                    <th>
+                                                        <button type="button" class="btn btn-sm btn-danger remove-social"><i class="fa fa-trash"></i></button>
+                                                    </th>
+                                                </tr>
+                                                @endforeach
+                                            @else
                                             <tr>
-                                                <th>Linkedin</th>
-                                                <th><input type="text" name="linkedin" id="linkedin" class="form-control"></th>
+                                                <th>
+                                                <div class="input-group">
+                                                    <input type="file" class=" upload-image dropify1 icon-list" id="icon_1">
+                                                    <div class="image-collection mt-3" >
+                                                        <input hidden type="text"   class="form-control image-input" name="icon[]" data-lable="icon" id="icon">
+                                                    </div>
+                                                </div>
+                                                </th>
+                                                <th><input type="text" name="social_link[]" id="linkedin" class="form-control"></th>
+                                                <th>
+                                                        <button type="button" class="btn btn-sm btn-danger remove-social"><i class="fa fa-trash"></i></button>
+                                                    </th>
                                             </tr>
-                                            <tr>
-                                                <th>Facebook</th>
-                                                <th><input type="text" name="facebook" id="facebook" class="form-control"></th>
-                                            </tr>
-                                            <tr>
-                                                <th>Twitter</th>
-                                                <th><input type="text" name="twitter" id="twitter" class="form-control"></th>
-                                            </tr>
-                                            <tr>
-                                                <th>Youtube</th>
-                                                <th><input type="text" name="youtube" id="youtube" class="form-control"></th>
-                                            </tr>
-                                            <tr>
-                                                <th>Instagram</th>
-                                                <th><input type="text" name="instagram" id="instagram" class="form-control"></th>
-                                            </tr>
+                                            @endif
+                                            <!--<tr>-->
+                                            <!--    <th>Linkedin</th>-->
+                                            <!--    <th><input type="text" name="linkedin" id="linkedin" class="form-control"></th>-->
+                                            <!--</tr>-->
+                                            <!--<tr>-->
+                                            <!--    <th>Facebook</th>-->
+                                            <!--    <th><input type="text" name="facebook" id="facebook" class="form-control"></th>-->
+                                            <!--</tr>-->
+                                            <!--<tr>-->
+                                            <!--    <th>Twitter</th>-->
+                                            <!--    <th><input type="text" name="twitter" id="twitter" class="form-control"></th>-->
+                                            <!--</tr>-->
+                                            <!--<tr>-->
+                                            <!--    <th>Youtube</th>-->
+                                            <!--    <th><input type="text" name="youtube" id="youtube" class="form-control"></th>-->
+                                            <!--</tr>-->
+                                            <!--<tr>-->
+                                            <!--    <th>Instagram</th>-->
+                                            <!--    <th><input type="text" name="instagram" id="instagram" class="form-control"></th>-->
+                                            <!--</tr>-->
                                         </table>
+                                    </div>
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-sm btn-secondary add-more-social-media">Add More</button>
                                     </div>
                                 </div>
                             </div>
@@ -132,3 +177,52 @@
     </div>
 </form>
 @endsection
+@push('js')
+<script>
+    $(document).on('change', '.icon-list', function(event) {
+        var input = event.target;
+        let preview =  $(this).parents().eq(2).find('.image-collection');
+        $(this).parents().eq(2).find('.image-collection img').remove()
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // console.log(e.target.result)
+                preview.append(`<img class="preview" alt="" width="100" src="${e.target.result}" target="blank" >`)
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+    $(document).on('click', '.add-more-social-media', function(e){
+        $('.social-media-list').append(`<tr class="draggable"  draggable="true">
+                                                 <th>
+                                                <div class="input-group">
+                                                    <input type="file" class=" upload-image dropify1 icon-list" id="icon_1">
+                                                    <div class="image-collection mt-3" >
+                                                        <input hidden type="text"   class="form-control image-input" name="icon[]" data-lable="icon" id="icon">
+                                                    </div>
+                                                </div>
+                                                </th>
+                                                <th><input type="text" name="social_link[]" id="linkedin" class="form-control"></th>
+                                                  <th>
+                                                        <button type="button" class="btn btn-sm btn-danger remove-social"><i class="fa fa-trash"></i></button>
+                                                    </th>
+                                            </tr>`);
+                                            reorder();
+    })
+    $(document).on('click', '.remove-social', function(e){
+        $(this).parents().eq(1).remove();
+        reorder();
+
+    })
+    function reorder() {
+        let index = 1;
+        $('.icon-list').each(function(){
+            $(this).attr('id', 'icon_'+index);
+            $(this).parents().eq(1).attr('id', 'row'+index).attr('productID', index)
+            index++;
+        })
+    }
+</script>
+@endpush

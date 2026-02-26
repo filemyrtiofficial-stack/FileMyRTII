@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Dashboard'])
 
-    
+
     <div class="row">
             <div class="col-md-12 grid-margin">
               <div class="row">
@@ -29,12 +29,12 @@
             </div>
           </div>
           <div class="row">
-            
+
             <div class="col-md-3 stretch-card transparent">
                 <div class="card card-tale">
                 <div class="card-body">
-                    <p class="mb-4">Total Blog</p>
-                    <p class="fs-30 mb-2">40</p>
+                    <p class="mb-4">Pending Refund Request</p>
+                    <p class="fs-30 mb-2">{{count($refund_request)}}</p>
                 </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 mt-3">
                 <div class="card">
                     <div class="card-header">
@@ -118,7 +118,7 @@
                                 <br>
                                 <h5>{{count($second_application)}}</h5>
                             </div>
-                           
+
 
                         </div>
                     </div>
@@ -138,18 +138,18 @@
                                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Name   </th>
                                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email
                                       </th>
-                                     
-                                      
-                                      
+
+
+
                                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number   </th>
-                                    
+
                                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Name   </th>
                                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Service Category </th>
                                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">  Payment Status </th>
                                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                           Status
                                       </th>
-                                   
+
                                       <th
                                           class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                           Action</th>
@@ -161,7 +161,7 @@
                                       <td>
                                           <div class="d-flex px-3 py-1">
                                               <div class="d-flex flex-column justify-content-center">
-                                                  <h6 class="mb-0 text-sm">{{$item->application_no}}</h6>
+                                                 <a href="{{route('rtiapplication.view', $item->id)}}"> <h6 class="mb-0 text-sm">{{$item->application_no}}</h6></a>
                                               </div>
                                           </div>
                                       </td>
@@ -186,7 +186,7 @@
                                               </div>
                                           </div>
                                       </td>
-                                      
+
                                       <td>
                                           <div class="d-flex px-3 py-1">
                                               <div class="d-flex flex-column justify-content-center">
@@ -197,7 +197,7 @@
                                       <td>
                                           <div class="d-flex px-3 py-1">
                                               <div class="d-flex flex-column justify-content-center">
-                                                  <h6 class="mb-0 text-sm">{{$item->serviceCategory->name ?? ''}}</h6>
+                                                  <h6 class="mb-0 text-sm">{{$item->service->category->name ?? ''}}</h6>
                                               </div>
                                           </div>
                                       </td>
@@ -208,31 +208,31 @@
                                               </div>
                                           </div>
                                       </td>
-      
+
                                         <td>
                                           <span class="{{applicationStatus()[$item->status]['class'] ??''}}"><b>{{applicationStatus()[$item->status]['name'] ??''}}</b></span>
                                       </td>
-                                     
+
                                       <td class="align-middle text-end">
                                           <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                         
+
                                               <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary"
                                                   href="{{route('rtiapplication.view', $item->id)}}">View</a>
                                           </div>
                                       </td>
-                                      
+
                                   </tr>
                                   @endforeach
-      
+
                               </tbody>
                           </table>
                       </div>
                   </div>
                 </div>
-               
+
             </div>
             <div class="col-md-6 mt-3">
-               
+
 
                 <div class="card mt-3">
                     <div class="card-header">
@@ -252,6 +252,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                               
+
+                               
+                                                <?php
+                                                 $lawyer_html = "";
+                                                 foreach(App\Models\Lawyer::list(false) as $item) {
+                                    $lawyer_html .= '<option value="'.$item->id.'">'.$item->first_name.' '.$item->last_name.' ('.$item->email.') </option>';
+                                                 }
+                                    ?>
                                     @foreach($close_request as $item)
                                     <tr>
                                         <td>
@@ -265,7 +274,7 @@
                                         <td>
                                             <a href="{{route('lawyers.edit',( $item->lawyer->id ?? ''))}}" target="blank">{{$item->lawyer->first_name ?? ""}} {{$item->lawyer->last_name ?? ""}}</a>
                                         </td>
-                                    
+
                                         <td>
                                             <div class="d-flex px-3 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -273,7 +282,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                    
+
                                         <td>
                                             <span class="{{applicationCloseRequestsStatus()[$item->status]['class'] ??''}}"><b>{{applicationCloseRequestsStatus()[$item->status]['name'] ??''}}</b></span>
                                         </td>
@@ -294,26 +303,42 @@
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                             </div>
-                                            <form class="form-submit" action="{{route('approve.lawyer.request',( $item->id ?? ''))}}" method="post">
+                                            <form class="form-submition" action="{{route('approve.lawyer.request',( $item->id ?? ''))}}" method="post">
                                             <input type="hidden" name="application_id" value="{{$item->application_id ?? ''}}"  >
                                             <div class="modal-body">
-                                                
+
                                                 <div class="form-group">
                                                     <label for="message-text" class="col-form-label">Message</label>
-                                                    <textarea class="form-control" id="message-text" name="message">
-                                                    {{$item->message}}
-                                                    </textarea>
+                                                    <textarea class="form-control" id="message-text" name="message" disabled>{{$item->message}}</textarea>
                                                 </div>
-                                            
+                                                <div class="form-group">
+
+                                                        @if(!empty($item->new_lawyer_id))
+                                                                                                    <label for="message-text" class="col-form-label">New Lawyer</label>
+                                                
+                                                            <textarea class="form-control" disabled="">{{$item->newLawyer->first_name ?? ""}} {{$item->newLawyer->last_name ?? ""}} ({{$item->newLawyer->email ?? ""}})</textarea>
+                                                        @else
+                                                                                                    <label for="message-text" class="col-form-label">Select Lawyer</label>
+                                                    <div>
+                                                        <select name="lawyer" class="form-control lawyer" id="lawyer">
+                                                        <option value="">Select Lawyer</option>
+                                                        {!! $lawyer_html !!}
+                                                    </select>
+                                                    </div>
+                                                        @endif
+                                                
+                                                    
+                                                </div>
+
+
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            @if(auth()->user()->can('Approve Request')  )
-
-                                                @if($item->status == '0')  
+                                            {{-- @if(auth()->user()->can('Approve Request')  ) --}}
+                                                @if($item->status == '0')
                                                 <button type="submit" class="btn btn-primary">Approve</button>
                                                 @endif
-                                            @endif
+                                            {{-- @endif --}}
                                             </div>
                                             </form>
                                             </div>
@@ -329,7 +354,7 @@
                 </div>
             </div>
           </div>
-          
+
 
 @endsection
 

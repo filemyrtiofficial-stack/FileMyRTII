@@ -33,8 +33,8 @@
                         <div class="col-12 col-sm-12">
                             <div class="breadcrumb">
                                <ol>
-                                <li class="fs-24"><a href="javascript:void(0);">Home</a></li>
-                                <li class="fs-24"><a href="javascript:void(0);">{{$application->serviceCategory->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="/">Home</a></li>
+                                <li class="fs-24"><a href="{{ url('/service/'.$application->serviceCategory->slug->slug ?? '') }}">{{$application->serviceCategory->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$application->service->name ?? 'Custom Request'}}</li>
                                </ol>
                             </div>
@@ -51,7 +51,7 @@
                 <div class="row service-form-row">
                     <div class="col-12 col-sm-9">
                         <div class="service_form">
-                            <form action="{{route('customer.pay.form')}}" class="service-form" method="post">
+                        <form action="{{route('customer.pay.form')}}" class="service-form" method="post">
                                 @csrf
                            
                                     <input type="hidden" id="application_no" name="application_no" value="{{$application->application_no}}">
@@ -93,7 +93,7 @@
                                                 @foreach($payment['amount_type'] as $key =>  $value)
                                                     <ul class="charge_list @if($application->appeal_no == 1) charge_list-first-appeal @elseif($application->appeal_no == 2) charge_list-second-appeal @endif">
                                                         <li>{{$payment['amount_type'][$key] ?? ''}}</li>
-                                                        <li>₹ {{$payment['amount'][$key] ?? ''}}</li>
+                                                        <li class="price-listing">₹ {{$payment['amount'][$key] ?? ''}}</li>
                                                         @if($application->appeal_no == 0)
                                                         <li>
                                                             <span class="check_icon_wrapper">
@@ -117,15 +117,39 @@
                                                     </ul>
                                                 @endforeach
                                             @endif
-                                               
+                                                 <ul class="charge_list option_list @if($application->appeal_no == 1) option_list-first-appeal @elseif($application->appeal_no == 2) option_list-second-appeal @endif">
+                                                <li>Price</li>
+                                                 @if($application->appeal_no == 0)
+                                                <li><div class="charge_option custom_radio"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
+                                                @endif
+                                                <li><div class="charge_option custom_radio"><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
+                                            </ul>
+
+                                            <ul class="charge_list option_list @if($application->appeal_no == 1) option_list-first-appeal @elseif($application->appeal_no == 2) option_list-second-appeal @endif">
+                                                <li>+GST (18%)</li>
+                                                 @if($application->appeal_no == 0)
+                                                <li><div class="charge_option custom_radio"><label for="price-2">₹ {{getGST($payment['basic_total'])}}</label></div></li>
+                                                @endif
+                                                <li><div class="charge_option custom_radio"><label for="price-3">₹ {{getGST($payment['advance_total'])}}</label></div></li>
+                                            </ul>
+                                            
+
                                                 <ul class="charge_list option_list @if($application->appeal_no == 1) option_list-first-appeal @elseif($application->appeal_no == 2) option_list-second-appeal @endif">
                                                     <li>Choose An Option</li>
                                                     @if($application->appeal_no == 0)
-                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
+                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']+getGST($payment['basic_total'])}}</label></div></li>
                                                     @endif
-                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
+                                                    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']+getGST($payment['advance_total'])}}</label></div></li>
                                                 </ul>
+                                                <!--<ul class="charge_list option_list @if($application->appeal_no == 1) option_list-first-appeal @elseif($application->appeal_no == 2) option_list-second-appeal @endif">-->
+                                                <!--    <li>Choose An Option</li>-->
+                                                <!--    @if($application->appeal_no == 0)-->
+                                                <!--    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>-->
+                                                <!--    @endif-->
+                                                <!--    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>-->
+                                                <!--</ul>-->
                                             </div>
+                                            
                                             <div class="form_action_wrap">
                                                 <div class="form_action">
                                                     <div class="payment_icon">
@@ -145,6 +169,7 @@
                                                     <button type="submit" class="theme-btn"><span>Pay Now</span></button>
                                                 </div>
                                             </div>
+                                            <div id="error"></div>
                                         </div>
 
                                 </div>
@@ -263,16 +288,23 @@ $(document).on('click', '.delete-icon', function(){
                 $.each(response.data, function(index, value){
 
                     $('#preview').append(`<div class="preview-item">
-                                                       <a href="${value.path}" target="blank">
-                                                            <embed src="{{url('/')}}${value.file}" width="50" height="50" />
-                                                            <input type="hidden" value="${value.file}" name="documents[]">
+                    <embed src="{{url('/')}}${value.file}" width="100" height="100" />
+                    <input type="hidden" value="${value.file}" name="documents[]">
+                    <div class="preview-btn">
+                    <a href="${value.path}" target="blank"> Preview
                                                         </a>
+                                                        </div>
                                                         <button type="button" class="delete-icon"></button>
                                                     </div>`);
                 })
     
             },
-            error : function(error) {}
+            error : function(error) {
+                console.log(value)
+                    index = index.replaceAll('.', '_')
+                    $('#' + index).html(
+                        `<span class="text-danger form-error-list">${value}</span>`)
+            }
          });
       });
       $(document).on('click', '.remove-document', function(e){
@@ -322,7 +354,7 @@ $(document).on('click', '.delete-icon', function(){
                 $.each(error.responseJSON.errors, function(index, value) {
                     console.log(value)
                     index = index.replaceAll('.', '_')
-                    $('#' + index).parents().eq(0).append(
+                    $('#' + index).html(
                         `<span class="text-danger form-error-list">${value}</span>`)
                 })
             }
@@ -337,7 +369,7 @@ $(document).on('click', '.delete-icon', function(){
             $('#appeal_no').val(rti.appeal_no);
             var options = {
                 "key": "{{ env('RAZORPAY_KEY') }}", // rzp_live_ILgsfZCZoFIKMb
-                "amount": (rti.charges*100), // 2000 paise = INR 20
+                "amount": (rti.final_price*100), // 2000 paise = INR 20
                 "name": "FileMyRti",
                 "description": "Razor Payment",
                 "prefill": {

@@ -1,5 +1,5 @@
 <a class="accord_item" href1="#tab6" data-id="tab6" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'upload-rti'])}}">Upload RTI</a>
-
+@if($tab == 'upload-rti')
 <div id="tab6" class="contact_faq_tab @if($tab == 'upload-rti')active @endif">
     <div class="upload_rti_lawyer">
         <div class="db_tab_heading">
@@ -17,7 +17,7 @@
                         </div>
                         <input id="document" name="document"  class="upload_inputfile upload-final-pdf" type="file" accept="application/pdf">
                     </div>
-                    <div class="pdf_preview v_scroll">
+                    <div class="pdf_preview v_scroll hide">
                         <iframe id="pdfPreview" width="100%" height="700" @if(!empty($data->final_rti_document)) src="{{asset($data->final_rti_document)}}" @endif></iframe>
                     </div>
                 </div>
@@ -33,3 +33,4 @@
             @endif
     </div>
 </div>
+@endif

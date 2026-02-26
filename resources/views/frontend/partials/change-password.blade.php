@@ -13,15 +13,18 @@
                 @csrf
                     <div class="form_item">
                         <label for="email_address">Current Password</label>
-                        <input class="form_field" type="password" name="current_password" id="" placeholder="Enter Your Current Password">
+                        <input class="form_field password" type="password" name="current_password" id="" placeholder="Enter Your Current Password">
                     </div>
                     <div class="form_item">
                         <label for="pwd">Password</label>
-                        <input class="form_field" type="password" name="password" id="" placeholder="Enter Your Password">
+                        <input class="form_field password" type="password" name="password" id="" placeholder="Enter Your Password">
                     </div>
                     <div class="form_item">
                         <label for="pwd">Confirm Password</label>
-                        <input class="form_field" type="password" name="confirm_password" id="" placeholder="Confirm Your Password">
+                        <input class="form_field password" type="password" name="confirm_password" id="" placeholder="Confirm Your Password">
+                    </div>
+                    <div class="show-password-section mb-1-2">
+                        <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password">Show Password</label>
                     </div>
 
                     <div class="modal_action_bottom">

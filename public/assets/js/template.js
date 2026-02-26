@@ -117,3 +117,15 @@
   });
   
 })(jQuery);
+
+
+$(document).on('change', '.show-password', function(){
+  if($(this).is(":checked")) {
+      $(this).closest("form").find(".password").attr('type', 'text');
+  }
+  else {
+      $(this).closest("form").find(".password").attr('type', 'password');
+
+  }
+
+})

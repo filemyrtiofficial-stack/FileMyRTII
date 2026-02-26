@@ -1,0 +1,67 @@
+
+.track_section {
+    position: relative;
+    overflow: hidden;
+    padding: 5.20833vw 0;
+}
+.track_section .section_heading *,
+.track_section .section_heading h2,
+.track_section .section_heading h3,
+.track_section .section_heading h4 {
+    font-size: 2.91667vw;
+    font-weight: 700;
+    margin-bottom: 0.893em;
+    text-align: center;
+}
+
+.track_section .row {
+    justify-content: center;
+}
+.tracking_wrapper {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 6.77083vw;
+}
+.tracking_wrapper .form_item {
+    width: calc((100% - 6.77083vw) / 2);
+}
+.tracking_wrapper .form_item label {
+    font-size: 1.45833vw;
+    font-weight: 700;
+    opacity: 0.6;
+    margin-bottom: 8px;
+    color: var(--theme-btn-color);
+}
+.tracking_action {
+    margin-top: 1.64583vw;
+    text-align: center;
+}
+
+@media (max-width: 1199px) {
+    .tracking_wrapper .form_item label {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .track_section {
+        padding: 40px 0;
+    }
+    .track_section .section_heading *,
+    .track_section .section_heading h2,
+    .track_section .section_heading h3,
+    .track_section .section_heading h4 {
+        font-size: 24px;
+    }
+    .tracking_wrapper {
+        row-gap: 30px;
+    }
+    .tracking_wrapper .form_item {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

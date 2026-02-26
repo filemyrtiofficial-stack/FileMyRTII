@@ -1,12 +1,16 @@
 @extends('layouts.app')
+@section('breadcrumbs')
 
+<li class="breadcrumb-item" aria-current="page">Newletters</li>
+
+@endsection
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Newletter'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
         <div class="card mb-3">
                 <div class="card-body">
-                      <form action="">
+                      <form action="" class="search-form">
                                 <div class="row">
                                         <div class="col-md-3">
                                                 <input type="text" name="email" class="form-control" placeholder="Search By Email" value="{{$_GET['email'] ?? ''}}">
@@ -21,6 +25,8 @@
                                         </div>
                                         <div class="col-12">
                                                 <button class="btn btn-sm btn-primary float-right">Filter</button>
+                                               <a href="{{route('newsletter-export')}}?email={{$_GET['email'] ?? ''}}&status={{$_GET['status'] ?? ''}}" class="btn btn-sm btn-secondary float-right">Export</a>
+
                                         </div>
                                 </div>
                       </form>
@@ -45,9 +51,9 @@
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Create Date</th>
-                                {{-- <th
+                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Action</th> --}}
+                                    Action</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -67,6 +73,10 @@
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     {{Carbon\Carbon::parse($item->created_at)->format('d M, Y')}}
+                                </td>
+                                 <td class="text-center">
+                                     <a href="{{route('newsletter.destroy', $item->id)}}"
+                                            class="text-sm font-weight-bold mb-0 ps-2 delete-btn btn btn-sm btn-danger ml-2">Delete</a>
                                 </td>
                                 
                             </tr>

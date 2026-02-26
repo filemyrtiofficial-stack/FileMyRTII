@@ -2,7 +2,7 @@
     <div class="blog_item_wrapper">
         <div class="blog_item">
             <div class="blog_img">
-                <img class="img-fluid" src="{{asset($value['thumbnail'] ?? '')}}" alt="Blog Image">
+                <img class="img-fluid" src="{{asset($value['thumbnail'] ?? '')}}" alt="{{$value['title'] ?? ''}}">
             </div>
             <div class="blog_area">
                 <div class="blog_date fs-20">{{isset($value['publish_date']) ? Carbon\Carbon::parse($value['publish_date'])->format('M d, Y') :  ''}}</div>

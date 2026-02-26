@@ -375,7 +375,7 @@
                                         </div>
                                         <div class="form_yes">
                                             <div class="rti_form">
-                                                <form action="">
+                                                <form action="" id="search-form">
                                                     <div class="form_item">
                                                         <select class="form_field custom_select" name="reason" id="">
                                                             <option value="selected">Please select a reason</option>

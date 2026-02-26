@@ -18,7 +18,7 @@
 
                                 @foreach(rtiPersonalDetailFields() as $key => $value)
 
-                                <tr>
+                                <tr <?php if(isset($revision_data[$key ]) && isset($change_request[$key]) && strip_tags($revision_data[$key ]) != strip_tags($change_request[$key])) {?> class="text-danger-light" <?php }?>>
                                     <td>{{ $value['label']}}</td>
                                     <td>{{$revision_data[$key ] ?? ''}} </td>
                                     <td>{{$change_request[$key] ?? ''}}</td>
@@ -27,13 +27,13 @@
 
                                 @if($data->lastRevision)
                                     @foreach($service_fields['field_type'] ?? [] as $key => $value)
-                                        @if((!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer' ))
+                                        @if((!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] != 'lawyer' ))
 
                                             @php
-                                                $field_key =  getFieldName($service_fields['field_lable'][$key]);
+                                                $field_key =  getFieldName($service_fields['field_lable'][$key] ?? '');
                                             @endphp
                                     
-                                            <tr>
+                                            <tr <?php if(isset($revision_data[$field_key ]) && isset($change_request[$field_key]) && strip_tags($revision_data[$field_key ]) != strip_tags($change_request[$field_key])) {?> class="text-danger-light" <?php }?> >
                                                 <td>{{$service_fields['field_lable'][$key] ?? ''}}</td>
                                                 @if($value == 'file')
                                                 <td>
@@ -51,8 +51,8 @@
                                                     @endif
                                                 </td>
                                                 @else
-                                                <td>{{$revision_data[$field_key ] ?? ''}} </td>
-                                                <td>{{$change_request[$field_key] ?? ''}}</td>
+                                                <td>{!! $revision_data[$field_key ] ?? '' !!}  </td>
+                                                <td>{!! $change_request[$field_key] ?? '' !!}</td>
                                                 @endif
                                             </tr>
                                         @endif
@@ -67,16 +67,19 @@
                 </div>
             </div>
             <div class="form_action">
-                <form action="{{route('lawyer.approve-change-request', $data->id)}}" class="authentication" method="post">
-                    @csrf
-                    <button  class="theme-btn"><span>Apply Changes</span></button>
-                </form>
+                <!--<form action="{{route('lawyer.approve-change-request', $data->id)}}" class="authentication" method="post">-->
+                <!--    @csrf-->
+                <!--    <button  class="theme-btn"><span>Apply Changes</span></button>-->
+                <!--</form>-->
+                <button  class="theme-btn tabings" href="#tab12"><span>Redraft Request</span></button>
             </div>
         </div>
         <div class="drafted_item">
             <div class="drafted_app_view">
                 <div class="v_scroll">
-                    <embed src="{{route('sample-rti-template',$data->service_id)}}" type="" width="100%" height="1000">
+                                    <embed type="text/html" src="{{url('download-my-rti/'.$data->id)}}" width="100%" height="100%">
+
+                    <!--<embed src="{{route('sample-rti-template',$data->service_id)}}" type="" width="100%" height="1000">-->
                 <!-- <img class="img-fluid" src="images/dashboard/drafted_rti.webp" alt=""> -->
                 </div>
             </div>

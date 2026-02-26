@@ -9,16 +9,22 @@
     <div class="col-12">
         <div class="card mb-3">
                 <div class="card-body">
-                      <form action="">
+                      <form action="" id="search-form">
                                 <div class="row">
                                         <div class="col-md-3">
                                                 <input type="text" name="search" class="form-control" placeholder="Search By Application No." value="{{$_GET['search'] ?? ''}}">
                                         </div>
+ <?php
+                                    $lawyer_html = "";
+                                    ?>
 
                                     <div class="col-md-3">
                                         <select  name="lawyer_id" class="form-control">
                                                 <option value="">Select Lawyer</option>
                                                 @foreach(App\Models\Lawyer::list(false) as $item)
+                                                <?php
+                                    $lawyer_html .= '<option value="'.$item->id.'">'.$item->first_name.' '.$item->last_name.' ('.$item->email.') </option>';
+                                    ?>
                                                         <option value="{{$item->id ?? ''}}" {{isset($_GET['lawyer_id']) && $_GET['lawyer_id'] == $item->id ? 'selected' : ''}}>{{$item->first_name ?? ''}} {{$item->last_name ?? ''}}</option>
                                                 @endforeach
                                         </select>
@@ -90,7 +96,22 @@
                                         <a class="text-sm font-weight-bold mb-0 ps-2 btn btn-sm btn-secondary" data-toggle="modal" data-target="#exampleModal_{{$item->id}}" data-whatever="@mdo"
                                             href="javascript:void(0)">View</a>
                                     </div>
-                                    <div class="modal fade" id="exampleModal_{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        {{ $list->links('pagination::bootstrap-4') }}
+        </div>
+        
+         @foreach($list as $item)
+         <div class="modal fade" id="exampleModal_{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -99,16 +120,33 @@
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                     </div>
-                                    <form class="form-submit" action="{{route('approve.lawyer.request',( $item->id ?? ''))}}" method="post">
+                                    <form class="form-submition" action="{{route('approve.lawyer.request',( $item->id ?? ''))}}" method="post">
                                     <input type="hidden" name="application_id" value="{{$item->application_id ?? ''}}"  >
                                     <div class="modal-body">
 
                                         <div class="form-group">
                                             <label for="message-text" class="col-form-label">Message</label>
-                                            <textarea class="form-control" id="message-text" name="message">
-                                            {{$item->message}}
-                                            </textarea>
+                                            <textarea class="form-control" id="message-text" name="message" disabled>{{$item->message}}</textarea>
                                         </div>
+                                          <div class="form-group">
+
+                                                @if(!empty($item->new_lawyer_id))
+                                                                                            <label for="message-text" class="col-form-label">New Lawyer</label>
+                                           
+                                                    <textarea class="form-control" disabled="">{{$item->newLawyer->first_name ?? ""}} {{$item->newLawyer->last_name ?? ""}} ({{$item->newLawyer->email ?? ""}})</textarea>
+                                                @else
+                                                                                            <label for="message-text" class="col-form-label">Select Lawyer</label>
+                                            <div>
+                                                  <select name="lawyer" class="form-control lawyer" id="lawyer">
+                                                <option value="">Select Lawyer</option>
+                                                {!! $lawyer_html !!}
+                                            </select>
+                                            </div>
+                                                @endif
+                                          
+                                            
+                                        </div>
+
 
                                     </div>
                                     <div class="modal-footer">
@@ -123,18 +161,7 @@
                                     </div>
                                     </div>
                                     </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        {{ $list->links('pagination::bootstrap-4') }}
-        </div>
+         @endforeach
 </div>
 
 

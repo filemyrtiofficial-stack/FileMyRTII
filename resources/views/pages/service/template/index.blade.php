@@ -12,7 +12,7 @@
     <div class="col-12">
         <div class="card mb-3">
             <div class="card-body">
-                  <form action="">
+                  <form action="" id="search-form">
                             <div class="row">
                                     <div class="col-md-3">
                                             <input type="text" name="template_name" class="form-control" placeholder="Search By template name" value="{{$_GET['template_name'] ?? ''}}">

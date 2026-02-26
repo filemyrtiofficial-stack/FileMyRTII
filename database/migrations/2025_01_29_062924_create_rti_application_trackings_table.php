@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('application_id')->nullable();
             $table->integer('revision_id')->nullable();
             $table->string('courier_name')->nullable();
-            $table->string('courier_tracking_number')->nullable();
+            $table->text('courier_tracking_number')->nullable();
             $table->date('courier_date')->nullable();
             $table->float('charges')->nullable();
             $table->text('address')->nullable();

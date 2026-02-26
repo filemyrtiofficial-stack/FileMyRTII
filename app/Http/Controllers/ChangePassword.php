@@ -27,7 +27,7 @@ class ChangePassword extends Controller
     public function update(Request $request)
     {
         $attributes = $request->validate([
-            'email' => ['required'],
+            'email' => ['required|regex:/(.+)@(.+)\.(.+)/i'],
             'password' => ['required', 'min:5'],
             'confirm-password' => ['same:password']
         ]);

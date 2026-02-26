@@ -4,6 +4,39 @@
 
 @endpush
 @section('content')
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "FileMyRTI",
+  "url": "https://filemyrti.com",
+  "logo": "https://filemyrti.com/assets/images/logo.webp",
+  "description": "{!! $seo->meta_description ?? 'File RTI online easily with India’s most trusted platform for fast, legal, and expert filing. Drafts, tracking, appeals & more in one place.' !!}",
+  "sameAs": [
+    "https://www.linkedin.com/company/filemyrti/",
+    "https://www.facebook.com/profile.php?id=61572512135057&sk=about",
+    "https://x.com/FileMyRTI",
+    "https://www.instagram.com/filemyrtiofficial/",
+    "https://www.youtube.com/@FileMyRTI"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-9911100859",
+    "contactType": "Customer Support",
+    "areaServed": "IN",
+    "availableLanguage": ["English", "Hindi", "Telugu"]
+  }
+}
+</script>
+@endsection
+
+<style>
+.hide {
+  display: none;
+}
+</style>
 <style>
     .hide {
         display:none;
@@ -21,7 +54,7 @@
                             <div class="breadcrumb">
                                <ol>
                                 <li class="fs-24"><a href="{{ url('/') }}">Home</a></li>
-                                <li class="fs-24"><a href="{{ url('/services/'.$service_category->slug->slug ?? '') }}">{{$service_category->name ?? ''}}</a></li>
+                                <li class="fs-24"><a href="{{ url('/service/'.$service_category->slug->slug ?? '') }}">{{$service_category->name ?? ''}}</a></li>
                                 <li class="fs-24 active">{{$service->name ?? ''}}</li>
                                </ol>
                             </div>
@@ -33,7 +66,21 @@
                 </div>
         </header>
 
-        <section class="serviceform_section">
+<!--checking start-->
+            <section id="serviceform" style="padding:10px !important;" class="serviceform_section">
+  <!-- content -->
+</section>
+
+<script>
+  const section = document.getElementById('serviceform');
+  if (window.innerWidth <= 768) {
+    section.style.padding = "0px";
+  }
+</script>
+
+
+            <!--checking end-->
+            
             <div class="container">
                 <div class="row service-form-row">
                     <div class="col-12 col-sm-9">
@@ -44,14 +91,17 @@
                                 <input type="hidden" id="service_key" name="service_key" value="{{$service->id}}">
                                 <input type="hidden" id="application_no" name="application_no" value="">
                                 <input type="hidden" id="category_id" name="category_id" value="{{$service_category->id}}">
+                                <input type="hidden" id="old_service_slug" name="old_service_slug" value="{{$old_service_slug}}">
+
+
 
 
                                 <div class="form_tab_wrapper">
                                     <div class="form_tabs">
                                         <ul class="form_tab_list">
-                                            <li id="form_step_tab_1"><a class="form_tab_item1 active fs-28" href="javascript:void(0);" data-toggle1="tab" data-id="form_tab1"><span class="step">step 1</span><span class="title">Personal Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
-                                            <li id="form_step_tab_2"><a class="form_tab_item1 fs-28" href="javascript:void(0);" data-toggle1="tab" data-id="form_tab2"><span class="step">step 2</span><span class="title">{{$service->name ?? ''}}</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
-                                            <li id="form_step_tab_3"><a class="form_tab_item1 fs-28" href="javascript:void(0);" data-toggle1="tab" data-id="form_tab3"><span class="step">step 3</span><span class="title">Payment Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_1"><a class="form_tab_item1 form-tab active fs-28" href="javascript:void(0);" data-key="1" data-toggle1="tab" data-id="form_tab1"><span class="step">step 1</span><span class="title">Personal Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_2"><a class="form_tab_item1 form-tab fs-28" href="javascript:void(0);" data-key="2" data-toggle1="tab" data-id="form_tab2"><span class="step">step 2</span><span class="title">{{ stringLimit(($service->name ?? ''), 20) }}</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
+                                            <li id="form_step_tab_3"><a class="form_tab_item1 form-tab fs-28" href="javascript:void(0);" ddata-key="3" ata-toggle1="tab" data-id="form_tab3"><span class="step">step 3</span><span class="title">Payment Details</span><span class="step_check" style="display:none;"><img class="img-fluid" src="{{asset('assets/rti/images/service-detail/step-check.svg')}}" alt="check-icon"></span></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -114,31 +164,31 @@
                                         <div class="form_data">
 
                                             @if($service->name == 'Custom Request')
-                                                <div class="form_item">
-                                                    <label for="rt_query">RTI Query</label>
-                                                    <input class="form_field" type="text" name="rti_query" id="rti_query" placeholder="">
+                                                <div class="form_item single">
+                                                    <label for="rt_query">RTI Query <span class="text-danger">*</span></label>
+                                                    <textarea class="form_field" type="text" name="rti_query" id="rti_query" placeholder=""></textarea>
                                                 </div>
-                                                <div class="form_item">
+                                                <div class="form_item single pio-address-yes-no">
                                                     <label for="pio_addr">Do you know the PIO Address? (Yes/No)</label>
                                                     <div class="radio_sec">
                                                         <div class="radio_btn"><label><input type="radio" id="yes" name="pio_addr" value="yes" class="pio_addr">Yes</label></div>
                                                         <div class="radio_btn"><label><input type="radio" id="no" name="pio_addr" value="no" class="pio_addr" checked>No</label></div>
                                                     </div>
                                                 </div>
-                                                <div class="form_item" id="pio_address_section" style="display:none;">
+                                                <div class="form_item single" id="pio_address_section" style="display:none;">
                                                     <label for="pio_address">PIO Address</label>
-                                                    <input class="form_field" type="text" name="pio_address" id="pio_address" placeholder="">
+                                                    <textarea class="form_field" type="text" name="pio_address" id="pio_address" placeholder=""></textarea>
                                                 </div>
                                             @else
                                                 @foreach($fields['field_type'] ?? [] as $key => $value)
-                                                @if( !isset($fields['form_field_type'][$key]) || (isset($fields['form_field_type'][$key])  && strtolower($fields['form_field_type'][$key]) != "lawyer"))
+                                                @if( !isset($fields['form_field_type'][$key]) || (isset($fields['form_field_type'][$key])  && strtolower($fields['form_field_type'][$key]) == "customer"))
                                                         <div class="form_item">
 
-                                                            <label for="{{getFieldName($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} {{isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no' ? '(Optional)' : ''}}</label>
+                                                            <label for="{{getFieldName($fields['field_lable'][$key])}}">{{$fields['field_lable'][$key] ?? ''}} @if(isset($fields['is_required'][$key]) && $fields['is_required'][$key] == 'no')  @else <span class="text-danger">*</span> @endif</label>
                                                             @if($value == 'textarea')
-                                                                <textarea class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder=""></textarea>
+                                                                <textarea class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="{{$fields['placeholder'][$key] ?? ''}}"></textarea>
                                                             @elseif($value == 'date')
-                                                            <input class="form_field" type="date" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
+                                                            <input class="form_field" type="date" value="{{Carbon\Carbon::now()}}" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif>
                                                             @elseif($value == 'file')
                                                             <div class="custom_choose_file">
                                                                 <input class="form_field form-image" type="file" name="{{getFieldName($fields['field_lable'][$key])}}_file" id="{{getFieldName($fields['field_lable'][$key])}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif accept="image/*,.pdf"/>
@@ -151,7 +201,7 @@
                                                                 {!! getOptions($fields['options'][$key]) !!}
                                                             </select>
                                                             @else
-                                                            <input class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="" >
+                                                            <input class="form_field" type="text" name="{{getFieldName($fields['field_lable'][$key])}}" id="{{getFieldName($fields['field_lable'][$key])}}" placeholder="{{$fields['placeholder'][$key] ?? ''}}" >
 
                                                             @endif
                                                         </div>
@@ -190,60 +240,381 @@
 
                                             </div>
                                             <!-- <a href="" class="hide" id="preview-dodument" target="blank">Preview</a> -->
-                                            <div class="form_table_detail">
+                                            <div style="border:none"; class="form_table_detail ">
                                             @if(isset($payment) && isset($payment['amount_type']))
                                                 @foreach($payment['amount_type'] as $key =>  $value)
-                                                    <ul class="charge_list">
-                                                        <li>{{$payment['amount_type'][$key] ?? ''}}</li>
-                                                        <li>₹ {{$payment['amount'][$key] ?? ''}}</li>
-                                                        <li>
-                                                            <span class="check_icon_wrapper">
-                                                                @if($payment['basic'][$key] == 'yes')
-                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
-                                                                @else
-                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
-                                                                @endif
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="check_icon_wrapper">
-                                                                @if($payment['advance'][$key] == 'yes')
-                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">
-                                                                @else
-                                                                    <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">
-                                                                @endif
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                @endforeach
-                                            @endif
+                                                <!--old Changes Start-->
+                                            <!--        <ul class="charge_list">-->
+                                            <!--            <li>{{$payment['amount_type'][$key] ?? ''}}</li>-->
+                                            <!--            <li class="price-listing">₹ {{$payment['amount'][$key] ?? ''}}</li>-->
+                                            <!--            <li>-->
+                                            <!--                <span class="check_icon_wrapper">-->
+                                            <!--                    @if($payment['basic'][$key] == 'yes')-->
+                                            <!--                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">-->
+                                            <!--                    @else-->
+                                            <!--                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">-->
+                                            <!--                    @endif-->
+                                            <!--                </span>-->
+                                            <!--            </li>-->
+                                            <!--            <li>-->
+                                            <!--                <span class="check_icon_wrapper">-->
+                                            <!--                    @if($payment['advance'][$key] == 'yes')-->
+                                            <!--                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/check-icon.svg')}}" alt="check icon">-->
+                                            <!--                    @else-->
+                                            <!--                        <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/cross-icon.svg')}}" alt="check icon">-->
+                                            <!--                    @endif-->
+                                            <!--                </span>-->
+                                            <!--            </li>-->
+                                            <!--        </ul>-->
+                                            <!--    @endforeach-->
+                                            <!--@endif-->
+                                            <!--<ul class="charge_list option_list">-->
+                                            <!--    <li>Price</li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>-->
+                                            <!--</ul>-->
 
-                                            <ul class="charge_list option_list">
-                                                <li>Choose An Option</li>
-                                                <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>
-                                                <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>
-                                            </ul>
+                                            <!--<ul class="charge_list option_list">-->
+                                            <!--    <li>+GST ({{getGSTNo()}}%)</li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><label for="price-2">₹ {{getGST($payment['basic_total'])}}</label></div></li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><label for="price-3">₹ {{getGST($payment['advance_total'])}}</label></div></li>-->
+                                            <!--</ul>-->
+                                            
+                                            <!--<ul class="charge_list option_list">-->
+                                            <!--    <li>Choose An Option</li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']+getGST($payment['basic_total'])}}</label></div></li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']+getGST($payment['advance_total'])}}</label></div></li>-->
+                                            <!--</ul>-->
+                                            
+                                            <!--old Changes end-->
+                                            <!--Payment page update24.oct.20225 START-->
+   
+@php
+  $basicBase   = $payment['basic_total'] ?? 0;
+  $advanceBase = $payment['advance_total'] ?? 0;
+@endphp
+
+<div id="pricing-matrix" class="pricing-matrix"
+  style="position:relative;border:1px solid #e5e7eb;border-radius:0px;overflow:hidden;
+         font-family:'Inter',sans-serif;max-width:100%;">
+
+  <!-- Header -->
+  <div class="pm-row pm-head"
+    style="display:grid;grid-template-columns:1.2fr 0.6fr 1fr 1fr;background:#f9fafb;
+           border-bottom:1px solid #e5e7eb;font-size:16px;font-weight:700;">
+    <div class="col-title"
+      style="grid-column:1 / span 2;padding:8px 10px;color:#0f172a;">Brief Plan Features</div>
+    <div class="col-basic" style="padding:8px 10px;text-align:center;">Smart</div>
+    <div class="col-adv" style="padding:8px 10px;text-align:center;">Pro</div>
+  </div>
+
+  <!-- Feature Rows -->
+  @foreach($payment['amount_type'] as $key => $value)
+    @php
+      $label = trim($payment['amount_type'][$key] ?? '');
+      $amountRaw = trim((string)($payment['amount'][$key] ?? ''));
+      $amountNum = (int)preg_replace('/[^0-9]/', '', $amountRaw);
+      $hideOnlyAmountOnSmall = in_array($amountNum, [149, 100, 150, 200], true);
+    @endphp
+
+    <div class="pm-row feature-row"
+      style="display:grid;grid-template-columns:1.2fr 0.6fr 1fr 1fr;align-items:center;
+             border-top:1px solid #eef2f7;position:relative;font-size:15px;">
+      <div class="col-feature" style="padding:6px 10px;font-size:14px;font-family:'Poppins', sans-serif;">{{ $label }}</div>
+      <div class="col-amount" style="padding:6px 10px;font-weight:300; font-size:10px;">
+        <span class="{{ $hideOnlyAmountOnSmall ? 'amt-hide-sm' : '' }}">₹ {{ $amountRaw }}</span>
+      </div>
+
+      <div class="col-basic" style="padding:6px 10px;text-align:center;z-index:1;">
+        @if(($payment['basic'][$key] ?? '') === 'yes')
+          <img src="{{ asset('assets/rti/images/service-detail/check-icon.svg') }}"
+               alt="yes" style="height:30px;">
+        @else
+          <img src="{{ asset('assets/rti/images/service-detail/cross-icon.svg') }}"
+               alt="no" style="height:14px;">
+        @endif
+      </div>
+
+      <div class="col-adv" style="padding:6px 10px;text-align:center;z-index:1;">
+        @if(($payment['advance'][$key] ?? '') === 'yes')
+          <img src="{{ asset('assets/rti/images/service-detail/check-icon.svg') }}"
+               alt="yes" style="height:30px;">
+        @else
+          <img src="{{ asset('assets/rti/images/service-detail/cross-icon.svg') }}"
+               alt="no" style="height:14px;">
+        @endif
+      </div>
+    </div>
+  @endforeach
+
+  <!-- Choose Option -->
+  <div class="pm-row choose-row"
+    style="display:grid;grid-template-columns:1.2fr 0.6fr 1fr 1fr;align-items:center;
+           border-top:2px solid #e5e7eb;background:#f9fafb;position:relative;font-size:15px;">
+    <div class="col-title"
+      style="grid-column:1 / span 2;padding:10px 12px;font-size:16px;font-weight:700;">Select</div>
+
+    <div class="col-basic opt-cell"
+      style="padding:10px;text-align:center;position:relative;z-index:1;">
+      <label for="price-basic"
+        style="display:inline-flex;gap:8px;align-items:center;cursor:pointer;
+               <!--padding:8px 12px;border:0px solid #dbe6f2;border-radius:10px;-->
+               <!--transition:0.2s ease;flex-wrap:wrap;">
+        <input type="radio" id="price-basic" name="charges"
+               value="{{ $basicBase }}" checked
+               style="width:14px;height:14px;cursor:pointer;">
+        <span style="font-weight:800;font-size:14px;color:#0f172a;">₹ {{ $basicBase }}</span>
+      </label>
+    </div>
+
+    <div class="col-adv opt-cell"
+      style="padding:10px;text-align:center;position:relative;z-index:1;">
+      <label for="price-adv"
+        style="display:inline-flex;gap:8px;align-items:center;cursor:pointer;
+               <!--padding:0px 0px;border:px solid #dbe6f2;border-radius:10px;-->
+               <!--transition:0.2s ease;flex-wrap:wrap;">
+        <input type="radio" id="price-adv" name="charges"
+               value="{{ $advanceBase }}"
+               style="width:14px;height:14px;cursor:pointer;">
+        <span style="font-weight:800;font-size:14px;color:#0f172a;">₹ {{ $advanceBase }}</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Highlight background strip -->
+  <div id="highlight-strip" style="
+      position:absolute;
+      top:0;
+      bottom:0;
+      width:25%;
+      background:rgba(2,108,182,0.08);
+      border:3px solid #026CB6;
+      border-right:3px solid #026CB6;
+      border-radius:8px;
+      box-shadow:0 0 8px rgba(2,108,182,0.25);
+      opacity:0;
+      transition:all 0.35s ease, opacity 0.4s ease;
+      z-index:0;">
+  </div>
+</div>
+
+<style>
+  /* hide only the amount text on small devices */
+  @media (max-width:480px){
+    .amt-hide-sm{ display:none !important; }
+    #pricing-matrix{ font-size:13px !important; }
+    #pricing-matrix .col-feature,#pricing-matrix .col-amount,
+    #pricing-matrix .col-basic,#pricing-matrix .col-adv{
+      padding:5px 6px !important;
+    }
+  }
+</style>
+
+<script>
+(function(){
+  const matrix = document.getElementById('pricing-matrix');
+  const highlight = document.getElementById('highlight-strip');
+
+  function applyHighlight(){
+    const selected = matrix.querySelector('input[name="charges"]:checked');
+    if(!selected) return;
+
+    const col = selected.id === 'price-basic' ? 'basic' : 'adv';
+    const screenWidth = window.innerWidth;
+
+    // align highlight accurately with columns
+    if (screenWidth <= 768) {
+      if (col === 'basic') {
+        highlight.style.left = '46.5%';
+        highlight.style.width = '26%';
+      } else {
+        highlight.style.left = '73.5%';
+        highlight.style.width = '26%';
+      }
+    } else {
+      if (col === 'basic') {
+        highlight.style.left = '47.3%';
+        highlight.style.width = '26.3%';
+      } else {
+        highlight.style.left = '73.6%';
+        highlight.style.width = '26.3%';
+      }
+    }
+
+    // make it visible with soft fade
+    highlight.style.opacity = '1';
+
+    // pop effect on label
+    const label = matrix.querySelector(col === 'basic' ? '.col-basic label' : '.col-adv label');
+    const otherLabel = matrix.querySelector(col === 'basic' ? '.col-adv label' : '.col-basic label');
+
+    if(label){
+      label.style.borderColor = '#026CB6';
+      label.style.boxShadow = '0 0 6px rgba(2,108,182,0.35)';
+      label.style.transform = 'scale(1.05)';
+    }
+    if(otherLabel){
+      otherLabel.style.borderColor = '#dbe6f2';
+      otherLabel.style.boxShadow = 'none';
+      otherLabel.style.transform = 'scale(1)';
+    }
+  }
+
+  matrix.addEventListener('change', e=>{
+    if(e.target.name === 'charges') applyHighlight();
+  });
+
+  window.addEventListener('resize', applyHighlight);
+  applyHighlight();
+})();
+</script>
+
+
+
+                                            <!---->
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <!--<ul class="charge_list option_list">-->
+                                            <!--    <li>Choose An Option</li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><input type="radio" id="price-2" name="charges" value="{{$payment['basic_total']}}"><label for="price-2">₹ {{$payment['basic_total']}}</label></div></li>-->
+                                            <!--    <li><div class="charge_option custom_radio"><input type="radio" id="price-3" name="charges" value="{{$payment['advance_total']}}" checked><label for="price-3">₹ {{$payment['advance_total']}}</label></div></li>-->
+                                            <!--</ul>-->
                                         </div>
                                         <p id="error"></p>
-                                            <div class="form_action_wrap">
-                                                <div class="form_action">
-                                                    <div class="payment_icon">
-                                                        <div class="razorpay">
-                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/razorpay.webp')}}" alt="razorpay icon">
-                                                        </div>
-                                                        <div class="visa">
-                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/visa.webp')}}" alt="visa icon">
-                                                        </div>
-                                                        <div class="paytm">
-                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/paytm.webp')}}" alt="paytm icon">
-                                                        </div>
-                                                        <div class="mastercard">
-                                                            <img class="img-fluid" src="{{asset('assets/rti/images/service-detail/master-card.webp')}}" alt="mastercard icon">
-                                                        </div>
-                                                    </div>
-                                                    <button type="submit" class="theme-btn"><span>Pay Now</span></button>
-                                                </div>
-                                            </div>
+                                        <!--<div class="gst_add" style="text-align: end">+GST (18%)</div>-->
+                                            <div style="margin-top:-25px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+
+  <!-- Pay Button -->
+<!--<div style="margin-top:-30px;">-->
+
+  <!-- Razorpay + PayNow Row -->
+ <!-- Razorpay + PayNow Row -->
+<div style="
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    width:100%;
+    max-width:650px;
+    margin:auto;
+  ">
+
+    <!-- Razorpay Logo (hidden on small screens) -->
+    <div class="razorpay-logo" style="flex:1 1 120px;display:flex;justify-content:flex-start;">
+      <img src='{{ asset("assets/rti/images/service-detail/razorpayv1.webp") }}'
+           alt="Razorpay"
+           style="height:42px;width:auto;max-width:128%; margin-left:-27px;">
+    </div>
+
+    <!-- Pay Now Button -->
+    <div class="paynow-container" style="position:relative;flex:0 0 auto;display:flex;flex-direction:column;align-items:center; margin-top:20px">
+      <button type="submit" class="theme-btn"
+        style="display:inline-block;width:373px;height:50px;border:none;border-radius:6px;cursor:pointer; left:30px">
+        <span>Proceed To Pay</span>
+      </button>
+      
+          
+      
+      <!-- Bottom Texts -->
+      <div style="position:relative;width:100%;margin-top:4px;">
+        <div style="position:relative;width:100%;margin-top:4px;">
+  <!-- Secure & Refundable with green tick -->
+  <span class="secure-text" style="position:absolute;left:36px;font-size:12px;color:#999; display:flex; align-items:center; margin-top:-6px;"> 
+    <!-- Green tick slightly bigger -->
+    <span style="color:#28a745; font-size:15px; font-weight:bold; margin-right:4px;">✔</span>
+    Secure & Refundable if RTI not applicable
+  </span> 
+
+  <!-- GST -->
+  <!--<span class="gst-text" style="position:absolute;right:-25px;font-size:12px;color:#999;">+Tax GST(18%)</span>-->
+</div>
+
+        <span class="gst-text" style="position:absolute;right:-25px;font-size:12px;color:#999; bottom:-14.5px;">+Tax GST(18%) </span>
+      </div>
+    </div>
+</div>
+<!-- Razorpay Logo (hidden on small screens) -->
+    <div class="razorpay-logos" style="flex:1 1 120px;display:flex;justify-content:flex-start;">
+      <img src='{{ asset("assets/rti/images/service-detail/razorpayv1.webp") }}'
+           alt="Razorpay"
+           style="height:42px;width:auto;max-width:100%; margin-left:-3px;display:none;">
+    </div>
+
+<!-- Payment Icons -->
+<div style="
+    display:none;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+    justify-content:center;
+    margin-top:16px;
+  
+    @media (max-width:768px){
+  /* Hide Razorpay logo */
+  .razorpay-logo { 
+    display:none !important;
+  }
+  ">
+  <!--<img src='{{ asset("assets/rti/images/service-detail/razorpay.webp") }}' alt="Rozarpay" style="height:28px;width:auto;">-->
+  <!--<img src='{{ asset("assets/rti/images/service-detail/visa.webp") }}' alt="VISA" style="height:28px;width:auto;">-->
+   <!--!--<img src='{{ asset("assets/rti/images/service-detail/paytm.webp") }}' alt="Paytm" style="height:28px;width:auto;">-->-->
+  <!--<img src='{{ asset("assets/rti/images/service-detail/master-card.webp") }}' alt="MasterCard" style="height:28px;width:auto;">-->
+</div>
+
+<!-- Responsive behavior -->
+<style>
+@media (max-width:768px){
+  /* Hide Razorpay logo */
+  .razorpay-logo { 
+    display:none !important; 
+  }
+  .razorpay-logos img {
+      display: flex !important;
+  }
+
+  /* Stack items vertically on small screens */
+  div[style*="max-width:650px"] {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Make Pay Now button responsive on small devices */
+  .paynow-container button {
+    /*width: 90% !important;  */
+    max-width: 320px !important;
+    left: 0 !important;  
+    /*margin-top:24.5px !important;*/
+  }
+  
+  /* Align bottom texts properly on mobile */
+  .paynow-container .gst-text {
+    right: 0 !important;
+    bottom: -14px;
+    font-size:10.5px !important;
+
+  }
+
+  .paynow-container .secure-text {
+    left: 0 !important;
+    bottom: -18px;
+    font-size:10.5px !important;
+  }
+
+  /* Reduce payment icons size for mobile */
+  div[style*="margin-top:16px"] img {
+    height: 24px !important;
+  }
+}
+</style>
+</div>
+<!--Payment page update 24.oct.2025 END-->
+
+
+
                                         </div>
 
                                 </div>
@@ -372,14 +743,19 @@
                     success : function(response){
                         $.each(response.data, function(index, value){
 
-                            $('#preview').append(`<div class="preview-item">
 
-                                                                <a href="${value.path}" target="blank">
-                                                                    <embed src="{{url('/')}}${value.file}" width="50" height="50" />
-                                                                    <input hidden value="${value.file}" name="documents[]">
-                                                                </a>
-                                                                <button type="button" class="delete-icon"></button>
-                                                            </div>`);
+                                $('#preview').append(`<div class="preview-item">
+
+                                                                    <a href="${value.path}" target="blank">
+                                                                        <embed src="{{url('/')}}${value.file}" width="100" height="100" />
+                                                                        <input hidden value="${value.file}" name="documents[]">
+                                                                    </a>
+                                                                     <div class="preview-btn">
+                    <a href="${value.path}" target="blank"> Preview
+                                                        </a>
+                                                        </div>
+                                                                    <button type="button" class="delete-icon"></button>
+                                                                </div>`);
                         })
                     //     console.log('upload-image', response)
                     //     $('#upload_file-section').addClass('hide');
@@ -440,6 +816,8 @@
         $('#form_step_tab_'+tab_index).find('a').removeClass('active');
         $('#form_step_tab_'+tab_index).find('.step_check').hide();
 
+        $('html,body').animate({ scrollTop: $('.banner_row').offset().top }, 500);
+
 
 
     });
@@ -471,6 +849,8 @@
                         }
 
                     }
+                                        $('html,body').animate({ scrollTop: $('.banner_row').offset().top }, 500);
+
                     // $('#form_step_tab_'+response.step).siblings().find('a').removeClass('active')
                     $('#step_no').val(response.step);
                     if(response.step == 3) {
@@ -486,12 +866,16 @@
                 }
             },
             error :  function(error) {
+             
                 $.each(error.responseJSON.errors, function(index, value) {
                     console.log(value)
                     index = index.replaceAll('.', '_')
                     $('#' + index).parents().eq(0).append(
-                        `<span class="text-danger form-error-list">${value}</span>`)
+                        `<span class="text-danger form-error-list">${value[0] ?? ''}</span>`)
+                       
                 });
+                                $('html,body').animate({ scrollTop: $('.form-error-list').offset().top -200}, 500);
+
                 $('.loader').hide();
 
             }
@@ -504,7 +888,7 @@
             $('#razor_order_number').val(rti.application_no);
             var options = {
                 "key": "{{ env('RAZORPAY_KEY') }}", // rzp_live_ILgsfZCZoFIKMb
-                "amount": (rti.charges*100), // 2000 paise = INR 20
+                "amount": (rti.final_price*100), // 2000 paise = INR 20
                 "name": "FileMyRti",
                 "description": "Razor Payment",
                 "prefill": {
@@ -512,7 +896,7 @@
                     "email": rti.email
                 },
                 "currency": "INR",
-                "image": "https://cdn.razorpay.com/logos/NSL3kbRT73axfn_medium.png",
+                // "image": "https://cdn.razorpay.com/logos/NSL3kbRT73axfn_medium.png",
                 "notes":{'order_id':rti.application_no},
                 "handler": function(reason_result){
                     console.log(reason_result, 'reason_result')
@@ -531,9 +915,9 @@
                     }
                 },
 
-                "theme": {
-                    "color": "#F9BF37"
-                }
+                // "theme": {
+                //     "color": "#F9BF37"
+                // }
             };
             var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response){
@@ -560,5 +944,22 @@
       });
 
 
+      $(document).on('click', '.form-tab', function(e){
+        e.preventDefault();
+        let step_no = parseInt($('#step_no').val());
+        let key = parseInt($(this).attr('data-key'));
+        let id = $(this).attr('data-id');
+
+        if(step_no > key) {
+            $('#step_no').val(key);
+            $(".form_step_"+key).removeClass('hide').siblings().addClass('hide');
+            $(this).addClass('active').parents().eq(0).nextAll().find('a').removeClass('active')
+          
+        }
+        if(step_no >= key) {
+           $(this).find('.step_check').hide();
+            $(this).parents().eq(0).nextAll().find('.step_check').hide();
+        }
+      })
 </script>
 @endpush

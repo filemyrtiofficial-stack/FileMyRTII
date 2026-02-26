@@ -195,6 +195,12 @@
     background-color: rgba(255, 255, 255, 0.93);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.form_item input[type=text]:disabled,
+.form_item input[type=email]:disabled,
+.form_item input[type=tel]:disabled,
+.form_item .form_field:disabled {
+    color: var(--theme-text-color);
+}
 .form_item .form_field:focus {
     outline: none;
     border-color: rgba(3, 132, 212, 1);
@@ -256,7 +262,13 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+        /*padding: 15px;*/
+        /*    justify-content: center;*/
     /* padding-right: 7.5vw; */
+}
+.form_action-query {
+       padding: 15px;
+            justify-content: center;
 }
 .form_step_1 .form_item label {
     position: relative;
@@ -330,6 +342,10 @@
 .custom_choose_file .preview_icon:hover {
     opacity: 1;
 }
+
+
+
+
 .custom_choose_file input[type=file]::file-selector-button {
     padding: 0.6em 1em;
     margin: -0.6em -1em;
@@ -823,7 +839,7 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    padding: 1.04167vw 0;
+    /*padding: 1.04167vw 0;*/
     align-items: center;
 }
 .charge_list li {
@@ -1133,7 +1149,24 @@
     font-size: 1.25vw;
     margin-bottom: 3.125vw;
 }
+.thankyou_msg_detail * + * {
+    margin-top: 10px;
+}
+#thankyou-process .thankyou_msg_detail * {
+    margin-bottom: 0;
+    font-size: 1.25vw;
+    margin-bottom: 10px;
+}
+
 /* thank you message end */
+
+
+
+.pio-popup .modal_body .form_action_wrap .form_action .theme-btn{
+    background-color: var(--theme-btn-color);
+}
+
+
 
 @media (max-width: 1199px) {
     .form_row {
@@ -1195,7 +1228,8 @@
         font-size: 20px;
     }
     .thankyou_msg_detail,
-    .thankyou_msg_detail p {
+    .thankyou_msg_detail p,
+    .thankyou_msg_detail * {
         font-size: 16px;
     }
     .upload_doc_modal_wrap {
@@ -1272,6 +1306,21 @@
     }
 }
 @media (max-width: 767px) {
+    /*.rti-document-list {*/
+    /*    display: flex;*/
+    /*}*/
+    /*.rti-document-list .relative {*/
+    /*    width: 47%;*/
+    /*}*/
+    .rti-document-list .relative img{
+        width: 100% !important;
+    }
+    /*.upload_doc_modal_wrap {*/
+    /*max-width: 100% !important;*/
+    /*}*/
+    .upload_doc_modal .modal_header .heading {
+            font-size: 14px;
+    }
     .serviceform_section {
         padding: 50px 0;
     }
@@ -1297,7 +1346,7 @@
         position: absolute;
         top: -7.30208vw;
         font-size: 3vw;
-        display: none;
+        display: none !important;
         font-weight: 600;
     }
     .form_tab_list li a.active .title {
@@ -1372,28 +1421,48 @@
     .form_row {
         padding-right: 0;
     }
+
+
+input.form_field[type="date"] {
+	height: 46px;
+}
+
     .charge_list {
         /* flex-wrap: wrap; */
         white-space: nowrap;
         /* overflow-x: scroll; */
         /* position: relative; */
-        padding: 20px;
+        /*padding: 20px;*/
         /* border-bottom: 1px solid #000 !important; */
+    }
+    .option_list .custom_radio input[type="radio"] + label {
+        padding-left: .8rem;
     }
     
     .charge_list li {
-        font-size: 16px;
+        font-size: 12px;
         position: relative;
     }
+    
     .charge_list li:first-child {
-        width: 100%;
+        /*width: 100%;*/
+        width: 50%;
         padding-left: 0;
         text-align: center;
         /* margin-bottom: 30px; */
+        word-break: break-word;
+        word-wrap: break-word;
+        white-space: normal;
+                padding-right: 0px;
+        font-size: 14px;
+    }
+    li.price-listing {
+        display : none;
     }
     .charge_list li:not(:first-child) {
         width: 33.333333%;
-        width: 50%;
+               width: 25%;
+
     }
     .charge_list li:not(:first-child)::after {
         content: "";
@@ -1425,10 +1494,10 @@
     }
     .charge_list.option_list li:first-child {
         width: 100%;
-        width: 150%;
+        width: 50%;
     }
     .charge_list.option_list li:not(:first-child) {
-        width: 50%;
+        width: 25%;
     }
     .payment_icon {
         padding: 10px 15px;
@@ -1511,6 +1580,9 @@
     .thankyou_msg_detail p {
         margin-bottom: 20px;
     }
+    .thankyou_msg_detail * + * {
+        margin-top: 20px;
+    }
     .upload_doc_modal .modal_body {
         padding-top: 0;
     }
@@ -1541,4 +1613,69 @@
     .upload_doc_modal .modal_area::after {
         display: none;
     }
+
+    .charge_list li:not(:first-child)::after{
+        display: none;
+    }
+}
+
+@media (min-width: 767px) {
+    .pio-address-yes-no {
+        display: flex;
+        gap: 0px 10px;
+    }
+    .pio-address-yes-no .radio_sec {
+        display: flex;
+        gap: 20px;
+    }
+    .pio-address-yes-no .radio_sec .radio_btn label {
+        display: flex;
+        gap: 10px;
+    }
+}
+.form_item select.form_field {
+    position: relative;
+    /*background-image: url(../images/down-arrow.svg);*/
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M8.75 12.25L15 18.5L21.25 12.25" stroke="%230384D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    background-repeat: no-repeat;
+    background-position: 96%;
+}
+
+
+.form_item .form_field::placeholder,
+.form_item .form_field::-webkit-input-placeholder {
+    font-size: 20px;
+}
+.form_item .form_field::-moz-placeholder {
+    font-size: 20px;
+}
+.form_item .form_field::-ms-input-placeholder{
+    font-size: 20px;
+}
+
+@media (max-width: 1199px) {
+   .form_item .form_field::placeholder,
+    .form_item .form_field::-webkit-input-placeholder {
+        font-size: 16px;
+    }
+    .form_item .form_field::-moz-placeholder {
+        font-size: 16px;
+    }
+    .form_item .form_field::-ms-input-placeholder{
+        font-size: 16px;
+    } 
+}
+
+@media (max-width: 1600px) {
+    .form_item .form_field::placeholder,
+.form_item .form_field::-webkit-input-placeholder {
+    font-size: 16px;
+}
+.form_item .form_field::-moz-placeholder {
+    font-size: 16px;
+}
+.form_item .form_field::-ms-input-placeholder{
+    font-size: 16px;
+}
+
 }

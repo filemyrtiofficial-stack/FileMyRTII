@@ -8,11 +8,13 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6">
-                <div class="search_area">
-                    <div class="search_block">
-                        <input class="form-field search-blog" type="search" name="search" id="" placeholder="Search">
+                <form action="" class="blog-search">
+                    <div class="search_area">
+                        <div class="search_block">
+                            <input class="form-field search-blog" type="search" name="search" id="" placeholder="Search" value="{{$_GET['search'] ?? ''}}">
+                        </div>
                     </div>
-                </div>
+               </form>
             </div>
         </div>
     </div>

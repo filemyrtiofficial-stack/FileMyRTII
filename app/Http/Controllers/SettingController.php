@@ -64,7 +64,9 @@ class SettingController extends Controller
             $validator = Validator::make($request->all(), [
                 'invoice_logo' => "required",
                 'company_name' => "required",
-                'address' => "required"
+                'address' => "required",
+                "gst" => "numeric|min:0|max:100"
+
                
             ]);
         } else {
@@ -74,7 +76,7 @@ class SettingController extends Controller
                 'secondary_logo' => "required",
                 'footer_logo_tagline' => "required",
                 'address' => "required",
-                'email' => "required",
+                'email' => "required|regex:/(.+)@(.+)\.(.+)/i",
                 'contact_no' => "required"
             ]);
         }
@@ -156,7 +158,7 @@ class SettingController extends Controller
                 'secondary_logo' => "required",
                 'footer_logo_tagline' => "required",
                 'address' => "required",
-                'email' => "required",
+                'email' => "required|regex:/(.+)@(.+)\.(.+)/i",
                 'contact_no' => "required"
             ]);
         }

@@ -121,10 +121,27 @@ class LawyerRepository implements LawyerInterface
 
         $image = uploadFile($request, 'image', 'lawyer');
         if (!empty($image)) {
+           
             $data['image'] = $image;
         }
+        else {
+            if(isset($request['image_preview'])&& !empty($request['image_preview'])) {
+                $data['image'] =$request['image_preview'];
+            }
+            else {
+                $data['image'] = null;
+            }
+        }
         Lawyer::where('id', $id)->update($data);
-        LawyerProfile::where('lawyer_id', $id)->update($LawyerProfileData);
+        $profile = LawyerProfile::where('lawyer_id', $id)->first();
+        if($profile) {
+            $profile->update($LawyerProfileData);
+        }
+        else {
+            $LawyerProfileData['lawyer_id'] = $id;
+            LawyerProfile::create($LawyerProfileData);
+        }
+        // LawyerProfile::where('lawyer_id', $id)->update($LawyerProfileData);
         
         Session::flash("success", "Data successfully updated");
         return response(['message' => "Data successfully updated"]);

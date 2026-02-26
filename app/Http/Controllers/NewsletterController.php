@@ -7,7 +7,9 @@ use App\Models\Newsletter;
 use App\Repositories\NewsletterRepository;
 use App\Interfaces\NewsletterInterface;
 use Validator;
-
+use App\Exports\NewsletterExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
 class NewsletterController extends Controller
 {
     public function __construct()
@@ -89,6 +91,49 @@ class NewsletterController extends Controller
      */
     public function destroy($id)
     {
-        //
+          try {
+             $data = Newsletter::where(['id' => $id])->first();
+            if ($data) {
+    
+                $data->delete();
+            } else {
+                throw new Exception("Invalid Newsletter");
+            }
+            return response(['message' => 'Data is successfully deleted']);
+        } catch (Exception $ex) {
+            return response(['error' => $ex->getMessage()], 500);
+        }
+    }
+     public function newsletterExport(Request $request) {
+          $query = Newsletter::query();
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->input('email') . '%');
+        }
+    
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+    
+        $users = $query->get(['email', 'created_at']); // only needed columns
+    
+        // Create CSV content
+        $csv = fopen('php://temp', 'r+');
+        fputcsv($csv, ['Email', 'Created At']); // headers
+    
+        foreach ($users as $user) {
+            fputcsv($csv, [$user->email, $user->created_at]);
+        }
+    
+        rewind($csv);
+        $csvContent = stream_get_contents($csv);
+        fclose($csv);
+    
+        // Return CSV download
+        return Response::make($csvContent, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="newsletter.csv"',
+        ]);
+        return Excel::download(new NewsletterExport($request->all()), 'newsletter.xlsx');
     }
 }

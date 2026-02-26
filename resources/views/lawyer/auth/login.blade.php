@@ -46,8 +46,12 @@
                                     </div>
                                     <div class="form_item">
                                         <label for="pwd">Password</label>
-                                        <input class="form_field" type="password" name="password" id="" placeholder="Enter Your Password">
+                                        <input class="form_field password" type="password" name="password" id="" placeholder="Enter Your Password">
                                     </div>
+                                    <div class="show-password-section mb-1-2">
+                                        <input type="checkbox" class="show-password" id="register-show-password"><label for="register-show-password">Show Password</label>
+                                    </div>
+
                                     <!-- <div class="forgot_pwd">
                                         <a href="javascript:void(0);" class="theme-btn-link singin-register-btn" data-target="forgot-password-step-1">Forgot Password?</a>
                                     </div> -->

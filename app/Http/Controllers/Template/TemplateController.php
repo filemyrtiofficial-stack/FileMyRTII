@@ -144,6 +144,18 @@ class TemplateController extends Controller
     public function uploadImages(Request $request) {
        
         
+        if(isset($request['field_type']) && $request['field_type'] == 'signature') {
+           
+            $validator = Validator::make($request->all(), [
+               'file' => 'dimensions:max_width=200,max_height=50',
+    
+            ]);
+            if($validator->fails()) {
+                return response(['errors' => $validator->errors()], 422);
+            }
+        }
+      
+      
         $key = "file";
         if($request->hasFile($key))
         {
@@ -320,14 +332,16 @@ class TemplateController extends Controller
 
     public function getSectionPage($page_id, $section_key, $id = null) {
         $data = [];
+        $page = [];
         if($id != null) {
+            $page = Page::where(['id' => $page_id])->first();
             $data = PageData::where(['page_id' => $page_id, 'id' => $id])->first();
             $data = json_decode($data->data, true);
         }
         $template = templateList()[$section_key];
         $page_type = "page";
         // print_r(json_encode( $template));
-       return view('backend.template.pages.section.'.$section_key, compact('template', 'page_id', 'section_key', 'id', 'data', 'page_type'));
+       return view('backend.template.pages.section.'.$section_key, compact('page', 'template', 'page_id', 'section_key', 'id', 'data', 'page_type'));
     }
 
     public function deleteSectionPage($id) {

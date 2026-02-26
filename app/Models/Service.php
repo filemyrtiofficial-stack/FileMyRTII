@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'icon', 'status', 'description', 'category_id', 'fields', 'faq', 'mobile_banner', 'desktop_banner', 'image_1', 'image_2'];
+    protected $fillable = ['name', 'icon', 'status', 'description', 'category_id', 'fields', 'faq', 'mobile_banner', 'desktop_banner', 'image_1', 'image_2', 'create_new_page'];
     protected $with = ['slug'];
     
     public static function list($pagination, $filters = null) {
@@ -65,6 +65,10 @@ class Service extends Model
 
     public function templates() {
         return $this->hasMany(ServiceTemplate::class, 'service_id', 'id');
+    }
+
+    public function rtiApplications() {
+        return $this->hasMany(RtiApplication::class, 'service_id', 'id');
     }
   
 }

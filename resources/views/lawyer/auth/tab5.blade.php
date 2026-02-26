@@ -1,5 +1,5 @@
 <a class="accord_item" href1="#tab5" data-id="tab5" href="{{route('lawyer.my-rti', [$data->application_no.'-'.$data->id, 'approved-rti'])}}">Approved RTI</a>
-
+@if($tab == 'approved-rti')
 <div id="tab5" class="contact_faq_tab @if($tab == 'approved-rti')active @endif">
     <div class="approve_rti">
         <div class="db_tab_heading">
@@ -22,18 +22,19 @@
 
             <div class="approval_form_wrap">
                 <div class="approval_form v_scroll">
-                    {!! $html !!}
+                      <embed type="text/html" src="{{url('download-my-rti/'.$data->id)}}" width="100%" height="100%">
                 </div>
             </div>
             <div class="form_action">
                 <!-- <a href="javascript:void(0);" class="theme-btn"><span>Print RTI</span></a> -->
                 <!-- <a href="javascript:void(0);" class="theme-btn"><span>Download</span></a> -->
-                <a href="{{route('lawyer.download-rti', $data->application_no)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download</span></a>
+                <a href="{{route('lawyer.download-rti', $data->id)}}" class="theme-btn @if(!$data->lastRevision ) disabled @endif" target="blank"><span>Download</span></a>
 
             </div>
             @endif
         </div>
     </div>
 </div>
+@endif
 
 <!-- && empty($data->lastRevision->customer_change_request)) || $data->status < 2 -->

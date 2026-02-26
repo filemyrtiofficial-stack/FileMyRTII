@@ -8,37 +8,37 @@
         
         <div class="db_item_wrap">
             
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="first_name">First Name</label>
                 <input type="text" name="first_name" class="form_field" value="{{$revision_data['first_name'] ?? ($data->first_name ?? '')}}">
     
             </div>
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="last_name">Last Name</label>
                 <input type="text" name="last_name" class="form_field" value="{{$revision_data['last_name'] ?? ($data->last_name ?? '')}}">
             </div>
     
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="">Email</label>
                 <input type="email" name="email" class="form_field" value="{{$revision_data['email'] ?? ($data->email ?? '')}}">
             </div>
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="">Phone Number</label>
                 <input type="text" name="phone_number" class="form_field" value="{{$revision_data['phone_number'] ?? ($data->phone_number ?? '')}}">
             </div>
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="">Address</label>
                 <input type="text" name="address" class="form_field" value="{{$revision_data['address'] ?? ($data->address ?? '')}}">
             </div>
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="">City</label>
                 <input type="text" name="city" class="form_field" value="{{$revision_data['city'] ?? ($data->city ?? '')}}">
             </div>
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="">State</label>
                 <input type="text" name="state" class="form_field" value="{{$revision_data['state'] ?? ($data->state ?? '')}}">
             </div>
-            <div class="form_item">
+            <div class="form_item hide">
                 <label for="">Pincode</label>
                 <input type="text" name="pincode" class="form_field" value="{{$revision_data['pincode'] ?? ($data->pincode  ?? '')}}">
             </div>
@@ -47,16 +47,19 @@
             @php
                 $field_key =  getFieldName($service_fields['field_lable'][$key]);
             @endphp
-            @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer')
-            <div class="form_item">
+            @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] != 'lawyer')
+            <div class="form_item @if($value == 'richtext' || $value == 'textarea') single @endif  @if(!isset($service_fields['form_field_type'][$key]) || $service_fields['form_field_type'][$key] == 'customer') hide  @endif">
                 <label for="last_name">{{$service_fields['field_lable'][$key] ?? ''}}</label>
                 @if($value == 'textarea') 
-                    <textarea class="form_field" type="text" name="{{$field_key }}" id="{{$field_key }}" placeholder="" >{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}</textarea>
+                    <textarea class="form_field" type="text" name="{{$field_key }}" id="{{$field_key }}" placeholder="" rows="1" >{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? ($service_fields['default_values'][$key] ?? ''))}}</textarea>
+                @elseif($value == 'richtext') 
+                <textarea class="form_field editor" type="text" name="{{$field_key }}" id="{{$field_key }}" placeholder="" >{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? ($service_fields['default_values'][$key] ?? ''))}}</textarea>
+            
                 @elseif($value == 'date') 
-                <input class="form_field" type="date" name="{{$field_key }}" id="{{$field_key }}" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" placeholder="" @if(isset($service_fields['minimum_date'][$key]) && !empty($service_fields['minimum_date'][$key]))  min="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" @endif  @if(isset($service_fields['maximum_date'][$key]) && !empty($service_fields['maximum_date'][$key]))  max="{{$service_fields['maximum_date'][$key]}}" @endif>
+                <input class="form_field" type="date" name="{{$field_key }}" id="{{$field_key }}" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? ($service_fields['default_values'][$key] ?? ''))}}" placeholder="" @if(isset($service_fields['minimum_date'][$key]) && !empty($service_fields['minimum_date'][$key]))  min="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}" @endif  @if(isset($service_fields['maximum_date'][$key]) && !empty($service_fields['maximum_date'][$key]))  max="{{$service_fields['maximum_date'][$key]}}" @endif>
                 @elseif($value == 'file')
 
-                <input type="hidden" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? '')}}">
+                <input type="hidden" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $service_field_data[$field_key] ?? ($service_fields['default_values'][$key] ?? ''))}}">
                         <div class="custom_choose_file">
                         <input class="form_field form-image" type="file" name="{{$field_key}}_file" id="{{$field_key}}_file" placeholder="" @if(isset($fields['minimum_date'][$key]) && !empty($fields['minimum_date'][$key]))  min="{{$fields['minimum_date'][$key]}}" @endif  @if(isset($fields['maximum_date'][$key]) && !empty($fields['maximum_date'][$key]))  max="{{$fields['maximum_date'][$key]}}" @endif accept="image/*,.pdf"/>
 
@@ -68,12 +71,12 @@
                     <a href="{{filePreview($revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? ''))}}"  class="theme-btn" target="blank">Preview</a> -->
                       
                 @elseif($value == 'select')
-                    <select type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key] ?? '')}}">
-                        {!! getOptions($service_fields['options'][$key], $revision_data[$field_key ] ?? ( $fields[$field_key] ?? '')) !!}    
+                    <select type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key] ?? ($service_fields['default_values'][$key] ?? ''))}}">
+                        {!! getOptions($service_fields['options'][$key], $revision_data[$field_key ] ?? ( $fields[$field_key] ?? ($service_fields['default_values'][$key] ?? ''))) !!}    
                     </select>
                 @else
 
-                <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? '')}}">
+                <input type="text" name="{{$field_key }}" class="form_field" value="{{$revision_data[$field_key ] ?? ( $fields[$field_key]['value'] ?? ($service_fields['default_values'][$key] ?? ''))}}">
                 @endif
 
 
@@ -90,10 +93,10 @@
                 <p>Note: Please do only minor modification. We will generate your application and send it for approval.</p>
             </div>
         </div>
-        <div class="form_action_wrap">
-            <div class="form_action">
-                <button type="submit" class="theme-btn"><span>Submit Edited Application</span></button>
-            </div>
+    </div>
+    <div class="form_action_wrap">
+        <div class="form_action">
+            <button type="submit" class="theme-btn"><span>Submit Edited Application</span></button>
         </div>
     </div>
 </form>
