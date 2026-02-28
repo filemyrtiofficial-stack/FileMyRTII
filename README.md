@@ -51,7 +51,7 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Thank you for considering contributing to the Laravel framework. To ensure a streamlined review process and maintain the technical integrity of the core codebase, all contributors must adhere to the standardized workflows outlined in the official documentation. [Laravel documentation](https://laravel.com/docs/contributions).
 
 ## Code of Conduct
 
